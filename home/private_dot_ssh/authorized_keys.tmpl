@@ -1,0 +1,6 @@
+{{ range (gitHubKeys "miszo") -}}
+{{   .Key }}
+{{ end -}}
+{{ if .isWork -}}
+{{    onepasswordRead "op://Private/GitLab SSH key/public key" .opWorkAccount | trim }}
+{{ end -}}

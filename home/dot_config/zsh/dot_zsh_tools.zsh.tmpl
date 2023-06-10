@@ -1,0 +1,28 @@
+eval $(thefuck --alias)
+eval $(gh completion -s zsh)
+{{ if .isWork -}}
+eval $(glab completion -s zsh); compdef _glab glab
+{{ end -}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+. /opt/homebrew/etc/profile.d/z.sh
+# 1password cli
+eval "$(op completion zsh)"; compdef _op op
+source /Users/miszo/.config/op/plugins.sh
+# 1password cli end
+
+source ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+if type pipx &>/dev/null; then
+  autoload -U bashcompinit
+  bashcompinit
+
+  eval "$(register-python-argcomplete pipx)"
+fi

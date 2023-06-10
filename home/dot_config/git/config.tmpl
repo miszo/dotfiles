@@ -1,0 +1,80 @@
+[user]
+  name = Miszo Radomski
+  email = {{ .personalEmail }}
+  signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" .opPersonalAccount | trim }}
+[includeIf "gitdir:~/projects/code/work/"]
+  path = ~/.config/git/config-work
+[core]
+  excludesfile = ~/.config/git/ignore
+  pager = delta
+[alias]
+  aliases = config --get-regexp alias
+  wow = log --all --graph --decorate --oneline --simplify-by-decoration
+  hist = log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+  find-change = name-rev
+  find-change-branch = branch --contains
+  a = add .
+  nb = checkout -b
+  co = checkout
+  com = checkout master
+  ci = commit
+  cim = commit -m
+  remotes = remote -v
+  s = status -s
+  last = log -1 HEAD
+  ol = log --pretty=oneline
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  stashes = stash list
+  mend = commit --amend
+  branches = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+  undo = reset HEAD~1 --mixed
+  del = branch -D
+  vasc = tag --list --sort=-v:refname
+  vdesc = tag --list --sort=v:refname
+  plrb = pull --rebase
+  rbi = rebase --interactive
+  rbiom = rebase --interactive origin/master
+  pshf = push --force
+  pt = !git tag -l | xargs git tag -d && git fetch -t
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+[pull]
+  rebase = false
+[init]
+  defaultBranch = main
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  features = side-by-side unobtrusive-line-numbers decorations
+  syntax-theme = ansi
+  whitespace-error-style = 22 reverse
+  algorithm = histogram
+  renamelimit = 8192
+  renames = copies
+[delta "unobtrusive-line-numbers"]
+  line-numbers = true
+  line-numbers-minus-style = "#444444"
+  line-numbers-zero-style = "#444444"
+  line-numbers-plus-style = "#444444"
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = blue
+  line-numbers-right-style = blue
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = yellow box
+[push]
+	autoSetupRemote = true
+  default = current
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[commit]
+  gpgsign = true

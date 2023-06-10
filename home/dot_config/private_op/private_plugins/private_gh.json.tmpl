@@ -1,0 +1,14 @@
+{
+	"account_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opPersonalAccount | trim }},
+	"entrypoint": [
+		"gh"
+	],
+	"credentials": [
+		{
+			"plugin": "github",
+			"credential_type": "personal_access_token",
+			"vault_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "dev" .opPersonalAccount | trim }},
+			"item_id": {{ (onepassword "GitHub CLI token" "dev" .opPersonalAccount).id | quote }}
+		}
+	]
+}

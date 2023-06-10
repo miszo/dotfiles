@@ -1,0 +1,1 @@
+[{"account_id":{{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opPersonalAccount | trim }},"vault_id":{{ output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "dev" .opPersonalAccount | trim }},"item_id":{{ (onepassword "GitHub CLI token" "dev" .opPersonalAccount).id | quote }}}]

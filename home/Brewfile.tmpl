@@ -1,0 +1,39 @@
+# frozen_string_literal: true
+
+tap '1password/tap'
+tap 'homebrew/bundle'
+tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/core'
+tap 'homebrew/services'
+
+brew 'act'
+brew 'asdf'
+brew 'bat'
+brew 'bison'
+brew 'exa'
+brew 'gh'
+brew 'git'
+brew 'gitleaks'
+brew 'git-delta'
+{{ if .isWork -}}
+brew 'glab'
+{{ end -}}
+brew 'gnupg'
+brew 'graphviz'
+brew 'imagemagick'
+brew 'jq'
+brew 'libpq'
+brew 'mysql@5.7', restart_service: true
+brew 'neofetch'
+brew 'postgresql@14', restart_service: true
+brew 'redis', restart_service: true
+brew 'ripgrep'
+brew 'thefuck'
+brew 'z'
+brew 'zlib'
+
+cask '1password-cli'
+cask 'calibre'
+cask 'docker'
+cask 'orbstack'

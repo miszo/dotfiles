@@ -1,0 +1,2 @@
+{{ .personalEmail }} {{ onepasswordRead "op://dev/Commit signing key/public key" .opPersonalAccount | trim }}
+{{ .workEmail }} {{ onepasswordRead "op://Private/Commit signing key/public key" .opWorkAccount | trim }}

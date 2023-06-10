@@ -1,0 +1,92 @@
+function work_git_local_config {
+    git config --local user.name "Miszo Radomski"
+    git config --local user.email {{ .workEmail | quote }}
+    echo "Local git user email changed to"
+    git config --local --get user.name
+    git config --local --get user.email
+}
+
+function web_restart_services {
+    echo "[web_restart_services] restarting services..."
+    brew services restart mysql@5.7 &&
+    brew services restart postgresql@14 &&
+    brew services restart redis &&
+    echo "[web_restart_services] done!"
+}
+
+function web_install_bundler {
+    echo "[web_install_bundler] installing bundler..."
+    gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)"
+    echo "[web_install_bundler] done!"
+}
+
+function web_yarn_install {
+    echo "[web_yarn_install] yarn install..."
+    yarn install
+    echo "[web_yarn_install] done!"
+}
+
+function web_husky_install {
+    echo "[web_husky_install] installing husky hooks..."
+    yarn run husky:install
+    echo "[web_husky_install] done!"
+}
+
+function web_bundle_install {
+    echo "[web_bundle_install] bundle intall..."
+    bundle install
+    echo "[web_bundle_install] done!"
+}
+
+function web_install_foreman {
+    echo "[web_install_foreman] installing foreman..."
+    gem install foreman
+    echo "[web_install_foreman] done!"
+}
+
+function web_run_migrations {
+    echo "[web_run_migrations] running migrations..."
+    rake db:migrate
+    echo "[web_run_migrations] done!"
+}
+
+function web_checkout_head_schema {
+    echo "[web_checkout_head_schema] resetting db/schema.rb with HEAD..."
+    git checkout @ -- db/schema.rb
+    echo "[web_checkout_head_schema] done!"
+}
+
+function web_prerequisites {
+    echo "[web_prerequisites] running prerequisites for web..."
+    web_restart_services
+    web_install_bundler
+    web_yarn_install
+    web_husky_install
+    web_bundle_install
+    web_install_foreman
+    web_run_migrations
+    web_checkout_head_schema
+    echo "[web_prerequisites] done!"
+}
+
+function web_start_backend {
+    echo "[web_start_backend] starting web backend..."
+    foreman start web=1,sidekiq=1,sidekiq-scheduler=0,webpack-dev-server=0
+    echo "[web_start_backend] end!"
+}
+
+function web_start {
+    echo "[web_start] starting web..."
+    foreman start
+    echo "[web_start] end!"
+}
+
+function web_prerequisites_and_start {
+    web_prerequisites
+    web_start
+}
+
+function web_prerequisites_and_start_backend {
+    web_prerequisites
+    web_start_backend
+}

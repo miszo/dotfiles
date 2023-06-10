@@ -1,0 +1,16 @@
+{{- $opPersonalAccount := promptStringOnce . "opPersonalAccount" "What is your 1Password personal account" -}}
+{{- $opWorkAccount := promptStringOnce . "opWorkAccount" "What is your 1Password work account" -}}
+{{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
+{{- $isWork := false -}}{{/* true if this machine is used for work */}}
+{{- "" -}}
+
+{{- if hasPrefix $workComputerPrefix .chezmoi.hostname -}}
+{{-   $isWork = true -}}
+{{- end -}}
+
+[data]
+    opPersonalAccount = {{ $opPersonalAccount | quote }}
+    opWorkAccount = {{ $opWorkAccount | quote }}
+    personalEmail = {{ onepasswordRead "op://dev/email/personal" $opPersonalAccount | quote }}
+    workEmail = {{ onepasswordRead "op://Private/email/personal" $opWorkAccount | quote }}
+    isWork = {{ $isWork }}

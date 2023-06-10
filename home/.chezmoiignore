@@ -1,0 +1,73 @@
+.oh-my-zsh/cache/**
+.oh-my-zsh/custom/themes/powerlevel10k/**/*.zwc
+
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+{{ end }}
+
+.git
+.tea
+.local
+.chezmoi
+.hyperfine.js
+bin
+docker-compose.yaml
+Dockerfile
+docs
+install.sh
+README.md
+
+# Cache
+.dccache
+.cs_cache
+.pnpm-state
+.cache/helix
+.cache/helm
+.cache/node
+.cache/nvim
+.cache/pnpm
+.cache/todoist
+.cache/typescript
+.cache/yarn
+.cache/zsh
+.config/zsh/.zcompdump*
+
+# SSH
+.ssh/environment-
+
+# History
+.lesshst
+.wget-hsts
+.bash_history
+.node_repl_history
+.nsh_history
+.pspg_history
+.python_history
+.tig_history
+.config/zsh/.zsh_history
+.config/zsh/.zsh_sessions
+.zsh_sessions
+
+# Ignore MacOS files
+.CFUserTextEncoding
+.DS_Store
+.Trash
+Applications
+Desktop
+Documents
+Downloads
+Library
+Movies
+Music
+Pictures
+Public
+Support
+
+**/.DS_Store
+
+{{ if not .isWork }}
+.config/glab-cli
+.config/op/plugins/used_items/glab.json
+.config/op/plugins/glab.json
+.gemrc
+{{ end }}
