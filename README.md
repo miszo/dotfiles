@@ -1,4 +1,4 @@
-# github.com/miszo/dotfiles
+# github.com/miszo/dotfiles ![protected by gitleaks](https://img.shields.io/badge/protected%20by-gitleaks-blue) [![gitleaks status](https://github.com/miszo/dotfiles/actions/workflows/gitleaks.yml/badge.svg?branch=main)](https://github.com/miszo/dotfiles/actions/workflows/gitleaks.yml)
 
 Miszo Radomski's dotfiles, managed with [`chezmoi`](https://github.com/twpayne/chezmoi).
 
