@@ -1,8 +1,5 @@
 eval $(thefuck --alias)
 eval $(gh completion -s zsh)
-{{ if .isWork -}}
-eval $(glab completion -s zsh); compdef _glab glab
-{{ end -}}
 eval "$(/opt/homebrew/bin/brew shellenv)"
 . /opt/homebrew/etc/profile.d/z.sh
 # 1password cli
