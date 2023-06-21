@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+tap '1password/tap'
+tap 'homebrew/bundle'
+tap 'homebrew/cask'
+tap 'homebrew/cask-fonts'
+tap 'homebrew/core'
+tap 'homebrew/services'
+
+brew 'asdf'
+brew 'gitleaks'
+brew 'jq'
+brew 'pre-commit'
+
+cask '1password-cli'
