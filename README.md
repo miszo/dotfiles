@@ -13,6 +13,10 @@ Install them with:
 Personal secrets are stored in [1Password](https://1password.com) and you'll
 need the [1Password CLI](https://developer.1password.com/docs/cli/) installed.
 
+To list possible commands just run:
+
+    make
+
 Bootstrap dependencies and git hooks with:
 
     make bootstrap

@@ -16,14 +16,14 @@ gitleaks: ## Detect GitLeaks.
 	@printf "Detecting GitLeaks...\n"
 	@gitleaks detect --source . -v
 
-chezmoi_apply: ## Apply current chezmoi state to your machine.
-	@printf "Applying current chezmoi state to yout machine...\n"
-	@chezmoi apply
-
-chezmoi_init: ## Run `chezmoi init`.
+chezmoi_init: ## Initialize (or update) chezmoi config file on your machine.
 	@printf "Running `chezmoi init`...\n"
 	@chezmoi init
 
-help: ## This help.
-	@printf "\033[36m%-30s\033[0m %s\n" "Targets:"
+chezmoi_apply: ## Apply current chezmoi state to your machine.
+	@printf "Applying current chezmoi state to your machine...\n"
+	@chezmoi apply
+
+help: ## Display this help.
+	@printf "\033[36m%-30s\033[0m %s\n" "Commands:"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\t\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
