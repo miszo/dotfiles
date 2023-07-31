@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $raycastCommandsSource := joinPath .chezmoi.homeDir ".config" "raycast" "_enabled-script-commands" -}}
+{{ $raycastEndabledCommands := joinPath .chezmoi.homeDir ".config" "raycast" "script-commands" "commands" -}}
+
+{{ $folders := list
+  "apps/cleanshot"
+  "apps/fantastical"
+  "apps/lungo"
+  "apps/reminders"
+  "apps/safari"
+  "apps/sip"
+
+  "conversions/change-case"
+
+  "web-searches/images"
+-}}
+
+{{ $files := list
+  "conversions/hex-to-rgb.sh"
+  "conversions/hex-to-rgba.sh"
+  "conversions/human-date-to-epoch.sh"
+
+  "web-searches/caniuse.sh"
+  "web-searches/giphy.sh"
+  "web-searches/google-maps.sh"
+  "web-searches/search-imdb.sh"
+-}}
+
+{{ range ($folders | sortAlpha | uniq) -}}
+{{ $source := joinPath $raycastEndabledCommands . -}}
+{{ $destination := joinPath $raycastCommandsSource . -}}
+if [ ! -d {{ $destination | quote }} ]; then
+    mkdir -p {{ $destination | quote }}
+fi
+cp -r {{ $source | quote }} {{ $destination | quote }}
+{{ end -}}
+
+{{ range ($files | sortAlpha | uniq) -}}
+{{ $source := joinPath $raycastEndabledCommands . -}}
+{{ $destination := joinPath $raycastCommandsSource . -}}
+cp -r {{ $source | quote }} {{ $destination | quote }}
+{{ end -}}
