@@ -2,8 +2,8 @@
 
 set -eufo pipefail
 
-{{ $raycastCommandsSource := joinPath .chezmoi.homeDir ".config" "raycast" "_enabled-script-commands" -}}
-{{ $raycastEndabledCommands := joinPath .chezmoi.homeDir ".config" "raycast" "script-commands" "commands" -}}
+{{ $raycastCommandsSource := joinPath .chezmoi.homeDir ".config" "raycast" "_enabled-scripts-commands" -}}
+{{ $raycastEndabledCommands := joinPath .chezmoi.homeDir ".config" "raycast" "scripts-commands" "commands" -}}
 
 {{ $folders := list
   "apps/cleanshot"
@@ -36,10 +36,12 @@ if [ ! -d {{ $destination | quote }} ]; then
     mkdir -p {{ $destination | quote }}
 fi
 cp -r {{ $source | quote }} {{ $destination | quote }}
+echo "Copied script command {{ . }}"
 {{ end -}}
 
 {{ range ($files | sortAlpha | uniq) -}}
 {{ $source := joinPath $raycastEndabledCommands . -}}
 {{ $destination := joinPath $raycastCommandsSource . -}}
 cp -r {{ $source | quote }} {{ $destination | quote }}
+echo "Copied script command {{ . }}"
 {{ end -}}
