@@ -25,8 +25,8 @@ set -eufo pipefail
 for entry in $(find {{ $foldersSource }} -depth 1 -type file)
 do
   cp $entry {{ $foldersDestination }}
+  echo "Copied raycast script command file $entry"
 done
-echo "Copied raycast script commands from folder {{ . }}"
 {{ end -}}
 
 
@@ -36,8 +36,8 @@ echo "Copied raycast script commands from folder {{ . }}"
 for entry in $(find {{ $imagesSource }} -depth 1 -type file)
 do
   cp $entry {{ $imagesDestination }}
+  echo "Copied raycast command image file $entry"
 done
-echo "Copied images from {{ . }}"
 {{ end -}}
 
 {{ range ($files | sortAlpha | uniq) -}}
