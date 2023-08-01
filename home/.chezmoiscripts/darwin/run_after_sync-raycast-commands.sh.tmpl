@@ -10,7 +10,7 @@ set -eufo pipefail
   "apps/safari"
   "apps/sip"
 
-  "convertions/change-case"
+  "conversions/change-case"
 
   "system/audio"
 -}}
@@ -32,9 +32,9 @@ set -eufo pipefail
 -}}
 
 {{ range ($folders | sortAlpha | uniq) -}}
-{{ $foldersSource := joinPath $raycastCommandsSource . "*" -}}
+{{ $foldersSource := joinPath $raycastCommandsSource . -}}
 {{ $foldersDestination := joinPath $raycastEnabledCommands -}}
-for entry in {{ $foldersSource }}
+for entry in $(find {{ $foldersSource }} -depth 1 -type file)
 do
   cp $entry {{ $foldersDestination }}
 done
@@ -43,9 +43,9 @@ echo "Copied raycast script commands from folder {{ . }}"
 
 
 {{ range ($images | sortAlpha | uniq) -}}
-{{ $imagesSource := joinPath $raycastCommandsSource . "images" "*" -}}
+{{ $imagesSource := joinPath $raycastCommandsSource . "images" -}}
 {{ $imagesDestination := joinPath $raycastEnabledCommands "images" -}}
-for entry in {{ $imagesSource }}
+for entry in $(find {{ $imagesSource }} -depth 1 -type file)
 do
   cp $entry {{ $imagesDestination }}
 done
