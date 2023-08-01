@@ -7,28 +7,16 @@ set -eufo pipefail
 
 {{ $folders := list
   "apps/lungo"
-  "apps/safari"
-  "apps/sip"
-
-  "conversions/change-case"
-
-  "system/audio"
 -}}
 
-{{ $images := concat $folders (list
-  "web-searches")
--}}
+{{ $images := $folders -}}
 
 
 {{ $files := list
   "conversions/hex-to-rgb.sh"
   "conversions/hex-to-rgba.sh"
+  "conversions/epoch-to-human-date.sh"
   "conversions/human-date-to-epoch.sh"
-
-  "web-searches/caniuse.sh"
-  "web-searches/giphy.sh"
-  "web-searches/google-maps.sh"
-  "web-searches/search-imdb.sh"
 -}}
 
 {{ range ($folders | sortAlpha | uniq) -}}
