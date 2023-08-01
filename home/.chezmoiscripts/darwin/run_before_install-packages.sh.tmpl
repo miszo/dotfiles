@@ -1,0 +1,64 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $packagesTimestampPath := joinPath .chezmoi.homeDir "chezmoi_install_packages_timestamp.txt" -}}
+{{ $brewfilePath := joinPath .chezmoi.homeDir "Brewfile" -}}
+{{ $toolVersionsPath := joinPath .chezmoi.homeDir -}}
+{{ $fallbackDate := "1970-01-01T00:00:00+0000" -}}
+{{ $dateFormat := "%Y-%m-%dT%H:%M:%S%z" -}}
+
+function brew_bundle() {
+  echo "Run brew bundle..."
+  brew bundle --no-lock --file={{ $brewfilePath }}
+}
+
+function asdf_install() {
+  echo "Installing software dependency versions via asdf..."
+  while IFS= read -r plugin; do
+    asdf plugin add "${plugin}" || true # ignore fail
+    asdf install "${plugin}"
+  done < <(cut -d " " -f1 < {{ $toolVersionsPath }})
+
+  asdf reshim
+}
+
+function get_current_date_utc() {
+  date -u +{{ $dateFormat | quote }}
+}
+
+function get_fallback_date_utc() {
+  echo {{ $fallbackDate | quote }}
+}
+
+function set_install_fallback_timestamp() {
+  echo "Setting current timestamp in {{ $packagesTimestampPath }}"
+  get_fallback_date_utc > {{ $packagesTimestampPath | quote }}
+}
+
+function set_install_timestamp() {
+  echo "Setting current timestamp in {{ $packagesTimestampPath }}"
+  get_current_date_utc > {{ $packagesTimestampPath | quote }}
+}
+
+function get_install_timestamp() {
+  if ! [ -e {{ $packagesTimestampPath | quote }} ]; then
+    set_install_fallback_timestamp
+  fi
+  cat {{ $packagesTimestampPath | quote }}
+}
+
+function get_brewfile_timestamp() {
+  date -r {{ $brewfilePath }} +{{ $dateFormat | quote }}
+}
+
+function main() {
+  if [[ $(get_brewfile_timestamp) > $(get_install_timestamp) ]];
+  then
+    brew_bundle
+    asdf_install
+    set_install_timestamp;
+  fi
+}
+
+main

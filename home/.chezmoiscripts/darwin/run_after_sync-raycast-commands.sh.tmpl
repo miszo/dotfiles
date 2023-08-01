@@ -2,23 +2,23 @@
 
 set -eufo pipefail
 
-{{ $raycastCommandsSource := joinPath .chezmoi.homeDir ".config" "raycast" "_enabled-scripts-commands" -}}
-{{ $raycastEndabledCommands := joinPath .chezmoi.homeDir ".config" "raycast" "scripts-commands" "commands" -}}
+{{ $raycastEnabledCommands := joinPath .chezmoi.homeDir ".config" "raycast" "_enabled-scripts-commands" -}}
+{{ $raycastCommandsSource := joinPath .chezmoi.homeDir ".config" "raycast" "scripts-commands" "commands" -}}
 
 {{ $folders := list
-  "apps/cleanshot"
-  "apps/fantastical"
   "apps/lungo"
-  "apps/reminders"
   "apps/safari"
   "apps/sip"
 
-  "conversions/change-case"
+  "convertions/change-case"
 
   "system/audio"
-
-  "web-searches/images"
 -}}
+
+{{ $images := concat $folders (list
+  "web-searches")
+-}}
+
 
 {{ $files := list
   "conversions/hex-to-rgb.sh"
@@ -32,18 +32,29 @@ set -eufo pipefail
 -}}
 
 {{ range ($folders | sortAlpha | uniq) -}}
-{{ $source := joinPath $raycastEndabledCommands . -}}
-{{ $destination := joinPath $raycastCommandsSource . -}}
-if [ ! -d {{ $destination | quote }} ]; then
-    mkdir -p {{ $destination | quote }}
-fi
-cp -r {{ $source | quote }} {{ $destination | quote }}
-echo "Copied raycast script command {{ . }}"
+{{ $foldersSource := joinPath $raycastCommandsSource . "*" -}}
+{{ $foldersDestination := joinPath $raycastEnabledCommands -}}
+for entry in {{ $foldersSource }}
+do
+  cp $entry {{ $foldersDestination }}
+done
+echo "Copied raycast script commands from folder {{ . }}"
+{{ end -}}
+
+
+{{ range ($images | sortAlpha | uniq) -}}
+{{ $imagesSource := joinPath $raycastCommandsSource . "images" "*" -}}
+{{ $imagesDestination := joinPath $raycastEnabledCommands "images" -}}
+for entry in {{ $imagesSource }}
+do
+  cp $entry {{ $imagesDestination }}
+done
+echo "Copied images from {{ . }}"
 {{ end -}}
 
 {{ range ($files | sortAlpha | uniq) -}}
-{{ $source := joinPath $raycastEndabledCommands . -}}
-{{ $destination := joinPath $raycastCommandsSource . -}}
-cp -r {{ $source | quote }} {{ $destination | quote }}
-echo "Copied raycast script command {{ . }}"
+{{ $filesSource := joinPath $raycastCommandsSource . -}}
+{{ $filesDestination := joinPath $raycastEnabledCommands -}}
+cp {{ $filesSource }} {{ $filesDestination }}
+echo "Copied raycast script command file {{ . }}"
 {{ end -}}
