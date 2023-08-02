@@ -55,6 +55,8 @@ function git_pull_them_all {
 
 function kitty_update {
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    cp ~/.custom-icons/kitty.icns /Applications/kitty.app/Contents/Resources/kitty.icns
+    touch /Applications/kitty.app
 }
 
 function delete_recursively {
