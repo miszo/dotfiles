@@ -1,8 +1,9 @@
-chezmoi 2.34.1
-rust 1.69.0
+chezmoi 2.39.1
+rust 1.72.0
 ruby 3.0.5
-nodejs 18.16.0
-pnpm 8.6.2
+nodejs 18.17.1
+pnpm 8.7.5
 yarn 1.22.19
-python 3.11.3
-awscli 2.11.27
+python 3.11.5
+awscli 2.13.18
+bun 1.0.1

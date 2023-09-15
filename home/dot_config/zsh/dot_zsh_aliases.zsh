@@ -1,5 +1,6 @@
-alias npmplease="rm -rf node_modules/ && rm -f package-lock.json && npm_install"
-alias yarnplease="rm -rf node_modules/ && rm -f yarn.lock && yarn_install"
+alias npmplease="rm -rf node_modules/ && rm -f package-lock.json && npm install"
+alias pnpmplease="rm -rf node_modules/ && rm -f pnpm-lock.yaml && pnpm install"
+alias yarnplease="rm -rf node_modules/ && rm -f yarn.lock && yarn install"
 alias npmconfig="subl -n -w ~/.npmrc"
 alias yarnconfig="subl -n -w ~/.yarnrc"
 alias zshconfig="subl -n -w $ZDOTDIR/.zshrc"
@@ -36,14 +37,10 @@ alias cb=copy_branch
 
 alias miszo_git=miszo_git_local_config
 
-{{- if lookPath "bat" }}
 if [ "$(command -v bat)" ]; then
   unalias -m 'cat'
   alias cat='bat -pp --theme="ansi"'
 fi
-{{- end }}
-
-{{- if lookPath "exa" }}
 if [ "$(command -v exa)" ]; then
     unalias -m 'll'
     unalias -m 'l'
@@ -52,4 +49,3 @@ if [ "$(command -v exa)" ]; then
     alias ls='exa -G --color auto -a -s type'
     alias ll='exa -l --color always -a -s type'
 fi
-{{- end }}
