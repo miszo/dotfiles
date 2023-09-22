@@ -65,9 +65,10 @@ Support
 
 **/.DS_Store
 
-{{ if not .isWork }}
+{{ if .isPersonal -}}
 .config/glab-cli
 .config/op/plugins/used_items/glab.json
 .config/op/plugins/glab.json
 .gemrc
-{{ end }}
+.ssh/miszo_wyse.pub
+{{ end -}}
