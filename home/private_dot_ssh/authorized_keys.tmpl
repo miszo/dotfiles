@@ -4,6 +4,6 @@
 {{ if .isWork -}}
 {{    onepasswordRead "op://Private/GitLab SSH key/public key" .opWorkAccount | trim }}
 {{ end -}}
-{{ if .isPersonal -}}
+{{ if not .isWork -}}
 {{    onepasswordRead "op://dev/WySe SSH key/public key" .opPersonalAccount | trim }}
 {{ end -}}

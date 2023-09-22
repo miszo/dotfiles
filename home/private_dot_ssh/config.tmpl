@@ -5,7 +5,7 @@ Include ~/.orbstack/ssh/config
 Host *
   IdentityAgent "~/.1password/agent.sock"
 
-{{ if .isPersonal -}}
+{{ if not .isWork -}}
 Host wyse
   HostName {{ onepasswordRead "op://dev/WySe/hostname" .opPersonalAccount | trim }}
   User {{ onepasswordRead "op://dev/WySe/username" .opPersonalAccount | trim }}

@@ -65,7 +65,7 @@ Support
 
 **/.DS_Store
 
-{{ if .isPersonal -}}
+{{ if not .isWork -}}
 .config/glab-cli
 .config/op/plugins/used_items/glab.json
 .config/op/plugins/glab.json
