@@ -70,5 +70,6 @@ Support
 .config/op/plugins/used_items/glab.json
 .config/op/plugins/glab.json
 .gemrc
-.ssh/miszo_wyse.pub
+.ssh/homelab.pub
+.ssh/unifi.pub
 {{ end -}}

@@ -6,9 +6,15 @@ Host *
   IdentityAgent "~/.1password/agent.sock"
 
 {{ if not .isWork -}}
-Host wyse
-  HostName {{ onepasswordRead "op://dev/WySe/hostname" .opPersonalAccount | trim }}
-  User {{ onepasswordRead "op://dev/WySe/username" .opPersonalAccount | trim }}
-  IdentityFile ~/.ssh/miszo_wyse.pub
+Host {{ onepasswordRead "op://dev/Homelab SSH key/Host" .opPersonalAccount | trim }}
+  HostName {{ onepasswordRead "op://dev/Homelab SSH key/HostName" .opPersonalAccount | trim }}
+  User {{ onepasswordRead "op://dev/Homelab SSH key/User" .opPersonalAccount | trim }}
+  IdentityFile ~/.ssh/homelab.pub
+  IdentitiesOnly yes
+
+Host {{ onepasswordRead "op://dev/Unifi SSH key/Host" .opPersonalAccount | trim }}
+  HostName {{ onepasswordRead "op://dev/Unifi SSH key/HostName" .opPersonalAccount | trim }}
+  User {{ onepasswordRead "op://dev/Unifi SSH key/User" .opPersonalAccount | trim }}
+  IdentityFile ~/.ssh/unifi.pub
   IdentitiesOnly yes
 {{ end -}}
