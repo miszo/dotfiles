@@ -70,6 +70,9 @@ Support
 .config/op/plugins/used_items/glab.json
 .config/op/plugins/glab.json
 .gemrc
+{{ end -}}
+
+{{ if .isWork -}}
 .ssh/homelab.pub
 .ssh/unifi.pub
 {{ end -}}
