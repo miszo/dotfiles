@@ -16,6 +16,8 @@
   a = add .
   nb = checkout -b
   co = checkout
+  coi = !git checkout $(git branch | fzf | xargs)
+  coia = !git checkout $(git branch -a | fzf | xargs)
   com = checkout master
   ci = commit
   cim = commit -m

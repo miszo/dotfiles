@@ -2,8 +2,8 @@
 
 set -eufo pipefail
 
-{{ $packagesTimestampPath := joinPath .chezmoi.homeDir "chezmoi_install_packages_timestamp.txt" -}}
-{{ $brewfilePath := joinPath .chezmoi.homeDir "Brewfile" -}}
+{{ $brewBundleTimestampPath := joinPath .chezmoi.homeDir ".config" "brew" "brew_bundle_timestamp.txt" -}}
+{{ $brewfilePath := joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" -}}
 {{ $toolVersionsPath := joinPath .chezmoi.homeDir ".tool-versions" -}}
 {{ $fallbackDate := "1970-01-01T00:00:00+0000" -}}
 {{ $dateFormat := "%Y-%m-%dT%H:%M:%S%z" -}}
@@ -31,21 +31,21 @@ function get_fallback_date_utc() {
   echo {{ $fallbackDate | quote }}
 }
 
-function set_install_fallback_timestamp() {
-  echo "Setting current timestamp in {{ $packagesTimestampPath }}"
-  get_fallback_date_utc > {{ $packagesTimestampPath | quote }}
+function set_bundle_fallback_timestamp() {
+  echo "Setting current timestamp in {{ $brewBundleTimestampPath }}"
+  get_fallback_date_utc > {{ $brewBundleTimestampPath | quote }}
 }
 
-function set_install_timestamp() {
-  echo "Setting current timestamp in {{ $packagesTimestampPath }}"
-  get_current_date_utc > {{ $packagesTimestampPath | quote }}
+function set_bundle_timestamp() {
+  echo "Setting current timestamp in {{ $brewBundleTimestampPath }}"
+  get_current_date_utc > {{ $brewBundleTimestampPath | quote }}
 }
 
-function get_install_timestamp() {
-  if ! [ -e {{ $packagesTimestampPath | quote }} ]; then
-    set_install_fallback_timestamp
+function get_bundle_timestamp() {
+  if ! [ -e {{ $brewBundleTimestampPath | quote }} ]; then
+    set_bundle_fallback_timestamp
   fi
-  cat {{ $packagesTimestampPath | quote }}
+  date -r {{ $brewBundleTimestampPath }} +{{ $dateFormat | quote }}
 }
 
 function get_brewfile_timestamp() {
@@ -53,11 +53,11 @@ function get_brewfile_timestamp() {
 }
 
 function main() {
-  if [[ $(get_brewfile_timestamp) > $(get_install_timestamp) ]];
+  if [[ $(get_brewfile_timestamp) > $(get_bundle_timestamp) ]];
   then
     brew_bundle
     asdf_install
-    set_install_timestamp;
+    set_bundle_timestamp;
   fi
 }
 
