@@ -31,6 +31,7 @@
   branches = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
   undo = reset HEAD~1 --mixed
   del = branch -D
+  deli = !git branch -D $(git branch | fzf | xargs)
   vasc = tag --list --sort=-v:refname
   vdesc = tag --list --sort=v:refname
   plrb = pull --rebase
