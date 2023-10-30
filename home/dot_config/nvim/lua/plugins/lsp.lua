@@ -7,6 +7,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
+      'jose-elias-alvarez/typescript.nvim',
       'simrat39/rust-tools.nvim',
     },
     opts = {
@@ -17,6 +18,41 @@ return {
         },
         tsserver = {
           root_dir = get_root_dir,
+          init_options = {
+            preferences = {
+              allowRenameOfImportPath = true,
+              importModuleSpecifierPreference = 'non-relative',
+              includeCompletionsForModuleExports = true,
+              includeCompletionsForImportStatements = true,
+            },
+          },
+          settings = {
+            typescript = {
+              inlayHints = {
+                -- taken from https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true, -- false
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true, -- false
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+              },
+            },
+          },
         },
         setup = {
           rust_analyzer = function(_, opts)

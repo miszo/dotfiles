@@ -19,7 +19,7 @@ return {
       {
         '<leader>tL',
         function()
-          require('neotest').run.run_last({ strategy = 'dap' })
+          require('neotest').run.run_last({ suite = false, strategy = 'dap' })
         end,
         desc = 'Debug Last Test',
       },
@@ -33,7 +33,16 @@ return {
       table.insert(opts.adapters, require('neotest-vitest'))
       table.insert(opts.adapters, require('neotest-plenary'))
       table.insert(opts.adapters, require('neotest-rust'))
-      table.insert(opts.adapters, require('neotest-jest'))
+      table.insert(
+        opts.adapters,
+        require('neotest-jest')({
+          jestCommand = 'npm test --',
+          jestConfigFile = 'jest.config.js',
+          cwd = function()
+            return vim.fn.getcwd()
+          end,
+        })
+      )
       table.insert(
         opts.adapters,
         require('neotest-vim-test')({

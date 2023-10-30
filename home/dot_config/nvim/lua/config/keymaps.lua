@@ -5,3 +5,6 @@ local Util = require('lazyvim.util')
 vim.keymap.set('n', '<leader>dd', function()
   Util.terminal({ 'lazydocker' }, { cwd = Util.root() })
 end, { desc = 'Lazydocker' })
+
+-- save file
+vim.keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save file' })

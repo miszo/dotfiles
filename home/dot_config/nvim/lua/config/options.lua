@@ -4,7 +4,7 @@
 --
 vim.opt.listchars = {
   space = '.',
-  eol = '↲',
+  -- eol = '↲',
   nbsp = '␣',
   trail = '·',
   precedes = '←',
