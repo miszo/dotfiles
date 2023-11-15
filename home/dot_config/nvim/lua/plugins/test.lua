@@ -1,53 +1,44 @@
 return {
   {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'haydenmeade/neotest-jest',
-      'marilari88/neotest-vitest',
-      'nvim-neotest/neotest-plenary',
-      'nvim-neotest/neotest-vim-test',
-      'rouge8/neotest-rust',
-    },
+    'klen/nvim-test',
+    lazy = true,
     keys = {
       {
         '<leader>tl',
         function()
-          require('neotest').run.run_last()
+          vim.cmd(':TestLast')
         end,
         desc = 'Run Last Test',
       },
       {
-        '<leader>tL',
+        '<leader>ts',
         function()
-          require('neotest').run.run_last({ suite = false, strategy = 'dap' })
+          vim.cmd(':TestSuite')
         end,
-        desc = 'Debug Last Test',
+        desc = 'Run Test Suite',
       },
       {
-        '<leader>tw',
-        "<cmd>lua require('neotest').run.run({ jestCommand = 'jest --watch ' })<cr>",
-        desc = 'Run Watch',
+        '<leader>tn',
+        function()
+          vim.cmd(':TestNearest')
+        end,
+        desc = 'Run Nearest Test',
+      },
+      {
+        '<leader>tf',
+        function()
+          vim.cmd(':TestFile')
+        end,
+        desc = 'Run Test File',
+      },
+      {
+        '<leader>tt',
+        function()
+          vim.cmd(':TestVisit')
+        end,
+        desc = 'Visit Test File',
       },
     },
-    opts = function(_, opts)
-      table.insert(opts.adapters, require('neotest-vitest'))
-      table.insert(opts.adapters, require('neotest-plenary'))
-      table.insert(opts.adapters, require('neotest-rust'))
-      table.insert(
-        opts.adapters,
-        require('neotest-jest')({
-          jestCommand = 'yarn test',
-          cwd = function()
-            return vim.fn.getcwd()
-          end,
-        })
-      )
-      table.insert(
-        opts.adapters,
-        require('neotest-vim-test')({
-          ignore_file_types = { 'python', 'vim', 'lua' },
-        })
-      )
-    end,
+    config = true,
   },
 }
