@@ -4,6 +4,22 @@ local get_root_dir = function(fname)
 end
 
 return {
+  -- tools
+  {
+    'williamboman/mason.nvim',
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        'stylua',
+        'selene',
+        'luacheck',
+        'shfmt',
+        'tailwindcss-language-server',
+        'typescript-language-server',
+        'css-lsp',
+      })
+    end,
+  },
+  -- lsp servers
   {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -11,13 +27,17 @@ return {
       'simrat39/rust-tools.nvim',
     },
     opts = {
+      inlay_hints = { enabled = true },
+      ---@type lspconfig.options
       servers = {
+        cssls = {},
         rust_analyzer = {},
         eslint = {
           root_dir = get_root_dir,
         },
         tsserver = {
           root_dir = get_root_dir,
+          single_file_support = false,
           init_options = {
             preferences = {
               allowRenameOfImportPath = true,
@@ -29,7 +49,6 @@ return {
           settings = {
             typescript = {
               inlayHints = {
-                -- taken from https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
                 includeInlayEnumMemberValueHints = true,
                 includeInlayFunctionLikeReturnTypeHints = true,
                 includeInlayFunctionParameterTypeHints = true,
@@ -50,6 +69,76 @@ return {
                 includeInlayPropertyDeclarationTypeHints = true,
                 includeInlayVariableTypeHints = true,
                 includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+              },
+            },
+          },
+        },
+        html = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
+        lua_ls = {
+          single_file_support = true,
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                workspaceWord = true,
+                callSnippet = 'Both',
+              },
+              misc = {
+                parameters = {},
+              },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = 'Disable',
+                semicolon = 'Disable',
+                arrayIndex = 'Disable',
+              },
+              doc = {
+                privateName = { '^_' },
+              },
+              type = {
+                castNumberToInteger = true,
+              },
+              diagnostics = {
+                disable = { 'incomplete-signature-doc', 'trailing-space' },
+                -- enable = false,
+                groupSeverity = {
+                  strong = 'Warning',
+                  strict = 'Warning',
+                },
+                groupFileStatus = {
+                  ['ambiguity'] = 'Opened',
+                  ['await'] = 'Opened',
+                  ['codestyle'] = 'None',
+                  ['duplicate'] = 'Opened',
+                  ['global'] = 'Opened',
+                  ['luadoc'] = 'Opened',
+                  ['redefined'] = 'Opened',
+                  ['strict'] = 'Opened',
+                  ['strong'] = 'Opened',
+                  ['type-check'] = 'Opened',
+                  ['unbalanced'] = 'Opened',
+                  ['unused'] = 'Opened',
+                },
+                unusedLocalExclude = { '_*' },
+              },
+              format = {
+                enable = false,
+                defaultConfig = {
+                  indent_style = 'space',
+                  indent_size = '2',
+                  continuation_indent_size = '2',
+                },
               },
             },
           },
