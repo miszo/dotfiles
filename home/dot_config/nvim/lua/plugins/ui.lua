@@ -1,19 +1,19 @@
 return {
   {
     'folke/noice.nvim',
-    opts = {
-      presets = {
+    opts = function(_, opts)
+      table.insert(opts.presets, {
         lsp_doc_border = true,
-      },
-      lsp = {
+      })
+      opts.lsp.progress = vim.tbl_extend('keep', opts.lsp, {
         progress = {
           enabled = true,
         },
-      },
-      messages = {
+      })
+      opts.messages = {
         enabled = false,
-      },
-    },
+      }
+    end,
   },
   {
     'rcarriga/nvim-notify',

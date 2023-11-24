@@ -13,12 +13,6 @@ return {
     },
     opts = { snippet_engine = 'luasnip' },
   },
-  -- Incremental rename
-  {
-    'smjonas/inc-rename.nvim',
-    cmd = 'IncRename',
-    config = true,
-  },
   -- Refactoring
   {
     'ThePrimeagen/refactoring.nvim',
@@ -110,6 +104,10 @@ return {
     'johmsalas/text-case.nvim',
     config = true,
   },
+  -- Word navigation
+  {
+    'chaoren/vim-wordmotion',
+  },
   -- Tasks
   {
     'stevearc/overseer.nvim',
@@ -131,11 +129,27 @@ return {
         desc = 'Task Action',
       },
       {
-        '<leader>rq',
+        '<leader>rs',
+        function()
+          require('util.tasks').stop_all_tasks()
+        end,
+        desc = 'Stop All Tasks',
+      },
+      {
+        '<leader>rd',
         function()
           require('util.tasks').dispose_all_tasks()
         end,
         desc = 'Dispose All Tasks',
+      },
+      {
+        '<leader>rq',
+        function()
+          local tasks = require('util.tasks')
+          tasks.stop_all_tasks()
+          tasks.dispose_all_tasks()
+        end,
+        desc = 'Stop and Dispose All Tasks',
       },
     },
     opts = {

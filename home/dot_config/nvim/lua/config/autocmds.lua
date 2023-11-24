@@ -19,6 +19,8 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('VimLeavePre', {
   callback = function()
-    require('util.tasks').dispose_all_tasks()
+    local tasks = require('util.tasks')
+    tasks.stop_all_task()
+    tasks.dispose_all_tasks()
   end,
 })
