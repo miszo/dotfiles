@@ -16,3 +16,9 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt.conceallevel = 0
   end,
 })
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  callback = function()
+    require('util.tasks').dispose_all_tasks()
+  end,
+})
