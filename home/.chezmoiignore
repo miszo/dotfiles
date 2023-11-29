@@ -48,6 +48,9 @@ README.md
 .config/zsh/.zsh_sessions
 .zsh_sessions
 
+# Neovim lock files
+.config/nvim/lazy-lock.json
+
 # Ignore MacOS files
 .CFUserTextEncoding
 .DS_Store

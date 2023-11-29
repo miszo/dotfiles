@@ -3,7 +3,7 @@
 -- Add any additional options here
 --
 vim.opt.listchars = {
-  space = '.',
+  space = '·',
   -- eol = '↲',
   nbsp = '␣',
   trail = '·',
