@@ -76,7 +76,7 @@ function git_pull_them_all {
 
 function kitty_update {
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin &&
-    osascript ~/.custom-icons/show_icons.scpt
+    kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("OK")' ~/.config/kitty/neue_outrun.icns
 }
 
 function delete_recursively {
