@@ -9,6 +9,9 @@ function M.run_on_every_task(actionName)
   end
 
   local tasks = overseer.list_tasks({ unique = false })
+  if next(tasks) == nil then
+    return
+  end
   for _, task in ipairs(tasks) do
     overseer.run_action(task, actionName)
   end

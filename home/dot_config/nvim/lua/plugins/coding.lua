@@ -169,6 +169,11 @@ return {
     },
     config = true,
   },
+  -- Multi cursor
+  {
+    'mg979/vim-visual-multi',
+  },
+  -- Local plugins
   {
     dir = '../local-plugins/copy-filepath',
     config = function()

@@ -10,7 +10,7 @@ keymap.set('n', '<leader>dd', function()
 end, { desc = 'Lazydocker' })
 
 -- Save file
-keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save file' })
+keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save all opened files' })
 
 -- Disable continuations
 keymap.set('n', '<leader>o', 'o<Esc>^Da', opts)
