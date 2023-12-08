@@ -28,7 +28,7 @@ return {
         'scss',
         'ssh_config',
         'sql',
-        'switf',
+        'swift',
         'svelte',
         'toml',
         'tsx',
