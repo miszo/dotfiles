@@ -4,7 +4,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 . /opt/homebrew/etc/profile.d/z.sh
 # 1password cli
 eval "$(op completion zsh)"; compdef _op op
-source /Users/miszo/.config/op/plugins.sh
+source ${HOME}/.config/op/plugins.sh
 # 1password cli end
 
 source ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
