@@ -62,3 +62,9 @@ vim.opt.formatoptions:append({ 'r' })
 
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+
+-- Code folding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.cmd([[ set nofoldenable]])         -- Disable folding at startup
+vim.opt.foldenable = true
