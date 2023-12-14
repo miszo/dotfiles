@@ -62,16 +62,25 @@ return {
         show_help = '?',
       },
     },
-  },
-  config = function(_, opts)
-    require('nvim-treesitter.configs').setup(opts)
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
 
-    -- MDX
-    vim.filetype.add({
-      extension = {
-        mdx = 'mdx',
-      },
-    })
-    vim.treesitter.language.register('markdown', 'mdx')
-  end,
+      -- MDX
+      vim.filetype.add({
+        extension = {
+          mdx = 'mdx',
+        },
+      })
+      vim.treesitter.language.register('markdown', 'mdx')
+    end,
+  },
+  {
+    'Wansmer/treesj',
+    keys = { '<leader>m' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({--[[ your config ]]
+      })
+    end,
+  },
 }
