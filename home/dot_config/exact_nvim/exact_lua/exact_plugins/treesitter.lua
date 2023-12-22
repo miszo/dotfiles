@@ -76,11 +76,13 @@ return {
   },
   {
     'Wansmer/treesj',
-    keys = { '<leader>m' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      require('treesj').setup({--[[ your config ]]
+      local tsj = require('treesj')
+      tsj.setup({
+        use_default_keymaps = false,
       })
+      vim.keymap.set('n', '<leader>m', tsj.toggle, { desc = 'Toggle split/join code block' })
     end,
   },
 }

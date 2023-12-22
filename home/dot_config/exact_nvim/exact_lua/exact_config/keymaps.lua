@@ -14,7 +14,6 @@ keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save a
 
 -- Disable continuations
 keymap.set('n', '<leader>o', 'o<Esc>^Da', opts)
-keymap.set('n', '<leader>O', 'O<Esc>^Da', opts)
 
 -- New tab
 keymap.set('n', 'te', ':tabedit<Return>')
