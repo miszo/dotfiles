@@ -24,6 +24,9 @@ if type pipx &>/dev/null; then
   eval "$(register-python-argcomplete pipx)"
 fi
 
+# set java env variables
+[[ -f ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh || true
+
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true

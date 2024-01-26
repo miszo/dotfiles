@@ -175,6 +175,17 @@ return {
       })
     end,
   },
+  -- Better TS Errors
+  {
+    'OlegGulevskyy/better-ts-errors.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    config = {
+      keymaps = {
+        toggle = '<leader>cx', -- default '<leader>dd'
+        go_to_definition = '<leader>dx', -- default '<leader>dx'
+      },
+    },
+  },
   -- Local plugins
   {
     dir = '../local-plugins/copy-filepath',

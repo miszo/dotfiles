@@ -10,13 +10,14 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         'angular-language-server',
-        'stylua',
-        'selene',
+        'css-lsp',
         'luacheck',
+        'ltex-ls',
+        'selene',
         'shfmt',
+        'stylua',
         'tailwindcss-language-server',
         'typescript-language-server',
-        'css-lsp',
       })
     end,
   },
@@ -82,84 +83,123 @@ return {
             },
           },
         },
-        lua_ls = {
-          single_file_support = true,
+        ltex = {
+          cmd = { '/Users/miszo/.local/share/nvim/mason/bin/ltex-ls' },
           settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
+            ltex = {
+              enabled = true,
+              language = 'en-US',
+              checkFrequency = 'save',
+              ['ltex-ls'] = {
+                path = '/Users/miszo/.local/share/nvim/mason/bin/ltex-ls',
               },
-              completion = {
-                workspaceWord = true,
-                callSnippet = 'Both',
+              dictionary = {
+                ['en-US'] = {},
+                ['pl-PL'] = {},
               },
-              misc = {
-                parameters = {},
+              additionalRules = {
+                enablePickyRules = true,
+                motherTongue = 'pl-PL',
               },
-              hint = {
-                enable = true,
-                setType = false,
-                paramType = true,
-                paramName = 'Disable',
-                semicolon = 'Disable',
-                arrayIndex = 'Disable',
-              },
-              doc = {
-                privateName = { '^_' },
-              },
-              type = {
-                castNumberToInteger = true,
-              },
-              diagnostics = {
-                disable = { 'incomplete-signature-doc', 'trailing-space' },
-                -- enable = false,
-                groupSeverity = {
-                  strong = 'Warning',
-                  strict = 'Warning',
-                },
-                groupFileStatus = {
-                  ['ambiguity'] = 'Opened',
-                  ['await'] = 'Opened',
-                  ['codestyle'] = 'None',
-                  ['duplicate'] = 'Opened',
-                  ['global'] = 'Opened',
-                  ['luadoc'] = 'Opened',
-                  ['redefined'] = 'Opened',
-                  ['strict'] = 'Opened',
-                  ['strong'] = 'Opened',
-                  ['type-check'] = 'Opened',
-                  ['unbalanced'] = 'Opened',
-                  ['unused'] = 'Opened',
-                },
-                unusedLocalExclude = { '_*' },
-              },
-              format = {
-                enable = false,
-                defaultConfig = {
-                  indent_style = 'space',
-                  indent_size = '2',
-                  continuation_indent_size = '2',
-                },
+              configurationTarget = {
+                dictionary = 'userExternalFile',
+                disabledRules = 'userExternalFile',
+                hiddenFalsePositives = 'userExternalFile',
               },
             },
           },
         },
-        setup = {
-          rust_analyzer = function(_, opts)
-            require('rust-tools').setup({ server = opts })
-            return true
-          end,
-
-          eslint = function()
-            require('lazyvim.util').on_attach(function(client)
-              if client.name == 'eslint' then
-                client.server_capabilities.documentFormattingProvider = true
-              elseif client.name == 'tsserver' then
-                client.server_capabilities.documentFormattingProvider = false
-              end
-            end)
-          end,
+        lua_ls = {
+          single_file_support = true,
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+            },
+            completion = {
+              workspaceWord = true,
+              callSnippet = 'Both',
+            },
+            misc = {
+              parameters = {},
+            },
+            hint = {
+              enable = true,
+              setType = false,
+              paramType = true,
+              paramName = 'Disable',
+              semicolon = 'Disable',
+              arrayIndex = 'Disable',
+            },
+            doc = {
+              privateName = { '^_' },
+            },
+            type = {
+              castNumberToInteger = true,
+            },
+            diagnostics = {
+              disable = { 'incomplete-signature-doc', 'trailing-space' },
+              -- enable = false,
+              groupSeverity = {
+                strong = 'Warning',
+                strict = 'Warning',
+              },
+              groupFileStatus = {
+                ['ambiguity'] = 'Opened',
+                ['await'] = 'Opened',
+                ['codestyle'] = 'None',
+                ['duplicate'] = 'Opened',
+                ['global'] = 'Opened',
+                ['luadoc'] = 'Opened',
+                ['redefined'] = 'Opened',
+                ['strict'] = 'Opened',
+                ['strong'] = 'Opened',
+                ['type-check'] = 'Opened',
+                ['unbalanced'] = 'Opened',
+                ['unused'] = 'Opened',
+              },
+              unusedLocalExclude = { '_*' },
+            },
+            format = {
+              enable = false,
+              defaultConfig = {
+                indent_style = 'space',
+                indent_size = '2',
+                continuation_indent_size = '2',
+              },
+            },
+          },
         },
+      },
+      setup = {
+        rust_analyzer = function(_, opts)
+          require('rust-tools').setup({ server = opts })
+          return true
+        end,
+
+        ltex = function(_, opts)
+          local enPath =
+            '/Users/miszo/Library/Application Support/Code/User/globalStorage/valentjn.vscode-ltex/ltex.dictionary.en-US.txt'
+          local plPath =
+            '/Users/miszo/Library/Application Support/Code/User/globalStorage/valentjn.vscode-ltex/ltex.dictionary.pl-PL.txt'
+
+          for word in io.open(enPath, 'r'):lines() do
+            table.insert(opts.settings.ltex.dictionary['en-US'], word)
+          end
+
+          for word in io.open(plPath, 'r'):lines() do
+            table.insert(opts.settings.ltex.dictionary['pl-PL'], word)
+          end
+        end,
+
+        eslint = function()
+          require('lazyvim.util').on_attach(function(client)
+            if client.name == 'eslint' then
+              client.server_capabilities.documentFormattingProvider = true
+            elseif client.name == 'tsserver' then
+              client.server_capabilities.documentFormattingProvider = false
+            end
+          end)
+        end,
       },
     },
   },
