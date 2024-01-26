@@ -27,6 +27,7 @@ return {
     dependencies = {
       'jose-elias-alvarez/typescript.nvim',
       'simrat39/rust-tools.nvim',
+      'barreiroleo/ltex_extra.nvim',
     },
     opts = {
       inlay_hints = { enabled = true },
@@ -84,19 +85,12 @@ return {
           },
         },
         ltex = {
-          cmd = { '/Users/miszo/.local/share/nvim/mason/bin/ltex-ls' },
+          cmd = { vim.fn.expand('~/.local/share/nvim/mason/bin/ltex-ls') },
           settings = {
             ltex = {
               enabled = true,
               language = 'en-US',
               checkFrequency = 'save',
-              ['ltex-ls'] = {
-                path = '/Users/miszo/.local/share/nvim/mason/bin/ltex-ls',
-              },
-              dictionary = {
-                ['en-US'] = {},
-                ['pl-PL'] = {},
-              },
               additionalRules = {
                 enablePickyRules = true,
                 motherTongue = 'pl-PL',
@@ -177,17 +171,11 @@ return {
         end,
 
         ltex = function(_, opts)
-          local enPath =
-            '/Users/miszo/Library/Application Support/Code/User/globalStorage/valentjn.vscode-ltex/ltex.dictionary.en-US.txt'
-          local plPath =
-            '/Users/miszo/Library/Application Support/Code/User/globalStorage/valentjn.vscode-ltex/ltex.dictionary.pl-PL.txt'
-
-          for word in io.open(enPath, 'r'):lines() do
-            table.insert(opts.settings.ltex.dictionary['en-US'], word)
-          end
-
-          for word in io.open(plPath, 'r'):lines() do
-            table.insert(opts.settings.ltex.dictionary['pl-PL'], word)
+          opts.on_attach = function(_, _)
+            require('ltex_extra').setup({
+              load_langs = { 'en-US', 'pl-PL' },
+              path = vim.fn.expand('~/.config/spell/dictionaries'),
+            })
           end
         end,
 

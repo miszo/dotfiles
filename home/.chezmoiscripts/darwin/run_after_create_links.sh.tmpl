@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $dictionariesPath := join.path .chezmoi.homedir ".config" "spell" "dictionaries" -}}
+{{ $vsCodeLtexPath := join.path .chezmoi.homedir "Library" "Application Support" "Code" "User" "globalStorage" "valentjn.vscode-ltex" -}}
+
+function main() {
+  echo "Creating symbolic link from {{ $dictionariesPath }} to {{ $vsCodeLtexPath }}"
+  ln -s {{ $dictionariesPath }} {{ $vsCodeLtexPath }}
+}
+
+main
