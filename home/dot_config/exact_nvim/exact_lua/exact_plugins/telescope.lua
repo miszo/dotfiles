@@ -54,6 +54,17 @@ return {
       require('textcase').setup()
       local telescope = require('telescope')
       opts.extensions = { file_browser = { hijack_netrw = true } }
+      opts.defaults.vimgrep_arguments = {
+        'rg',
+        '--color=never',
+        '--no-heading',
+        '--with-filename',
+        '--line-number',
+        '--column',
+        '--smart-case',
+        '-B=0',
+        '-A=0',
+      }
       telescope.setup(opts)
       telescope.load_extension('undo')
       telescope.load_extension('file_browser')

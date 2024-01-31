@@ -107,15 +107,6 @@ return {
     keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen Mode' } },
   },
   {
-    'lewis6991/gitsigns.nvim',
-    opts = function(_, opts)
-      opts.current_line_blame = true
-      opts.current_line_blame_opts = {
-        delay = 300,
-      }
-    end,
-  },
-  {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
     opts = function(_, opts)
