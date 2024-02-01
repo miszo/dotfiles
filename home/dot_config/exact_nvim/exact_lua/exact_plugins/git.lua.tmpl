@@ -1,0 +1,55 @@
+local get_gh_env = function()
+  local op = require('op')
+  op.op_signin({{ .opPersonalAccount | squote }})
+  local github_token = op.get_secret('GitHub CLI token', 'token')
+  if not github_token or not vim.startswith(github_token, 'gho_') then
+    error('Failed to get GitHub token.')
+  end
+
+  return {
+    GITHUB_TOKEN = github_token,
+  }
+end
+
+return {
+  {
+    'tpope/vim-fugitive',
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    opts = function(_, opts)
+      opts.current_line_blame = false
+      opts.current_line_blame_opts = {
+        delay = 300,
+      }
+    end,
+    config = function(_, opts)
+      require('gitsigns').setup(opts)
+
+      vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', { desc = 'Preview hunk' })
+      vim.keymap.set(
+        'n',
+        '<leader>gt',
+        ':Gitsigns toggle_current_line_blame<CR>',
+        { desc = 'Toggle current line blame' }
+      )
+    end,
+  },
+  {
+    'pwntester/octo.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    keys = {
+      { '<leader>O', '<cmd>Octo<cr>', desc = 'Octo' },
+    },
+    config = function()
+      require('octo').setup({
+        enable_builtin = true,
+        gh_env = get_gh_env(),
+      })
+    end,
+  },
+}
