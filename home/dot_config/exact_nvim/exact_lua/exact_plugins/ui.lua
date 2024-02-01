@@ -1,6 +1,10 @@
 return {
   {
     'folke/noice.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
     opts = function(_, opts)
       table.insert(opts.presets, {
         lsp_doc_border = true,
@@ -13,7 +17,14 @@ return {
       opts.messages = {
         enabled = false,
       }
+      opts.routes = {
+        filter = { event = 'notify', find = 'No information available' },
+        opts = { skip = true },
+      }
     end,
+    keys = {
+      { '<leader>nd', '<cmd>NoiceDismiss<CR>', desc = 'Dismiss Noice Message' },
+    },
   },
   {
     'rcarriga/nvim-notify',
