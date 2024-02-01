@@ -49,6 +49,7 @@ return {
         end,
         desc = 'Open File Browser with the path of the current buffer',
       },
+      { '<leader>fN', ':Telescope noice<cr>', desc = 'Noice' },
     },
     config = function(_, opts)
       require('textcase').setup()
@@ -70,6 +71,7 @@ return {
       telescope.load_extension('file_browser')
       telescope.load_extension('fzf')
       telescope.load_extension('textcase')
+      telescope.load_extension('noice')
       vim.keymap.set('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = 'Telescope' })
       vim.keymap.set('v', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = 'Telescope' })
     end,
