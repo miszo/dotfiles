@@ -41,3 +41,11 @@ keymap.set({ 'n', 't' }, '<C-h>', ':KittyNavigateLeft<Return>', opts)
 keymap.set({ 'n', 't' }, '<C-j>', ':KittyNavigateDown<Return>', opts)
 keymap.set({ 'n', 't' }, '<C-k>', ':KittyNavigateUp<Return>', opts)
 keymap.set({ 'n', 't' }, '<C-l>', ':KittyNavigateRight<Return>', opts)
+
+keymap.set('n', '<leader>r', function()
+  require('util.hsl').replaceHexWithHSL()
+end)
+
+keymap.set('n', '<leader>i', function()
+  require('util.lsp').toggleInlayHints()
+end)

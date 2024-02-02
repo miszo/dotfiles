@@ -1,6 +1,6 @@
-local get_root_dir = function(fname)
+local get_root_dir = function(...)
   local util = require('lspconfig.util')
-  return util.root_pattern('package.json', 'tsconfig.json')(fname) or util.root_pattern('.git')(fname)
+  return util.root_pattern('package.json', 'tsconfig.json')(...) or util.root_pattern('.git')(...)
 end
 
 return {
@@ -31,7 +31,7 @@ return {
     },
     ---@class PluginLspOpts
     opts = {
-      inlay_hints = { enabled = true },
+      inlay_hints = { enabled = false },
       ---@type lspconfig.options
       servers = {
         cssls = {},
@@ -178,16 +178,6 @@ return {
               path = vim.fn.expand('~/.config/spell/dictionaries'),
             })
           end
-        end,
-
-        eslint = function()
-          require('lazyvim.util').on_attach(function(client)
-            if client.name == 'eslint' then
-              client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == 'tsserver' then
-              client.server_capabilities.documentFormattingProvider = false
-            end
-          end)
         end,
       },
     },
