@@ -160,21 +160,6 @@ return {
     },
     config = true,
   },
-  -- Multi cursor
-  {
-    'mg979/vim-visual-multi',
-  },
-  -- Surround
-  {
-    'kylechui/nvim-surround',
-    version = '*', -- Use for stability; omit to use `main` branch for the latest features
-    event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
-  },
   -- Better TS Errors
   {
     'OlegGulevskyy/better-ts-errors.nvim',
