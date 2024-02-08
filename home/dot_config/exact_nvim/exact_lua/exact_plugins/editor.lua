@@ -171,6 +171,28 @@ return {
       },
     },
   },
+  {
+    'folke/todo-comments.nvim',
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    event = 'LazyFile',
+    config = true,
+    keys = {
+      {
+        ']k',
+        function()
+          require('todo-comments').jump_next()
+        end,
+        desc = 'Next todo comment',
+      },
+      {
+        '[k',
+        function()
+          require('todo-comments').jump_prev()
+        end,
+        desc = 'Previous todo comment',
+      },
+    },
+  },
   -- Local plugins
   {
     dir = '../local-plugins/copy-filepath',

@@ -2,7 +2,7 @@ return {
   {
     'LazyVim/LazyVim',
     opts = function(_, opts)
-      opts.colorscheme = 'nightfly'
+      opts.colorscheme = { 'nightfly' }
       opts.icons = {
         misc = {
           dots = '󰇘',

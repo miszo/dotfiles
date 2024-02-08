@@ -37,7 +37,11 @@ return {
   },
   {
     'luukvbaal/statuscol.nvim',
-    config = true,
+    config = function()
+      require('statuscol').setup({
+        setopt = true,
+      })
+    end,
   },
   -- buffer line
   {
@@ -144,6 +148,7 @@ return {
     },
     keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen Mode' } },
   },
+  { 'folke/twilight.nvim' },
   {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
