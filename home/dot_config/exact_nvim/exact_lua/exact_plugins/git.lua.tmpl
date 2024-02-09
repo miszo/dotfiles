@@ -35,6 +35,7 @@ return {
       )
     end,
   },
+  -- Octo - GitHub PRs and issues
   {
     'pwntester/octo.nvim',
     dependencies = {
@@ -50,6 +51,16 @@ return {
         enable_builtin = true,
         gh_env = get_gh_env(),
       })
+    end,
+  },
+  -- Generate link to file in the repository
+  {
+    'ruifm/gitlinker.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      require('gitlinker').setup()
     end,
   },
 }
