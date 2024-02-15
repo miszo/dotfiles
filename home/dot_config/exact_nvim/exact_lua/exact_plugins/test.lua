@@ -5,6 +5,7 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-jest',
+      'nvim-neotest/neotest-go',
       'marilari88/neotest-vitest',
       'olimorris/neotest-rspec',
       'rouge8/neotest-rust',
@@ -83,6 +84,7 @@ return {
       table.insert(opts.adapters, require('neotest-vitest'))
       table.insert(opts.adapters, require('neotest-rust'))
       table.insert(opts.adapters, require('neotest-rspec'))
+      table.insert(opts.adapters, require('neotest-go'))
     end,
   },
 }

@@ -8,3 +8,4 @@ python 3.11.5
 awscli 2.13.18
 bun 1.0.1
 java zulu-11.68.17
+golang 1.21.7

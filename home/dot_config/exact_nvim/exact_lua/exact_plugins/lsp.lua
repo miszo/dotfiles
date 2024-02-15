@@ -35,7 +35,6 @@ return {
       ---@type lspconfig.options
       servers = {
         cssls = {},
-        rust_analyzer = {},
         eslint = {
           root_dir = get_root_dir,
         },
