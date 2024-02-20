@@ -3,7 +3,6 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    tag = 'v0.9.1',
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         'angular',
