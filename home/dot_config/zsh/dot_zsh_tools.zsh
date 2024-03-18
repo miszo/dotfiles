@@ -1,7 +1,7 @@
 eval $(thefuck --alias)
 eval $(gh completion -s zsh)
 eval "$(/opt/homebrew/bin/brew shellenv)"
-. /opt/homebrew/etc/profile.d/z.sh
+eval "$(zoxide init zsh)"
 # 1password cli
 eval "$(op completion zsh)"; compdef _op op
 source ${HOME}/.config/op/plugins.sh

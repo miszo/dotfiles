@@ -50,4 +50,5 @@ if [ "$(command -v exa)" ]; then
     unalias -m 'ls'
     alias ls='exa -G --color auto -a -s type --icons'
     alias ll='exa -l --color always -a -s type --icons'
+    alias tree='exa --tree --level=2 --color auto -a -s type --icons'
 fi
