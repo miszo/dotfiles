@@ -9,6 +9,7 @@ return {
       'marilari88/neotest-vitest',
       'olimorris/neotest-rspec',
       'rouge8/neotest-rust',
+      'nvim-neotest/nvim-nio',
     },
     keys = {
       {

@@ -1,8 +1,14 @@
 return {
   {
+    'vhyrro/luarocks.nvim',
+    config = function()
+      require('luarocks').setup({})
+    end,
+  },
+  {
     'rest-nvim/rest.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim',
+      'vhyrro/luarocks.nvim',
     },
     ft = { 'http' },
     keys = { { '<leader>hr', '<Plug>RestNvim', desc = 'Run REST request under cursor' } },
