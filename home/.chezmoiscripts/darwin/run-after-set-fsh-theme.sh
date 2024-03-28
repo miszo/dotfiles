@@ -1,2 +1,4 @@
-#fast-syntax-highlighting theme
+#!/bin/bash
+
+# fast-syntax-highlighting theme
 fast-theme XDG:catppuccin-mocha
