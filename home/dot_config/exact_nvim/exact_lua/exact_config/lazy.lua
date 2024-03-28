@@ -42,6 +42,7 @@ require('lazy').setup({
     { import = 'lazyvim.plugins.extras.editor.navic' },
     { import = 'lazyvim.plugins.extras.editor.aerial' },
     { import = 'lazyvim.plugins.extras.editor.leap' },
+    { import = 'lazyvim.plugins.extras.editor.harpoon2' },
     { import = 'lazyvim.plugins.extras.test.core' },
     -- import/override with your plugins
     { import = 'plugins' },
@@ -55,7 +56,7 @@ require('lazy').setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { 'nightfly', 'tokyonight', 'habamax' } },
+  install = { colorscheme = { 'catppuccin' } },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {

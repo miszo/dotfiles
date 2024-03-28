@@ -1,9 +1,13 @@
 return {
   {
-    'bluz71/vim-nightfly-guicolors',
-    name = 'nightfly',
-    lazy = true,
+    'catppuccin/nvim',
+    lazy = false,
+    name = 'catppuccin',
     priority = 1000,
+    config = function(_, opts)
+      table.insert(opts.integrations, { overseer = true, harpoon = true })
+      require('catppuccin').setup(opts)
+      vim.cmd.colorscheme('catppuccin-mocha')
+    end,
   },
-  { 'norcalli/nvim-colorizer.lua', config = true },
 }

@@ -73,16 +73,16 @@ return {
   },
   {
     'b0o/incline.nvim',
-    dependencies = { 'bluz71/vim-nightfly-guicolors', name = 'nightfly' },
+    dependencies = { 'catppuccin/nvim' },
     event = 'BufReadPre',
     priority = 1200,
     config = function()
-      local colors = require('nightfly').palette
+      local colors = require('catppuccin.palettes').get_palette('mocha')
       require('incline').setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.black_blue, guifg = colors.purple },
-            InclineNormalNC = { guibg = colors.black_blue, guifg = colors.plant_green },
+            InclineNormal = { guibg = colors.surface0, guifg = colors.lavender },
+            InclineNormalNC = { guibg = colors.surface0, guifg = colors.overlay2 },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
