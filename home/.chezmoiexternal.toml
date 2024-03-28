@@ -1,9 +1,38 @@
-[".config/raycast/scripts-commands"]
-type = "archive"
-url = "https://github.com/raycast/script-commands/archive/master.tar.gz"
-exact = true
-stripComponents = 1
+# Raycast script commands
+[".config/raycast/_enabled-scripts-commands/epoch-to-human-date.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/epoch-to-human-date.sh"
 refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/human-date-to-epoch.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/human-date-to-epoch.sh"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/hex-to-rgb.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/hex-to-rgb.sh"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/hex-to-rgba.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/hex-to-rgba.sh"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/images/lungo.png"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/images/lungo.png"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/lungo-activate.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-activate.sh"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/lungo-deactivate.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-deactivate.sh"
+refreshPeriod = "168h"
+[".config/raycast/_enabled-scripts-commands/lungo-toggle.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-toggle.sh"
+refreshPeriod = "168h"
+
+# Oh My Zsh plugins and themes
 [".oh-my-zsh"]
 type = "archive"
 url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
@@ -34,9 +63,9 @@ url = "https://github.com/redxtech/zsh-kitty/archive/master.tar.gz"
 exact = true
 stripComponents = 1
 refreshPeriod = "168h"
-[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+[".oh-my-zsh/custom/plugins/fast-syntax-highlighting"]
 type = "archive"
-url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+url = "https://github.com/zdharma-continuum/fast-syntax-highlighting/archive/master.tar.gz"
 exact = true
 stripComponents = 1
 refreshPeriod = "168h"
@@ -51,4 +80,22 @@ type = "archive"
 url = "https://github.com/romkatv/powerlevel10k/archive/master.tar.gz"
 exact = true
 stripComponents = 1
+refreshPeriod = "168h"
 
+# Catppuccin-Mocha theme
+[".config/fsh/themes/catppuccin-mocha.ini"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini"
+refreshPeriod = "168h"
+[".config/bat/themes/Catppuccin Mocha.tmTheme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
+refreshPeriod = "168h"
+[".config/bottom/bottom.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bottom/main/themes/mocha.toml"
+refreshPeriod = "168h"
+[".config/kitty/themes/Catppuccin-Mocha.conf"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf"
+refreshPeriod = "168h"
