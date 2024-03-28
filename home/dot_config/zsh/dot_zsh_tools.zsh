@@ -7,11 +7,6 @@ eval "$(op completion zsh)"; compdef _op op
 source ${HOME}/.config/op/plugins.sh
 # 1password cli end
 
-source ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-#fast-syntax-highlightinh theme
-fast-theme XDG:catppuccin-mocha
-
 # fzf default options
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \

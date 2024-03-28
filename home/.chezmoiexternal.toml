@@ -83,7 +83,7 @@ stripComponents = 1
 refreshPeriod = "168h"
 
 # Catppuccin-Mocha theme
-[".config/fsh/themes/catppuccin-mocha.ini"]
+[".config/fsh/catppuccin-mocha.ini"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini"
 refreshPeriod = "168h"
