@@ -7,6 +7,11 @@ eval "$(op completion zsh)"; compdef _op op
 source ${HOME}/.config/op/plugins.sh
 # 1password cli end
 
+#fast-syntax-highlighting theme
+if ! fast-theme --show | rg -q 'catppuccin-mocha'; then
+  fast-theme XDG:catppuccin-mocha
+fi
+
 # fzf default options
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
