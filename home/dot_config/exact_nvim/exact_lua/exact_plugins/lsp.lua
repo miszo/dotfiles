@@ -13,6 +13,7 @@ return {
         'css-lsp',
         'luacheck',
         'ltex-ls',
+        'solargraph',
         'selene',
         'shfmt',
         'stylua',
@@ -163,6 +164,7 @@ return {
             },
           },
         },
+        solargraph = {},
       },
       setup = {
         rust_analyzer = function(_, opts)

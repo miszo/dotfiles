@@ -39,6 +39,11 @@ fi
 [[ -f ~/.asdf/plugins/golang/set-env.zsh ]] && . ~/.asdf/plugins/golang/set-env.zsh || true
 export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 
+# set rust env variables
+[[ -f "~/.asdf/installs/rust/1.77.1/env" ]] && . "~/.asdf/installs/rust/1.77.1/env" || true
+
+
+
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
