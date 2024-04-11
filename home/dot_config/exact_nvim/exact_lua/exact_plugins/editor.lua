@@ -78,6 +78,12 @@ return {
           augend.constant.alias.bool,
           augend.semver.alias.semver,
           augend.constant.new({ elements = { 'let', 'const' } }),
+          augend.constant.new({ elements = { 'start', 'end' } }),
+          augend.constant.new({ elements = { 'as', 'satisfies' } }),
+          augend.constant.new({ elements = { 'before', 'after' } }),
+          augend.constant.new({ elements = { 'left', 'right' } }),
+          augend.constant.new({ elements = { '&&', '||' } }),
+          augend.case.new({ types = { 'PascalCase', 'camelCase', 'snake_case', 'kebab-case', 'SCREAMING_SNAKE_CASE' } }),
         },
       })
     end,
@@ -171,6 +177,21 @@ return {
       },
     },
   },
+  -- Code Actions Preview
+  {
+    'aznhe21/actions-preview.nvim',
+    lazy = false,
+    opts = {},
+    config = function()
+      vim.keymap.set(
+        { 'v', 'n' },
+        '<leader>cp',
+        require('actions-preview').code_actions,
+        { desc = 'Code Actions Preview' }
+      )
+    end,
+  },
+  -- Todo Comments
   {
     'folke/todo-comments.nvim',
     cmd = { 'TodoTrouble', 'TodoTelescope' },
@@ -192,6 +213,32 @@ return {
         desc = 'Previous todo comment',
       },
     },
+  },
+  -- NPM Package info
+  {
+    'vuki656/package-info.nvim',
+    dependencies = { 'folke/which-key.nvim', 'MunifTanjim/nui.nvim', 'catppuccin/nvim' },
+    ft = { 'json' },
+    opts = {
+      autostart = true,
+      hide_up_to_date = true,
+      hide_unstable_versions = false,
+      package_manager = 'pnpm',
+    },
+    keys = function()
+      require('which-key').register({ n = { name = '+PackageInfo' } }, { prefix = '<leader>' })
+      local function map(key, cmd, desc)
+        vim.keymap.set({ 'n' }, '<LEADER>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
+      end
+      local pi = require('package-info')
+      map('s', pi.show, 'Show package info')
+      map('h', pi.hide, 'Hide package info')
+      map('n', pi.toggle, 'Toggle package info')
+      map('u', pi.update, 'Update package')
+      map('d', pi.delete, 'Delete package')
+      map('i', pi.install, 'Install package')
+      map('v', pi.change_version, 'Change package version')
+    end,
   },
   -- Local plugins
   {

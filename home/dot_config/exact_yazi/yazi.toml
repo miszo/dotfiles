@@ -1,0 +1,106 @@
+[manager]
+ratio = [1, 2, 4]
+sort_by = "modified"
+sort_sensitive = true
+sort_reverse = true
+sort_dir_first = true
+linemode = "none"
+show_hidden = true
+show_symlink = true
+
+[preview]
+tab_size = 2
+max_width = 2000
+max_height = 1200
+cache_dir = ""
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+edit = [{ exec = '$EDITOR "$@"', block = true, for = "macos" }]
+open = [{ exec = 'open "$@"', desc = "Open", for = "macos" }]
+reveal = [{ exec = 'open -R "$1"', desc = "Reveal", for = "macos" }]
+extract = [{ exec = 'unar "$1"', desc = "Extract here", for = "macos" }]
+
+[open]
+rules = [
+  { name = "*/", use = [
+    "edit",
+    "open",
+    "reveal",
+  ] },
+
+  { mime = "text/*", use = [
+    "edit",
+    "reveal",
+  ] },
+  { mime = "image/*", use = [
+    "open",
+    "reveal",
+  ] },
+  { mime = "video/*", use = [
+    "reveal",
+  ] },
+  { mime = "audio/*", use = [
+    "reveal",
+  ] },
+  { mime = "inode/x-empty", use = [
+    "edit",
+    "reveal",
+  ] },
+
+  { mime = "application/json", use = [
+    "edit",
+    "reveal",
+  ] },
+  { mime = "*/javascript", use = [
+    "edit",
+    "reveal",
+  ] },
+
+  { mime = "application/zip", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/gzip", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-tar", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-bzip", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-bzip2", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-7z-compressed", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-rar", use = [
+    "extract",
+    "reveal",
+  ] },
+
+  { mime = "*", use = [
+    "open",
+    "reveal",
+  ] },
+]
+
+[tasks]
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
+
+[plugins]
+preload = []
+prepend_previewers = [{ mime = "image/heic", run = "heic" }]
+
+[log]
+enabled = false

@@ -77,12 +77,12 @@ return {
     event = 'BufReadPre',
     priority = 1200,
     config = function()
-      local colors = require('catppuccin.palettes').get_palette('mocha')
+      local palette = require('catppuccin.palettes').get_palette('mocha')
       require('incline').setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.surface0, guifg = colors.lavender },
-            InclineNormalNC = { guibg = colors.surface0, guifg = colors.overlay2 },
+            InclineNormal = { guibg = palette.surface0, guifg = palette.lavender },
+            InclineNormalNC = { guibg = palette.surface0, guifg = palette.overlay2 },
           },
         },
         window = { margin = { vertical = 0, horizontal = 1 } },
@@ -136,6 +136,17 @@ return {
 
       require('lualine').setup(opts)
     end,
+  },
+  {
+    'DreamMaoMao/yazi.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+      'nvim-lua/plenary.nvim',
+    },
+
+    keys = {
+      { '<leader>fy', '<cmd>Yazi<CR>', desc = 'Toggle Yazi' },
+    },
   },
   {
     'folke/zen-mode.nvim',
