@@ -1,8 +1,6 @@
 [manager]
 ratio = [1, 2, 4]
-sort_by = "modified"
 sort_sensitive = true
-sort_reverse = true
 sort_dir_first = true
 linemode = "none"
 show_hidden = true
@@ -39,9 +37,11 @@ rules = [
     "reveal",
   ] },
   { mime = "video/*", use = [
+    "play",
     "reveal",
   ] },
   { mime = "audio/*", use = [
+    "play",
     "reveal",
   ] },
   { mime = "inode/x-empty", use = [
