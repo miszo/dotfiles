@@ -43,12 +43,12 @@ if [ "$(command -v bat)" ]; then
   unalias -m 'cat'
   alias cat='bat -pp --theme="ansi"'
 fi
-if [ "$(command -v exa)" ]; then
+if [ "$(command -v eza)" ]; then
     unalias -m 'll'
     unalias -m 'l'
     unalias -m 'la'
     unalias -m 'ls'
-    alias ls='exa -G --color auto -a -s type --icons'
-    alias ll='exa -l --color always -a -s type --icons'
-    alias tree='exa --tree --level=2 --color auto -a -s type --icons'
+    alias ls='eza -G --color auto -a -s type --icons'
+    alias ll='eza -l --color always -a -s type --icons'
+    alias tree='eza --tree --level=2 --color auto -a -s type --icons'
 fi

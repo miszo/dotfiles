@@ -1,9 +1,12 @@
 local get_gh_env = function()
-  local op = require('op')
-  op.op_signin({{ .opPersonalAccount | squote }})
-  local github_token = op.get_secret('GitHub CLI token', 'token')
-  if not github_token or not vim.startswith(github_token, 'gho_') then
+  local github_token = os.getenv('OCTO_GH_TOKEN')
+  if not github_token then
     error('Failed to get GitHub token.')
+  end
+
+  local start = string.find(github_token, 'gho_')
+  if not start == 1 then
+    error('Wrong GitHub token format. Please use a personal access token.')
   end
 
   return {
