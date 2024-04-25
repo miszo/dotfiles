@@ -27,4 +27,9 @@ function M.stop_all_tasks()
   M.run_on_every_task('stop')
 end
 
+--- Resrtart all tasks
+function M.restart_all_tasks()
+  M.run_on_every_task('restart')
+end
+
 return M
