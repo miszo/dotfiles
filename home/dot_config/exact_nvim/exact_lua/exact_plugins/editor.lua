@@ -111,6 +111,10 @@ return {
     event = 'VeryLazy',
     keys = {
       {
+        '<leader>r',
+        desc = 'Overseer',
+      },
+      {
         '<leader>rr',
         '<cmd>OverseerRun<cr>',
         desc = 'Run Tasks',
@@ -147,6 +151,13 @@ return {
           tasks.dispose_all_tasks()
         end,
         desc = 'Stop and Dispose All Tasks',
+      },
+      {
+        '<leader>rR',
+        function()
+          require('util.tasks').restart_all_tasks()
+        end,
+        desc = 'Restart All Tasks',
       },
     },
     opts = {
