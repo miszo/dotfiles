@@ -4,14 +4,14 @@
 :bulk_threshold: 1000
 :sources:
 - https://rubygems.org/
-- s3://{{ onepasswordRead "op://Private/gemsrc/s3_source" .opWorkAccount | trim }}/
+- s3://{{ onepasswordRead "op://Employee/gemsrc/s3_source" .opWorkAccount | trim }}/
 :update_sources: true
 :verbose: true
 s3_source: {
-  {{ onepasswordRead "op://Private/gemsrc/s3_source" .opWorkAccount | trim }}: {
-    id: {{ onepasswordRead "op://Private/gemsrc/username" .opWorkAccount | quote }},
-    secret: {{ onepasswordRead "op://Private/gemsrc/credential" .opWorkAccount | quote }},
-    region: {{ onepasswordRead "op://Private/gemsrc/region" .opWorkAccount | quote }},
-    endpoint: {{ onepasswordRead "op://Private/gemsrc/endpoint" .opWorkAccount | quote }}
+  {{ onepasswordRead "op://Employee/gemsrc/s3_source" .opWorkAccount | trim }}: {
+    id: {{ onepasswordRead "op://Employee/gemsrc/username" .opWorkAccount | quote }},
+    secret: {{ onepasswordRead "op://Employee/gemsrc/credential" .opWorkAccount | quote }},
+    region: {{ onepasswordRead "op://Employee/gemsrc/region" .opWorkAccount | quote }},
+    endpoint: {{ onepasswordRead "op://Employee/gemsrc/endpoint" .opWorkAccount | quote }}
   }
 }

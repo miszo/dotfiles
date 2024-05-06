@@ -7,8 +7,8 @@
 		{
 			"plugin": "gitlab",
 			"credential_type": "personal_access_token",
-			"vault_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "Private" .opWorkAccount | trim }},
-			"item_id": {{ (onepassword "GitLab CLI token" "Private" .opWorkAccount).id | quote }}
+			"vault_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "Employee" .opWorkAccount | trim }},
+			"item_id": {{ (onepassword "GitLab CLI token" "Employee" .opWorkAccount).id | quote }}
 		}
 	]
 }

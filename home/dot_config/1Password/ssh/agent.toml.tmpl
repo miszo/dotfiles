@@ -4,4 +4,4 @@ vault = "dev"
 
 [[ssh-keys]]
 account = {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opWorkAccount ".name" | trim }}
-vault = "Private"
+vault = "Employee"
