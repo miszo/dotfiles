@@ -188,20 +188,6 @@ return {
       },
     },
   },
-  -- Code Actions Preview
-  {
-    'aznhe21/actions-preview.nvim',
-    lazy = false,
-    opts = {},
-    config = function()
-      vim.keymap.set(
-        { 'v', 'n' },
-        '<leader>cp',
-        require('actions-preview').code_actions,
-        { desc = 'Code Actions Preview' }
-      )
-    end,
-  },
   -- Todo Comments
   {
     'folke/todo-comments.nvim',
