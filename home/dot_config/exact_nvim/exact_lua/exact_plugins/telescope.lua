@@ -11,6 +11,14 @@ return {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
       'johmsalas/text-case.nvim',
     },
+    -- temporary until fixed upstream
+    opts = {
+      pickers = {
+        lsp_definitions = {
+          jump_type = 'never',
+        },
+      },
+    },
     keys = {
       { '<leader>fR', Util.telescope('resume'), desc = 'Resume' },
       {
