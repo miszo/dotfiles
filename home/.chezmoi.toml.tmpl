@@ -9,8 +9,8 @@
 {{- end -}}
 
 [data]
-    opPersonalAccount = {{ $opPersonalAccount | quote }}
-    opWorkAccount = {{ $opWorkAccount | quote }}
-    personalEmail = {{ onepasswordRead "op://dev/email/personal" $opPersonalAccount | quote }}
-    workEmail = {{ onepasswordRead "op://Employee/email/personal" $opWorkAccount | quote }}
-    isWork = {{ $isWork }}
+opPersonalAccount = {{ $opPersonalAccount | quote }}
+opWorkAccount = {{ $opWorkAccount | quote }}
+personalEmail = {{ onepasswordRead "op://dev/email/personal" $opPersonalAccount | quote }}
+workEmail = {{ onepasswordRead "op://Employee/email/personal" $opWorkAccount | quote }}
+isWork = {{ $isWork }}

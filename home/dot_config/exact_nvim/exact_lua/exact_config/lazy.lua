@@ -40,9 +40,10 @@ require('lazy').setup({
     { import = 'lazyvim.plugins.extras.util.mini-hipatterns' },
     { import = 'lazyvim.plugins.extras.util.dot' },
     { import = 'lazyvim.plugins.extras.editor.navic' },
-    { import = 'lazyvim.plugins.extras.editor.aerial' },
+    { import = 'lazyvim.plugins.extras.editor.outline' },
     { import = 'lazyvim.plugins.extras.editor.leap' },
     { import = 'lazyvim.plugins.extras.editor.harpoon2' },
+    { import = 'lazyvim.plugins.extras.editor.trouble-v3' },
     { import = 'lazyvim.plugins.extras.test.core' },
     -- import/override with your plugins
     { import = 'plugins' },
