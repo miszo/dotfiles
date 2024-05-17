@@ -13,25 +13,6 @@ return {
     },
     opts = { snippet_engine = 'luasnip' },
   },
-  -- Refactoring
-  {
-    'ThePrimeagen/refactoring.nvim',
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-treesitter/nvim-treesitter' },
-    },
-    config = function()
-      require('refactoring').setup({})
-    end,
-    keys = {
-      {
-        '<leader>cR',
-        ":lua require('refactoring').select_refactor()<CR>",
-        mode = 'v',
-        desc = 'Refactor',
-      },
-    },
-  },
   -- Go forward/backward with square brackets
   {
     'echasnovski/mini.bracketed',
@@ -105,78 +86,6 @@ return {
   {
     'chaoren/vim-wordmotion',
   },
-  -- Tasks
-  {
-    'stevearc/overseer.nvim',
-    event = 'VeryLazy',
-    keys = {
-      {
-        '<leader>r',
-        desc = 'Overseer',
-      },
-      {
-        '<leader>rr',
-        '<cmd>OverseerRun<cr>',
-        desc = 'Run Tasks',
-      },
-      {
-        '<leader>rt',
-        '<cmd>OverseerToggle<cr>',
-        desc = 'Toggle Tasks',
-      },
-      {
-        '<leader>ra',
-        '<cmd>OverseerTaskAction<cr>',
-        desc = 'Task Action',
-      },
-      {
-        '<leader>rs',
-        function()
-          require('util.tasks').stop_all_tasks()
-        end,
-        desc = 'Stop All Tasks',
-      },
-      {
-        '<leader>rd',
-        function()
-          require('util.tasks').dispose_all_tasks()
-        end,
-        desc = 'Dispose All Tasks',
-      },
-      {
-        '<leader>rq',
-        function()
-          local tasks = require('util.tasks')
-          tasks.stop_all_tasks()
-          tasks.dispose_all_tasks()
-        end,
-        desc = 'Stop and Dispose All Tasks',
-      },
-      {
-        '<leader>rR',
-        function()
-          require('util.tasks').restart_all_tasks()
-        end,
-        desc = 'Restart All Tasks',
-      },
-    },
-    opts = {
-      templates = {
-        'cargo',
-        'make',
-        'npm',
-        'shell',
-        'deno',
-        'cargo-make',
-        'vscode',
-      },
-      task_list = {
-        direction = 'bottom',
-        min_height = { 15, 0.2 },
-      },
-    },
-    config = true,
-  },
   -- Better TS Errors
   {
     'OlegGulevskyy/better-ts-errors.nvim',
@@ -185,29 +94,6 @@ return {
       keymaps = {
         toggle = '<leader>cx', -- default '<leader>dd'
         go_to_definition = '<leader>dx', -- default '<leader>dx'
-      },
-    },
-  },
-  -- Todo Comments
-  {
-    'folke/todo-comments.nvim',
-    cmd = { 'TodoTrouble', 'TodoTelescope' },
-    event = 'LazyFile',
-    config = true,
-    keys = {
-      {
-        ']k',
-        function()
-          require('todo-comments').jump_next()
-        end,
-        desc = 'Next todo comment',
-      },
-      {
-        '[k',
-        function()
-          require('todo-comments').jump_prev()
-        end,
-        desc = 'Previous todo comment',
       },
     },
   },

@@ -17,14 +17,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  callback = function()
-    local tasks = require('util.tasks')
-    tasks.stop_all_task()
-    tasks.dispose_all_tasks()
-  end,
-})
-
 local set_kitty_layout_is_stack = vim.schedule_wrap(function()
   local layout = vim.fn.system('kitty @ kitten get_layout.py')
   vim.g.kitty_layout_is_stack = string.match(layout, 'stack')

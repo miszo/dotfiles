@@ -32,13 +32,15 @@ return {
     },
     ---@class PluginLspOpts
     opts = {
-      inlay_hints = { enabled = false },
+      inlay_hints = { enabled = true },
       ---@type lspconfig.options
       servers = {
         cssls = {},
+        ---@type lspconfig.options.eslint
         eslint = {
           root_dir = get_root_dir,
         },
+        ---@type lspconfig.options.tsserver
         tsserver = {
           root_dir = get_root_dir,
           single_file_support = false,
@@ -50,34 +52,8 @@ return {
               includeCompletionsForImportStatements = true,
             },
           },
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
         },
-        html = {},
+        ---@type lspconfig.options.yamlls
         yamlls = {
           settings = {
             yaml = {
@@ -85,6 +61,7 @@ return {
             },
           },
         },
+        ---@type lspconfig.options.ltex
         ltex = {
           cmd = { vim.fn.expand('~/.local/share/nvim/mason/bin/ltex-ls') },
           settings = {
@@ -104,6 +81,7 @@ return {
             },
           },
         },
+        ---@type lspconfig.options.lua_ls
         lua_ls = {
           single_file_support = true,
           Lua = {
@@ -164,7 +142,6 @@ return {
             },
           },
         },
-        solargraph = {},
       },
       setup = {
         rust_analyzer = function(_, opts)
