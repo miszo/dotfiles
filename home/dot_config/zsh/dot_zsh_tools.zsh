@@ -1,6 +1,6 @@
 eval $(thefuck --alias)
 eval $(gh completion -s zsh)
-eval $(gh copilot alias -- zsh)
+eval "$(gh copilot alias -- zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(zoxide init zsh)"
 # 1password cli
