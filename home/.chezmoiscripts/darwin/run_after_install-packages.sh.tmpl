@@ -2,15 +2,9 @@
 
 set -eufo pipefail
 
-{{ $brewBundleTimestampPath := joinPath .chezmoi.homeDir ".config" "brew" "brew_bundle_timestamp.txt" -}}
-{{ $brewfilePath := joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" -}}
-{{ $toolVersionsPath := joinPath .chezmoi.homeDir ".tool-versions" -}}
-{{ $fallbackDate := "1970-01-01T00:00:00+0000" -}}
-{{ $dateFormat := "%Y-%m-%dT%H:%M:%S%z" -}}
-
 function brew_bundle() {
   echo "Run brew bundle..."
-  brew bundle --no-lock --file={{ $brewfilePath }}
+  brew bundle --no-lock --file={{ .brew.brewfilePath }}
 }
 
 function asdf_install() {
@@ -18,38 +12,38 @@ function asdf_install() {
   while IFS= read -r plugin; do
     asdf plugin add "${plugin}" || true # ignore fail
     asdf install "${plugin}"
-  done < <(cut -d " " -f1 < {{ $toolVersionsPath }})
+  done < <(cut -d " " -f1 < {{ .brew.toolVersionsPath }})
 
   asdf reshim
 }
 
 function get_current_date_utc() {
-  date -u +{{ $dateFormat | quote }}
+  date -u +{{ .brew.dateFormat | quote }}
 }
 
 function get_fallback_date_utc() {
-  echo {{ $fallbackDate | quote }}
+  echo {{ .brew.fallbackDate | quote }}
 }
 
 function set_bundle_fallback_timestamp() {
-  echo "Setting current timestamp in {{ $brewBundleTimestampPath }}"
-  get_fallback_date_utc > {{ $brewBundleTimestampPath | quote }}
+  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
+  get_fallback_date_utc > {{ .brew.bundleTimestampPath | quote }}
 }
 
 function set_bundle_timestamp() {
-  echo "Setting current timestamp in {{ $brewBundleTimestampPath }}"
-  get_current_date_utc > {{ $brewBundleTimestampPath | quote }}
+  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
+  get_current_date_utc > {{ .brew.bundleTimestampPath | quote }}
 }
 
 function get_bundle_timestamp() {
-  if ! [ -e {{ $brewBundleTimestampPath | quote }} ]; then
+  if ! [ -e {{ .brew.bundleTimestampPath | quote }} ]; then
     set_bundle_fallback_timestamp
   fi
-  date -r {{ $brewBundleTimestampPath }} +{{ $dateFormat | quote }}
+  date -r {{ .brew.bundleTimestampPath }} +{{ .brew.dateFormat | quote }}
 }
 
 function get_brewfile_timestamp() {
-  date -r {{ $brewfilePath }} +{{ $dateFormat | quote }}
+  date -r {{ .brew.brewfilePath }} +{{ .brew.dateFormat | quote }}
 }
 
 function main() {

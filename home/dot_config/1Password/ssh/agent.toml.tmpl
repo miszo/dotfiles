@@ -1,7 +1,7 @@
 [[ssh-keys]]
-account = {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opPersonalAccount ".name" | trim }}
-vault = "dev"
+account = {{ .op.personal.accountName | quote }}
+vault = {{ .op.personal.vaultName | quote }}
 
 [[ssh-keys]]
-account = {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opWorkAccount ".name" | trim }}
-vault = "Employee"
+account = {{ .op.work.accountName | quote }}
+vault = {{ .op.work.vaultName | quote }}

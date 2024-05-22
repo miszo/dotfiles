@@ -1,5 +1,5 @@
 {
-	"account_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") .opPersonalAccount | trim }},
+	"account_id": {{ .gh.accountId | quote }},
 	"entrypoint": [
 		"gh"
 	],
@@ -7,8 +7,8 @@
 		{
 			"plugin": "github",
 			"credential_type": "personal_access_token",
-			"vault_id": {{ output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "dev" .opPersonalAccount | trim }},
-			"item_id": {{ (onepassword "GitHub CLI token" "dev" .opPersonalAccount).id | quote }}
+			"vault_id": {{ .gh.vaultId | quote }},
+			"item_id": {{ .gh.itemId | quote }}
 		}
 	]
 }

@@ -1,20 +1,15 @@
-{{- $brewBundleTimestampPath := joinPath .chezmoi.homeDir ".config" "brew" "brew_bundle_timestamp.txt" -}}
-{{- $brewfilePath := joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" -}}
-{{- $fallbackDate := "1970-01-01T00:00:00+0000" -}}
-{{- $dateFormat := "%Y-%m-%dT%H:%M:%S%z" -}}
-
 function get_current_date_utc() {
-  date -u +{{ $dateFormat | quote }}
+  date -u +{{ .brew.dateFormat | quote }}
 }
 
 function set_bundle_timestamp() {
-  echo "Setting current timestamp in {{ $brewBundleTimestampPath }}"
-  get_current_date_utc > {{ $brewBundleTimestampPath | quote }}
+  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
+  get_current_date_utc > {{ .brew.bundleTimestampPath | quote }}
 }
 
 function brew_bundle() {
   echo "Run brew bundle..."
-  brew bundle --no-lock --file={{ $brewfilePath }}
+  brew bundle --no-lock --file={{ .brew.brewfilePath }}
   set_bundle_timestamp;
 }
 
@@ -27,9 +22,9 @@ function brew_update {
 }
 
 function miszo_git_local_config {
-    git config --local user.name "Miszo Radomski"
-    git config --local user.email "hello@miszo.dev"
-    echo "Local git user email changed to miszo.dev"
+    git config --local user.name {{ .name | quote }}
+    git config --local user.email {{ .git.personal.email | quote }}
+    echo "Local git user email changed to personal"
     git config --local --get user.name
     git config --local --get user.email
 }

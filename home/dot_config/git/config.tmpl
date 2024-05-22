@@ -1,7 +1,7 @@
 [user]
-  name = Miszo Radomski
-  email = {{ .personalEmail }}
-  signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" .opPersonalAccount | trim }}
+  name = {{ .name }}
+  email = {{ .git.personalEmail }}
+  signingkey = {{ .git.personal.signingkey | trim }}
 [includeIf "gitdir:~/projects/code/work/"]
   path = ~/.config/git/config-work
 [core]
