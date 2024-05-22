@@ -1,5 +1,3 @@
-{{ $tealdeerCacheDir := joinPath .chezmoi.homeDir ".cache" "tealdeer" -}}
-{{ $tealdeerCustomPagesDir := joinPath .chezmoi.homeDir ".local" "share" "tealdeer" "pages" -}}
 [style.description]
 underline = false
 bold = false
@@ -38,5 +36,5 @@ auto_update = true
 auto_update_interval_hours = 168 # one week
 
 [directories]
-cache_dir = {{ $tealdeerCacheDir | quote }}
-custom_pages_dir = {{ $tealdeerCustomPagesDir | quote }}
+cache_dir = {{ .tealdeer.cacheDir | quote }}
+custom_pages_dir = {{ .tealdeer.customPagesDir | quote }}

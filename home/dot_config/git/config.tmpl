@@ -1,9 +1,11 @@
 [user]
-  name = Miszo Radomski
-  email = {{ .personalEmail }}
-  signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" .opPersonalAccount | trim }}
+  name = {{ .name }}
+  email = {{ .git.personal.email }}
+  signingkey = {{ .git.personal.signingkey | trim }}
 [includeIf "gitdir:~/projects/code/work/"]
   path = ~/.config/git/config-work
+[include]
+	path = ~/.config/delta/themes/catpuccin.gitconfig
 [core]
   excludesfile = ~/.config/git/ignore
   pager = delta
@@ -51,26 +53,7 @@
 [interactive]
   diffFilter = delta --color-only
 [delta]
-  features = side-by-side unobtrusive-line-numbers decorations
-  syntax-theme = ansi
-  whitespace-error-style = 22 reverse
-  algorithm = histogram
-  renamelimit = 8192
-  renames = copies
-[delta "unobtrusive-line-numbers"]
-  line-numbers = true
-  line-numbers-minus-style = "#444444"
-  line-numbers-zero-style = "#444444"
-  line-numbers-plus-style = "#444444"
-  line-numbers-left-format = "{nm:>4}┊"
-  line-numbers-right-format = "{np:>4}│"
-  line-numbers-left-style = blue
-  line-numbers-right-style = blue
-[delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  file-style = bold yellow ul
-  file-decoration-style = none
-  hunk-header-decoration-style = yellow box
+  features = side-by-side catpuccin-mocha
 [push]
 	autoSetupRemote = true
   default = current

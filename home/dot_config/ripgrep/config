@@ -9,3 +9,4 @@
 --hidden
 --line-number
 --sort=path
+--smart-case

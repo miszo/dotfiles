@@ -1,16 +1,110 @@
-{{- $opPersonalAccount := promptStringOnce . "opPersonalAccount" "What is your 1Password personal account" -}}
-{{- $opWorkAccount := promptStringOnce . "opWorkAccount" "What is your 1Password work account" -}}
+{{- $opPersonalAccountCode := promptStringOnce . "opPersonalAccountCode" "What is your 1Password personal account" -}}
+{{- $opPersonalAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode ".name" | trim -}}
+{{- $opPersonalAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode | trim -}}
+{{- $opPersonalVaultName := "dev" -}}
+{{- $opPersonalVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opPersonalVaultName $opPersonalAccountCode | trim -}}
+{{- "" -}}
+{{- $opWorkAccountCode := promptStringOnce . "opWorkAccountCode" "What is your 1Password work account" -}}
+{{- $opWorkAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode ".name" | trim -}}
+{{- $opWorkAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
+{{- $opWorkVaultName := "Employee" -}}
+{{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
+{{- "" -}}
+{{- $name := "Miszo Radomski" -}}
+{{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | trim -}}
+{{- $workEmail := onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
+{{- "" -}}
 {{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
 {{- $isWork := false -}}{{/* true if this machine is used for work */}}
 {{- "" -}}
-
 {{- if hasPrefix $workComputerPrefix .chezmoi.hostname -}}
 {{-   $isWork = true -}}
 {{- end -}}
 
+[diff]
+exclude = ["scripts", "externals"]
+pager = "delta"
+args = ["--features", "catpuccin-mocha"]
+
 [data]
-opPersonalAccount = {{ $opPersonalAccount | quote }}
-opWorkAccount = {{ $opWorkAccount | quote }}
-personalEmail = {{ onepasswordRead "op://dev/email/personal" $opPersonalAccount | quote }}
-workEmail = {{ onepasswordRead "op://Employee/email/personal" $opWorkAccount | quote }}
+name = {{ $name | quote }}
+
+[data.computer]
+hostname = {{ .chezmoi.hostname | quote }}
 isWork = {{ $isWork }}
+
+[data.user.personal]
+name = {{ $name | quote }}
+email = {{ $personalEmail | quote }}
+
+[data.user.work]
+name = {{ $name | quote }}
+email = {{ $workEmail | quote }}
+
+[data.git.personal]
+email = {{ $personalEmail | quote }}
+signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" $opPersonalAccountCode | quote }}
+
+[data.git.work]
+email = {{ $workEmail | quote }}
+signingkey = {{ onepasswordRead "op://Employee/Commit signing key/public key" $opWorkAccountCode | quote }}
+
+[data.op.personal]
+accountCode = {{ $opPersonalAccountCode | quote }}
+accountName = {{ $opPersonalAccountName }}
+accountId = {{ $opPersonalAccountId }}
+vaultName = {{ $opPersonalVaultName | quote }}
+
+[data.op.work]
+accountCode = {{ $opWorkAccountCode | quote }}
+accountName = {{ $opWorkAccountName }}
+accountId = {{ $opWorkAccountId }}
+vaultName = {{ $opWorkVaultName | quote }}
+
+[data.brew]
+brewfilePath = {{ joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" | quote }}
+bundleTimestampPath = {{ joinPath .chezmoi.homeDir ".config" "brew" "brew_bundle_timestamp.txt" | quote }}
+fallbackDate = "1970-01-01T00:00:00+0000"
+dateFormat = "%Y-%m-%dT%H:%M:%S%z"
+toolVersionsPath = {{ joinPath .chezmoi.homeDir ".tool-versions" | quote }}
+
+[data.gh]
+accountId = {{ $opPersonalAccountId }}
+vaultId = {{ $opPersonalVaultId }}
+itemId = {{ (onepassword "GitHub CLI token" $opPersonalVaultName $opPersonalAccountCode).id | quote }}
+chezmoiToken = {{ onepasswordRead "op://dev/chezmoi GitHub API Token/token" $opPersonalAccountCode | quote }}
+octoToken = {{ onepasswordRead "op://dev/GitHub CLI token/token" $opPersonalAccountCode | quote }}
+
+{{- if $isWork }}
+[data.glab]
+accountId = {{ $opWorkAccountId }}
+vaultId = {{ $opWorkVaultId }}
+itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode).id | quote }}
+{{- end }}
+
+{{- if not $isWork }}
+[data.ssh.homelab]
+host = {{ onepasswordRead "op://dev/Homelab SSH key/Host" $opPersonalAccountCode | quote }}
+hostName = {{ onepasswordRead "op://dev/Homelab SSH key/HostName" $opPersonalAccountCode | quote }}
+user = {{ onepasswordRead "op://dev/Homelab SSH key/User" $opPersonalAccountCode | quote }}
+publicKey = {{ onepasswordRead "op://dev/Homelab SSH key/public key" $opPersonalAccountCode | quote }}
+
+[data.ssh.unifi]
+host = {{ onepasswordRead "op://dev/Unifi SSH key/Host" $opPersonalAccountCode | quote }}
+hostName = {{ onepasswordRead "op://dev/Unifi SSH key/HostName" $opPersonalAccountCode | quote }}
+user = {{ onepasswordRead "op://dev/Unifi SSH key/User" $opPersonalAccountCode | quote }}
+publicKey = {{ onepasswordRead "op://dev/Unifi SSH key/public key" $opPersonalAccountCode | quote }}
+{{- end }}
+
+[data.tealdeer]
+cacheDir = {{ joinPath .chezmoi.homeDir ".cache" "tealdeer" | quote }}
+customPagesDir = {{ joinPath .chezmoi.homeDir ".local" "share" "tealdeer" "pages" | quote }}
+
+{{- if $isWork }}
+[data.gemrc]
+s3Source = {{ onepasswordRead "op://Employee/gemsrc/s3_source" $opWorkAccountCode | quote }}
+username = {{ onepasswordRead "op://Employee/gemsrc/username" $opWorkAccountCode | quote }}
+secret = {{ onepasswordRead "op://Employee/gemsrc/credential" $opWorkAccountCode | quote }}
+region = {{ onepasswordRead "op://Employee/gemsrc/region" $opWorkAccountCode | quote }}
+endpoint = {{ onepasswordRead "op://Employee/gemsrc/endpoint" $opWorkAccountCode | quote }}
+{{- end }}

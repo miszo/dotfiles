@@ -5,16 +5,16 @@ Include ~/.orbstack/ssh/config
 Host *
   IdentityAgent "~/.1password/agent.sock"
 
-{{ if not .isWork -}}
-Host {{ onepasswordRead "op://dev/Homelab SSH key/Host" .opPersonalAccount | trim }}
-  HostName {{ onepasswordRead "op://dev/Homelab SSH key/HostName" .opPersonalAccount | trim }}
-  User {{ onepasswordRead "op://dev/Homelab SSH key/User" .opPersonalAccount | trim }}
+{{ if not .computer.isWork -}}
+Host {{ .ssh.homelab.host | trim }}
+  HostName {{ .ssh.homelab.hostName | trim }}
+  User {{ .ssh.homelab.user | trim }}
   IdentityFile ~/.ssh/homelab.pub
   IdentitiesOnly yes
 
-Host {{ onepasswordRead "op://dev/Unifi SSH key/Host" .opPersonalAccount | trim }}
-  HostName {{ onepasswordRead "op://dev/Unifi SSH key/HostName" .opPersonalAccount | trim }}
-  User {{ onepasswordRead "op://dev/Unifi SSH key/User" .opPersonalAccount | trim }}
+Host {{ .ssh.unifi.host | trim }}
+  HostName {{ .ssh.unifi.hostName | trim }}
+  User {{ .ssh.unifi.user | trim }}
   IdentityFile ~/.ssh/unifi.pub
   IdentitiesOnly yes
 {{ end -}}
