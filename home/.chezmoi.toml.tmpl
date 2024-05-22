@@ -11,8 +11,8 @@
 {{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
 {{- "" -}}
 {{- $name := "Miszo Radomski" -}}
-{{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | quote -}}
-{{- $workEmail := onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | quote -}}
+{{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | trim -}}
+{{- $workEmail := onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
 {{- "" -}}
 {{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
 {{- $isWork := false -}}{{/* true if this machine is used for work */}}
@@ -22,13 +22,15 @@
 {{- end -}}
 
 [diff]
-exclude = ["scripts"]
-pager = delta
+exclude = ["scripts", "externals"]
+pager = "delta"
+args = ["--features", "catpuccin-mocha"]
 
 [data]
 name = {{ $name | quote }}
 
 [data.computer]
+hostname = {{ .chezmoi.hostname | quote }}
 isWork = {{ $isWork }}
 
 [data.user.personal]
@@ -41,7 +43,7 @@ email = {{ $workEmail | quote }}
 
 [data.git.personal]
 email = {{ $personalEmail | quote }}
-signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" .opPersonalAccountCode | quote }}
+signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" $opPersonalAccountCode | quote }}
 
 [data.git.work]
 email = {{ $workEmail | quote }}
@@ -49,14 +51,14 @@ signingkey = {{ onepasswordRead "op://Employee/Commit signing key/public key" $o
 
 [data.op.personal]
 accountCode = {{ $opPersonalAccountCode | quote }}
-accountName = {{ $opPersonalAccountName | quote }}
-accountId = {{ $opPersonalAccountId | quote }}
+accountName = {{ $opPersonalAccountName }}
+accountId = {{ $opPersonalAccountId }}
 vaultName = {{ $opPersonalVaultName | quote }}
 
 [data.op.work]
 accountCode = {{ $opWorkAccountCode | quote }}
-accountName = {{ $opWorkAccountName | quote }}
-accountId = {{ $opWorkAccountId | quote }}
+accountName = {{ $opWorkAccountName }}
+accountId = {{ $opWorkAccountId }}
 vaultName = {{ $opWorkVaultName | quote }}
 
 [data.brew]
@@ -67,16 +69,16 @@ dateFormat = "%Y-%m-%dT%H:%M:%S%z"
 toolVersionsPath = {{ joinPath .chezmoi.homeDir ".tool-versions" | quote }}
 
 [data.gh]
-accountId = {{ $opPersonalAccountId | quote }}
-vaultId = {{ $opPersonalVaultId | quote }}
+accountId = {{ $opPersonalAccountId }}
+vaultId = {{ $opPersonalVaultId }}
 itemId = {{ (onepassword "GitHub CLI token" $opPersonalVaultName $opPersonalAccountCode).id | quote }}
 chezmoiToken = {{ onepasswordRead "op://dev/chezmoi GitHub API Token/token" $opPersonalAccountCode | quote }}
 octoToken = {{ onepasswordRead "op://dev/GitHub CLI token/token" $opPersonalAccountCode | quote }}
 
 {{- if $isWork }}
 [data.glab]
-accountId = {{ $opWorkAccountId | quote }}
-vaultId = {{ $opWorkVaultId | quote }}
+accountId = {{ $opWorkAccountId }}
+vaultId = {{ $opWorkVaultId }}
 itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode).id | quote }}
 {{- end }}
 

@@ -75,7 +75,7 @@ Support
 .gemrc
 {{ end -}}
 
-{{ if .conmputer.isWork -}}
+{{ if .computer.isWork -}}
 .ssh/homelab.pub
 .ssh/unifi.pub
 {{ end -}}

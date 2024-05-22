@@ -1,5 +1,5 @@
 {{ onepasswordRead "op://dev/Brewfile/notesPlain" .op.personal.accountCode  }}
 
-{{ if .isWork -}}
+{{ if .computer.isWork -}}
 {{ onepasswordRead "op://Employee/Brewfile/notesPlain" .op.work.accountCode -}}
 {{- end -}}
