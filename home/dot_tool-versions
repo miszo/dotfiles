@@ -1,4 +1,4 @@
-chezmoi 2.47.3
+chezmoi 2.48.1
 rust 1.77.1
 ruby 3.2.3
 nodejs 20.12.1
@@ -6,6 +6,6 @@ pnpm 8.15.6
 yarn 1.22.19
 python 3.11.5
 awscli 2.13.18
-bun 1.1.0
+bun 1.1.9
 java zulu-11.68.17
 golang 1.22.2

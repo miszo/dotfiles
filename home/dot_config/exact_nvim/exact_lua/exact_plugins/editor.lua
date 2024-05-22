@@ -123,6 +123,8 @@ return {
       map('v', pi.change_version, 'Change package version')
     end,
   },
+  -- Chezmoi syntax highlighting
+  { 'alker0/chezmoi.vim' },
   -- Local plugins
   {
     dir = '../local-plugins/copy-filepath',
