@@ -2,13 +2,13 @@
 {{- $opPersonalAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode ".name" | trim -}}
 {{- $opPersonalAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode | trim -}}
 {{- $opPersonalVaultName := "dev" -}}
-{{- $opPersonalVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "dev" $opPersonalAccountCode | trim -}}
+{{- $opPersonalVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opPersonalVaultName $opPersonalAccountCode | trim -}}
 {{- "" -}}
 {{- $opWorkAccountCode := promptStringOnce . "opWorkAccountCode" "What is your 1Password work account" -}}
 {{- $opWorkAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode ".name" | trim -}}
 {{- $opWorkAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
 {{- $opWorkVaultName := "Employee" -}}
-{{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") "dev" $opWorkAccountCode | trim -}}
+{{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
 {{- "" -}}
 {{- $name := "Miszo Radomski" -}}
 {{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | quote -}}
@@ -20,6 +20,10 @@
 {{- if hasPrefix $workComputerPrefix .chezmoi.hostname -}}
 {{-   $isWork = true -}}
 {{- end -}}
+
+[diff]
+exclude = ["scripts"]
+pager = delta
 
 [data]
 name = {{ $name | quote }}
