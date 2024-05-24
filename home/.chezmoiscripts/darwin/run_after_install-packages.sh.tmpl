@@ -56,7 +56,7 @@ function install_gh_extensions() {
   echo "Installing gh extensions..."
   {{ $ghToken := .gh.token -}}
   {{ range .packages.gh.extensions -}}
-  GH_TOKEN={{ $ghToken }} gh extension install {{ . }}
+  GH_TOKEN={{ $ghToken | quote }} gh extension install {{ . }}
   {{ end -}}
 }
 

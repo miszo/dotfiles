@@ -30,7 +30,7 @@ function zinit_update {
 function update_all {
   brew_update &&
   zinit_update &&
-  gh extension upgrade --all &&
+  GH_TOKEN=$OCTO_TOKEN gh extension upgrade --all &&
   asdf reshim
 }
 
