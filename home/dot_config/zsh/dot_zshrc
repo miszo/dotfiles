@@ -36,7 +36,6 @@ zinit light redxtech/zsh-kitty
 zinit light chrisands/zsh-yarn-completions
 zinit light Aloxaf/fzf-tab
 zinit light Tarrasch/zsh-bd
-# zinit light z-shell/zsh-navigation-tools
 
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
