@@ -1,3 +1,5 @@
+# vim: syntax=sh
+
 function get_current_date_utc() {
   date -u +{{ .brew.dateFormat | quote }}
 }
@@ -16,9 +18,19 @@ function brew_bundle() {
 function brew_update {
     brew upgrade &&
     brew update &&
-    brew cleanup &&
-    asdf reshim
+    brew cleanup
+}
 
+function zinit_update {
+  zi self-update &&
+  zi update --all &&
+  zi delete --clean
+}
+
+function update_all {
+  brew_update &&
+  zinit_update &&
+  asdf reshim
 }
 
 function miszo_git_local_config {
