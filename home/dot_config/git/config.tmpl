@@ -2,7 +2,7 @@
   name = {{ .name }}
   email = {{ .git.personal.email }}
   signingkey = {{ .git.personal.signingkey | trim }}
-[includeIf "gitdir:~/projects/code/work/"]
+[includeIf "gitdir:~/dev/work/"]
   path = ~/.config/git/config-work
 [include]
 	path = ~/.config/delta/themes/catpuccin.gitconfig
