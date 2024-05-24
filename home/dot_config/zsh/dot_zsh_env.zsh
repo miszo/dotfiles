@@ -1,4 +1,3 @@
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters
 export PATH="$PATH:/Users/miszo/.local/bin"
 # pnpm
 export PNPM_HOME="/Users/miszo/Library/pnpm"

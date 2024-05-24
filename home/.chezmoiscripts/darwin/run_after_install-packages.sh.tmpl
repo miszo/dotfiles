@@ -1,4 +1,5 @@
 #!/bin/bash
+# vim: syntax=sh
 
 set -eufo pipefail
 
@@ -46,6 +47,11 @@ function get_brewfile_timestamp() {
   date -r {{ .brew.brewfilePath }} +{{ .brew.dateFormat | quote }}
 }
 
+function update_theme() {
+  echo "You can update syntax highliting theme by running:"
+  echo "fast-theme XDG:catppuccin-mocha"
+}
+
 function main() {
   if [[ $(get_brewfile_timestamp) > $(get_bundle_timestamp) ]];
   then
@@ -53,6 +59,7 @@ function main() {
     asdf_install
     set_bundle_timestamp;
   fi
+  update_theme
 }
 
 main

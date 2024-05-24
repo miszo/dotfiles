@@ -1,0 +1,4 @@
+# vim: syntax=sh
+
+export ZDOTDIR=$HOME/.config/zsh
+export EDITOR='nvim'
