@@ -66,10 +66,10 @@ zinit snippet OMZP::git
 zinit snippet OMZP::node
 zinit snippet OMZP::ruby
 zinit snippet OMZP::rails
-zinit snippet "$ZDOTDIR/completions/chezmoi.zsh"
-zinit snippet "$ZDOTDIR/completions/gh.zsh"
-zinit snippet "$ZDOTDIR/completions/op.zsh"
-zinit snippet "$ZDOTDIR/completions/pnpm.zsh"
+zinit snippet "$ZDOTDIR/plugins/chezmoi.zsh"
+zinit snippet "$ZDOTDIR/plugins/gh.zsh"
+zinit snippet "$ZDOTDIR/plugins/op.zsh"
+zinit snippet "$ZDOTDIR/plugins/pnpm.zsh"
 
 # Keybindings
 bindkey "^p" history-search-backward
