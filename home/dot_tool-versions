@@ -2,7 +2,7 @@ chezmoi 2.48.1
 rust 1.77.1
 ruby 3.2.3
 nodejs 20.12.1
-pnpm 8.15.6
+pnpm 9.1.2
 yarn 1.22.19
 python 3.11.5
 awscli 2.13.18
