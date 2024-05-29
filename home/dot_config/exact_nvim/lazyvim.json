@@ -3,6 +3,7 @@
     "lazyvim.plugins.extras.dap.core",
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.coding.copilot",
+    "lazyvim.plugins.extras.coding.copilot-chat",
     "lazyvim.plugins.extras.coding.mini-comment",
     "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.coding.yanky",
@@ -35,5 +36,5 @@
     "NEWS.md": "4964",
     "doc/news.txt": "24447"
   },
-  "version": 4
+  "version": 5
 }

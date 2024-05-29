@@ -13,8 +13,8 @@ M.setup = function()
     vim.notify('Copied "' .. path .. '" to the clipboard!')
   end, { desc = 'Copy the relative path of the current file to the clipboard' })
 
-  vim.keymap.set('n', '<leader>aa', '<cmd>CopyFilePathAbsolute<CR>', { desc = "Copy file's absolute path" })
-  vim.keymap.set('n', '<leader>ar', '<cmd>CopyFilePathRelative<CR>', { desc = "Copy file's relative path" })
+  vim.keymap.set('n', '<leader>cpa', '<cmd>CopyFilePathAbsolute<CR>', { desc = "Copy file's absolute path" })
+  vim.keymap.set('n', '<leader>cpr', '<cmd>CopyFilePathRelative<CR>', { desc = "Copy file's relative path" })
 end
 
 return M
