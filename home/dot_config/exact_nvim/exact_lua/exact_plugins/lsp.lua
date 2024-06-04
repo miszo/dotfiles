@@ -8,52 +8,44 @@ return {
   {
     'williamboman/mason.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
+      vim.tbl_deep_extend('force', {}, opts.ensure_installed, {
         'angular-language-server',
         'css-lsp',
         'luacheck',
-        'ltex-ls',
         'solargraph',
         'selene',
         'shfmt',
         'stylua',
         'tailwindcss-language-server',
-        'typescript-language-server',
+        'vue',
+        'vtsls',
       })
     end,
   },
   -- lsp servers
   {
     'neovim/nvim-lspconfig',
-    dependencies = {
-      'jose-elias-alvarez/typescript.nvim',
-      'simrat39/rust-tools.nvim',
-      'barreiroleo/ltex_extra.nvim',
-    },
     ---@class PluginLspOpts
     opts = {
       inlay_hints = { enabled = true },
-      ---@type lspconfig.options
       servers = {
         cssls = {},
-        ---@type lspconfig.options.eslint
         eslint = {
           root_dir = get_root_dir,
         },
-        ---@type lspconfig.options.tsserver
         tsserver = {
+          enabled = false,
+        },
+        vtsls = {
           root_dir = get_root_dir,
-          single_file_support = false,
-          init_options = {
-            preferences = {
-              allowRenameOfImportPath = true,
-              importModuleSpecifierPreference = 'non-relative',
-              includeCompletionsForModuleExports = true,
-              includeCompletionsForImportStatements = true,
+          settings = {
+            typescript = {
+              preferences = {
+                importModuleSpecifier = 'non-relative',
+              },
             },
           },
         },
-        ---@type lspconfig.options.yamlls
         yamlls = {
           settings = {
             yaml = {
@@ -61,57 +53,14 @@ return {
             },
           },
         },
-        ---@type lspconfig.options.ltex
-        ltex = {
-          cmd = { vim.fn.expand('~/.local/share/nvim/mason/bin/ltex-ls') },
-          settings = {
-            ltex = {
-              enabled = true,
-              language = 'en-US',
-              checkFrequency = 'save',
-              additionalRules = {
-                enablePickyRules = true,
-                motherTongue = 'pl-PL',
-              },
-              configurationTarget = {
-                dictionary = 'userExternalFile',
-                disabledRules = 'userExternalFile',
-                hiddenFalsePositives = 'userExternalFile',
-              },
-            },
-          },
-        },
-        ---@type lspconfig.options.lua_ls
         lua_ls = {
           single_file_support = true,
           Lua = {
-            workspace = {
-              checkThirdParty = false,
-            },
-            completion = {
-              workspaceWord = true,
-              callSnippet = 'Both',
-            },
-            misc = {
-              parameters = {},
-            },
-            hint = {
-              enable = true,
-              setType = false,
-              paramType = true,
-              paramName = 'Disable',
-              semicolon = 'Disable',
-              arrayIndex = 'Disable',
-            },
-            doc = {
-              privateName = { '^_' },
-            },
             type = {
               castNumberToInteger = true,
             },
             diagnostics = {
               disable = { 'incomplete-signature-doc', 'trailing-space' },
-              -- enable = false,
               groupSeverity = {
                 strong = 'Warning',
                 strict = 'Warning',
@@ -142,21 +91,6 @@ return {
             },
           },
         },
-      },
-      setup = {
-        rust_analyzer = function(_, opts)
-          require('rust-tools').setup({ server = opts })
-          return true
-        end,
-
-        ltex = function(_, opts)
-          opts.on_attach = function(_, _)
-            require('ltex_extra').setup({
-              load_langs = { 'en-US', 'pl-PL' },
-              path = vim.fn.expand('~/.config/spell/dictionaries'),
-            })
-          end
-        end,
       },
     },
   },

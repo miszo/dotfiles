@@ -13,6 +13,7 @@ vim.opt.listchars = {
   conceal = '※',
 }
 
+vim.spell = true
 vim.g.mapleader = ' '
 
 vim.scriptencoding = 'utf-8'
