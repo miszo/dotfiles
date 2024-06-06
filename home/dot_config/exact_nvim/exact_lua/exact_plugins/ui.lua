@@ -125,10 +125,10 @@ return {
       })
     end,
   },
-  -- Extend lualine for tasks and battery
+  -- Extend lualine with battery
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'stevearc/overseer.nvim', 'justinhj/battery.nvim' },
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'justinhj/battery.nvim' },
     event = 'VeryLazy',
     config = function(_, opts)
       local battery = {
@@ -136,7 +136,6 @@ return {
           return require('battery').get_status_line()
         end,
       }
-      table.insert(opts.sections.lualine_x, { 'overseer' })
       table.insert(opts.sections.lualine_y, battery)
 
       require('lualine').setup(opts)
