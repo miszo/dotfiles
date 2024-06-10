@@ -47,10 +47,6 @@ return {
   {
     'akinsho/bufferline.nvim',
     event = 'VeryLazy',
-    keys = {
-      { '<Tab>', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next tab' },
-      { '<S-Tab>', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev tab' },
-    },
     opts = function(_, opts)
       opts.options = vim.tbl_extend('force', opts.options, {
         show_buffer_close_icons = false,
@@ -74,36 +70,6 @@ return {
       })
 
       web_devicons.setup()
-    end,
-  },
-  {
-    'b0o/incline.nvim',
-    dependencies = { 'catppuccin/nvim' },
-    event = 'BufReadPre',
-    priority = 1200,
-    config = function()
-      local palette = require('catppuccin.palettes').get_palette('mocha')
-      require('incline').setup({
-        highlight = {
-          groups = {
-            InclineNormal = { guibg = palette.surface0, guifg = palette.lavender },
-            InclineNormalNC = { guibg = palette.surface0, guifg = palette.overlay2 },
-          },
-        },
-        window = { margin = { vertical = 0, horizontal = 1 } },
-        hide = {
-          cursorline = true,
-        },
-        render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          if vim.bo[props.buf].modified then
-            filename = '[+] ' .. filename
-          end
-
-          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-          return { { icon, guifg = color }, { ' ' }, { filename } }
-        end,
-      })
     end,
   },
   -- Battery

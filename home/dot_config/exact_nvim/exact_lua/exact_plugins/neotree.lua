@@ -10,7 +10,7 @@ return {
     config = function(_, opts)
       opts.filesystem.commands = {
 
-        -- Override delete to use trash instead of rm
+        -- overwrite delete to use trash instead of rm
         delete = function(state)
           local inputs = require('neo-tree.ui.inputs')
           local path = state.tree:get_node().path
@@ -24,14 +24,14 @@ return {
             require('neo-tree.sources.manager').refresh(state.name)
           end)
         end,
-        -- over write default 'delete_visual' command to 'trash' x n.
+        -- overwrite default 'delete_visual' command to 'trash' x n.
         delete_visual = function(state, selected_nodes)
           local inputs = require('neo-tree.ui.inputs')
 
           -- get table items count
           function GetTableLen(tbl)
             local len = 0
-            for n in pairs(tbl) do
+            for _ in pairs(tbl) do
               len = len + 1
             end
             return len
