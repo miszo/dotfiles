@@ -77,6 +77,16 @@ function git_pull_them_all {
     done
 }
 
+function export_velja_settings() {
+  echo "Exporting Velja settings..."
+  defaults export com.sindresorhus.Velja {{ .velja.veljaFilePath }}
+}
+
+function import_velja_settings() {
+  echo "Importing Velja settings..."
+  defaults import com.sindresorhus.Velja {{ .velja.veljaFilePath }}
+}
+
 function delete_recursively {
     readonly folder_name=${1:?"node_modules"}
     find . -name "$folder_name" -type d -prune -print -exec rm -rf '{}' \;
