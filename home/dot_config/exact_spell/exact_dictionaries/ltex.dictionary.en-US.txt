@@ -1,4 +1,0 @@
-LazyVim
-Miszo
-Radomski
-JSDoc
