@@ -28,8 +28,6 @@ return {
     end,
     config = function(_, opts)
       require('gitsigns').setup(opts)
-
-      vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', { desc = 'Preview hunk' })
       vim.keymap.set(
         'n',
         '<leader>gt',
@@ -41,19 +39,8 @@ return {
   -- Octo - GitHub PRs and issues
   {
     'pwntester/octo.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
-    keys = {
-      { '<leader>O', '<cmd>Octo<cr>', desc = 'Octo' },
-    },
-    config = function()
-      require('octo').setup({
-        enable_builtin = true,
-        gh_env = get_gh_env(),
-      })
+    opts = function(_, opts)
+      opts.gh_env = get_gh_env()
     end,
   },
   -- Generate link to file in the repository
