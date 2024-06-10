@@ -1,18 +1,8 @@
 # vim: syntax=sh
 
-function get_current_date_utc() {
-  date -u +{{ .brew.dateFormat | quote }}
-}
-
-function set_bundle_timestamp() {
-  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
-  get_current_date_utc > {{ .brew.bundleTimestampPath | quote }}
-}
-
 function brew_bundle() {
   echo "Run brew bundle..."
   brew bundle --no-lock --file={{ .brew.brewfilePath }}
-  set_bundle_timestamp;
 }
 
 function brew_update {

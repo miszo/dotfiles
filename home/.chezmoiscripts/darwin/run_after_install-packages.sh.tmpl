@@ -17,36 +17,6 @@ function asdf_install() {
 
   asdf reshim
 }
-
-function get_current_date_utc() {
-  date -u +{{ .brew.dateFormat | quote }}
-}
-
-function get_fallback_date_utc() {
-  echo {{ .brew.fallbackDate | quote }}
-}
-
-function set_bundle_fallback_timestamp() {
-  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
-  get_fallback_date_utc > {{ .brew.bundleTimestampPath | quote }}
-}
-
-function set_bundle_timestamp() {
-  echo "Setting current timestamp in {{ .brew.bundleTimestampPath }}"
-  get_current_date_utc > {{ .brew.bundleTimestampPath | quote }}
-}
-
-function get_bundle_timestamp() {
-  if ! [ -e {{ .brew.bundleTimestampPath | quote }} ]; then
-    set_bundle_fallback_timestamp
-  fi
-  date -r {{ .brew.bundleTimestampPath }} +{{ .brew.dateFormat | quote }}
-}
-
-function get_brewfile_timestamp() {
-  date -r {{ .brew.brewfilePath }} +{{ .brew.dateFormat | quote }}
-}
-
 function update_theme() {
   echo "You can update syntax highliting theme by running:"
   echo "fast-theme XDG:catppuccin-mocha"
@@ -60,14 +30,16 @@ function install_gh_extensions() {
   {{ end -}}
 }
 
+function update_velja_settings() {
+  echo "Updating Velja settings..."
+  defaults import com.sindresorhus.Velja {{ .velja.veljaFilePath }}
+}
+
 function main() {
-  if [[ $(get_brewfile_timestamp) > $(get_bundle_timestamp) ]];
-  then
-    brew_bundle
-    asdf_install
-    set_bundle_timestamp;
-  fi
+  brew_bundle
+  asdf_install
   install_gh_extensions
+  update_velja_settings
   update_theme
 }
 
