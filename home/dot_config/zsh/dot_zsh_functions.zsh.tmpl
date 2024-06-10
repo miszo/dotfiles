@@ -59,21 +59,21 @@ function copy_branch {
 }
 
 function remove_docker_containers {
-    echo "Stop running shit"
+    echo "Stop running docker containers"
     docker stop $(docker ps -q)
-    echo "Remove the whale shit"
+    echo "Remove docker containers"
     docker rm $(docker ps -a -q)
 }
 
 function remove_docker_images {
     remove_docker_containers
-    echo "Remove pictures of whale shit"
+    echo "Remove docker images"
     docker rmi $(docker images -f "dangling=true" -q)
 }
 
-function CLEAN_THE_FUCKING_DOCKER {
+function clean_docker {
     remove_docker_images
-    echo "Fucking shit, those silly fucking whales eating my fucking disk"
+    echo "Remove docker volumes"
     docker volume rm $(docker volume ls -qf dangling=true)
     echo "done m8"
 }

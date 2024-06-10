@@ -3,7 +3,7 @@
 {{ if .computer.isWork -}}
 {{ onepasswordRead "op://Employee/Brewfile/notesPlain" .op.work.accountCode -}}
 {{- else -}}
-{{ onepasswordRead "op://Employee/Brewfile_private/notesPlain" .op.personal.accountCode -}}
+{{ onepasswordRead "op://dev/Brewfile_private/notesPlain" .op.personal.accountCode -}}
 {{- end -}}
 
 
