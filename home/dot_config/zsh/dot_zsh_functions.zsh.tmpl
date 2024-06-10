@@ -27,8 +27,13 @@ function zinit_update {
   zi delete --clean
 }
 
+function update_kitty_icon {
+  kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("OK")' ~/.config/kitty/neue_outrun.icns
+}
+
 function update_all {
   brew_update &&
+  update_kitty_icon &&
   zinit_update &&
   GH_TOKEN=$OCTO_TOKEN gh extension upgrade --all &&
   asdf reshim
@@ -80,11 +85,6 @@ function git_pull_them_all {
             echo "Running git pull and clean branches in ${D}" && cd "${D}" && git pull && git_clear_gone_branches && cd .. && echo "Done!\n"
         fi
     done
-}
-
-function kitty_update {
-    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin &&
-    kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("OK")' ~/.config/kitty/neue_outrun.icns
 }
 
 function delete_recursively {
