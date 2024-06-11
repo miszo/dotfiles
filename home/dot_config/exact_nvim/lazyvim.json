@@ -9,7 +9,6 @@
     "lazyvim.plugins.extras.coding.neogen",
     "lazyvim.plugins.extras.coding.yanky",
     "lazyvim.plugins.extras.editor.harpoon2",
-    "lazyvim.plugins.extras.editor.inc-rename",
     "lazyvim.plugins.extras.editor.leap",
     "lazyvim.plugins.extras.editor.mini-move",
     "lazyvim.plugins.extras.editor.navic",

@@ -15,10 +15,10 @@ ueberzug_scale = 1
 ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
-edit = [{ exec = '$EDITOR "$@"', block = true, for = "macos" }]
-open = [{ exec = 'open "$@"', desc = "Open", for = "macos" }]
-reveal = [{ exec = 'open -R "$1"', desc = "Reveal", for = "macos" }]
-extract = [{ exec = 'unar "$1"', desc = "Extract here", for = "macos" }]
+edit = [{ run = '$EDITOR "$@"', block = true, for = "macos" }]
+open = [{ run = 'open "$@"', desc = "Open", for = "macos" }]
+reveal = [{ run = 'open -R "$1"', desc = "Reveal", for = "macos" }]
+extract = [{ run = 'unar "$1"', desc = "Extract here", for = "macos" }]
 
 [open]
 rules = [
