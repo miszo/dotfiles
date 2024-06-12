@@ -92,7 +92,7 @@ return {
       })
     end,
   },
-  -- Extend lualine with battery
+  -- Extend lualine
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', 'justinhj/battery.nvim' },
@@ -104,7 +104,12 @@ return {
         end,
       }
       table.insert(opts.sections.lualine_y, battery)
-
+      opts.options = vim.tbl_deep_extend('keep', opts.options, {
+        icons_enabled = true,
+        theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+      })
       require('lualine').setup(opts)
     end,
   },
