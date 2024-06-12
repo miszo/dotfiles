@@ -1,12 +1,5 @@
 # vim: syntax=sh
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 DEFAULT_USER="miszo"
@@ -25,9 +18,6 @@ ZINIT[SNIPPETS]="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/snippets"
 source "${ZINIT_HOME}/zinit.zsh"
 
 ZSH_CACHE_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
-
-# Add in Powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Add in zsh plugins
 zinit light MichaelAquilina/zsh-you-should-use
@@ -150,5 +140,9 @@ export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 # set rust env variables
 [[ -f "~/.asdf/installs/rust/1.77.1/env" ]] && . "~/.asdf/installs/rust/1.77.1/env" || true
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# set lazygit config location
+export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml"
+
+# run oh-my-posh
+eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/config.json)"
+
