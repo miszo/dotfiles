@@ -12,7 +12,7 @@ return {
       'johmsalas/text-case.nvim',
     },
     keys = {
-      { '<leader>fR', Util.telescope('resume'), desc = 'Resume' },
+      { '<leader>fR', Util.pick('resume'), desc = 'Resume' },
       {
         '<leader>sB',
         ':Telescope file_browser file_browser path=%:p:h=%:p:h<cr>',
