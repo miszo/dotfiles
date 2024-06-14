@@ -18,7 +18,8 @@ function zinit_update {
 }
 
 function update_kitty_icon {
-  kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("OK")' ~/.config/kitty/neue_outrun.icns
+  kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("Updating kitty icon")' ~/.config/kitty/neue_outrun.icns
+  echo "Kitty icon updated"
 }
 
 function update_all {
