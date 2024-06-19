@@ -1,13 +1,35 @@
 return {
   {
+    'vhyrro/luarocks.nvim',
+    priority = 1001, -- this plugin needs to run before anything else
+    opts = {
+      rocks = { 'magick' },
+    },
+  },
+  {
+    '3rd/image.nvim',
+    dependencies = { 'luarocks.nvim' },
+    config = function(_, opts)
+      require('image').setup(opts)
+    end,
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v3.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
       'MunifTanjim/nui.nvim',
+      '3rd/image.nvim',
     },
-    config = function(_, opts)
+    opts = function(_, opts)
+      opts.filesystem = opts.filesystem or {}
+
+      opts.filesystem.filtered_items = opts.filesystem.filtered_items or {}
+      opts.filesystem.filtered_items.visible = true
+      opts.filesystem.filtered_items.hide_dotfiles = false
+
+      opts.filesystem.commands = opts.filesystem.commands or {}
       opts.filesystem.commands = {
 
         -- overwrite delete to use trash instead of rm
@@ -50,7 +72,13 @@ return {
           end)
         end,
       }
-      require('neo-tree').setup(opts)
+
+      opts.window = opts.window or {}
+      opts.window.mappings = opts.window.mappings or {}
+
+      vim.tbl_extend('force', opts.window.mappings, {
+        ['P'] = { 'toggle_preview', config = { use_float = false, use_image_nvim = true } },
+      })
     end,
   },
 }
