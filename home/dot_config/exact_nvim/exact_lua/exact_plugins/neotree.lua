@@ -10,6 +10,11 @@ return {
     '3rd/image.nvim',
     dependencies = { 'luarocks.nvim' },
     config = function(_, opts)
+      opts.integrations = opts.integrations or {}
+      opts.integrations.markdown = opts.integrations.markdown or {}
+      opts.integrations.markdown.only_render_image_at_cursor = true
+      opts.hijack_file_patterns = opts.hijack_file_patterns or {}
+      opts.hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif', '*.heic' }
       require('image').setup(opts)
     end,
   },
@@ -34,6 +39,14 @@ return {
 
         -- overwrite delete to use trash instead of rm
         delete = function(state)
+          if vim.fn.executable('trash') == 0 then
+            vim.api.nvim_echo({
+              { '- Trash utility not installed. Make sure to install it first\n', nil },
+              { '- In macOS run `brew install trash`\n', nil },
+              { '- Or delete the `custom delete command` section in neo-tree', nil },
+            }, false, {})
+            return
+          end
           local inputs = require('neo-tree.ui.inputs')
           local path = state.tree:get_node().path
           local msg = 'Are you sure you want to trash ' .. path
@@ -48,6 +61,14 @@ return {
         end,
         -- overwrite default 'delete_visual' command to 'trash' x n.
         delete_visual = function(state, selected_nodes)
+          if vim.fn.executable('trash') == 0 then
+            vim.api.nvim_echo({
+              { '- Trash utility not installed. Make sure to install it first\n', nil },
+              { '- In macOS run `brew install trash`\n', nil },
+              { '- Or delete the `custom delete command` section in neo-tree', nil },
+            }, false, {})
+            return
+          end
           local inputs = require('neo-tree.ui.inputs')
 
           -- get table items count
@@ -79,6 +100,8 @@ return {
       vim.tbl_extend('force', opts.window.mappings, {
         ['P'] = { 'toggle_preview', config = { use_float = false, use_image_nvim = true } },
       })
+
+      opts.window.position = 'right'
     end,
   },
 }

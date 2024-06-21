@@ -30,8 +30,8 @@ function install_gh_extensions() {
   {{ end -}}
 }
 
-function update_velja_settings() {
-  echo "Updating Velja settings..."
+function import_velja_settings() {
+  echo "Importing Velja settings..."
   defaults import com.sindresorhus.Velja {{ .velja.veljaFilePath }}
 }
 
@@ -39,7 +39,7 @@ function main() {
   brew_bundle
   asdf_install
   install_gh_extensions
-  update_velja_settings
+  import_velja_settings
   update_theme
 }
 

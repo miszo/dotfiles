@@ -87,4 +87,6 @@ return {
       vim.keymap.set('n', '<leader>m', tsj.toggle, { desc = 'Toggle split/join code block' })
     end,
   },
+  -- Chezmoi syntax highlighting
+  { 'alker0/chezmoi.vim' },
 }

@@ -1,4 +1,5 @@
 local Util = require('lazyvim.util')
+local img_utils = require('utils.image')
 
 return {
   {
@@ -8,11 +9,13 @@ return {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
+      'nvim-telescope/telescope-node-modules.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
       'johmsalas/text-case.nvim',
+      '3rd/image.nvim',
     },
     keys = {
-      { '<leader>fR', Util.pick('resume'), desc = 'Resume' },
+      { '<leader>fR', Util.pick('resume'), desc = 'Resume search' },
       {
         '<leader>sB',
         ':Telescope file_browser file_browser path=%:p:h=%:p:h<cr>',
@@ -42,19 +45,34 @@ return {
             respect_gitignore = false,
             hidden = true,
             grouped = true,
-            previewer = false,
+            previewer = true,
             initial_mode = 'normal',
             layout_config = { height = 40 },
           })
         end,
         desc = 'Open File Browser with the path of the current buffer',
       },
-      { '<leader>fN', ':Telescope noice<cr>', desc = 'Noice' },
+      {
+        '<leader>fN',
+        function()
+          require('telescope').extensions.noice.noice()
+        end,
+        desc = 'Filter Noice',
+      },
+      {
+        '<leader>fm',
+        function()
+          require('telescope').extensions.node_modules.list()
+        end,
+        desc = 'Find node_modules',
+      },
     },
     config = function(_, opts)
       require('textcase').setup()
       local telescope = require('telescope')
       opts.extensions = { file_browser = { hijack_netrw = true } }
+      opts.defaults = opts.defaults or {}
+
       opts.defaults.vimgrep_arguments = {
         'rg',
         '--color=never',
@@ -66,14 +84,22 @@ return {
         '-B=0',
         '-A=0',
       }
-      telescope.setup(opts)
+
+      opts.defaults.preview = opts.defaults.preview or {}
+
+      opts.defaults.path_display = { 'filename_firs' }
+
       telescope.load_extension('undo')
       telescope.load_extension('file_browser')
       telescope.load_extension('fzf')
       telescope.load_extension('textcase')
       telescope.load_extension('noice')
+      telescope.load_extension('node_modules')
+
       vim.keymap.set('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = 'Telescope' })
       vim.keymap.set('v', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = 'Telescope' })
+
+      telescope.setup(opts)
     end,
   },
 }
