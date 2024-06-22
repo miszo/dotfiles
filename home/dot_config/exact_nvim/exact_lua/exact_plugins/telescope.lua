@@ -82,6 +82,10 @@ return {
 
       opts.defaults.file_previewer = buffer_previewer.cat.new
 
+      opts.defaults.preview = opts.defaults.preview or {}
+
+      opts.defaults.preview.filesize_limit = 10
+
       opts.defaults.vimgrep_arguments = {
         'rg',
         '--color=never',

@@ -13,9 +13,8 @@ return {
       opts.integrations = opts.integrations or {}
       opts.integrations.markdown = opts.integrations.markdown or {}
       opts.integrations.markdown.only_render_image_at_cursor = true
-      opts.hijack_file_patterns = opts.hijack_file_patterns or {}
-      opts.hijack_file_patterns = { '*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.avif', '*.heic' }
-      opts.window_overlap_clear_enabled = true
+      opts.hijack_file_patterns = require('utils.core').get_hijack_images_patterns()
+      opts.max_width_window_percentage = 80
       require('image').setup(opts)
     end,
   },
