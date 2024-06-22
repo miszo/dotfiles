@@ -30,7 +30,9 @@ local create_image = function(filepath, winid, bufnr)
   if not image then
     return
   end
-  image:render()
+  vim.defer_fn(function()
+    image:render()
+  end, 0)
 
   is_image_preview = true
 end
