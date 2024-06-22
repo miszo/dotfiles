@@ -1,5 +1,4 @@
 local Util = require('lazyvim.util')
-local img_utils = require('utils.image')
 
 return {
   {
@@ -70,8 +69,18 @@ return {
     config = function(_, opts)
       require('textcase').setup()
       local telescope = require('telescope')
+
+      local buffer_previewer = require('utils.telescope.buffer_previewer')
+      local image = require('utils.telescope.image')
+
+      buffer_previewer.teardown = image.teardown
+
       opts.extensions = { file_browser = { hijack_netrw = true } }
       opts.defaults = opts.defaults or {}
+
+      opts.defaults.buffer_previewer_maker = image.buffer_previewer_maker
+
+      opts.defaults.file_previewer = buffer_previewer.cat.new
 
       opts.defaults.vimgrep_arguments = {
         'rg',
@@ -85,9 +94,7 @@ return {
         '-A=0',
       }
 
-      opts.defaults.preview = opts.defaults.preview or {}
-
-      opts.defaults.path_display = { 'filename_firs' }
+      opts.defaults.path_display = { 'filename_first' }
 
       telescope.load_extension('undo')
       telescope.load_extension('file_browser')
