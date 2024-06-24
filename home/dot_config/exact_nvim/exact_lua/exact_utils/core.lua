@@ -1,6 +1,6 @@
 local M = {}
 
-local supported_images = { 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'heic' }
+local supported_images = { 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif' }
 
 M.get_hijack_images_patterns = function()
   local patterns = {}
