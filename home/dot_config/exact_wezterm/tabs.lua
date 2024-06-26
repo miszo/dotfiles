@@ -195,6 +195,7 @@ function M.setup(config)
     local cmd = pane:get_foreground_process_name()
     -- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
     cmd = cmd and basename(cmd) or ''
+    local cmd_icon = M.icons[cmd] or '🤷'
 
     local battery = ''
     local battery_color = palette.text
@@ -221,7 +222,7 @@ function M.setup(config)
       { Text = '  ' .. M.right_arrow_thin .. '  ' },
       'ResetAttributes',
       { Foreground = { Color = '#fab387' } },
-      { Text = M.icons[cmd] .. '  ' .. cmd },
+      { Text = cmd_icon .. '  ' .. cmd },
       'ResetAttributes',
       { Foreground = { Color = palette.surface1 } },
       { Text = '  ' .. M.right_arrow_thin .. '  ' },
