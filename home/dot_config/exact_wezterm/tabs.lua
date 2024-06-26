@@ -28,6 +28,7 @@ M.icons = {
   ['sudo'] = wezterm.nerdfonts.fa_bolt,
   ['vim'] = wezterm.nerdfonts.dev_vim,
   ['zsh'] = wezterm.nerdfonts.dev_terminal,
+  ['fallback'] = wezterm.nerdfonts.dev_code,
   ['folder'] = wezterm.nerdfonts.md_folder,
   ['clock'] = wezterm.nerdfonts.md_clock,
 }
@@ -195,7 +196,7 @@ function M.setup(config)
     local cmd = pane:get_foreground_process_name()
     -- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
     cmd = cmd and basename(cmd) or ''
-    local cmd_icon = M.icons[cmd] or '🤷'
+    local cmd_icon = M.icons[cmd] or M.icons['fallback']
 
     local battery = ''
     local battery_color = palette.text
