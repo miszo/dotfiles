@@ -50,6 +50,7 @@ config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
 config.tab_max_width = 30
+config.native_macos_fullscreen_mode = true
 config.automatically_reload_config = true
 config.default_cursor_style = 'SteadyBar'
 

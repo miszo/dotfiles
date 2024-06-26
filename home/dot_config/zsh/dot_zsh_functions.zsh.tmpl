@@ -17,14 +17,8 @@ function zinit_update {
   zi delete --clean
 }
 
-function update_kitty_icon {
-  kitty +runpy 'from kitty.fast_data_types import cocoa_set_app_icon; import sys; cocoa_set_app_icon(*sys.argv[1:]); print("Updating kitty icon")' ~/.config/kitty/neue_outrun.icns
-  echo "Kitty icon updated"
-}
-
 function update_all {
   brew_update &&
-  update_kitty_icon &&
   zinit_update &&
   GH_TOKEN=$OCTO_TOKEN gh extension upgrade --all &&
   asdf reshim
