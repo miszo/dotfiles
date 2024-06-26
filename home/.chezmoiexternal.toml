@@ -49,10 +49,6 @@ refreshPeriod = "168h"
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/delta/main/catppuccin.gitconfig"
 refreshPeriod = "168h"
-[".config/kitty/themes/Catppuccin-Mocha.conf"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf"
-refreshPeriod = "168h"
 [".config/yazi/theme.toml"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha.toml"

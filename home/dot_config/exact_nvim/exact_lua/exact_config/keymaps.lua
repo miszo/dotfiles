@@ -36,12 +36,6 @@ keymap.set('n', '<C-w><right>', '<C-w>>')
 keymap.set('n', '<C-w><up>', '<C-w>+')
 keymap.set('n', '<C-w><down>', '<C-w>-')
 
--- Kitty navigation
-keymap.set({ 'n', 't' }, '<C-h>', ':KittyNavigateLeft<Return>', opts)
-keymap.set({ 'n', 't' }, '<C-j>', ':KittyNavigateDown<Return>', opts)
-keymap.set({ 'n', 't' }, '<C-k>', ':KittyNavigateUp<Return>', opts)
-keymap.set({ 'n', 't' }, '<C-l>', ':KittyNavigateRight<Return>', opts)
-
 keymap.set('n', '<leader>r', function()
   require('utils.hsl').replaceHexWithHSL()
 end, { desc = 'Replace hex with HSL' })
