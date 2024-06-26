@@ -91,27 +91,6 @@
           "template": " {{ .FormattedMs }}  ",
           "type": "executiontime"
         },
-
-        {
-          "background": "p:teal",
-          "foreground": "transparent",
-          "powerline_symbol": "",
-          "leading_powerline_symbol": "",
-          "style": "powerline",
-          "background_templates": [
-            "{{if eq \"Charging\" .State.String}}p:sapphire{{end}}",
-            "{{if eq \"Discharging\" .State.String}}p:peach{{end}}",
-            "{{if eq \"Full\" .State.String}}p:green{{end}}"
-          ],
-          "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}% ",
-          "properties": {
-            "discharging_icon": " ",
-            "charging_icon": " ",
-            "charged_icon": " ",
-            "not_charging_icon": " "
-          },
-          "type": "battery"
-        },
         {
           "background": "p:yellow",
           "foreground": "transparent",
