@@ -7,6 +7,7 @@ M.right_arrow_solid = ''
 M.right_arrow_thin = ''
 M.icons = {
   ['cargo'] = wezterm.nerdfonts.dev_rust,
+  ['chezmoi'] = wezterm.nerdfonts.custom_folder_config,
   ['curl'] = wezterm.nerdfonts.mdi_flattr,
   ['docker'] = wezterm.nerdfonts.linux_docker,
   ['docker-compose'] = wezterm.nerdfonts.linux_docker,
@@ -22,15 +23,15 @@ M.icons = {
   ['lua'] = wezterm.nerdfonts.seti_lua,
   ['make'] = wezterm.nerdfonts.seti_makefile,
   ['node'] = wezterm.nerdfonts.mdi_hexagon,
-  ['nvim'] = wezterm.nerdfonts.custom_vim,
+  ['nvim'] = wezterm.nerdfonts.custom_neovim,
   ['psql'] = wezterm.nerdfonts.dev_postgresql,
   ['ruby'] = wezterm.nerdfonts.cod_ruby,
   ['sudo'] = wezterm.nerdfonts.fa_bolt,
   ['vim'] = wezterm.nerdfonts.dev_vim,
   ['zsh'] = wezterm.nerdfonts.dev_terminal,
-  ['fallback'] = wezterm.nerdfonts.dev_code,
   ['folder'] = wezterm.nerdfonts.md_folder,
   ['clock'] = wezterm.nerdfonts.md_clock,
+  ['fallback'] = wezterm.nerdfonts.dev_code,
 }
 
 local palette = {
@@ -67,7 +68,7 @@ local battery_icons = {
   ['Discharging'] = wezterm.nerdfonts.md_battery_arrow_down,
   ['Empty'] = wezterm.nerdfonts.md_battery_outline,
   ['Full'] = wezterm.nerdfonts.md_battery_heart_variant,
-  ['Unknown'] = wezterm.nerdfonts.md_battery_unknown,
+  ['Unknown'] = wezterm.nerdfonts.md_power_plug,
 }
 
 local battery_colors = {
@@ -161,16 +162,14 @@ function M.setup(config)
   wezterm.on('update-status', function(window, pane)
     -- Workspace name
     local stat = window:active_workspace()
-    local stat_color = palette.maroon
-    -- It's a little silly to have workspace name all the time
-    -- Utilize this to display LDR or current key table name
+    local stat_color = palette.mauve
     if window:active_key_table() then
       stat = window:active_key_table()
-      stat_color = palette.sapphire
+      stat_color = palette.sky
     end
     if window:leader_is_active() then
       stat = 'LDR'
-      stat_color = palette.lavender
+      stat_color = palette.pink
     end
 
     local basename = function(s)
@@ -222,7 +221,7 @@ function M.setup(config)
       { Foreground = { Color = palette.surface1 } },
       { Text = '  ' .. M.right_arrow_thin .. '  ' },
       'ResetAttributes',
-      { Foreground = { Color = '#fab387' } },
+      { Foreground = { Color = palette.blue } },
       { Text = cmd_icon .. '  ' .. cmd },
       'ResetAttributes',
       { Foreground = { Color = palette.surface1 } },
