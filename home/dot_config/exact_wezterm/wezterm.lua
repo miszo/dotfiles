@@ -39,7 +39,7 @@ config.mouse_bindings = {
 }
 
 config.underline_thickness = 3
-config.cursor_thickness = 4
+config.cursor_thickness = 3
 config.underline_position = -6
 
 config.front_end = 'WebGpu'
