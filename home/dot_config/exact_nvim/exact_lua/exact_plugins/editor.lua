@@ -1,5 +1,4 @@
 return {
-
   -- Go forward/backward with square brackets
   {
     'echasnovski/mini.bracketed',
@@ -121,6 +120,40 @@ return {
         })
       end,
     },
+  },
+  -- Open openapi preview in swagger-ui
+  {
+    'vinnymeller/swagger-preview.nvim',
+    build = 'npm install -g swagger-ui-watcher',
+    keys = {
+      {
+        '<leader>os',
+        function()
+          require('swagger-preview').start_server()
+        end,
+        { desc = 'Open preview OpenAPI in Swagger UI' },
+      },
+      {
+        '<leader>ox',
+        function()
+          require('swagger-preview').stop_server()
+        end,
+        { desc = 'Stop preview OpenAPI in Swagger UI' },
+      },
+      {
+        '<leader>ot',
+        function()
+          require('swagger-preview').toggle_server()
+        end,
+        { desc = 'Toggle preview OpenAPI in Swagger UI' },
+      },
+    },
+    config = function()
+      require('swagger-preview').setup({
+        port = 1111,
+        host = 'localhost',
+      })
+    end,
   },
   -- Local plugins
   {
