@@ -49,10 +49,8 @@ function M.setup(config)
     activate_pane(window, pane, 'Down', 'j')
   end)
 
-  config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 }
+  config.leader = { key = ' ', mods = 'SHIFT', timeout_milliseconds = 1000 }
   config.keys = {
-    -- Send C-a when pressing C-a twice
-    { key = 'a', mods = 'LEADER|CTRL', action = act.SendKey({ key = 'a', mods = 'CTRL' }) },
     -- Pane keybindings
     { key = 's', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
     { key = 'v', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
@@ -69,8 +67,8 @@ function M.setup(config)
     -- Key table for moving tabs around
     { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable({ name = 'move_tab', one_shot = false }) },
     -- Or shortcuts to move tab w/o move_tab table. SHIFT is for when caps lock is on
-    { key = '{', mods = 'LEADER|SHIFT', action = act.MoveTabRelative(-1) },
-    { key = '}', mods = 'LEADER|SHIFT', action = act.MoveTabRelative(1) },
+    { key = '{', mods = 'LEADER', action = act.MoveTabRelative(-1) },
+    { key = '}', mods = 'LEADER', action = act.MoveTabRelative(1) },
 
     -- Lastly, workspace
     { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },

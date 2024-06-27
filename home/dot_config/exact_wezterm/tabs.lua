@@ -212,7 +212,7 @@ function M.setup(config)
     window:set_left_status(wezterm.format({
       { Foreground = { Color = stat_color } },
       { Text = '  ' },
-      { Text = wezterm.nerdfonts.oct_table .. '  ' .. stat },
+      { Text = wezterm.nerdfonts.cod_window .. '  ' .. stat },
       { Text = '  ' },
     }))
 
