@@ -131,26 +131,26 @@ return {
         function()
           require('swagger-preview').start_server()
         end,
-        { desc = 'Open preview OpenAPI in Swagger UI' },
+        desc = 'Open preview OpenAPI in Swagger UI',
       },
       {
         '<leader>ox',
         function()
           require('swagger-preview').stop_server()
         end,
-        { desc = 'Stop preview OpenAPI in Swagger UI' },
+        desc = 'Stop preview OpenAPI in Swagger UI',
       },
       {
         '<leader>ot',
         function()
           require('swagger-preview').toggle_server()
         end,
-        { desc = 'Toggle preview OpenAPI in Swagger UI' },
+        desc = 'Toggle preview OpenAPI in Swagger UI',
       },
     },
     config = function()
       require('swagger-preview').setup({
-        port = 1111,
+        port = 9876,
         host = 'localhost',
       })
     end,
