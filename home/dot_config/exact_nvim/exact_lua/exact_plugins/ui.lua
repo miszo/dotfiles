@@ -77,7 +77,7 @@ return {
   -- Extend lualine
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'justinhj/battery.nvim' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     config = function(_, opts)
       opts.options = vim.tbl_deep_extend('keep', opts.options, {
