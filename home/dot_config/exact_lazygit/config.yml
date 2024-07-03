@@ -1,4 +1,6 @@
 gui:
+  showFileIcons: true
+  nerdFontsVersion: "3"
   # Use the mocha catppuccin theme
   theme:
     activeBorderColor:
