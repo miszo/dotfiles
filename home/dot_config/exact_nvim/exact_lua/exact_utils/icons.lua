@@ -61,4 +61,15 @@ return {
     Value = ' ',
     Variable = '󰀫 ',
   },
+  files = {
+    test = '',
+    prettier = '',
+    eslint = '',
+    npm = '',
+    tailwind = '󱏿',
+    tsconfig = '',
+    yarn = '',
+    node = '',
+    tool = '󰒓',
+  },
 }
