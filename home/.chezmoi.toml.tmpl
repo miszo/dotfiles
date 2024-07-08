@@ -9,6 +9,7 @@
 {{- $opWorkAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
 {{- $opWorkVaultName := "Employee" -}}
 {{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
+{{- $gpgPassphrase := onepasswordRead "op://dev/Chezmoi GPG passhrase/password" $opPersonalAccountCode -}}
 {{- "" -}}
 {{- $name := "Miszo Radomski" -}}
 {{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | trim -}}
@@ -20,6 +21,8 @@
 {{- if hasPrefix $workComputerPrefix .chezmoi.hostname -}}
 {{-   $isWork = true -}}
 {{- end -}}
+
+encryption = "gpg"
 
 [diff]
 exclude = ["scripts", "externals"]
@@ -100,6 +103,9 @@ publicKey = {{ onepasswordRead "op://dev/Unifi SSH key/public key" $opPersonalAc
 cacheDir = {{ joinPath .chezmoi.homeDir ".cache" "tealdeer" | quote }}
 customPagesDir = {{ joinPath .chezmoi.homeDir ".local" "share" "tealdeer" "pages" | quote }}
 
+[data.gpg]
+passphrase = {{ $gpgPassphrase | quote }}
+
 {{- if $isWork }}
 [data.gemrc]
 s3Source = {{ onepasswordRead "op://Employee/gemsrc/s3_source" $opWorkAccountCode | quote }}
@@ -108,3 +114,7 @@ secret = {{ onepasswordRead "op://Employee/gemsrc/credential" $opWorkAccountCode
 region = {{ onepasswordRead "op://Employee/gemsrc/region" $opWorkAccountCode | quote }}
 endpoint = {{ onepasswordRead "op://Employee/gemsrc/endpoint" $opWorkAccountCode | quote }}
 {{- end }}
+
+[gpg]
+symmetric = true
+args = ["--batch", "--passphrase", {{ $gpgPassphrase | quote }}, "--no-symkey-cache"]

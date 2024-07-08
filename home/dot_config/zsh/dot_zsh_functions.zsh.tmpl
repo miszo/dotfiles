@@ -60,7 +60,7 @@ function clean_docker {
     remove_docker_images
     echo "Remove docker volumes"
     docker volume rm $(docker volume ls -qf dangling=true)
-    echo "done m8"
+    echo "Docker cleanup done!"
 }
 
 
@@ -75,11 +75,13 @@ function git_pull_them_all {
 function export_velja_settings() {
   echo "Exporting Velja settings..."
   defaults export com.sindresorhus.Velja {{ .velja.veljaFilePath }}
+  echo "Velja settings exported!"
 }
 
 function import_velja_settings() {
   echo "Importing Velja settings..."
   defaults import com.sindresorhus.Velja {{ .velja.veljaFilePath }}
+  echo "Velja settings imported!"
 }
 
 function delete_recursively {
