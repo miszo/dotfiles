@@ -94,7 +94,7 @@ return {
           ['eslint.config.cjs'] = eslint_table,
           ['eslint.config.mjs'] = eslint_table,
           ['.prettierignore'] = { glyph = icons.files.prettier, hl = 'MiniIconsPurple' },
-          ['.prettierc'] = prettier_table,
+          ['.prettierrc'] = prettier_table,
           ['.prettierrc.json'] = prettier_table,
           ['.prettierrc.js'] = prettier_table,
           ['.prettierrc.cjs'] = prettier_table,
