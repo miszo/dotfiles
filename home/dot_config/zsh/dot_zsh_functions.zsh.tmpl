@@ -72,16 +72,26 @@ function git_pull_them_all {
     done
 }
 
-function export_velja_settings() {
-  echo "Exporting Velja settings..."
-  defaults export com.sindresorhus.Velja {{ .velja.veljaFilePath }}
-  echo "Velja settings exported!"
+function export_app_settings {
+  echo "Exporting settings for $1..."
+  defaults export $2 $3
+  echo "Settings exported for $1!"
 }
 
-function import_velja_settings() {
-  echo "Importing Velja settings..."
-  defaults import com.sindresorhus.Velja {{ .velja.veljaFilePath }}
-  echo "Velja settings imported!"
+function import_app_settings {
+  echo "Importing settings for $1..."
+  defaults import $2 $3
+  echo "Settings imported for $1!"
+}
+
+function export_all_settings {
+  export_app_settings "Better Display" "pro.betterdisplay.BetterDisplay" {{ .exportedSettings.betterDisplayFilePath }}
+  export_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
+}
+
+function import_all_settings {
+  import_app_settings "Better Display" "pro.betterdisplay.BetterDisplay" {{ .exportedSettings.betterDisplayFilePath }}
+  import_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
 }
 
 function delete_recursively {

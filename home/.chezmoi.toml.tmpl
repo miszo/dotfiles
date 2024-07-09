@@ -68,8 +68,9 @@ vaultName = {{ $opWorkVaultName | quote }}
 brewfilePath = {{ joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" | quote }}
 toolVersionsPath = {{ joinPath .chezmoi.homeDir ".tool-versions" | quote }}
 
-[data.velja]
-veljaFilePath = {{ joinPath .chezmoi.homeDir ".config" "velja" "Velja.plist" | quote }}
+[data.exportedSettings]
+veljaFilePath = {{ joinPath .chezmoi.homeDir ".config" "exported-settings" "Velja.plist" | quote }}
+betterDisplayFilePath = {{ joinPath .chezmoi.homeDir ".config" "exported-settings" "BetterDisplay.plist" | quote }}
 
 [data.gh]
 accountId = {{ $opPersonalAccountId }}
