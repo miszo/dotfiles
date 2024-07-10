@@ -3,7 +3,7 @@ return {
     'LazyVim/LazyVim',
     opts = function(_, opts)
       opts.colorscheme = { 'catppuccin-mocha' }
-      opts.icons = require('utils.icons')
+      opts.icons = require('utils.icons').icons
     end,
   },
 }
