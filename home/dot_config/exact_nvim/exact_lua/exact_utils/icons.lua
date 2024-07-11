@@ -74,7 +74,6 @@ local file_icons = {
   yarn = '',
   node = '',
   tool = '󰒓',
-  astro = '',
   angular = '󰚲',
 }
 
@@ -165,7 +164,6 @@ M.get_icons = function()
       ['cy.jsx'] = jsx_table,
       ['cy.ts'] = ts_table,
       ['cy.tsx'] = tsx_table,
-      ['astro'] = { glyph = file_icons.astro, hl = 'MiniIconsOrange' },
     },
   }
 
