@@ -109,18 +109,6 @@ return {
       map('v', pi.change_version, 'Change package version')
     end,
   },
-  {
-    {
-      'MagicDuck/grug-far.nvim',
-      event = 'VeryLazy',
-      cmd = 'GrugFar',
-      config = function()
-        require('grug-far').setup({
-          vim.keymap.set('n', '<leader>sr', '<cmd>GrugFar<cr>', { desc = 'Find And Replace (GrugFar)', silent = true }),
-        })
-      end,
-    },
-  },
   -- Open openapi preview in swagger-ui
   {
     'vinnymeller/swagger-preview.nvim',
