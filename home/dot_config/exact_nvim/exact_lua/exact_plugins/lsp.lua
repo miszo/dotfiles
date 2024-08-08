@@ -30,6 +30,17 @@ return {
       inlay_hints = { enabled = true },
       servers = {
         cssls = {},
+        solargraph = {
+          root_dir = require('lspconfig.util').root_pattern('Gemfile', '.git'),
+          settings = {
+            solargraph = {
+              diagnostics = true,
+              completion = true,
+              definitions = true,
+              hover = true,
+            },
+          },
+        },
         eslint = {
           root_dir = get_root_dir,
         },

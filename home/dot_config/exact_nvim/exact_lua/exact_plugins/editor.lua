@@ -143,6 +143,76 @@ return {
       })
     end,
   },
+  -- Find other files
+  {
+    'rgroli/other.nvim',
+    keys = {
+      { 'go', '<cmd>Other<CR>', desc = 'Alternate file' },
+      { 'gV', '<cmd>OtherVSplit<CR>', desc = 'Alternate file (vsplit)' },
+    },
+    cmd = { 'Other', 'OtherSplit', 'OtherVSplit' },
+    config = function()
+      require('other-nvim').setup({
+        mappings = {
+          'angular',
+          'rails',
+
+          -- the "going back to source from tests" from the Rails builtin but with a _spec suffix
+          {
+            pattern = '(.+)/spec/(.*)/(.*)/(.*)_spec.rb',
+            target = {
+              { target = '%1/db/%3/%4.rb' },
+              { target = '%1/app/%3/%4.rb' },
+              { target = '%1/%3/%4.rb' },
+            },
+          },
+          {
+            pattern = '(.+)/spec/(.*)/(.*)_spec.rb',
+            target = {
+              { target = '%1/db/%2/%3.rb' },
+              { target = '%1/app/%2/%3.rb' },
+              { target = '%1/lib/%2/%3.rb' },
+            },
+          },
+          {
+            pattern = '(.+)/spec/(.*)/(.*)_(.*)_spec.rb',
+            target = {
+              { target = '%1/app/%4s/%3_%4.rb' },
+            },
+          },
+          {
+            pattern = '/lib/(.*)/(.*).rb',
+            target = '/spec/lib/%1/%2_spec.rb',
+            context = 'test',
+          },
+          -- Jest tests
+          {
+            pattern = '(.*)/(.*).ts$',
+            target = '%1/%2.test.ts',
+            context = 'test',
+          },
+          {
+            pattern = '(.*)/(.*).tsx$',
+            target = '%1/%2.test.tsx',
+            context = 'test',
+          },
+          -- Back from tests to files
+          {
+            pattern = '(.*)/(.*).test.ts$',
+            target = '%1/%2.ts',
+            context = 'source',
+          },
+          {
+            pattern = '(.*)/(.*).test.tsx$',
+            target = '%1/%2.tsx',
+            context = 'source',
+          },
+        },
+        rememberBuffers = false,
+        showMissingFiles = false,
+      })
+    end,
+  },
   -- Local plugins
   {
     dir = '../local-plugins/copy-filepath',
