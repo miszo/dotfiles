@@ -14,8 +14,11 @@ osascript -e 'tell application "System Preferences" to quit'
 sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
+while true; do
+  sudo -n true
+  sleep 60
+  kill -0 "$$" || exit
+done 2>/dev/null &
 
 echo "Applying the macOS settings"
 
@@ -85,7 +88,6 @@ defaults write NSGlobalDomain AppleMetricUnits -bool true
 defaults write NSGlobalDomain NSLinguisticDataAssetsRequested -array "en" "pl"
 defaults write NSGlobalDomain NSUserDictionaryReplacementItems -array
 defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false
-
 
 echo "General UI/UX - done!"
 
@@ -241,6 +243,9 @@ echo "Finder – done!"
 
 echo "Dock, Dashboard, and hot corners"
 
+# Group windows by application in Mission Control
+defaults write com.apple.dock expose-group-apps -bool true
+
 # Enable highlight hover effect for the grid view of a stack (Dock)
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
@@ -250,6 +255,9 @@ defaults write com.apple.dock tilesize -int 36
 # Set the icon size of Dock items to 64 pixels
 defaults write com.apple.dock largesize -int 64
 
+# Disable windows opening animations
+defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
+
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "suck"
 
@@ -257,7 +265,7 @@ defaults write com.apple.dock mineffect -string "suck"
 defaults write com.apple.dock minimize-to-application -bool true
 
 # Enable spring loading for all Dock items
-defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool false
 
 # Show indicator lights for open applications in the Dock
 defaults write com.apple.dock show-process-indicators -bool true
@@ -358,7 +366,6 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
 
 # Enable continuous spellchecking
 defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
@@ -550,7 +557,6 @@ echo "Google Chrome & Google Chrome Canary – done!"
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
-
 
 echo "Applying the macOS settings – done! Note that some of these changes require a logout/restart to take effect."
 
