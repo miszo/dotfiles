@@ -24,8 +24,8 @@
 {{- end -}}
 
 {{- if $isWork -}}
-{{- $workEmail = onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
 {{- $opWorkAccountCode = promptStringOnce . "opWorkAccountCode" "What is your 1Password work account" -}}
+{{- $workEmail = onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
 {{- $opWorkAccountName = output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode ".name" | trim -}}
 {{- $opWorkAccountId = output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
 {{- $opWorkVaultName = "Employee" -}}
