@@ -258,13 +258,16 @@ defaults write com.apple.dock largesize -int 64
 # Disable windows opening animations
 defaults write -g NSAutomaticWindowAnimationsEnabled -bool false
 
+# Move windows by dragging any part of the window
+defaults write -g NSWindowShouldDragOnGesture -bool true
+
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "suck"
 
 # Minimize windows into their application’s icon
 defaults write com.apple.dock minimize-to-application -bool true
 
-# Enable spring loading for all Dock items
+# Disable spring loading for all Dock items
 defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool false
 
 # Show indicator lights for open applications in the Dock
@@ -284,8 +287,8 @@ defaults write com.apple.dock autohide -bool true
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
-# Add launch animation
-defaults write com.apple.dock launchanim -bool true
+# Remove launch animation
+defaults write com.apple.dock launchanim -bool false
 
 # Set dock position on bottom
 defaults write com.apple.dock orientation bottom
