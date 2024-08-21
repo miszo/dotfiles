@@ -69,10 +69,14 @@ Support
 **/.DS_Store
 
 {{ if not .computer.isWork -}}
+.config/git/config-work
 .config/glab-cli
 .config/op/plugins/used_items/glab.json
 .config/op/plugins/glab.json
 .gemrc
+.config/zsh/.zsh_work_aliases.zsh
+.config/zsh/.zsh_work_env.zsh
+.config/zsh/.zsh_work_functions.zsh
 {{ end -}}
 
 {{ if .computer.isWork -}}

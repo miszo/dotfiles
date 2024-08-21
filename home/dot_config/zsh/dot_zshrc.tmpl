@@ -106,11 +106,14 @@ function load_zsh_config {
 
 load_zsh_config credentials
 load_zsh_config env
-load_zsh_config work_env
 load_zsh_config functions
-load_zsh_config work_functions
 load_zsh_config aliases
+
+{{ if .computer.isWork -}}
+load_zsh_config work_env
+load_zsh_config work_functions
 load_zsh_config work_aliases
+{{ end -}}
 
 autoload -Uz compinit
 compinit

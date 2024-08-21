@@ -1,2 +1,4 @@
 {{ .git.personal.email }} {{ .git.personal.signingkey | trim }}
+{{ if .computer.isWork -}}
 {{ .git.work.email }} {{ .git.work.signingkey | trim }}
+{{ end -}}

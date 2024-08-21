@@ -1,26 +1,37 @@
 {{- $opPersonalAccountCode := promptStringOnce . "opPersonalAccountCode" "What is your 1Password personal account" -}}
+{{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
+
 {{- $opPersonalAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode ".name" | trim -}}
 {{- $opPersonalAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opPersonalAccountCode | trim -}}
 {{- $opPersonalVaultName := "dev" -}}
 {{- $opPersonalVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opPersonalVaultName $opPersonalAccountCode | trim -}}
-{{- "" -}}
-{{- $opWorkAccountCode := promptStringOnce . "opWorkAccountCode" "What is your 1Password work account" -}}
-{{- $opWorkAccountName := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode ".name" | trim -}}
-{{- $opWorkAccountId := output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
-{{- $opWorkVaultName := "Employee" -}}
-{{- $opWorkVaultId := output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
-{{- $gpgPassphrase := onepasswordRead "op://dev/Chezmoi GPG passhrase/password" $opPersonalAccountCode -}}
-{{- "" -}}
 {{- $name := "Miszo Radomski" -}}
+
+{{- $gpgPassphrase := onepasswordRead "op://dev/Chezmoi GPG passhrase/password" $opPersonalAccountCode -}}
 {{- $personalEmail := onepasswordRead "op://dev/email/personal" $opPersonalAccountCode | trim -}}
-{{- $workEmail := onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
-{{- "" -}}
-{{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
-{{- $isWork := false -}}{{/* true if this machine is used for work */}}
-{{- "" -}}
+
+{{/* initialize variables used for work */}}
+{{- $isWork := false -}}
+{{- $workEmail := "" -}}
+{{- $opWorkAccountCode := "" -}}
+{{- $opWorkAccountName := "" -}}
+{{- $opWorkAccountId := "" -}}
+{{- $opWorkVaultName := "" -}}
+{{- $opWorkVaultId := "" -}}
+
 {{- if hasPrefix $workComputerPrefix .chezmoi.hostname -}}
-{{-   $isWork = true -}}
+{{- $isWork = true -}}
 {{- end -}}
+
+{{- if $isWork -}}
+{{- $workEmail = onepasswordRead "op://Employee/email/personal" $opWorkAccountCode | trim -}}
+{{- $opWorkAccountCode = promptStringOnce . "opWorkAccountCode" "What is your 1Password work account" -}}
+{{- $opWorkAccountName = output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode ".name" | trim -}}
+{{- $opWorkAccountId = output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
+{{- $opWorkVaultName = "Employee" -}}
+{{- $opWorkVaultId = output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
+{{- end -}}
+
 
 encryption = "gpg"
 
@@ -40,17 +51,21 @@ isWork = {{ $isWork }}
 name = {{ $name | quote }}
 email = {{ $personalEmail | quote }}
 
+{{- if $isWork  }}
 [data.user.work]
 name = {{ $name | quote }}
 email = {{ $workEmail | quote }}
+{{- end }}
 
 [data.git.personal]
 email = {{ $personalEmail | quote }}
 signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" $opPersonalAccountCode | quote }}
 
+{{- if $isWork }}
 [data.git.work]
 email = {{ $workEmail | quote }}
 signingkey = {{ onepasswordRead "op://Employee/Commit signing key/public key" $opWorkAccountCode | quote }}
+{{- end }}
 
 [data.op.personal]
 accountCode = {{ $opPersonalAccountCode | quote }}
@@ -58,11 +73,13 @@ accountName = {{ $opPersonalAccountName }}
 accountId = {{ $opPersonalAccountId }}
 vaultName = {{ $opPersonalVaultName | quote }}
 
+{{- if $isWork }}
 [data.op.work]
 accountCode = {{ $opWorkAccountCode | quote }}
 accountName = {{ $opWorkAccountName }}
 accountId = {{ $opWorkAccountId }}
 vaultName = {{ $opWorkVaultName | quote }}
+{{- end }}
 
 [data.brew]
 brewfilePath = {{ joinPath .chezmoi.homeDir ".config" "brew" "Brewfile" | quote }}
