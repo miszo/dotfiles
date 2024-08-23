@@ -102,10 +102,10 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-cmd-h = 'focus left --ignore-floating'
-cmd-j = 'focus down --ignore-floating'
-cmd-k = 'focus up --ignore-floating'
-cmd-l = 'focus right --ignore-floating'
+alt-ctrl-h = 'focus left --ignore-floating'
+alt-ctrl-j = 'focus down --ignore-floating'
+alt-ctrl-k = 'focus up --ignore-floating'
+alt-ctrl-l = 'focus right --ignore-floating'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'
