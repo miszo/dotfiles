@@ -58,7 +58,7 @@ inner.horizontal = 8
 inner.vertical = 8
 outer.left = 12
 outer.bottom = 12
-outer.top = 12
+outer.top = [{monitor.'built-in' = 6 }, 12]
 outer.right = 12
 
 
@@ -226,6 +226,22 @@ run = 'layout floating'
 if.app-id = 'dev.kdrag0n.MacVirt'
 run = 'layout floating'
 
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+if.window-title-regex-substring = 'Picture in Picture'
+run = 'layout floating'
+check-further-callbacks = true
+
+[[on-window-detected]]
+if.app-id = 'com.jordanbaird.Ice'
+run = 'layout floating'
+check-further-callbacks = true
+
+[[on-window-detected]]
+if.app-id = 'com.macpaw.CleanMyMac-setapp'
+run = 'layout floating'
+check-further-callbacks = true
+
 # assign apps to workspaces
 
 [[on-window-detected]]
@@ -235,12 +251,6 @@ run = 'move-node-to-workspace 1'
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
 run = 'move-node-to-workspace T'
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-if.window-title-regex-substring = 'Picture in Picture'
-run = 'layout floating'
-check-further-callbacks = true
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
