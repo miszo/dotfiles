@@ -30,22 +30,10 @@ function install_gh_extensions() {
   {{ end -}}
 }
 
-function import_app_settings {
-  echo "Importing settings for $1..."
-  defaults import $2 $3
-  echo "Settings imported for $1!"
-}
-
-function import_all_settings {
-  import_app_settings "Better Display" "pro.betterdisplay.BetterDisplay" {{ .exportedSettings.betterDisplayFilePath }}
-  import_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
-}
-
 function main() {
   brew_bundle
   asdf_install
   install_gh_extensions
-  import_all_settings
   update_theme
 }
 
