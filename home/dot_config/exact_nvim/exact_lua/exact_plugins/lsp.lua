@@ -29,6 +29,7 @@ return {
       inlay_hints = { enabled = true },
       servers = {
         cssls = {},
+        sourcekit = {},
         ruby_lsp = {
           mason = false,
           cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
