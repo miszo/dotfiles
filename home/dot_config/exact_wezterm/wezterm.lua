@@ -3,6 +3,7 @@ local config = wezterm.config_builder()
 wezterm.log_info('reloading')
 
 require('mux').setup()
+require('zen-mode').setup()
 require('tabs').setup(config)
 require('links').setup(config)
 require('keys').setup(config)

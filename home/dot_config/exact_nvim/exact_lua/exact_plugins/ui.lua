@@ -106,12 +106,11 @@ return {
     opts = {
       plugins = {
         gitsigns = true,
-        kitty = { enabled = true, font = '+2' },
+        wezterm = { enabled = true, font = '+4' },
       },
     },
     keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen Mode' } },
   },
-  { 'folke/twilight.nvim' },
   {
     'nvimdev/dashboard-nvim',
     event = 'VimEnter',
