@@ -242,6 +242,16 @@ if.app-id = 'com.macpaw.CleanMyMac-setapp'
 run = 'layout floating'
 check-further-callbacks = true
 
+[[on-window-detected]]
+if.app-id = 'com.iBoysoft.NTFS-Assistant-website-setapp'
+run = 'layout floating'
+check-further-callbacks = true
+
+[[on-window-detected]]
+if.app-id = 'org.languagetool.desktop'
+run = 'layout floating'
+check-further-callbacks = true
+
 # assign apps to workspaces
 
 [[on-window-detected]]

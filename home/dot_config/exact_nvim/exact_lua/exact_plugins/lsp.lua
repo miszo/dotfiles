@@ -12,7 +12,6 @@ return {
         'angular-language-server',
         'css-lsp',
         'luacheck',
-        'solargraph',
         'selene',
         'shfmt',
         'stylua',
@@ -30,16 +29,9 @@ return {
       inlay_hints = { enabled = true },
       servers = {
         cssls = {},
-        solargraph = {
-          root_dir = require('lspconfig.util').root_pattern('Gemfile', '.git'),
-          settings = {
-            solargraph = {
-              diagnostics = true,
-              completion = true,
-              definitions = true,
-              hover = true,
-            },
-          },
+        ruby_lsp = {
+          mason = false,
+          cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
         },
         eslint = {
           root_dir = get_root_dir,
