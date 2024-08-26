@@ -19,6 +19,11 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_create_autocmd('VimLeave', {
   callback = function()
-    require('zen-mode').reset()
+    local has_zen_mode, zen_mode = pcall(require, 'zen-mode')
+    if not has_zen_mode then
+      return
+    end
+
+    zen_mode.close()
   end,
 })
