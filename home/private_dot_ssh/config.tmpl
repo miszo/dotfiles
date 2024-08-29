@@ -1,4 +1,4 @@
-{{- if lookPath "orbctl" }}
+{{- if not .computer.isWork }}
 Include ~/.orbstack/ssh/config
 {{- end }}
 
