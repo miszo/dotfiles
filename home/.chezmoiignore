@@ -80,7 +80,6 @@ Support
 {{ end -}}
 
 {{ if .computer.isWork -}}
-.config/aerospace
 .ssh/homelab.pub
 .ssh/unifi.pub
 {{ end -}}
