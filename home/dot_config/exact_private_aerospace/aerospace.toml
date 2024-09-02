@@ -266,6 +266,14 @@ if.app-id = 'com.apple.Safari'
 run = 'move-node-to-workspace 🌐'
 
 [[on-window-detected]]
+if.app-id = 'org.mozilla.com.zen.browser'
+run = 'move-node-to-workspace 🌐'
+
+[[on-window-detected]]
+if.app-id = 'com.duckduckgo.macos.browser'
+run = 'move-node-to-workspace 🌐'
+
+[[on-window-detected]]
 if.app-id = 'com.figma.Desktop'
 run = 'move-node-to-workspace 🎨'
 
