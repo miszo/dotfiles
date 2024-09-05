@@ -2,11 +2,15 @@ local wezterm = require('wezterm') --[[@as Wezterm]]
 local config = wezterm.config_builder()
 wezterm.log_info('reloading')
 
-require('mux').setup()
-require('zen-mode').setup()
-require('tabs').setup(config)
-require('links').setup(config)
-require('keys').setup(config)
+-- load the configuration files
+require('config.mux').setup()
+require('config.zen-mode').setup()
+require('config.tabs').setup(config)
+require('config.links').setup(config)
+require('config.keys').setup(config)
+
+-- load the plugins
+require('plugins.presentation').setup(config)
 
 config.color_scheme = 'Catppuccin Mocha'
 config.scrollback_lines = 4000
@@ -46,7 +50,7 @@ config.underline_position = -6
 config.front_end = 'WebGpu'
 config.webgpu_power_preference = 'HighPerformance'
 config.enable_kitty_graphics = true
-config.native_macos_fullscreen_mode = true
+config.native_macos_fullscreen_mode = false
 config.automatically_reload_config = true
 config.default_cursor_style = 'SteadyBar'
 

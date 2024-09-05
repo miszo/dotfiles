@@ -1,10 +1,11 @@
 local wezterm = require('wezterm') --[[@as Wezterm]]
 
 local M = {}
-M.left_arrow_solid = ''
-M.left_arrow_thin = ''
-M.right_arrow_solid = ''
-M.right_arrow_thin = ''
+M.right_arrow_thick = wezterm.nerdfonts.ple_right_half_circle_thick
+M.right_arrow_thin = wezterm.nerdfonts.ple_rigth_half_circle_thin
+
+M.left_arrow_tick = wezterm.nerdfonts.ple_left_half_circle_thick
+M.left_arrow_thin = wezterm.nerdfonts.ple_left_half_circle_thin
 M.icons = {
   ['cargo'] = wezterm.nerdfonts.dev_rust,
   ['chezmoi'] = wezterm.nerdfonts.custom_folder_config,
@@ -34,6 +35,33 @@ M.icons = {
   ['folder'] = wezterm.nerdfonts.md_folder,
   ['clock'] = wezterm.nerdfonts.md_clock,
   ['fallback'] = wezterm.nerdfonts.dev_code,
+}
+
+local hour_to_icon = {
+  ['00'] = wezterm.nerdfonts.md_clock_time_twelve_outline,
+  ['01'] = wezterm.nerdfonts.md_clock_time_one_outline,
+  ['02'] = wezterm.nerdfonts.md_clock_time_two_outline,
+  ['03'] = wezterm.nerdfonts.md_clock_time_three_outline,
+  ['04'] = wezterm.nerdfonts.md_clock_time_four_outline,
+  ['05'] = wezterm.nerdfonts.md_clock_time_five_outline,
+  ['06'] = wezterm.nerdfonts.md_clock_time_six_outline,
+  ['07'] = wezterm.nerdfonts.md_clock_time_seven_outline,
+  ['08'] = wezterm.nerdfonts.md_clock_time_eight_outline,
+  ['09'] = wezterm.nerdfonts.md_clock_time_nine_outline,
+  ['10'] = wezterm.nerdfonts.md_clock_time_ten_outline,
+  ['11'] = wezterm.nerdfonts.md_clock_time_eleven_outline,
+  ['12'] = wezterm.nerdfonts.md_clock_time_twelve,
+  ['13'] = wezterm.nerdfonts.md_clock_time_one,
+  ['14'] = wezterm.nerdfonts.md_clock_time_two,
+  ['15'] = wezterm.nerdfonts.md_clock_time_three,
+  ['16'] = wezterm.nerdfonts.md_clock_time_four,
+  ['17'] = wezterm.nerdfonts.md_clock_time_five,
+  ['18'] = wezterm.nerdfonts.md_clock_time_six,
+  ['19'] = wezterm.nerdfonts.md_clock_time_seven,
+  ['20'] = wezterm.nerdfonts.md_clock_time_eight,
+  ['21'] = wezterm.nerdfonts.md_clock_time_nine,
+  ['22'] = wezterm.nerdfonts.md_clock_time_ten,
+  ['23'] = wezterm.nerdfonts.md_clock_time_eleven,
 }
 
 local palette = {
@@ -74,7 +102,7 @@ local battery_icons = {
 }
 
 local battery_colors = {
-  ['Charging'] = palette.saphire,
+  ['Charging'] = palette.sapphire,
   ['Discharging'] = palette.peach,
   ['Empty'] = palette.red,
   ['Full'] = palette.green,
@@ -99,7 +127,7 @@ function M.title(tab, max_width)
     end
   end
   if is_zoomed then -- or (#tab.panes > 1 and not tab.is_active) then
-    title = ' ' .. title
+    title = wezterm.nerdfonts.fa_bars .. ' ' .. title
   end
 
   title = wezterm.truncate_right(title, max_width - 3)
@@ -131,7 +159,7 @@ function M.setup(config)
     local is_last = tab_idx == #tabs
     local next_tab = tabs[tab_idx + 1]
     local next_is_active = next_tab and next_tab.is_active
-    local arrow = (tab.is_active or is_last or next_is_active) and M.left_arrow_solid or M.left_arrow_thin
+    local arrow = (tab.is_active or is_last or next_is_active) and M.right_arrow_thick or M.right_arrow_thin
     local arrow_bg = inactive_bg
     local arrow_fg = colors.tab_bar.inactive_tab_edge
 
@@ -207,35 +235,44 @@ function M.setup(config)
     end
 
     -- Time
-    local time = wezterm.strftime('%H:%M')
+    local time = wezterm.time.now()
+    local formatted_time = time:format('%H:%M')
+    local clock_icon = hour_to_icon[time:format('%H')]
 
     -- Left status (left of the tab line)
     window:set_left_status(wezterm.format({
       { Foreground = { Color = stat_color } },
       { Text = '  ' },
-      { Text = wezterm.nerdfonts.cod_window .. '  ' .. stat },
+      { Text = wezterm.nerdfonts.cod_terminal_tmux .. '  ' .. stat },
       { Text = '  ' },
     }))
 
     -- Right status
     window:set_right_status(wezterm.format({
+      --- Current path
       { Text = M.icons['folder'] .. '  ' .. cwd },
+
+      -- Current command
+      'ResetAttributes',
       { Foreground = { Color = palette.surface1 } },
-      { Text = '  ' .. M.right_arrow_thin .. '  ' },
+      { Text = '  ' .. M.left_arrow_thin .. '  ' },
       'ResetAttributes',
       { Foreground = { Color = palette.blue } },
       { Text = cmd_icon .. '  ' .. cmd },
+
+      -- Battery
       'ResetAttributes',
       { Foreground = { Color = palette.surface1 } },
-      { Text = '  ' .. M.right_arrow_thin .. '  ' },
+      { Text = '  ' .. M.left_arrow_thin .. '  ' },
       'ResetAttributes',
       { Foreground = { Color = battery_color } },
       { Text = battery },
-      'ResetAttributes',
+
+      -- Time
       { Foreground = { Color = palette.surface1 } },
-      { Text = '  ' .. M.right_arrow_thin .. '  ' },
+      { Text = '  ' .. M.left_arrow_thin .. '  ' },
       'ResetAttributes',
-      { Text = M.icons['clock'] .. '  ' .. time },
+      { Text = clock_icon .. '  ' .. formatted_time },
       { Text = '  ' },
     }))
   end)
