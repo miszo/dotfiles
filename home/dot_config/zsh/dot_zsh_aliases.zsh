@@ -18,8 +18,6 @@ alias dcu="docker compose up -d"
 alias dcb="docker compose build"
 alias dcd="docker compose down"
 alias dcp="docker compose pull"
-alias ssh="kitty +kitten ssh"
-alias icat="kitty +kitten icat"
 
 alias npmi="npm install"
 alias npmci="npm ci"
