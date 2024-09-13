@@ -97,7 +97,7 @@ return {
     keys = function()
       require('which-key').add({ '<leader>n', group = 'PackageInfo' })
       local function map(key, cmd, desc)
-        vim.keymap.set({ 'n' }, '<LEADER>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
+        vim.keymap.set({ 'n' }, '<leader>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
       end
       local pi = require('package-info')
       map('s', pi.show, 'Show package info')
