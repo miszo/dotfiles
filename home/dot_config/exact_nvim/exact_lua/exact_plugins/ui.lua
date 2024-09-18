@@ -9,11 +9,9 @@ return {
       table.insert(opts.presets, {
         lsp_doc_border = true,
       })
-      opts.lsp.progress = vim.tbl_extend('keep', opts.lsp, {
-        progress = {
-          enabled = true,
-        },
-      })
+      opts.lsp = opts.lsp or {}
+      opts.lsp.progress = opts.lsp.progress or {}
+      opts.lsp.progress.enabled = false
       opts.messages = {
         enabled = false,
       }
@@ -40,6 +38,48 @@ return {
     config = function()
       require('statuscol').setup({
         setopt = true,
+      })
+    end,
+  },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+          border = 'rounded',
+        },
+      },
+    },
+  },
+  -- filename
+  {
+    'b0o/incline.nvim',
+    dependencies = { 'catppuccin/nvim' },
+    event = 'BufReadPre',
+    priority = 1200,
+    config = function()
+      local colors = require('catppuccin.palettes').get_palette('mocha')
+      require('incline').setup({
+        highlight = {
+          groups = {
+            InclineNormal = { guibg = colors.surface0, guifg = colors.lavender },
+            InclineNormalNC = { guibg = 'none', guifg = colors.overlay2 },
+          },
+        },
+        window = { margin = { vertical = 0, horizontal = 1 } },
+        hide = {
+          cursorline = true,
+        },
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+          if vim.bo[props.buf].modified then
+            filename = '[+] ' .. filename
+          end
+
+          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+          return { { icon, guifg = color }, { ' ' }, { filename } }
+        end,
       })
     end,
   },
@@ -78,7 +118,8 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     config = function(_, opts)
-      opts.options = vim.tbl_deep_extend('keep', opts.options, {
+      opts.options = vim.tbl_deep_extend('force', opts.options, {
+        globalstatus = true,
         icons_enabled = true,
         theme = 'auto',
         component_separators = { left = '', right = '' },
