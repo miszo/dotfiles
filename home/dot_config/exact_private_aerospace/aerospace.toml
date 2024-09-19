@@ -286,11 +286,11 @@ if.app-id = 'ru.keepcoder.Telegram'
 run = 'move-node-to-workspace 💬'
 
 [[on-window-detected]]
-if.app-id = 'com.flexibits.fantastical2.mac'
+if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace 📧'
 
 [[on-window-detected]]
-if.app-id = 'com.readdle.SparkDesktop-setapp'
+if.app-id = 'com.apple.mail'
 run = 'move-node-to-workspace 📧'
 
 [[on-window-detected]]
