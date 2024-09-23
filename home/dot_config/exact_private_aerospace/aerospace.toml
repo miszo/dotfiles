@@ -202,6 +202,10 @@ if.app-id = 'com.apple.systempreferences'
 run = 'layout floating'
 
 [[on-window-detected]]
+if.app-id = 'com.apple.AppStore'
+run = 'layout floating'
+
+[[on-window-detected]]
 if.app-id = 'pl.maketheweb.cleanshotx'
 run = 'layout floating'
 
@@ -283,6 +287,14 @@ run = 'move-node-to-workspace 💬'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
+run = 'move-node-to-workspace 💬'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 💬'
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
 run = 'move-node-to-workspace 💬'
 
 [[on-window-detected]]
