@@ -31,25 +31,3 @@ refreshPeriod = "168h"
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-toggle.sh"
 refreshPeriod = "168h"
-
-# Catppuccin-Mocha theme
-[".config/fsh/catppuccin-mocha.ini"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini"
-refreshPeriod = "168h"
-[".config/bat/themes/Catppuccin Mocha.tmTheme"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
-refreshPeriod = "168h"
-[".config/bottom/bottom.toml"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bottom/main/themes/mocha.toml"
-refreshPeriod = "168h"
-[".config/delta/themes/catpuccin.gitconfig"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/delta/main/catppuccin.gitconfig"
-refreshPeriod = "168h"
-[".config/yazi/theme.toml"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha.toml"
-refreshPeriod = "168h"
