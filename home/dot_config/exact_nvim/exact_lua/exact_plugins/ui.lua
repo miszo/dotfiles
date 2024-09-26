@@ -59,15 +59,15 @@ return {
     event = 'BufReadPre',
     priority = 1200,
     config = function()
-      local colors = require('catppuccin.palettes').get_palette('mocha')
+      local colors = require('catppuccin.palettes').get_palette()
       require('incline').setup({
         highlight = {
           groups = {
             InclineNormal = { guibg = colors.surface0, guifg = colors.lavender },
-            InclineNormalNC = { guibg = 'none', guifg = colors.overlay2 },
+            InclineNormalNC = { guibg = colors.none, guifg = colors.overlay2 },
           },
         },
-        window = { margin = { vertical = 0, horizontal = 1 } },
+        window = { margin = { vertical = 0, horizontal = 0 } },
         hide = {
           cursorline = true,
         },
@@ -86,13 +86,30 @@ return {
   -- buffer line
   {
     'akinsho/bufferline.nvim',
+    dependencies = { 'catppuccin/nvim' },
     event = 'VeryLazy',
     opts = function(_, opts)
+      opts.options = opts.options or {}
       opts.options = vim.tbl_extend('force', opts.options, {
         show_buffer_close_icons = false,
         show_close_icon = false,
         separator_style = 'slant',
         always_show_bufferline = true,
+      })
+
+      opts.highlights = opts.highlights or {}
+      local colors = require('catppuccin.palettes').get_palette()
+      local separator_fg = colors.surface0
+      opts.highlights = require('catppuccin.groups.integrations.bufferline').get({
+        custom = {
+          all = {
+            fill = { fg = colors.overlay2, bg = colors.surface0 },
+            separator = { fg = separator_fg, bg = colors.none },
+            separator_visible = { fg = separator_fg, bg = colors.none },
+            separator_selected = { fg = separator_fg, bg = colors.none },
+            offset_separator = { fg = separator_fg, bg = colors.none },
+          },
+        },
       })
     end,
   },

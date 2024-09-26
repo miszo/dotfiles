@@ -78,6 +78,13 @@ function M.setup(config)
     { key = 'j', mods = 'CTRL', action = act.EmitEvent('ActivatePaneDown') },
     { key = 'k', mods = 'CTRL', action = act.EmitEvent('ActivatePaneUp') },
     { key = 'l', mods = 'CTRL', action = act.EmitEvent('ActivatePaneRight') },
+
+    { mods = 'OPT', key = 'LeftArrow', action = act.SendString('\x1b\x62') },
+    { mods = 'OPT', key = 'RightArrow', action = act.SendString('\x1b\x66') },
+    { mods = 'OPT', key = 'Backspace', action = act.SendString('\x17') },
+    { mods = 'CMD', key = 'LeftArrow', action = act.SendString('\x1bOH') },
+    { mods = 'CMD', key = 'RightArrow', action = act.SendString('\x1bOF') },
+    { mods = 'CMD', key = 'Backspace', action = act.SendString('\x15') },
   }
 end
 
