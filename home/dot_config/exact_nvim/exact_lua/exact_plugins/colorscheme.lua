@@ -31,7 +31,7 @@ return {
       opts.highlight_overrides = {
         all = function(c)
           return {
-            TelescopeSelection = { bg = c.surface0 },
+            TelescopeSelection = { fg = c.text, bg = c.surface0 },
             PackageInfoOutdatedVersion = { fg = c.peach },
             PackageInfoUptodateVersion = { fg = c.green },
           }
