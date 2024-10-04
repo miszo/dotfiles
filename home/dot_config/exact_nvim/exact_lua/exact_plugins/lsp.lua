@@ -34,6 +34,12 @@ return {
           mason = false,
           cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
         },
+        intelephense = {
+          enable = true,
+        },
+        phpactor = {
+          enable = false,
+        },
         eslint = {
           root_dir = get_root_dir,
         },

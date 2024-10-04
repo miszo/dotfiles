@@ -66,3 +66,7 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 -- vim.cmd([[ set nofoldenable]])         -- Disable folding at startup
 vim.opt.foldenable = true
+
+-- LSP Server to use for PHP.
+-- Set to "intelephense" to use intelephense instead of phpactor.
+vim.g.lazyvim_php_lsp = 'intelephense'

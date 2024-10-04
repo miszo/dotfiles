@@ -2,11 +2,21 @@ return {
   { 'nvim-treesitter/playground', cmd = 'TSPlaygroundToggle' },
   {
     'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
+    build = function()
+      require('nvim-treesitter.install').update({ with_sync = true })()
+    end,
+    dependencies = {
+      'windwp/nvim-ts-autotag',
+      'RRethy/nvim-treesitter-endwise',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter-context',
+      'LiadOz/nvim-dap-repl-highlights',
+    },
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         'angular',
         'bash',
+        'blade',
         'cpp',
         'css',
         'dockerfile',
@@ -22,6 +32,7 @@ return {
         'markdown',
         'markdown_inline',
         'mermaid',
+        'php',
         'prisma',
         'regex',
         'ruby',
@@ -39,6 +50,9 @@ return {
         'vue',
       })
       opts.autoinstall = true
+      opts.highlight = { enable = true }
+      opts.indent = { enable = true }
+
       -- https://github.com/nvim-treesitter/playground#query-linter
       opts.query_linter = {
         enable = true,
@@ -65,15 +79,29 @@ return {
       }
     end,
     config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
+      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+
+      parser_config.blade = {
+        install_info = {
+          url = 'https://github.com/EmranMR/tree-sitter-blade',
+          files = { 'src/parser.c' },
+          branch = 'main',
+        },
+        filetype = 'blade',
+      }
 
       -- MDX
       vim.filetype.add({
         extension = {
           mdx = 'mdx',
         },
+        pattern = {
+          ['.*%.blade%.php'] = 'blade',
+        },
       })
       vim.treesitter.language.register('markdown', 'mdx')
+
+      require('nvim-treesitter.configs').setup(opts)
     end,
   },
   {
