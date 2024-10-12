@@ -130,8 +130,8 @@ function M.title(tab, max_width)
     title = wezterm.nerdfonts.fa_bars .. ' ' .. title
   end
 
-  title = wezterm.truncate_right(title, max_width - 3)
-  return ' ' .. title .. ' '
+  title = wezterm.truncate_right(title, max_width - 8)
+  return ' ' .. tab.tab_index + 1 .. ': ' .. title .. ' '
 end
 
 ---@param config Config
@@ -158,9 +158,7 @@ function M.setup(config)
       end
     end
     local is_last = tab_idx == #tabs
-    local next_tab = tabs[tab_idx + 1]
-    local next_is_active = next_tab and next_tab.is_active
-    local arrow = (tab.is_active or is_last or next_is_active) and M.right_arrow_thick or M.right_arrow_thin
+    local arrow = (tab.is_active or is_last) and M.right_arrow_thick or M.right_arrow_thin
     local arrow_bg = inactive_bg
     local arrow_fg = colors.tab_bar.inactive_tab_edge
 
@@ -170,9 +168,9 @@ function M.setup(config)
     elseif tab.is_active then
       arrow_bg = inactive_bg
       arrow_fg = active_bg
-    elseif next_is_active then
-      arrow_bg = active_bg
+    else
       arrow_fg = inactive_bg
+      arrow_bg = inactive_bg
     end
 
     local ret = tab.is_active
@@ -181,6 +179,10 @@ function M.setup(config)
           { Attribute = { Italic = true } },
         }
       or {}
+    ret[#ret + 1] = { Foreground = { Color = arrow_fg } }
+    ret[#ret + 1] = { Background = { Color = arrow_bg } }
+    ret[#ret + 1] = { Text = M.left_arrow_tick }
+    ret[#ret + 1] = 'ResetAttributes'
     ret[#ret + 1] = { Text = title }
     ret[#ret + 1] = { Foreground = { Color = arrow_fg } }
     ret[#ret + 1] = { Background = { Color = arrow_bg } }

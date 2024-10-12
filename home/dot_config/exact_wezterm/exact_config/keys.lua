@@ -86,6 +86,14 @@ function M.setup(config)
     { mods = 'CMD', key = 'RightArrow', action = act.SendString('\x1bOF') },
     { mods = 'CMD', key = 'Backspace', action = act.SendString('\x15') },
   }
+
+  for i = 1, 9 do
+    table.insert(config.keys, {
+      key = tostring(i),
+      mods = 'LEADER',
+      action = act.ActivateTab(i - 1),
+    })
+  end
 end
 
 return M
