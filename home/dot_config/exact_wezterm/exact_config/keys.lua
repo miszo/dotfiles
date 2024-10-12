@@ -49,7 +49,7 @@ function M.setup(config)
     activate_pane(window, pane, 'Down', 'j')
   end)
 
-  config.leader = { key = ' ', mods = 'SHIFT', timeout_milliseconds = 1000 }
+  config.leader = { key = 'q', mods = 'ALT', timeout_milliseconds = 2000 }
   config.keys = {
     -- Pane keybindings
     { key = 's', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
@@ -79,10 +79,10 @@ function M.setup(config)
     { key = 'k', mods = 'CTRL', action = act.EmitEvent('ActivatePaneUp') },
     { key = 'l', mods = 'CTRL', action = act.EmitEvent('ActivatePaneRight') },
 
-    { mods = 'OPT', key = 'LeftArrow', action = act.SendString('\x1b\x62') },
-    { mods = 'OPT', key = 'RightArrow', action = act.SendString('\x1b\x66') },
-    { mods = 'OPT', key = 'Backspace', action = act.SendString('\x17') },
-    { mods = 'CMD', key = 'LeftArrow', action = act.SendString('\x1bOH') },
+    { mods = 'ALT', key = 'LeftArrow', action = act.SendString('\x1b\x62') },
+    { mods = 'ALT', key = 'RightArrow', action = act.SendString('\x1b\x66') },
+    { mods = 'ALT', key = 'Backspace', action = act.SendString('\x17') },
+    { mods = 'CMD', key = 'LeftArrow', action = act.SendString('X1bOH') },
     { mods = 'CMD', key = 'RightArrow', action = act.SendString('\x1bOF') },
     { mods = 'CMD', key = 'Backspace', action = act.SendString('\x15') },
   }

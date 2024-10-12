@@ -142,6 +142,7 @@ function M.setup(config)
   config.hide_tab_bar_if_only_one_tab = false
   config.tab_max_width = 32
   config.unzoom_on_switch_pane = true
+  config.tab_and_split_indices_are_zero_based = true
 
   wezterm.on('format-tab-title', function(tab, tabs, _, event_config, _, max_width)
     local title = M.title(tab, max_width)

@@ -50,6 +50,7 @@ config.underline_thickness = 3
 config.cursor_thickness = 3
 config.underline_position = -6
 
+config.term = 'xterm-kitty'
 config.front_end = 'WebGpu'
 config.webgpu_power_preference = 'HighPerformance'
 config.enable_kitty_graphics = true
