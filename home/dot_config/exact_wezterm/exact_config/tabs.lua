@@ -157,15 +157,10 @@ function M.setup(config)
         break
       end
     end
-    local is_last = tab_idx == #tabs
-    local arrow = (tab.is_active or is_last) and M.right_arrow_thick or M.right_arrow_thin
     local arrow_bg = inactive_bg
     local arrow_fg = colors.tab_bar.inactive_tab_edge
 
-    if is_last then
-      arrow_fg = tab.is_active and active_bg or inactive_bg
-      arrow_bg = colors.tab_bar.background
-    elseif tab.is_active then
+    if tab.is_active then
       arrow_bg = inactive_bg
       arrow_fg = active_bg
     else
@@ -186,7 +181,7 @@ function M.setup(config)
     ret[#ret + 1] = { Text = title }
     ret[#ret + 1] = { Foreground = { Color = arrow_fg } }
     ret[#ret + 1] = { Background = { Color = arrow_bg } }
-    ret[#ret + 1] = { Text = arrow }
+    ret[#ret + 1] = { Text = M.right_arrow_thick }
     return ret
   end)
 
