@@ -67,6 +67,11 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 -- vim.cmd([[ set nofoldenable]])         -- Disable folding at startup
 vim.opt.foldenable = true
 
+-- LSP Server to use for Ruby.
+-- Set to "solargraph" to use solargraph instead of ruby_lsp.
+vim.g.lazyvim_ruby_lsp = 'ruby_lsp'
+vim.g.lazyvim_ruby_formatter = 'rubocop'
+
 -- LSP Server to use for PHP.
 -- Set to "intelephense" to use intelephense instead of phpactor.
 vim.g.lazyvim_php_lsp = 'intelephense'
