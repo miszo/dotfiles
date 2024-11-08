@@ -3,7 +3,6 @@ return {
     'folke/noice.nvim',
     dependencies = {
       'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
     },
     opts = function(_, opts)
       table.insert(opts.presets, {
@@ -22,15 +21,6 @@ return {
     end,
     keys = {
       { '<leader>nd', '<cmd>NoiceDismiss<CR>', desc = 'Dismiss Noice Message' },
-    },
-  },
-  {
-    'rcarriga/nvim-notify',
-    opts = {
-      -- background_colour = '#000000',
-      level = vim.log.levels.ERROR, -- help vim.log.levels
-      render = 'default',
-      stages = 'fade_in_slide_out',
     },
   },
   {
