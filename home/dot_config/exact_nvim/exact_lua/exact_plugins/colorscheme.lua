@@ -20,6 +20,7 @@ return {
           enabled = true,
           custom_bg = colors.mantle,
         },
+        overseer = true,
         telescope = {
           enabled = true,
           style = 'nvchad',

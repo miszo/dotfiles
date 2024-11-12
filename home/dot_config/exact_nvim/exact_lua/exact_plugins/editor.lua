@@ -57,7 +57,7 @@ return {
   },
   -- Completion emoji
   {
-    'nvim-cmp',
+    'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-emoji' },
     opts = function(_, opts)
       table.insert(opts.sources, { name = 'emoji' })
@@ -86,7 +86,7 @@ return {
   -- NPM Package info
   {
     'vuki656/package-info.nvim',
-    dependencies = { 'folke/which-key.nvim', 'MunifTanjim/nui.nvim', 'catppuccin/nvim' },
+    dependencies = { 'MunifTanjim/nui.nvim', 'catppuccin/nvim' },
     ft = { 'json' },
     opts = {
       autostart = true,
@@ -95,7 +95,6 @@ return {
       package_manager = 'pnpm',
     },
     keys = function()
-      require('which-key').add({ '<leader>n', group = 'PackageInfo' })
       local function map(key, cmd, desc)
         vim.keymap.set({ 'n' }, '<leader>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
       end
@@ -112,24 +111,25 @@ return {
   -- Open openapi preview in swagger-ui
   {
     'vinnymeller/swagger-preview.nvim',
-    build = 'npm install -g swagger-ui-watcher',
+    build = 'npm i',
+    cmd = { 'SwaggerPreview', 'SwaggerPreviewStop', 'SwaggerPreviewToggle' },
     keys = {
       {
-        '<leader>os',
+        '<leader>Os',
         function()
           require('swagger-preview').start_server()
         end,
         desc = 'Open preview OpenAPI in Swagger UI',
       },
       {
-        '<leader>ox',
+        '<leader>Ox',
         function()
           require('swagger-preview').stop_server()
         end,
         desc = 'Stop preview OpenAPI in Swagger UI',
       },
       {
-        '<leader>ot',
+        '<leader>Ot',
         function()
           require('swagger-preview').toggle_server()
         end,
@@ -212,6 +212,17 @@ return {
         showMissingFiles = false,
       })
     end,
+  },
+  -- Which key
+  {
+    'folke/which-key.nvim',
+    optional = true,
+    opts = {
+      spec = {
+        { '<leader>n', group = 'PackageInfo' },
+        { '<leader>O', group = 'OpenAPI Swagger' },
+      },
+    },
   },
   -- Local plugins
   {
