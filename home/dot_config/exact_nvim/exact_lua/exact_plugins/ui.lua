@@ -161,11 +161,12 @@ return {
     keys = { { '<leader>z', '<cmd>ZenMode<cr>', desc = 'Zen Mode' } },
   },
   {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
-    opts = function(_, opts)
-      local logo = [[
-
+    'folke/snacks.nvim',
+    opts = {
+      dashboard = {
+        width = 80,
+        preset = {
+          header = [[
  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
@@ -174,10 +175,27 @@ return {
  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
 
 [miszo]
-  ]]
-
-      logo = string.rep('\n', 8) .. logo .. '\n\n'
-      opts.config.header = vim.split(logo, '\n')
-    end,
+  ]],
+          ---@param keys snacks.dashboard.Item[]
+          keys = function(keys)
+            -- add LazyExtra before Lazy
+            for k, key in ipairs(keys) do
+              if key.action == ':Lazy' then
+                key.key = 'l' -- we don't have multiple panes, so `l` is free
+                table.insert(keys, k, { icon = ' ', desc = 'Lazy Extras', action = ':LazyExtras', key = 'x' })
+                break
+              end
+            end
+          end,
+        },
+        sections = {
+          { section = 'header' },
+          { icon = ' ', title = 'Keymaps', section = 'keys', indent = 2, padding = 1 },
+          { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
+          { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
+          { section = 'startup' },
+        },
+      },
+    },
   },
 }
