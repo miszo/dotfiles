@@ -1,3 +1,4 @@
+# vim: syntax=toml
 # Place a copy of this config to ~/.aerospace.toml
 # After that, you can edit ~/.aerospace.toml to your liking
 # In your config, you can drop keys you don't care about
@@ -247,9 +248,11 @@ run = 'layout floating'
 if.app-id = 'org.languagetool.desktop'
 run = 'layout floating'
 
+{{- if .computer.isWork }}
 [[on-window-detected]]
-if.app-id = 'com.mosyle.macos.business'
+if.app-id = {{ .selfService.appId | squote }}
 run = 'layout floating'
+{{- end }}
 
 # assign apps to workspaces
 

@@ -1,3 +1,4 @@
+# vim: syntax=toml
 {{- $opPersonalAccountCode := promptStringOnce . "opPersonalAccountCode" "What is your 1Password personal account" -}}
 {{- $workComputerPrefix := promptStringOnce . "workComputerPrefix" "What is your work computer name prefix" -}}
 
@@ -131,6 +132,11 @@ username = {{ onepasswordRead "op://Employee/gemsrc/username" $opWorkAccountCode
 secret = {{ onepasswordRead "op://Employee/gemsrc/credential" $opWorkAccountCode | quote }}
 region = {{ onepasswordRead "op://Employee/gemsrc/region" $opWorkAccountCode | quote }}
 endpoint = {{ onepasswordRead "op://Employee/gemsrc/endpoint" $opWorkAccountCode | quote }}
+{{- end }}
+
+{{- if $isWork }}
+[data.selfService]
+appId = {{ onepasswordRead "op://Employee/Self service application/appId" $opWorkAccountCode | quote }}
 {{- end }}
 
 [gpg]
