@@ -31,8 +31,7 @@
 {{- $opWorkAccountId = output (joinPath .chezmoi.workingTree "./scripts/get_op_account.sh") $opWorkAccountCode | trim -}}
 {{- $opWorkVaultName = "Employee" -}}
 {{- $opWorkVaultId = output (joinPath .chezmoi.workingTree "./scripts/get_op_vault.sh") $opWorkVaultName $opWorkAccountCode | trim -}}
-{{- end -}}
-
+{{- end }}
 
 encryption = "gpg"
 
