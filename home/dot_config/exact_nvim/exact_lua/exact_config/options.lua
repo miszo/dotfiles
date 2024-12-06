@@ -62,10 +62,11 @@ vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
 -- Code folding
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
--- vim.cmd([[ set nofoldenable]])         -- Disable folding at startup
-vim.opt.foldenable = true
+vim.opt.foldenable = false
+
+vim.lsp.set_log_level('off')
+
+vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 
 -- LSP Server to use for Ruby.
 -- Set to "solargraph" to use solargraph instead of ruby_lsp.

@@ -198,6 +198,11 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # floating windows for apps
 
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 run = 'layout floating'

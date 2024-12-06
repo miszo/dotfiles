@@ -224,11 +224,4 @@ return {
       },
     },
   },
-  -- Local plugins
-  {
-    dir = '../local-plugins/copy-filepath',
-    config = function()
-      require('../local-plugins/copy-filepath').setup()
-    end,
-  },
 }
