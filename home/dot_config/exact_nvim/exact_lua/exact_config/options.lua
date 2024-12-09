@@ -76,3 +76,6 @@ vim.g.lazyvim_ruby_formatter = 'rubocop'
 -- LSP Server to use for PHP.
 -- Set to "intelephense" to use intelephense instead of phpactor.
 vim.g.lazyvim_php_lsp = 'intelephense'
+
+-- Enable this option to avoid Biome conflicts with Prettier.
+vim.g.lazyvim_prettier_needs_config = true
