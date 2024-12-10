@@ -163,6 +163,8 @@ return {
   {
     'folke/snacks.nvim',
     opts = {
+      bigfile = { enabled = true },
+      ---@class snacks.dashboard.Config
       dashboard = {
         width = 80,
         preset = {
@@ -184,6 +186,15 @@ return {
           { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
           { section = 'startup' },
         },
+      },
+    },
+    keys = {
+      {
+        '<leader>fN',
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = 'Notification History',
       },
     },
   },

@@ -21,6 +21,7 @@ return {
           custom_bg = colors.mantle,
         },
         overseer = true,
+        snacks = true,
         telescope = {
           enabled = true,
           style = 'nvchad',
@@ -34,7 +35,8 @@ return {
           return {
             TelescopeSelection = { fg = c.text, bg = c.surface0 },
             PackageInfoOutdatedVersion = { fg = c.peach },
-            PackageInfoUptodateVersion = { fg = c.green },
+            PackageInfoUpToDateVersion = { fg = c.green },
+            PackageInfoInErrorVersion = { fg = c.red },
           }
         end,
       }
