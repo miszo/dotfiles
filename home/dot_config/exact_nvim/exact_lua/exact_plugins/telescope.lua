@@ -1,4 +1,5 @@
 local Util = require('lazyvim.util')
+local multigrep = require('utils.telescope.multigrep')
 
 return {
   {
@@ -53,6 +54,11 @@ return {
       },
       {
         '<leader>fm',
+        multigrep.live_multigrep,
+        desc = 'Live Multigrep',
+      },
+      {
+        '<leader>fM',
         function()
           require('telescope').extensions.node_modules.list()
         end,
