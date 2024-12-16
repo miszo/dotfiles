@@ -38,7 +38,3 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 keymap.set('n', '<leader>r', function()
   require('utils.hsl').replaceHexWithHSL()
 end, { desc = 'Replace hex with HSL' })
-
-keymap.set('n', '<leader>i', function()
-  require('utils.lsp').toggleInlayHints()
-end, { desc = 'Toggle inlay hints' })

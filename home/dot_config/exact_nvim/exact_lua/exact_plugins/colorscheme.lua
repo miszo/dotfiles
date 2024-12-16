@@ -11,10 +11,12 @@ return {
 
       opts.integrations = opts.integrations or {}
       opts.integrations = vim.tbl_deep_extend('force', opts.integrations, {
+        blink_cmp = true,
         cmp = true,
         fidget = true,
         grug_far = true,
         harpoon = true,
+        mason = true,
         neotree = true,
         navic = {
           enabled = true,
@@ -37,6 +39,8 @@ return {
             PackageInfoOutdatedVersion = { fg = c.peach },
             PackageInfoUpToDateVersion = { fg = c.green },
             PackageInfoInErrorVersion = { fg = c.red },
+            SnacksIndent = { link = 'Whitespace' },
+            SnacksIndentScope = { fg = c.text },
           }
         end,
       }

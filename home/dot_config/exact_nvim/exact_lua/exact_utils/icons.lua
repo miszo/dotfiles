@@ -32,6 +32,7 @@ M.icons = {
     Constant = '󰏿 ',
     Constructor = ' ',
     Copilot = ' ',
+    Emoji = '󰞅 ',
     Enum = ' ',
     EnumMember = ' ',
     Event = ' ',
