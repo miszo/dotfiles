@@ -33,6 +33,39 @@ return {
         ruby_lsp = {
           mason = false,
           cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
+          cmd_env = {
+            BUNDLE_GEMFILE = vim.fn.expand('~/.ruby-lsp/Gemfile'),
+          },
+          init_options = {
+            enabledFeatures = {
+              'codeActions',
+              'codeLens',
+              'completion',
+              'definition',
+              'diagnostics',
+              'documentHighlights',
+              'documentLink',
+              'documentSymbols',
+              'foldingRanges',
+              'formatting',
+              'hover',
+              'selectionRanges',
+              'semanticHighlighting',
+              'signatureHelp',
+              'typeHierarchy',
+              'workspaceSymbol',
+            },
+            experimentalFeaturesEnabled = false,
+            formatter = 'auto',
+            indexing = {
+              excludedPatterns = {
+                '**/test/**/*',
+                '**/spec/**/*',
+                '**/db/**/*',
+                '**/vendor/**/*',
+              },
+            },
+          },
         },
         eslint = {
           root_dir = get_root_dir,
