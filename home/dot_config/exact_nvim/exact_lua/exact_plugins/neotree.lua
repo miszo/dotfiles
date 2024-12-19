@@ -1,3 +1,11 @@
+local trash_not_installed = function(commmand_name)
+  vim.api.nvim_echo({
+    { '- Trash utility not installed. Make sure to install it first\n', nil },
+    { '- In macOS run `brew install trash`\n', nil },
+    { '- Or delete the custom `' .. commmand_name .. '` command section in neo-tree', nil },
+  }, false, {})
+end
+
 return {
   {
     'vhyrro/luarocks.nvim',
@@ -40,11 +48,7 @@ return {
         -- overwrite delete to use trash instead of rm
         delete = function(state)
           if vim.fn.executable('trash') == 0 then
-            vim.api.nvim_echo({
-              { '- Trash utility not installed. Make sure to install it first\n', nil },
-              { '- In macOS run `brew install trash`\n', nil },
-              { '- Or delete the `custom delete command` section in neo-tree', nil },
-            }, false, {})
+            trash_not_installed('delete')
             return
           end
           local inputs = require('neo-tree.ui.inputs')
@@ -62,11 +66,7 @@ return {
         -- overwrite default 'delete_visual' command to 'trash' x n.
         delete_visual = function(state, selected_nodes)
           if vim.fn.executable('trash') == 0 then
-            vim.api.nvim_echo({
-              { '- Trash utility not installed. Make sure to install it first\n', nil },
-              { '- In macOS run `brew install trash`\n', nil },
-              { '- Or delete the `custom delete command` section in neo-tree', nil },
-            }, false, {})
+            trash_not_installed('delete_visual')
             return
           end
           local inputs = require('neo-tree.ui.inputs')

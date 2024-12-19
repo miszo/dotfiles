@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 ---@class snacks.bigfile.Config
 local bigfile = { enabled = true }
 
@@ -31,6 +32,82 @@ local indent = {
   only_scope = true,
   only_current = true,
 }
+
+local scratch_delete_all = function()
+  local items = Snacks.scratch.list()
+  local count = #items
+
+  if count == 0 then
+    vim.notify('No scratch buffers to delete', 'info')
+    return
+  end
+
+  for _, item in ipairs(items) do
+    os.remove(item.file)
+  end
+
+  vim.notify('Deleted ' .. count .. ' scratch buffer(s)', 'info')
+end
+
+---@type snacks.win.Config
+local ts_win = {
+  keys = {
+    ['source'] = {
+      '<C-s>',
+      '<cmd>Tsw rt=bun show_variables=true show_order=true<cr>',
+      desc = 'Execute buffer',
+      mode = { 'n', 'x' },
+    },
+    ['delete'] = {
+      '<C-d>',
+      function(self)
+        local buf_name = vim.api.nvim_buf_get_name(self.buf)
+        os.remove(buf_name)
+        vim.api.nvim_buf_delete(self.buf, { force = true })
+        vim.notify('Deleted scratch buffer' .. buf_name, 'info')
+      end,
+      desc = 'Delete buffer',
+      mode = { 'n', 'x' },
+    },
+  },
+}
+
+---@class snacks.scratch.Config
+local scratch = {
+  root = vim.fn.stdpath('data') .. '/scratch',
+  name = 'Scratch',
+  actions = {},
+  win = {
+    width = 0.5,
+    height = 0.9,
+    style = 'scratch',
+  },
+  ft = function()
+    if vim.bo.buftype == '' and vim.bo.filetype ~= '' then
+      return vim.bo.filetype
+    end
+    return 'typescript'
+  end,
+  ---@type table<string, snacks.win.Config>
+  win_by_ft = {
+    lua = {
+      keys = {
+        ['source'] = {
+          '<C-s>',
+          function(self)
+            local name = 'scratch.' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(self.buf), ':e')
+            Snacks.debug.run({ buf = self.buf, name = name })
+          end,
+          desc = 'Source buffer',
+          mode = { 'n', 'x' },
+        },
+      },
+    },
+    typescript = ts_win,
+    javascript = ts_win,
+  },
+}
+
 ---@class snacks.zen.Config
 local zen = {
   toggles = {
@@ -50,9 +127,15 @@ return {
       bigfile = bigfile,
       dashboard = dashboard,
       indent = indent,
+      scratch = scratch,
       zen = zen,
     },
     keys = {
+      {
+        '<leader>bs',
+        scratch_delete_all,
+        desc = 'Delete all scratch buffers',
+      },
       {
         '<leader>fN',
         function()
