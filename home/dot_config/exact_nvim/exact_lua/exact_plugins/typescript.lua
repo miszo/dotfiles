@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   {
     'dmmulroy/tsc.nvim',

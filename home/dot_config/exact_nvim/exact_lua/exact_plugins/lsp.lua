@@ -3,6 +3,7 @@ local get_root_dir = function(...)
   return util.root_pattern('package.json', 'tsconfig.json')(...) or util.root_pattern('.git')(...)
 end
 
+---@type LazySpec[]
 return {
   -- tools
   {
@@ -24,8 +25,9 @@ return {
   -- lsp servers
   {
     'neovim/nvim-lspconfig',
-    ---@class PluginLspOpts
+    ---@type lspconfig.options
     opts = {
+      diagnostics = { virtual_text = { prefix = 'icons' } },
       inlay_hints = { enabled = false },
       servers = {
         cssls = {},
@@ -39,7 +41,7 @@ return {
           init_options = {
             enabledFeatures = {
               'codeActions',
-              'codeLens',
+              -- "codeLens", -- adds "Run/Debug Test" lenses and ruby-lsp-rails "Go to Controller Action Route"
               'completion',
               'definition',
               'diagnostics',

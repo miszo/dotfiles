@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   -- Go forward/backward with square brackets
   {

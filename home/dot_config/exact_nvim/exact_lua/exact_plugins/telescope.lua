@@ -1,6 +1,7 @@
 local Util = require('lazyvim.util')
 local multigrep = require('utils.telescope.multigrep')
 
+---@type LazySpec[]
 return {
   {
     'nvim-telescope/telescope.nvim',

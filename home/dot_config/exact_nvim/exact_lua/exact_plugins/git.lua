@@ -14,6 +14,7 @@ local get_gh_env = function()
   }
 end
 
+---@type LazySpec[]
 return {
   {
     'tpope/vim-fugitive',

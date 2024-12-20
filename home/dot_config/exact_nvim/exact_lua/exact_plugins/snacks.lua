@@ -119,6 +119,7 @@ local zen = {
   },
 }
 
+---@type LazySpec[]
 return {
   {
     'folke/snacks.nvim',

@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   {
     'mrjones2014/op.nvim',

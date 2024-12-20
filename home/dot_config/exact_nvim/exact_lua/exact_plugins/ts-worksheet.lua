@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   {
     'typed-rocks/ts-worksheet-neovim',

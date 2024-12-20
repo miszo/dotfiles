@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   {
     dir = vim.g.local_plugins_path .. 'copy-filepath',
