@@ -6,6 +6,7 @@ local trash_not_installed = function(commmand_name)
   }, false, {})
 end
 
+---@module "lazy"
 ---@type LazySpec[]
 return {
   {

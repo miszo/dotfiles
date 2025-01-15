@@ -14,6 +14,7 @@ local get_gh_env = function()
   }
 end
 
+---@module "lazy"
 ---@type LazySpec[]
 return {
   {

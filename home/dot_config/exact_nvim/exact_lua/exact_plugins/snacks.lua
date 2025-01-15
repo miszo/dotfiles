@@ -119,6 +119,7 @@ local zen = {
   },
 }
 
+---@module "lazy"
 ---@type LazySpec[]
 return {
   {

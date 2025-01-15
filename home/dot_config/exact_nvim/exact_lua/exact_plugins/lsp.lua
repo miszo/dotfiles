@@ -3,6 +3,7 @@ local get_root_dir = function(...)
   return util.root_pattern('package.json', 'tsconfig.json')(...) or util.root_pattern('.git')(...)
 end
 
+---@module "lazy"
 ---@type LazySpec[]
 return {
   -- tools
