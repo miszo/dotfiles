@@ -197,66 +197,11 @@ alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
 # floating windows for apps
-
-
+{{ range .floating_apps }}
 [[on-window-detected]]
-if.app-id = 'com.apple.finder'
+if.app-id = {{ . | squote }}
 run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.systempreferences'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.AppStore'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'pl.maketheweb.cleanshotx'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.1password.1password'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.1password.1password'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.ActivityMonitor'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'dev.kdrag0n.MacVirt'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-if.window-title-regex-substring = 'Picture in Picture'
-run = 'layout floating'
-check-further-callbacks = true
-
-[[on-window-detected]]
-if.app-id = 'com.jordanbaird.Ice'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.macpaw.CleanMyMac-setapp'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.iBoysoft.NTFS-Assistant-website-setapp'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'org.languagetool.desktop'
-run = 'layout floating'
-
-[[on-window-detected]]
-if.app-id = 'com.shure.motivmix'
-run = 'layout floating'
-
+{{ end }}
 {{- if .computer.isWork }}
 [[on-window-detected]]
 if.app-id = {{ .selfService.appId | squote }}
