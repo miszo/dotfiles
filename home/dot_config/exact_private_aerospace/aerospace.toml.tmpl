@@ -253,6 +253,10 @@ run = 'layout floating'
 if.app-id = 'org.languagetool.desktop'
 run = 'layout floating'
 
+[[on-window-detected]]
+if.app-id = 'com.shure.motivmix'
+run = 'layout floating'
+
 {{- if .computer.isWork }}
 [[on-window-detected]]
 if.app-id = {{ .selfService.appId | squote }}
