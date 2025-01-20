@@ -65,6 +65,10 @@ signingkey = {{ onepasswordRead "op://dev/Commit signing key/public key" $opPers
 [data.git.work]
 email = {{ $workEmail | quote }}
 signingkey = {{ onepasswordRead "op://Employee/Commit signing key/public key" $opWorkAccountCode | quote }}
+
+[data.lazygit.work]
+serviceName = {{ onepasswordRead "op://Employee/LazyGit service/name" $opWorkAccountCode | quote }}
+serviceValue = {{ onepasswordRead "op://Employee/LazyGit service/value" $opWorkAccountCode | quote }}
 {{- end }}
 
 [data.op.personal]

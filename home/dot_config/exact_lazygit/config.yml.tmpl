@@ -1,3 +1,10 @@
+# vim: syntax=yaml
+{{ if .computer.isWork -}}
+services:
+  {{ .lazygit.work.serviceName | quote }}: {{ .lazygit.work.serviceValue | quote }}
+{{- end }}
+os:
+  openLink: open "$(echo {{ "{{link}}" | quote }} | sed 's/%2F/\//g')"
 gui:
   showFileIcons: true
   nerdFontsVersion: "3"
