@@ -142,6 +142,9 @@ endpoint = {{ onepasswordRead "op://Employee/gemsrc/endpoint" $opWorkAccountCode
 appId = {{ onepasswordRead "op://Employee/Self service application/appId" $opWorkAccountCode | quote }}
 {{- end }}
 
+[data.posting]
+themeDirectory = {{ joinPath .chezmoi.homeDir ".config" "posting" "themes" | quote }}
+
 [gpg]
 symmetric = true
 args = ["--batch", "--passphrase", {{ $gpgPassphrase | quote }}, "--no-symkey-cache"]

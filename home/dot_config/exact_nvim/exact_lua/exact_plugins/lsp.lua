@@ -42,7 +42,6 @@ return {
           init_options = {
             enabledFeatures = {
               'codeActions',
-              -- "codeLens", -- adds "Run/Debug Test" lenses and ruby-lsp-rails "Go to Controller Action Route"
               'completion',
               'definition',
               'diagnostics',
@@ -66,6 +65,17 @@ return {
                 '**/spec/**/*',
                 '**/db/**/*',
                 '**/vendor/**/*',
+                '**/.git',
+                '**/.svn',
+                '**/.hg',
+                '**/CVS',
+                '**/.DS_Store',
+                '**/tmp/**/*',
+                '**/node_modules/**/*',
+                '**/bower_components/**/*',
+                '**/dist/**/*',
+                '**/.git/objects/**',
+                '**/.git/subtree-cache/**',
               },
             },
           },

@@ -1,0 +1,29 @@
+name: catppuccin_mocha
+primary: "#cba6f7"
+secondary: "#a6e3a1"
+accent: "#94e2d5"
+background: "#1e1e2e"
+surface: "#45475a"
+error: "#f38ba8"
+success: "#74c7ec"
+warning: "#f9e2af"
+
+text_area:
+  cursor: "reverse"
+  cursor_line: "underline"
+  selection: "reverse"
+  gutter: "bold #b4befe"
+  matched_bracket: "black on #a6e3a1"
+url:
+  base: "italic #94e2d5"
+  protocol: "bold #a6e3a1"
+syntax:
+  json_key: "italic #94e2d5"
+  json_number: "#cba6f7"
+  json_string: "#94e2d5"
+  json_boolean: "#94e2d5"
+  json_null: "underline #94e2d5"
+
+author: Miszo Radomski
+description: A soothing pastel theme for the high-spirited!
+homepage: https://github.com/catppuccin/catppuccin

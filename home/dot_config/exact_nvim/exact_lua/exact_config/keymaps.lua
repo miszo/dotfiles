@@ -8,6 +8,10 @@ keymap.set('n', '<leader>dd', function()
   Snacks.terminal({ 'lazydocker' }, { cwd = LazyVim.root() })
 end, { desc = 'Lazydocker' })
 
+keymap.set('n', '<leader>R', function()
+  Snacks.terminal({ 'posting' }, { cwd = LazyVim.root() })
+end, { desc = 'Posting' })
+
 -- Save file
 keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save all opened files' })
 
