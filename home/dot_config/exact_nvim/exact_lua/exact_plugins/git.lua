@@ -52,7 +52,15 @@ return {
       'nvim-lua/plenary.nvim',
     },
     config = function()
-      require('gitlinker').setup()
+      local callbacks = {}
+      local gitlab_host = os.getenv('GITLINKER_GITLAB_HOST')
+      if gitlab_host then
+        callbacks[gitlab_host] = require('gitlinker.hosts').get_gitlab_type_url
+      end
+
+      require('gitlinker').setup({
+        callbacks = callbacks,
+      })
     end,
   },
 }

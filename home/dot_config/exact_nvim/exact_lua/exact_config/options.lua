@@ -79,5 +79,6 @@ vim.g.lazyvim_php_lsp = 'intelephense'
 
 -- Enable this option to avoid Biome conflicts with Prettier.
 vim.g.lazyvim_prettier_needs_config = true
--- Set Telescope as the default picker
-vim.g.lazyvim_picker = 'telescope'
+
+-- Set Snacks.picker as the default picker
+vim.g.lazyvim_picker = 'snacks'

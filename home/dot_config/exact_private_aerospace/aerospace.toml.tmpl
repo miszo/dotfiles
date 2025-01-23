@@ -197,7 +197,7 @@ alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
 # floating windows for apps
-{{ range .floating_apps }}
+{{ range .aerospace_apps.floating }}
 [[on-window-detected]]
 if.app-id = {{ . | squote }}
 run = 'layout floating'
@@ -208,60 +208,59 @@ if.app-id = {{ .selfService.appId | squote }}
 run = 'layout floating'
 {{- end }}
 
-# assign apps to workspaces
-
+# assign apps to workspace_1
+{{ range .aerospace_apps.workspace_1 }}
 [[on-window-detected]]
-if.app-id = 'co.teamport.around'
+if.app-id = {{ . | squote }}
 run = 'move-node-to-workspace 1️⃣'
+{{- end }}
 
+# assign apps to workspace_b
+{{ range .aerospace_apps.workspace_b }}
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = 'move-node-to-workspace 📟'
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace ⚒️'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Safari'
+if.app-id = {{ . | squote }}
 run = 'move-node-to-workspace 🌐'
+{{- end }}
 
+# assign apps to workspace_d
+{{ range .aerospace_apps.workspace_d }}
 [[on-window-detected]]
-if.app-id = 'org.mozilla.com.zen.browser'
-run = 'move-node-to-workspace 🌐'
-
-[[on-window-detected]]
-if.app-id = 'com.duckduckgo.macos.browser'
-run = 'move-node-to-workspace 🌐'
-
-[[on-window-detected]]
-if.app-id = 'com.figma.Desktop'
+if.app-id = {{ . | squote }}
 run = 'move-node-to-workspace 🎨'
+{{- end }}
 
+# assign apps to workspace_m
+{{ range .aerospace_apps.workspace_m }}
 [[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace 💬'
-
-[[on-window-detected]]
-if.app-id = 'ru.keepcoder.Telegram'
-run = 'move-node-to-workspace 💬'
-
-[[on-window-detected]]
-if.app-id = 'net.whatsapp.WhatsApp'
-run = 'move-node-to-workspace 💬'
-
-[[on-window-detected]]
-if.app-id = 'com.hnc.Discord'
-run = 'move-node-to-workspace 💬'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iCal'
+if.app-id = {{ . | squote }}
 run = 'move-node-to-workspace 📧'
+{{- end }}
 
+# assign apps to workspace_t
+{{ range .aerospace_apps.workspace_t }}
 [[on-window-detected]]
-if.app-id = 'com.apple.mail'
-run = 'move-node-to-workspace 📧'
+if.app-id = {{ . | squote }}
+run = 'move-node-to-workspace 📟'
+{{- end }}
 
+# assign apps to workspace_v
+{{ range .aerospace_apps.workspace_v }}
 [[on-window-detected]]
-if.app-id = 'com.kitze.sizzy'
+if.app-id = {{ . | squote }}
 run = 'move-node-to-workspace 🖥️'
+{{- end }}
+
+# assign apps to workspace_w
+{{ range .aerospace_apps.workspace_w }}
+[[on-window-detected]]
+if.app-id = {{ . | squote }}
+run =  'move-node-to-workspace ⚒️'
+{{- end }}
+
+# assign apps to workspace_y
+{{ range .aerospace_apps.workspace_y }}
+[[on-window-detected]]
+if.app-id = {{ . | squote }}
+run = 'move-node-to-workspace 💬'
+{{- end }}
+
