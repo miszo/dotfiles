@@ -27,6 +27,7 @@ aerospace_apps:
     - 'com.apple.ActivityMonitor'
     - 'com.apple.AppStore'
     - 'com.apple.MobileSMS'
+    - 'com.apple.Music'
     - 'pl.maketheweb.cleanshotx'
     - 'com.1password.1password'
     - 'dev.kdrag0n.MacVirt'
