@@ -64,6 +64,13 @@
         {
           "properties": {
             "branch_icon": "\uf126 ",
+            "github_icon": "\uF408 ",
+            "gitlab_icon": "\uF296 ",
+            "bitbucket_icon": "\uF171 ",
+            "azure_devops_icon": "\uEBE8 ",
+            "codecommit_icon": "\uF270 ",
+            "codeberg_icon": "\uF330 ",
+            "git_icon": "\uE5FB ",
             "cache_duration": "none",
             "fetch_stash_count": true,
             "fetch_status": true,
