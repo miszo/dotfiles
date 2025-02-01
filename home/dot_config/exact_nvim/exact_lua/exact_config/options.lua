@@ -82,3 +82,6 @@ vim.g.lazyvim_prettier_needs_config = true
 
 -- Set Snacks.picker as the default picker
 vim.g.lazyvim_picker = 'snacks'
+
+-- Enable lazydev
+vim.g.lazydev_enabled = true
