@@ -40,6 +40,7 @@ local indent = {
 
 ---@param picker snacks.Picker
 local explorer_trash = function(picker)
+  local explorer_api = require('snacks.picker.source.explorer')
   if vim.fn.executable('trash') == 0 then
     vim.api.nvim_echo({
       { '- Trash utility not installed. Make sure to install it first\n', nil },
@@ -48,25 +49,24 @@ local explorer_trash = function(picker)
     }, false, {})
     return
   end
-  local state = require('snacks.picker.source.explorer').get_state(picker)
+  local state = explorer_api.get_state(picker)
   ---@type string[]
   local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
   if #paths == 0 then
     return
   end
   local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ':p:~:.') or #paths .. ' files'
-  Snacks.picker.select({ 'Yes', 'No' }, { prompt = 'Trash ' .. what .. '?' }, function(_, idx)
-    if idx == 1 then
-      for _, path in ipairs(paths) do
-        local ok, err = pcall(function()
-          vim.system({ 'trash', vim.fn.fnameescape(path) })
-        end)
-        if not ok then
-          Snacks.notify.error('Failed to trash `' .. path .. '`:\n- ' .. err)
-        end
+  explorer_api.confirm('Trash ' .. what .. '?', function()
+    for _, path in ipairs(paths) do
+      local ok, err = pcall(function()
+        vim.system({ 'trash', vim.fn.fnameescape(path) })
+      end)
+      if not ok then
+        Snacks.notify.error('Failed to trash `' .. path .. '`:\n- ' .. err)
       end
-      state:update()
     end
+    picker.list:set_selected() -- clear selection
+    state:update({ force = true })
   end)
 end
 
@@ -146,6 +146,7 @@ local picker = {
         },
       },
       hidden = true,
+      ignored = true,
       layout = {
         preset = 'sidebar',
         layout = {
