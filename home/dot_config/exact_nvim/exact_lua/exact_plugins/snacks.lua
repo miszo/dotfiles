@@ -1,4 +1,4 @@
---@diagnostic disable: missing-fields
+---@diagnostic disable: missing-fields
 ---@class snacks.bigfile.Config
 local bigfile = { enabled = true }
 
@@ -76,20 +76,25 @@ local images = {}
 
 ---@param ctx snacks.picker.preview.ctx
 local file_preview_with_image = function(ctx)
+  local plenary_path = require('plenary.path')
+  local uv = vim.uv or vim.loop
+
   local winid = ctx.preview.win.win
   local bufnr = ctx.preview.win.buf
-  local file_name = ctx.item.file
+  local file_relative_path = ctx.item.file
   local cwd = ctx.item.cwd
-  local is_supported_image = require('utils.core').is_supported_image(file_name)
+  local file_name = vim.fn.fnamemodify(file_relative_path, ':t')
+
+  local is_supported_image = require('utils.core').is_supported_image(file_relative_path)
 
   if ctx.prev ~= nil then
-    local prev_image = images[require('plenary.path'):new(ctx.prev.cwd):joinpath(ctx.prev.file):absolute()]
+    local prev_image = images[plenary_path:new(ctx.prev.cwd):joinpath(ctx.prev.file):absolute()]
     if prev_image then
-      prev_image:clear()
+      prev_image:clear(true)
     end
   end
 
-  local filepath = require('plenary.path'):new(cwd):joinpath(file_name):absolute()
+  local file_path = plenary_path:new(cwd):joinpath(file_relative_path):absolute()
   if is_supported_image and LazyVim.has('image.nvim') then
     ctx.preview:reset()
     local autocmd
@@ -97,7 +102,7 @@ local file_preview_with_image = function(ctx)
       callback = function(evt)
         if evt.match ~= winid then
           for _, i in ipairs(images) do
-            i:clear()
+            i:clear(false)
           end
           images = {}
           if autocmd ~= nil then
@@ -107,25 +112,27 @@ local file_preview_with_image = function(ctx)
       end,
     })
 
-    local image = images[filepath]
+    local image = images[file_path]
 
     if image then
+      ctx.preview:set_title(file_name)
       image:render()
       return
     end
 
-    image = require('image').from_file(filepath, {
+    image = require('image').from_file(file_path, {
       window = winid,
       buffer = bufnr,
       width = vim.api.nvim_win_get_width(winid),
       with_virtual_padding = true,
     })
 
-    images[filepath] = image
+    images[file_path] = image
 
     if not image then
       return
     end
+    ctx.preview:set_title(file_name)
     image:render()
     return
   end
@@ -147,7 +154,6 @@ local picker = {
         },
       },
       hidden = true,
-      ignored = true,
       layout = {
         preset = 'sidebar',
         layout = {
