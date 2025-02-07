@@ -1,4 +1,4 @@
----@diagnostic disable: missing-fields
+--@diagnostic disable: missing-fields
 ---@class snacks.bigfile.Config
 local bigfile = { enabled = true }
 
@@ -40,7 +40,8 @@ local indent = {
 
 ---@param picker snacks.Picker
 local explorer_trash = function(picker)
-  local explorer_api = require('snacks.picker.source.explorer')
+  local Tree = require('snacks.explorer.tree')
+  local explorer_api = require('snacks.explorer.actions')
   if vim.fn.executable('trash') == 0 then
     vim.api.nvim_echo({
       { '- Trash utility not installed. Make sure to install it first\n', nil },
@@ -49,7 +50,6 @@ local explorer_trash = function(picker)
     }, false, {})
     return
   end
-  local state = explorer_api.get_state(picker)
   ---@type string[]
   local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
   if #paths == 0 then
@@ -64,9 +64,10 @@ local explorer_trash = function(picker)
       if not ok then
         Snacks.notify.error('Failed to trash `' .. path .. '`:\n- ' .. err)
       end
+      Tree:refresh(vim.fs.dirname(path))
     end
     picker.list:set_selected() -- clear selection
-    state:update({ force = true })
+    explorer_api.update(picker)
   end)
 end
 
