@@ -309,4 +309,23 @@ return {
       },
     },
   },
+  {
+    'neovim/nvim-lspconfig',
+    opts = function()
+      local Keys = require('lazyvim.plugins.lsp.keymaps').get()
+      vim.list_extend(Keys, {
+        {
+          '<leader>ss',
+          function()
+            Snacks.picker.lsp_symbols({
+              filter = LazyVim.config.kind_filter,
+              layout = { preset = 'vscode', preview = 'main' },
+            })
+          end,
+          desc = 'LSP Symbols',
+          has = 'documentSymbol',
+        },
+      })
+    end,
+  },
 }

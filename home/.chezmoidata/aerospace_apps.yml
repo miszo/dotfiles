@@ -29,6 +29,7 @@ aerospace_apps:
     - 'com.apple.MobileSMS'
     - 'com.apple.Music'
     - 'com.apple.podcasts'
+    - 'com.apple.reminders'
     - 'pl.maketheweb.cleanshotx'
     - 'com.1password.1password'
     - 'dev.kdrag0n.MacVirt'
