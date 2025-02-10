@@ -38,7 +38,7 @@ config.window_background_opacity = 0.9
 config.macos_window_background_blur = 80
 
 config.mouse_bindings = {
-  -- Ctrl-click will open the link under the mouse cursor
+  -- Cmd-click will open the link under the mouse cursor
   {
     event = { Up = { streak = 1, button = 'Left' } },
     mods = 'CMD',
@@ -50,7 +50,7 @@ config.underline_thickness = 3
 config.cursor_thickness = 3
 config.underline_position = -6
 
-config.term = 'xterm-kitty'
+config.term = 'wezterm'
 config.front_end = 'WebGpu'
 config.webgpu_power_preference = 'HighPerformance'
 config.enable_kitty_graphics = true
