@@ -12,7 +12,7 @@ function asdf_install() {
   echo "Installing software dependency versions via asdf..."
   while IFS= read -r plugin; do
     asdf plugin add "${plugin}" || true # ignore fail
-    asdf install "${plugin}"
+    asdf install "${plugin}" || true # ignore fail
   done < <(cut -d " " -f1 < {{ .brew.toolVersionsPath }})
 
   asdf reshim
@@ -66,7 +66,7 @@ function main() {
   brew_bundle
   asdf_install
   install_gh_extensions
-  install__wezterm_terminfo
+  install_wezterm_terminfo
   update_theme
 }
 
