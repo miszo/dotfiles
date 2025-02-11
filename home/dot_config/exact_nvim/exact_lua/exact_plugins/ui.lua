@@ -26,14 +26,6 @@ return {
     },
   },
   {
-    'luukvbaal/statuscol.nvim',
-    config = function()
-      require('statuscol').setup({
-        setopt = true,
-      })
-    end,
-  },
-  {
     'j-hui/fidget.nvim',
     opts = {
       notification = {

@@ -28,11 +28,18 @@ local dashboard = {
 
 ---@class snacks.explorer.Config
 local explorer = {
+  enabled = true,
   replace_netrw = true,
+}
+
+---@class snacks.image.Config
+local image = {
+  enabled = true,
 }
 
 ---@class snacks.indent.Config
 local indent = {
+  enabled = true,
   blank = nil,
   only_scope = true,
   only_current = true,
@@ -71,76 +78,9 @@ local explorer_trash = function(picker)
   end)
 end
 
----@type table<string, Image>
-local images = {}
-
----@param ctx snacks.picker.preview.ctx
-local file_preview_with_image = function(ctx)
-  local plenary_path = require('plenary.path')
-  local uv = vim.uv or vim.loop
-
-  local winid = ctx.preview.win.win
-  local bufnr = ctx.preview.win.buf
-  local file_relative_path = ctx.item.file
-  local cwd = ctx.item.cwd
-  local file_name = vim.fn.fnamemodify(file_relative_path, ':t')
-
-  local is_supported_image = require('utils.core').is_supported_image(file_relative_path)
-
-  if ctx.prev ~= nil then
-    local prev_image = images[plenary_path:new(ctx.prev.cwd):joinpath(ctx.prev.file):absolute()]
-    if prev_image then
-      prev_image:clear(true)
-    end
-  end
-
-  local file_path = plenary_path:new(cwd):joinpath(file_relative_path):absolute()
-  if is_supported_image and LazyVim.has('image.nvim') then
-    ctx.preview:reset()
-    local autocmd
-    autocmd = vim.api.nvim_create_autocmd('WinClosed', {
-      callback = function(evt)
-        if evt.match ~= winid then
-          for _, i in ipairs(images) do
-            i:clear(false)
-          end
-          images = {}
-          if autocmd ~= nil then
-            vim.api.nvim_del_autocmd(autocmd)
-          end
-        end
-      end,
-    })
-
-    local image = images[file_path]
-
-    if image then
-      ctx.preview:set_title(file_name)
-      image:render()
-      return
-    end
-
-    image = require('image').from_file(file_path, {
-      window = winid,
-      buffer = bufnr,
-      width = vim.api.nvim_win_get_width(winid),
-      with_virtual_padding = true,
-    })
-
-    images[file_path] = image
-
-    if not image then
-      return
-    end
-    ctx.preview:set_title(file_name)
-    image:render()
-    return
-  end
-  Snacks.picker.preview.file(ctx)
-end
-
 ---@class snacks.picker.Config
 local picker = {
+  enabled = true,
   sources = {
     explorer = {
       actions = {
@@ -161,11 +101,9 @@ local picker = {
           max_width = 60,
         },
       },
-      preview = file_preview_with_image,
     },
     files = {
       hidden = true,
-      preview = file_preview_with_image,
     },
     git_files = {
       hidden = true,
@@ -175,7 +113,6 @@ local picker = {
     },
     recent = {
       hidden = true,
-      preview = file_preview_with_image,
     },
   },
 }
@@ -221,6 +158,7 @@ local ts_win = {
 
 ---@class snacks.scratch.Config
 local scratch = {
+  enabled = true,
   root = vim.fn.stdpath('data') .. '/scratch',
   name = 'Scratch',
   actions = {},
@@ -255,8 +193,22 @@ local scratch = {
   },
 }
 
+---@class snacks.statuscolumn.Config
+local statuscolumn = {
+  enabled = true,
+  folds = {
+    open = true,
+  },
+}
+
+---@class snacks.words.Config
+local words = {
+  enabled = true,
+}
+
 ---@class snacks.zen.Config
 local zen = {
+  enabled = true,
   toggles = {
     dim = true,
     git_signs = true,
@@ -275,9 +227,12 @@ return {
     opts = {
       bigfile = bigfile,
       dashboard = dashboard,
+      image = image,
       indent = indent,
       picker = picker,
       scratch = scratch,
+      statuscolumn = statuscolumn,
+      words = words,
       zen = zen,
     },
     keys = {

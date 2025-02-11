@@ -105,7 +105,7 @@ return {
   -- Open openapi preview in swagger-ui
   {
     'vinnymeller/swagger-preview.nvim',
-    build = 'npm i',
+    build = 'npm install -g swagger-ui-watcher',
     cmd = { 'SwaggerPreview', 'SwaggerPreviewStop', 'SwaggerPreviewToggle' },
     keys = {
       {
