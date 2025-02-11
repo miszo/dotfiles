@@ -52,10 +52,7 @@ function M.setup(config)
   config.leader = { key = 'q', mods = 'ALT', timeout_milliseconds = 2000 }
   config.keys = {
     -- Pane keybindings
-    { key = 's', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
     { key = '-', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
-
-    { key = 'v', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
     { key = '|', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
 
     { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane({ confirm = true }) },
