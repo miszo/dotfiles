@@ -53,9 +53,10 @@ function M.setup(config)
   config.keys = {
     -- Pane keybindings
     { key = 's', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
+    { key = '-', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
+
     { key = 'v', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
-    { key = '|', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
-    { key = '-', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
+    { key = '|', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
 
     { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane({ confirm = true }) },
     { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
