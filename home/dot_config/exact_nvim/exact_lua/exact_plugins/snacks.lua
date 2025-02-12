@@ -117,6 +117,11 @@ local picker = {
   },
 }
 
+---@class snacks.quickfile.Config
+local quickfile = {
+  enabled = true,
+}
+
 local scratch_delete_all = function()
   local items = Snacks.scratch.list()
   local count = #items
@@ -230,6 +235,7 @@ return {
       image = image,
       indent = indent,
       picker = picker,
+      quickfile = quickfile,
       scratch = scratch,
       statuscolumn = statuscolumn,
       words = words,

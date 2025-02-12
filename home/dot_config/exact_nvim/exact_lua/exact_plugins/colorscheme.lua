@@ -26,10 +26,6 @@ return {
         },
         overseer = true,
         snacks = true,
-        telescope = {
-          enabled = true,
-          style = 'nvchad',
-        },
         which_key = true,
       })
 
