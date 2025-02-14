@@ -20,17 +20,17 @@ local function is_nvim(pane)
   return success
 end
 
-local function activate_pane(window, pane, direction, vim_key)
+local function activate_pane(window, pane, pane_direction, vim_direction)
   if is_nvim(pane) then
     window:perform_action(
       act.Multiple({
         act.SendKey({ key = 'w', mods = 'CTRL' }),
-        act.SendKey({ key = vim_key }),
+        act.SendKey({ key = vim_direction }),
       }),
       pane
     )
   else
-    window:perform_action(act.ActivatePaneDirection(direction), pane)
+    window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
   end
 end
 
@@ -53,7 +53,7 @@ function M.setup(config)
   config.keys = {
     -- Pane keybindings
     { key = '-', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
-    { key = '|', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
+    { key = '\\', mods = 'LEADER', action = act.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
 
     { key = 'q', mods = 'LEADER', action = act.CloseCurrentPane({ confirm = true }) },
     { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
@@ -72,6 +72,9 @@ function M.setup(config)
 
     -- Lastly, workspace
     { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }) },
+
+    -- activates the debug overlay
+    { key = 'l', mods = 'LEADER', action = wezterm.action.ShowDebugOverlay },
 
     -- Neovim integration
     { key = 'h', mods = 'CTRL', action = act.EmitEvent('ActivatePaneLeft') },

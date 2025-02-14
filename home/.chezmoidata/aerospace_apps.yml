@@ -13,6 +13,7 @@ aerospace_apps:
     - 'com.apple.iCal'
   workspace_t:
     - 'com.github.wez.wezterm'
+    - 'com.mitchellh.ghostty'
   workspace_v:
     - 'notion.id'
     - 'com.kitze.sizzy'
