@@ -1,0 +1,12 @@
+# vim: syntax=config
+# keybinds
+
+# https://www.eso.org/~ndelmott/ascii.html
+# ctrl+z is the prefix for tmux
+# \x02 is ctrl+b
+#
+keybind=super+n=text:\x02c
+keybind=super+t=text:\x02c
+keybind=super+w=text:\x02q
+keybind=super+d=text:\x02\x5c
+keybind=super+shift+d=text:\x02\x2d

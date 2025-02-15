@@ -49,7 +49,7 @@ function M.setup(config)
     activate_pane(window, pane, 'Down', 'j')
   end)
 
-  config.leader = { key = 'q', mods = 'ALT', timeout_milliseconds = 2000 }
+  config.leader = { key = 'b', mods = 'CRTL', timeout_milliseconds = 2000 }
   config.keys = {
     -- Pane keybindings
     { key = '-', mods = 'LEADER', action = act.SplitVertical({ domain = 'CurrentPaneDomain' }) },
