@@ -18,11 +18,6 @@ keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save a
 -- Disable continuations
 keymap.set('n', '<leader>o', 'o<Esc>^Da', opts)
 
--- New tab
-keymap.set('n', 'te', ':tabedit<Return>')
-keymap.set('n', '<tab>', ':tabnext<Return>', opts)
-keymap.set('n', '<s-tab>', ':tabprev<Return>', opts)
-
 -- Split window
 keymap.set('n', 'ss', ':split<Return>', opts)
 keymap.set('n', 'sv', ':vsplit<Return>', opts)
