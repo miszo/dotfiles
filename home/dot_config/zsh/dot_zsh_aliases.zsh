@@ -25,7 +25,6 @@ alias chcd="chezmoi cd"
 alias chup="chezmoi update"
 alias chapp="chezmoi apply"
 
-alias mux="tmuxifier"
 alias tls="tmuxifier load-session"
 alias tns="tmuxifier new-session"
 alias tes="tmuxifier edit-session"
