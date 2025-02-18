@@ -2,9 +2,6 @@
 
 tap '1password/tap'
 tap 'homebrew/bundle'
-tap 'homebrew/cask'
-tap 'homebrew/cask-fonts'
-tap 'homebrew/core'
 tap 'homebrew/services'
 
 brew 'asdf'
@@ -12,5 +9,6 @@ brew 'gitleaks'
 brew 'jq'
 brew 'pre-commit'
 brew 'gnupg'
+brew 'gh'
 
 cask '1password-cli'

@@ -16,7 +16,7 @@ function install_dependencies() {
   echo "Installing software dependency versions via asdf..."
   while IFS= read -r plugin; do
     asdf plugin add "${plugin}" || true # ignore fail
-    asdf install "${plugin}"
+    asdf install "${plugin}" || true    # ignore fail
   done < <(cut -d ' ' -f1 <"$TOOLVERSIONS_PATH")
 
   asdf reshim
