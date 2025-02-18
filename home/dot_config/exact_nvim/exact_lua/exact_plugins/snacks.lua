@@ -43,6 +43,9 @@ local indent = {
   blank = nil,
   only_scope = true,
   only_current = true,
+  chunk = {
+    enabled = true,
+  },
 }
 
 ---@param picker snacks.Picker
@@ -104,6 +107,31 @@ local picker = {
     },
     files = {
       hidden = true,
+    },
+    files_with_symbols = {
+      multi = { 'files', 'symbols' },
+      filter = {
+        ---@param p snacks.Picker
+        ---@param filter snacks.picker.Filter
+        transform = function(p, filter)
+          local symbol_pattern = filter.pattern:match('^.-@(.*)$')
+          -- store the current file buffer
+          if filter.source_id ~= 2 then
+            local item = p:current()
+            if item and item.file then
+              filter.meta.buf = vim.fn.bufadd(item.file)
+            end
+          end
+
+          if symbol_pattern and filter.meta.buf then
+            filter.pattern = symbol_pattern
+            filter.current_buf = filter.meta.buf
+            filter.source_id = 2
+          else
+            filter.source_id = 1
+          end
+        end,
+      },
     },
     git_files = {
       hidden = true,
@@ -242,6 +270,13 @@ return {
       zen = zen,
     },
     keys = {
+      {
+        '<leader><space>',
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = 'Smart Find Files',
+      },
       {
         '<leader>bs',
         scratch_delete_all,
