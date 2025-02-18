@@ -11,5 +11,6 @@ brew 'asdf'
 brew 'gitleaks'
 brew 'jq'
 brew 'pre-commit'
+brew 'gnupg'
 
 cask '1password-cli'
