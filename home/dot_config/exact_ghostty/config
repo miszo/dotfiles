@@ -37,7 +37,7 @@ macos-auto-secure-input = true
 keybind=super+shift+w=close_window
 keybind=super+shift+n=new_window
 keybind=super+ctrl+d=new_split:right
-keybind=super++ctrl+shift+d=new_split:right
+keybind=super+alt+d=new_split:down
 keybind=super+shift+r=reload_config
 
 config-file = ?config-tmux
