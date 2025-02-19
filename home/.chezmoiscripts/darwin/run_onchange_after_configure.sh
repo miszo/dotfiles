@@ -125,6 +125,9 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 25
 # Show language menu in the top right corner of the boot screen
 sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
+# disable the ctrl+cmd+d global shortcut
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 70 "<dict><key>enabled</key><false/></dict>"
+
 echo "Trackpad, mouse, keyboard, Bluetooth accessories, and input – done!"
 
 ###############################################################################
