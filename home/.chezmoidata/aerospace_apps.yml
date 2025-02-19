@@ -41,3 +41,7 @@ aerospace_apps:
     - 'com.shure.motivmix'
     - 'net.whatsapp.WhatsApp'
     - 'ru.keepcoder.Telegram'
+    - 'com.setapp.DesktopClient'
+    - 'com.tinyapp.TablePlus-setapp'
+    - 'com.insta360.linkcontroller'
+
