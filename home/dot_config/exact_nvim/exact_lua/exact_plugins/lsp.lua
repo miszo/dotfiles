@@ -26,7 +26,6 @@ return {
   -- lsp servers
   {
     'neovim/nvim-lspconfig',
-    ---@type lspconfig.options
     opts = {
       diagnostics = { virtual_text = { prefix = 'icons' } },
       inlay_hints = { enabled = false },
