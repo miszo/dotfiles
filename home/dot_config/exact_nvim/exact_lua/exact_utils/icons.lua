@@ -71,11 +71,35 @@ local file_icons = {
   eslint = '',
   npm = '',
   tailwind = '󱏿',
-  tsconfig = '',
+  ts = '',
   yarn = '',
-  node = '',
+  node = '󰎙',
   tool = '󰒓',
+  tsconfig = '',
   angular = '󰚲',
+  react = '',
+}
+
+local hl = {
+  js = 'MiniIconsYellow',
+  jsx = 'MiniIconsOrange',
+  ts = 'MiniIconsAzure',
+  tsx = 'MiniIconsBlue',
+  ignore = 'MiniIconsPurple',
+  eslint = 'MiniIconsBlue',
+  prettier = 'MiniIconsOrange',
+  node = 'MiniIconsGreen',
+  npm = 'MiniIconsRed',
+  yarn = 'MiniIconsCyan',
+  tailwind = 'MiniIconsAzure',
+  config = 'MiniIconsGreen',
+  webpack = 'MiniIconsBlue',
+  angular = {
+    main = 'MiniIconsRed',
+    component = 'MiniIconsBlue',
+    directive = 'MiniIconsPurple',
+    service = 'MiniIconsOrange',
+  },
 }
 
 local get_angular_root = function()
@@ -93,44 +117,46 @@ local get_angular_icons = function()
   end
   return {
     file = {
-      ['angular.json'] = { glyph = file_icons.angular, hl = 'MiniIconsRed' },
+      ['angular.json'] = { glyph = file_icons.angular, hl = hl.angular.main },
     },
     extension = {
-      ['component.ts'] = { glyph = file_icons.angular, hl = 'MiniIconsBlue' },
-      ['directive.ts'] = { glyph = file_icons.angular, hl = 'MiniIconsPurple' },
-      ['module.ts'] = { glyph = file_icons.angular, hl = 'MiniIconsRed' },
-      ['service.ts'] = { glyph = file_icons.angular, hl = 'MiniIconsYellow' },
+      ['component.ts'] = { glyph = file_icons.angular, hl = hl.angular.component },
+      ['directive.ts'] = { glyph = file_icons.angular, hl = hl.angular.directive },
+      ['module.ts'] = { glyph = file_icons.angular, hl = hl.angular.main },
+      ['service.ts'] = { glyph = file_icons.angular, hl = hl.angular.service },
     },
   }
 end
 
 M.get_icons = function()
-  local js_table = { glyph = file_icons.test, hl = 'MiniIconsYellow' }
-  local jsx_table = { glyph = file_icons.test, hl = 'MiniIconsAzure' }
-  local ts_table = { glyph = file_icons.test, hl = 'MiniIconsAzure' }
-  local tsx_table = { glyph = file_icons.test, hl = 'MiniIconsBlue' }
-  local eslint_table = { glyph = file_icons.eslint, hl = 'MiniIconsBlue' }
-  local prettier_table = { glyph = file_icons.prettier, hl = 'MiniIconsOrange' }
-  local tw_table = { glyph = file_icons.tailwind, hl = 'MiniIconsAzure' }
-  local npm_table = { glyph = file_icons.npm, hl = 'MiniIconsRed' }
-  local node_table = { glyph = file_icons.node, hl = 'MiniIconsGreen' }
-  local yarn_table = { glyph = file_icons.yarn, hl = 'MiniIconsCyan' }
+  local test_js_table = { glyph = file_icons.test, hl = hl.js }
+  local jsx_table = { glyph = file_icons.react, hl = hl.jsx }
+  local test_jsx_table = { glyph = file_icons.test, hl = hl.jsx }
+  local test_ts_table = { glyph = file_icons.test, hl = hl.ts }
+  local test_tsx_table = { glyph = file_icons.test, hl = hl.tsx }
+  local eslint_table = { glyph = file_icons.eslint, hl = hl.eslint }
+  local prettier_table = { glyph = file_icons.prettier, hl = hl.prettier }
+  local tailwind_table = { glyph = file_icons.tailwind, hl = hl.tailwind }
+  local npm_table = { glyph = file_icons.npm, hl = hl.npm }
+  local node_table = { glyph = file_icons.node, hl = hl.node }
+  local yarn_table = { glyph = file_icons.yarn, hl = hl.yarn }
 
   local icons = {
     file = {
       ['.nvmrc'] = node_table,
       ['.node-version'] = node_table,
-      ['.tool-versions'] = { glyph = file_icons.tool, hl = 'MiniIconsGrey' },
+      ['.tool-versions'] = { glyph = file_icons.tool, hl = hl.config },
       ['.eslintrc'] = eslint_table,
       ['.eslintrc.json'] = eslint_table,
       ['.eslintrc.js'] = eslint_table,
       ['.eslintrc.cjs'] = eslint_table,
       ['.eslintrc.mjs'] = eslint_table,
-      ['.eslintignore'] = { glyph = file_icons.eslint, hl = 'MiniIconsPurple' },
+      ['.eslintignore'] = { glyph = file_icons.eslint, hl = hl.ignore },
+      ['eslint.config.json'] = eslint_table,
       ['eslint.config.js'] = eslint_table,
       ['eslint.config.cjs'] = eslint_table,
       ['eslint.config.mjs'] = eslint_table,
-      ['.prettierignore'] = { glyph = file_icons.prettier, hl = 'MiniIconsPurple' },
+      ['.prettierignore'] = { glyph = file_icons.prettier, hl = hl.ignore },
       ['.prettierrc'] = prettier_table,
       ['.prettierrc.json'] = prettier_table,
       ['.prettierrc.js'] = prettier_table,
@@ -139,12 +165,12 @@ M.get_icons = function()
       ['prettier.config.js'] = prettier_table,
       ['prettier.config.cjs'] = prettier_table,
       ['prettier.config.mjs'] = prettier_table,
-      ['tailwind.config.js'] = tw_table,
-      ['tailwind.config.cjs'] = tw_table,
-      ['tailwind.config.mjs'] = tw_table,
-      ['tsconfig.json'] = { glyph = file_icons.tsconfig, hl = 'MiniIconsAzure' },
+      ['tailwind.config.js'] = tailwind_table,
+      ['tailwind.config.cjs'] = tailwind_table,
+      ['tailwind.config.mjs'] = tailwind_table,
+      ['tsconfig.json'] = { glyph = file_icons.tsconfig, hl = hl.ts },
       ['.npmrc'] = npm_table,
-      ['.npmignore'] = npm_table,
+      ['.npmignore'] = { glyph = file_icons.npm, hl = hl.ignore },
       ['package.json'] = npm_table,
       ['package-lock.json'] = npm_table,
       ['yarn.lock'] = yarn_table,
@@ -152,19 +178,22 @@ M.get_icons = function()
       ['.yarnrc.yml'] = yarn_table,
       ['.yarnrc.yaml'] = yarn_table,
     },
+    filetype = {
+      javascriptreact = jsx_table,
+    },
     extension = {
-      ['test.js'] = js_table,
-      ['test.jsx'] = jsx_table,
-      ['test.ts'] = ts_table,
-      ['test.tsx'] = tsx_table,
-      ['spec.js'] = js_table,
-      ['spec.jsx'] = jsx_table,
-      ['spec.ts'] = ts_table,
-      ['spec.tsx'] = tsx_table,
-      ['cy.js'] = js_table,
-      ['cy.jsx'] = jsx_table,
-      ['cy.ts'] = ts_table,
-      ['cy.tsx'] = tsx_table,
+      ['test.js'] = test_js_table,
+      ['test.jsx'] = test_jsx_table,
+      ['test.ts'] = test_ts_table,
+      ['test.tsx'] = test_tsx_table,
+      ['spec.js'] = test_js_table,
+      ['spec.jsx'] = test_jsx_table,
+      ['spec.ts'] = test_ts_table,
+      ['spec.tsx'] = test_tsx_table,
+      ['cy.js'] = test_js_table,
+      ['cy.jsx'] = test_jsx_table,
+      ['cy.ts'] = test_ts_table,
+      ['cy.tsx'] = test_tsx_table,
     },
   }
 
