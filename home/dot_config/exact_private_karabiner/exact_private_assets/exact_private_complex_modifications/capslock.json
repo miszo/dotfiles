@@ -1,0 +1,58 @@
+{
+  "title": "CapsLock as ESC on tap, but still CapsLock on hold",
+  "maintainers": [
+    "miszo"
+  ],
+  "rules": [
+    {
+      "description": "CapsLock as ESC on tap, but still CapsLock on hold",
+      "manipulators": [
+        {
+          "conditions": [
+            {
+              "type": "device_if",
+              "identifiers": [
+                {
+                  "is_built_in_keyboard": true
+                }
+              ]
+            }
+          ],
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to_delayed_action": {
+            "to_if_canceled": [
+              {
+                "key_code": "caps_lock"
+              }
+            ],
+            "to_if_invoked": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          "to_if_alone": [
+            {
+              "halt": true,
+              "key_code": "escape"
+            }
+          ],
+          "to_if_held_down": [
+            {
+              "halt": true,
+              "key_code": "caps_lock"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
