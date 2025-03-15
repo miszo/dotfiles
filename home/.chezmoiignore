@@ -48,6 +48,9 @@ README.md
 # Neovim lock files
 .config/nvim/lazy-lock.json
 
+# Karabiner automatic backups
+.config/karabiner/automatic_backups
+
 # Ignore MacOS files
 .CFUserTextEncoding
 .DS_Store
