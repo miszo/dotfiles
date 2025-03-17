@@ -87,3 +87,6 @@ vim.g.lazyvim_picker = 'snacks'
 
 -- Enable lazydev
 vim.g.lazydev_enabled = true
+
+-- Disable AI completions and have them as a ghost text
+vim.g.ai_cmp = false
