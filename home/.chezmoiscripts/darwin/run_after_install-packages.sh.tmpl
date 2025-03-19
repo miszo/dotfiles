@@ -5,7 +5,7 @@ set -eufo pipefail
 
 function brew_bundle() {
   echo "Run brew bundle..."
-  brew bundle --no-lock --file={{ .brew.brewfilePath }}
+  brew bundle --file={{ .brew.brewfilePath }}
 }
 
 function asdf_install() {

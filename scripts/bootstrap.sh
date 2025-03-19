@@ -11,7 +11,7 @@ function install_dependencies() {
   echo "Run brew bundle..."
   BREWFILE_PATH="$(pwd)/scripts/Brewfile_bootstrap"
   TOOLVERSIONS_PATH="$(pwd)/.tool-versions"
-  brew bundle --no-lock --file="$BREWFILE_PATH"
+  brew bundle --file="$BREWFILE_PATH"
 
   echo "Installing software dependency versions via asdf..."
   while IFS= read -r plugin; do
