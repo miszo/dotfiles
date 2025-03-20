@@ -78,6 +78,42 @@ function git_pull_them_all {
     done
 }
 
+# Function to copy git hook from ~/.config/git/prepare-commit-msg to current repository
+function add_git_msg_hook() {
+    # Source hook path
+    # {{ joinPath .chezmoi.homeDir ".config" "git" "prepare-commit-msg" | quote }}
+    local SOURCE_HOOK={{ joinPath .chezmoi.homeDir ".config" "git" "prepare-commit-msg" | quote }}
+
+    # Destination hook path (in current repository's .git/hooks/)
+    local DEST_HOOK="$(git rev-parse --git-dir)/hooks/prepare-commit-msg"
+
+    # Check if source hook exists
+    if [[ ! -f "$SOURCE_HOOK" ]]; then
+        echo "Error: Source hook file not found at $SOURCE_HOOK"
+        return 1
+    fi
+
+    # Check if we're inside a git repository
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        echo "Error: Not inside a Git repository"
+        return 1
+    fi
+
+    # Create hooks directory if it doesn't exist
+    mkdir -p "$(git rev-parse --git-dir)/hooks"
+
+    # Copy the hook
+    cp "$SOURCE_HOOK" "$DEST_HOOK"
+
+    # Check copy operation
+    if [[ $? -eq 0 ]]; then
+        echo "Git hook copied successfully to $DEST_HOOK"
+    else
+        echo "Error: Failed to copy git hook"
+        return 1
+    fi
+}
+
 function export_app_settings {
   echo "Exporting settings for $1..."
   defaults export $2 $3

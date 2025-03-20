@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Get the current branch name
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+# Extract Jira issue key from branch
+if [[ $BRANCH_NAME =~ [^/]+/([A-Z]+-[0-9]+)/[^/]+ ]]; then
+    JIRA_ISSUE_KEY="${BASH_REMATCH[1]}"
+    
+    # Path to the commit message file
+    COMMIT_MSG_FILE=$1
+    
+    # Read the existing commit message
+    COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+    
+    # Check if the message is a conventional commit without an issue key
+    if [[ $COMMIT_MSG =~ ^([a-z]+)(\([^)]*\))?:\s*(.+)$ ]]; then
+        TYPE="${BASH_REMATCH[1]}"
+        EXISTING_SCOPE="${BASH_REMATCH[2]}"
+        MESSAGE="${BASH_REMATCH[3]}"
+        
+        # If no scope exists, add Jira issue key as scope
+        if [ -z "$EXISTING_SCOPE" ]; then
+            echo "$TYPE($JIRA_ISSUE_KEY): $MESSAGE" > "$COMMIT_MSG_FILE"
+        fi
+    # If not a conventional commit, but follows our commit message structure
+    elif [[ $COMMIT_MSG =~ ^([a-z]+):\s*(.+)$ ]]; then
+        TYPE="${BASH_REMATCH[1]}"
+        MESSAGE="${BASH_REMATCH[2]}"
+        
+        # Add Jira issue key as scope
+        echo "$TYPE($JIRA_ISSUE_KEY): $MESSAGE" > "$COMMIT_MSG_FILE"
+    fi
+fi
