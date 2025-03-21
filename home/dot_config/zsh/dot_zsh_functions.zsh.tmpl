@@ -78,40 +78,47 @@ function git_pull_them_all {
     done
 }
 
-# Function to copy git hook from ~/.config/git/prepare-commit-msg to current repository
-function add_git_msg_hook() {
-    # Source hook path
-    # {{ joinPath .chezmoi.homeDir ".config" "git" "prepare-commit-msg" | quote }}
-    local SOURCE_HOOK={{ joinPath .chezmoi.homeDir ".config" "git" "prepare-commit-msg" | quote }}
-
-    # Destination hook path (in current repository's .git/hooks/)
-    local DEST_HOOK="$(git rev-parse --git-dir)/hooks/prepare-commit-msg"
-
-    # Check if source hook exists
-    if [[ ! -f "$SOURCE_HOOK" ]]; then
-        echo "Error: Source hook file not found at $SOURCE_HOOK"
+function add_git_hook() {
+    # Check if both arguments are provided
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: add_git_hook <source_path> <hook_name>"
         return 1
     fi
 
-    # Check if we're inside a git repository
+    local source_path="$1"
+    local hook_name="$2"
+
+    # Robust Git repository check
     if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-        echo "Error: Not inside a Git repository"
+        echo "Error: Not in a Git repository"
         return 1
     fi
 
-    # Create hooks directory if it doesn't exist
-    mkdir -p "$(git rev-parse --git-dir)/hooks"
+    # Get the root directory of the Git repository
+    local git_root=$(git rev-parse --show-toplevel)
+    local git_hooks_dir="$git_root/.git/hooks"
 
-    # Copy the hook
-    cp "$SOURCE_HOOK" "$DEST_HOOK"
+    # Ensure the hooks directory exists
+    mkdir -p "$git_hooks_dir"
 
-    # Check copy operation
-    if [[ $? -eq 0 ]]; then
-        echo "Git hook copied successfully to $DEST_HOOK"
-    else
-        echo "Error: Failed to copy git hook"
+    # Full path for the destination hook
+    local destination_hook="$git_hooks_dir/$hook_name"
+
+    # Check if source path exists and is a file
+    if [[ ! -f "$source_path" ]]; then
+        echo "Error: Source path '$source_path' does not exist or is not a file"
         return 1
     fi
+
+    # Copy the hook file
+    cp "$source_path" "$destination_hook"
+    chmod +x "$destination_hook"
+    echo "Git hook '$hook_name' added successfully from $source_path"
+}
+
+function add_git_hooks() {
+    add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "conventional-commit-msg" | quote }} "commit-msg"
+    add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "js-pre-commit" | quote }} "pre-commit"
 }
 
 function export_app_settings {
