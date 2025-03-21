@@ -1,5 +1,22 @@
 import { $, file, write } from 'bun';
 
+async function isSpecialGitOperation() {
+  try {
+    const { stdout } = await $`git status`.nothrow();
+
+    const specialOperations = [
+      'rebase in progress',
+      'You are currently merging',
+      'All conflicts fixed',
+      'Merging'
+    ];
+
+    return specialOperations.some(op => stdout.toLowerCase().includes(op.toLowerCase()));
+  } catch {
+    return false;
+  }
+}
+
 async function runInGitRepo(callback) {
   const { exitCode } = await $`git rev-parse --is-inside-work-tree`.nothrow().quiet();
 
@@ -59,6 +76,11 @@ function transformCommitMessage(originalMessage, branchName) {
 }
 
 async function main() {
+  if (await isSpecialGitOperation()) {
+    console.log('Skipping commit-msg hook during merge/rebase');
+    process.exit(0);
+  }
+
   const commitMessageFile = getCommitMessageFile();
   const originalMessage = await getCommitMessage();
   const branchName = await getBranchName();
@@ -69,5 +91,3 @@ async function main() {
 
 
 await runInGitRepo(main);
-
-
