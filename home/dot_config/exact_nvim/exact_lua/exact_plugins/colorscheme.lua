@@ -24,7 +24,7 @@ return {
           enabled = true,
           custom_bg = colors.mantle,
         },
-        overseer = true,
+        render_markdown = true,
         snacks = true,
         which_key = true,
       })

@@ -4,23 +4,31 @@ Miszo Radomski's dotfiles, managed with [`chezmoi`](https://github.com/twpayne/c
 
 Install them with:
 
+```sh
     //https
     chezmoi init https://github.com/miszo/dotfiles.git
 
     // ssh
     chezmoi init git@github.com:miszo/dotfiles.git
+```
 
 Personal secrets are stored in [1Password](https://1password.com), and you'll
 need the [1Password CLI](https://developer.1password.com/docs/cli/) installed.
 
 To list possible commands just run:
 
+```sh
     make
+```
 
 Bootstrap dependencies and git hooks with:
 
+```sh
     make bootstrap
+```
 
 To run `gitleaks` locally:
 
+```sh
     make gitleaks
+```
