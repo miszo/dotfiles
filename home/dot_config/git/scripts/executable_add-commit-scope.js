@@ -25,91 +25,91 @@ function getSpecialBranchPrefixes() {
   }
 
   return specialBranchPrefixes;
+}
 
+function isSpecialGitBranch(branchName) {
+  const specialBranchPrefixes = getSpecialBranchPrefixes();
 
-  function isSpecialGitBranch(branchName) {
-    const specialBranchPrefixes = getSpecialBranchPrefixes();
+  return specialBranchPrefixes.some(prefix => branchName.startsWith(prefix));
+}
 
-    return specialBranchPrefixes.some(prefix => branchName.startsWith(prefix));
+async function runInGitRepo(callback) {
+  const { exitCode } = await $`git rev-parse --is-inside-work-tree`.nothrow().quiet();
+
+  if (exitCode === 0) {
+    return await callback();
+  } else {
+    console.error('Not a git repository');
   }
+}
 
-  async function runInGitRepo(callback) {
-    const { exitCode } = await $`git rev-parse --is-inside-work-tree`.nothrow().quiet();
+async function getBranchName() {
+  return await $`git rev-parse --abbrev-ref HEAD`.nothrow().text();
+}
 
-    if (exitCode === 0) {
-      return await callback();
-    } else {
-      console.error('Not a git repository');
-    }
-  }
+function getCommitMessageFile() {
+  return process.argv[2];
+}
 
-  async function getBranchName() {
-    return await $`git rev-parse --abbrev-ref HEAD`.nothrow().text();
-  }
+async function getCommitMessage() {
+  const commitMessageFile = getCommitMessageFile();
 
-  function getCommitMessageFile() {
-    return process.argv[2];
-  }
-
-  async function getCommitMessage() {
-    const commitMessageFile = getCommitMessageFile();
-
-    if (!commitMessageFile) {
-      console.error('Commit message is required');
-      process.exit(1);
-    }
-
-    return await file(commitMessageFile).text();
-  }
-
-  function splitCommitMessage(message) {
-    const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore)(\(([^)]+)\))?:\s*(.+)$/m;
-
-    const match = message.match(conventionalCommitRegex);
-
-    if (match) {
-      const [, type, , existingScope, description] = match;
-
-      return {
-        type,
-        existingScope,
-        description
-      };
-    }
-
-    console.error('Invalid commit message');
+  if (!commitMessageFile) {
+    console.error('Commit message is required');
     process.exit(1);
   }
 
-  function transformCommitMessage(originalMessage, branchName) {
-    const ticketKeyMatch = branchName.match(/([A-Z]+-\d+)/);
-    const ticketKey = ticketKeyMatch ? ticketKeyMatch[1] : null;
-    const { type, existingScope, description } = splitCommitMessage(originalMessage);
+  return await file(commitMessageFile).text();
+}
 
-    const scope = existingScope || ticketKey;
+function splitCommitMessage(message) {
+  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore)(\(([^)]+)\))?:\s*(.+)$/m;
 
-    return `${type}(${scope}): ${description}`;
+  const match = message.match(conventionalCommitRegex);
+
+  if (match) {
+    const [, type, , existingScope, description] = match;
+
+    return {
+      type,
+      existingScope,
+      description
+    };
   }
 
-  async function main() {
-    if (await isSpecialGitOperation()) {
-      console.log('Skipping commit-msg hook during merge/rebase');
-      process.exit(0);
-    }
+  console.error('Invalid commit message');
+  process.exit(1);
+}
 
-    const commitMessageFile = getCommitMessageFile();
-    const originalMessage = await getCommitMessage();
-    const branchName = await getBranchName();
+function transformCommitMessage(originalMessage, branchName) {
+  const ticketKeyMatch = branchName.match(/([A-Z]+-\d+)/);
+  const ticketKey = ticketKeyMatch ? ticketKeyMatch[1] : null;
+  const { type, existingScope, description } = splitCommitMessage(originalMessage);
 
-    if (isSpecialGitBranch(branchName)) {
-      console.log('Skipping commit-msg hook for the branch: ', branchName);
-      process.exit(0);
-    }
+  const scope = existingScope || ticketKey;
 
-    const transformedMessage = transformCommitMessage(originalMessage, branchName);
+  return `${type}(${scope}): ${description}`;
+}
 
-    await write(commitMessageFile, transformedMessage);
+async function main() {
+  if (await isSpecialGitOperation()) {
+    console.log('Skipping commit-msg hook during merge/rebase');
+    process.exit(0);
   }
 
+  const commitMessageFile = getCommitMessageFile();
+  const originalMessage = await getCommitMessage();
+  const branchName = await getBranchName();
 
-  await runInGitRepo(main);
+  if (isSpecialGitBranch(branchName)) {
+    console.log('Skipping commit-msg hook for the branch: ', branchName);
+    process.exit(0);
+  }
+
+  const transformedMessage = transformCommitMessage(originalMessage, branchName);
+
+  await write(commitMessageFile, transformedMessage);
+}
+
+
+await runInGitRepo(main);
