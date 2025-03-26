@@ -3,15 +3,13 @@
 :backtrace: false
 :bulk_threshold: 1000
 :sources:
-- https://rubygems.org/
-- s3://{{ .gemrc.s3Source | trim }}/
+  - https://rubygems.org/
+  - s3://{{ .gemrc.s3Source | trim }}/
 :update_sources: true
 :verbose: true
-s3_source: {
-  {{ .gemrc.s3Source | trim }}: {
-    id: {{ .gemrc.username | quote }},
-    secret: {{ .gemrc.secret | quote }},
-    region: {{ .gemrc.region | quote }},
+s3_source: 
+  {{ .gemrc.s3Source | trim }}:
+    id: {{ .gemrc.username | quote }}
+    secret: {{ .gemrc.secret | quote }}
+    region: {{ .gemrc.region | quote }}
     endpoint: {{ .gemrc.endpoint | quote }}
-  }
-}
