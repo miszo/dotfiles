@@ -33,6 +33,12 @@ function isSpecialGitBranch(branchName) {
   return specialBranchPrefixes.some(prefix => branchName.startsWith(prefix));
 }
 
+async function isDetachedHead() {
+  const { exitCode } = await $`git symbolic-ref -q HEAD`.nothrow().quiet();
+
+  return exitCode !== 0;
+}
+
 async function runInGitRepo(callback) {
   const { exitCode } = await $`git rev-parse --is-inside-work-tree`.nothrow().quiet();
 
@@ -77,7 +83,7 @@ function splitCommitMessage(message) {
     };
   }
 
-  console.error('Invalid commit message');
+  console.error(`Invalid commit message: "${message}"`);
   process.exit(1);
 }
 
@@ -97,12 +103,17 @@ async function main() {
     process.exit(0);
   }
 
+  if (await isDetachedHead()) {
+    console.log('Skipping commit-msg hook for detached head');
+    process.exit(0);
+  }
+
   const commitMessageFile = getCommitMessageFile();
   const originalMessage = await getCommitMessage();
   const branchName = await getBranchName();
 
   if (isSpecialGitBranch(branchName)) {
-    console.log('Skipping commit-msg hook for the branch: ', branchName);
+    console.log(`Skipping commit-msg hook for the branch: "${branchName}"`);
     process.exit(0);
   }
 
