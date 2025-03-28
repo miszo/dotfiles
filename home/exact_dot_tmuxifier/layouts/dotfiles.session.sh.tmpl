@@ -7,8 +7,9 @@ session_root {{ joinPath .chezmoi.sourceDir ".." | quote }}
 # argument is given, session name will be based on layout file name.
 if initialize_session "dotfiles"; then
   new_window "editor"
+  new_window "shell"
   select_window 1
-  run_cmd "vim ."
+  run_cmd "vim"
 fi
 
 # Finalize session creation and switch/attach to it.
