@@ -82,11 +82,9 @@ return {
         eslint = {
           root_dir = get_root_dir,
           settings = {
-            eslint = {
-              codeActionOnSave = {
-                enable = true,
-                mode = 'all',
-              },
+            codeActionOnSave = {
+              enable = true,
+              mode = 'all',
             },
           },
         },
