@@ -7,4 +7,10 @@ return {
       model = vim.g.copilot_chat_model,
     },
   },
+  {
+    'zbirenbaum/copilot.lua',
+    opts = {
+      copilot_model = vim.g.copilot_model,
+    },
+  },
 }

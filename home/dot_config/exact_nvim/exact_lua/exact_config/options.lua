@@ -91,5 +91,6 @@ vim.g.lazydev_enabled = true
 -- Disable AI completions and have them as a ghost text
 vim.g.ai_cmp = false
 
--- Copilot model
+-- Copilot models
+vim.g.copilot_model = 'gpt-4o-copilot'
 vim.g.copilot_chat_model = 'claude-3.7-sonnet'
