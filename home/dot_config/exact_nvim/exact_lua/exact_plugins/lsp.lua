@@ -3,6 +3,28 @@ local get_root_dir = function(...)
   return util.root_pattern('package.json', 'tsconfig.json')(...) or util.root_pattern('.git')(...)
 end
 
+local diagnostic_signs = {
+  [vim.diagnostic.severity.ERROR] = '',
+  [vim.diagnostic.severity.WARN] = '',
+  [vim.diagnostic.severity.INFO] = '',
+  [vim.diagnostic.severity.HINT] = '󰌵',
+}
+
+local shorter_source_names = {
+  ['Lua Diagnostics.'] = 'Lua',
+  ['Lua Syntax Check.'] = 'Lua',
+}
+
+local function diagnostic_format(diagnostic)
+  return string.format(
+    '%s %s (%s): %s',
+    diagnostic_signs[diagnostic.severity],
+    shorter_source_names[diagnostic.source] or diagnostic.source,
+    diagnostic.code,
+    diagnostic.message
+  )
+end
+
 ---@module "lazy"
 ---@type LazySpec[]
 return {
@@ -27,7 +49,24 @@ return {
   {
     'neovim/nvim-lspconfig',
     opts = {
-      diagnostics = { virtual_text = { prefix = 'icons' } },
+      diagnostics = {
+        virtual_text = {
+          spacing = 4,
+          prefix = '',
+          format = diagnostic_format,
+          severity = {
+            max = vim.diagnostic.severity.WARN,
+          },
+        },
+        virtual_lines = {
+          format = diagnostic_format,
+          severity = {
+            min = vim.diagnostic.severity.ERROR,
+          },
+        },
+        underline = true,
+        severity_sort = true,
+      },
       inlay_hints = { enabled = false },
       servers = {
         cssls = {},
