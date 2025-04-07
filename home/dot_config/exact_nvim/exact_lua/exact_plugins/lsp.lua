@@ -1,13 +1,15 @@
+local icons = require('utils.icons').icons
+
 local get_root_dir = function(...)
   local util = require('lspconfig.util')
   return util.root_pattern('package.json', 'tsconfig.json')(...) or util.root_pattern('.git')(...)
 end
 
 local diagnostic_signs = {
-  [vim.diagnostic.severity.ERROR] = '',
-  [vim.diagnostic.severity.WARN] = '',
-  [vim.diagnostic.severity.INFO] = '',
-  [vim.diagnostic.severity.HINT] = '󰌵',
+  [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+  [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
+  [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
+  [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
 }
 
 local shorter_source_names = {
