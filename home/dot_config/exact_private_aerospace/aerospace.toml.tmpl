@@ -206,6 +206,10 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = {{ .selfService.appId | squote }}
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = {{ .authService.appId | squote }}
+run = 'layout floating'
 {{- end }}
 
 # assign apps to workspace_1
