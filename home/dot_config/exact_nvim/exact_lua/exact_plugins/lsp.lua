@@ -18,6 +18,9 @@ local shorter_source_names = {
 }
 
 local function diagnostic_format(diagnostic)
+  if not diagnostic.source or not diagnostic.code then
+    return string.format('%s %s', diagnostic_signs[diagnostic.severity], diagnostic.message)
+  end
   return string.format(
     '%s %s (%s): %s',
     diagnostic_signs[diagnostic.severity],
