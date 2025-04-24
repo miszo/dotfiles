@@ -101,22 +101,18 @@ return {
   {
     'echasnovski/mini.icons',
     lazy = true,
-    init = function()
-      package.preload['nvim-web-devicons'] = function()
-        require('mini.icons').mock_nvim_web_devicons()
-        return package.loaded['nvim-web-devicons']
-      end
-    end,
     config = function()
       local icons = require('utils.icons').get_icons()
-      require('mini.icons').setup(icons)
+      local mini_icons = require('mini.icons')
+      mini_icons.setup(icons)
+      mini_icons.mock_nvim_web_devicons()
     end,
   },
 
   -- Extend lualine
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'echasnovski/mini.icons' },
     event = 'VeryLazy',
     config = function(_, opts)
       opts.options = vim.tbl_deep_extend('force', opts.options, {
