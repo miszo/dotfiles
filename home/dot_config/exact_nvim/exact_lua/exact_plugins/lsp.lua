@@ -35,7 +35,9 @@ end
 return {
   -- tools
   {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
+    -- workaround for breaking changes in mason.nvim
+    version = '1.11.0',
     opts = function(_, opts)
       vim.tbl_deep_extend('force', {}, opts.ensure_installed, {
         'angular-language-server',
@@ -50,6 +52,8 @@ return {
       })
     end,
   },
+  -- workaround for breaking changes in mason.nvim
+  { 'mason-org/mason-lspconfig.nvim', version = '1.32.0' },
   -- lsp servers
   {
     'neovim/nvim-lspconfig',
