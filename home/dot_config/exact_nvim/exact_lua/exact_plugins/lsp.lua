@@ -30,6 +30,13 @@ local function diagnostic_format(diagnostic)
   )
 end
 
+local ts_preferences = {
+  importModuleSpecifierPreference = 'non-relative',
+}
+
+--- Set 8GB for tsserver memory limit
+local max_ts_server_memory = 8192
+
 ---@module "lazy"
 ---@type LazySpec[]
 return {
@@ -136,9 +143,13 @@ return {
           root_dir = get_root_dir,
           settings = {
             typescript = {
-              preferences = {
-                importModuleSpecifier = 'non-relative',
+              preferences = ts_preferences,
+              tsserver = {
+                maxTsServerMemory = max_ts_server_memory,
               },
+            },
+            javascript = {
+              preferences = ts_preferences,
             },
           },
         },
