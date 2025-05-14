@@ -31,7 +31,7 @@ local function diagnostic_format(diagnostic)
 end
 
 local ts_preferences = {
-  importModuleSpecifierPreference = 'non-relative',
+  importModuleSpecifier = 'non-relative',
 }
 
 --- Set 8GB for tsserver memory limit
