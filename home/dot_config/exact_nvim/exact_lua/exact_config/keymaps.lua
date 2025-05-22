@@ -37,3 +37,5 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 keymap.set('n', '<leader>r', function()
   require('utils.hsl').replaceHexWithHSL()
 end, { desc = 'Replace hex with HSL' })
+
+keymap.set({ 'n', 'x' }, 'D', '"_d', { desc = 'Delete without yank' })
