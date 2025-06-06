@@ -16,3 +16,13 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt.conceallevel = 0
   end,
 })
+
+-- Disable the diagnostics in files from ther `/node_modules/` directory
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte', 'astro' },
+  callback = function()
+    if vim.fn.expand('%:p'):match('/node_modules/') then
+      vim.diagnostic.enable(false)
+    end
+  end,
+})
