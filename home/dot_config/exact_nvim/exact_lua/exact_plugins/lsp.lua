@@ -32,6 +32,9 @@ end
 
 local ts_preferences = {
   importModuleSpecifier = 'non-relative',
+  preferTypeOnlyAutoImports = true,
+  quoteStyle = 'single',
+  useAliasesForRenames = false,
 }
 
 --- Set 8GB for tsserver memory limit
@@ -150,6 +153,10 @@ return {
             },
             javascript = {
               preferences = ts_preferences,
+            },
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+              enableMoveToFileCodeAction = true,
             },
           },
         },
