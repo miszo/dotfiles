@@ -1,10 +1,9 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
 # vim: syntax=yaml
 {{ if .computer.isWork -}}
 services:
   {{ .lazygit.work.serviceName | quote }}: {{ .lazygit.work.serviceValue | quote }}
 {{- end }}
-os:
-  openLink: open "$(echo {{ "{{link}}" | quote }} | sed 's/%2F/\//g')"
 gui:
   showFileIcons: true
   nerdFontsVersion: "3"
@@ -19,8 +18,6 @@ gui:
       - "#89b4fa"
     selectedLineBgColor:
       - "#313244"
-    selectedRangeBgColor:
-      - "#313244"
     cherryPickedCommitBgColor:
       - "#45475a"
     cherryPickedCommitFgColor:
@@ -32,8 +29,22 @@ gui:
     searchingActiveBorderColor:
       - "#f9e2af"
 
+  branchColorPatterns:
+    # sdlc branches
+    "^(main|master|dev|develop|staging|production)$": "#a6e3a1"
+    # feature branches
+    "^(feat|feature)/": "#89b4fa"
+    # bugfix branches
+    "^(fix|bug|bugfix)/": "#f9e2af"
+    # test/refactor/performance branches
+    "^(test/refactor|perf)/": "#f5c2e7"
+    # hotfix/revert branches
+    "^(hotfix|refert)/": "#f38ba8"
+    # chore/config branches
+    "^(chore|config|ci|docs)/": "#f5e0dc"
   authorColors:
-  '*': '#b4befe'
+    "Miszo Radomski": "#a6e3a1"
+    "*": "#b4befe"
 customCommands:
   - key: "G"
     command: |
