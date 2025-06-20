@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazydocker.json
 gui:
   showFileIcons: true
   nerdFontsVersion: "3"
@@ -12,15 +13,3 @@ gui:
       - "#89b4fa"
     selectedLineBgColor:
       - "#313244"
-    selectedRangeBgColor:
-      - "#313244"
-    cherryPickedCommitBgColor:
-      - "#45475a"
-    cherryPickedCommitFgColor:
-      - "#89b4fa"
-    unstagedChangesColor:
-      - "#f38ba8"
-    defaultFgColor:
-      - "#cdd6f4"
-    searchingActiveBorderColor:
-      - "#f9e2af"
