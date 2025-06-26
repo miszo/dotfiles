@@ -66,7 +66,7 @@ vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 -- Code folding
 vim.opt.foldenable = false
 
-vim.lsp.set_log_level('off')
+vim.lsp.set_log_level('OFF')
 
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 

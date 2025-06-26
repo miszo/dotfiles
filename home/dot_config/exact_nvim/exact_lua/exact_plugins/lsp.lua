@@ -89,10 +89,8 @@ return {
         ruby_lsp = {
           mason = false,
           cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
-          cmd_env = {
-            BUNDLE_GEMFILE = vim.fn.expand('~/.ruby-lsp/Gemfile'),
-          },
           init_options = {
+            bundleGemfile = vim.fn.expand('~/.ruby-lsp/Gemfile'),
             enabledFeatures = {
               'codeActions',
               'completion',
