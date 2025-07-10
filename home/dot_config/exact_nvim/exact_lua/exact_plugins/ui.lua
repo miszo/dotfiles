@@ -118,7 +118,7 @@ return {
       opts.options = vim.tbl_deep_extend('force', opts.options, {
         globalstatus = true,
         icons_enabled = true,
-        theme = 'auto',
+        theme = 'catppuccin',
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
       })
