@@ -76,18 +76,19 @@ M.attached_clients = function()
   local formatters = safe_formatter_status()
   local linters = safe_linter_status()
 
-  local clients = {
+  local clients = vim.tbl_filter(function(client)
+    return client ~= ''
+  end, {
     lsp_clients,
     formatters,
     linters,
-  }
+  })
 
-  return table.concat(
-    vim.tbl_filter(function(client)
-      return client ~= ''
-    end, clients),
-    ' '
-  )
+  if #clients == 0 then
+    return '' -- Return empty string when no clients
+  end
+
+  return table.concat(clients, ' ')
 end
 
 M.padding = {
