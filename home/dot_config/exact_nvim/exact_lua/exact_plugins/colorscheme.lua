@@ -9,7 +9,7 @@ return {
     config = function(_, opts)
       local colors = require('catppuccin.palettes').get_palette()
       opts.flavour = 'mocha'
-      opts.transparent_background = true
+      opts.transparent_background = false
 
       opts.integrations = opts.integrations or {}
       opts.integrations = vim.tbl_deep_extend('force', opts.integrations, {
@@ -39,6 +39,9 @@ return {
             SnacksIndent = { link = 'Whitespace' },
             SnacksIndentScope = { fg = c.text },
             SnacksPickerGitStatusIgnored = { link = 'NonText' },
+            NormalFloat = { bg = c.mantle },
+            FloatBorder = { bg = c.mantle },
+            FloatTitle = { bg = c.mantle },
           }
         end,
       }

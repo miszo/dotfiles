@@ -26,12 +26,6 @@ local dashboard = {
   },
 }
 
----@class snacks.explorer.Config
-local explorer = {
-  enabled = true,
-  replace_netrw = true,
-}
-
 ---@class snacks.image.Config
 local image = {
   enabled = true,
@@ -101,7 +95,8 @@ local picker = {
         preset = 'sidebar',
         layout = {
           position = 'right',
-          max_width = 60,
+          min_width = 60,
+          width = 60,
         },
       },
     },

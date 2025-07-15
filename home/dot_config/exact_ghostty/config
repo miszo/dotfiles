@@ -12,8 +12,8 @@ theme = catppuccin-mocha
 cursor-style = bar
 cursor-invert-fg-bg = true
 cursor-style-blink = false
-background-opacity = 0.9
-background-blur = 80
+background-opacity = 1
+background-blur = 0
 
 # window
 gtk-single-instance = true
@@ -31,7 +31,6 @@ shell-integration = zsh
 shell-integration-features = cursor,sudo,title
 macos-option-as-alt = true
 macos-auto-secure-input = true
-
 
 # keybindings
 keybind=super+shift+w=close_window

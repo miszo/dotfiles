@@ -204,4 +204,15 @@ M.get_icons = function()
   return icons
 end
 
+local statusline_icons = {
+  lsp = '',
+  formatter = '󰉿',
+  linter = '󰁨',
+}
+
+---@param type 'lsp' | 'formatter' | 'linter'
+M.get_statusline_icon = function(type)
+  return statusline_icons[type] or ''
+end
+
 return M

@@ -30,7 +30,7 @@ return {
     opts = {
       notification = {
         window = {
-          winblend = 0,
+          winblend = 100,
           border = 'rounded',
         },
       },
@@ -47,7 +47,7 @@ return {
       require('incline').setup({
         highlight = {
           groups = {
-            InclineNormal = { guibg = colors.surface0, guifg = colors.lavender },
+            InclineNormal = { guibg = colors.crust, guifg = colors.lavender },
             InclineNormalNC = { guibg = colors.none, guifg = colors.overlay2 },
           },
         },
@@ -57,12 +57,15 @@ return {
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          if vim.bo[props.buf].modified then
-            filename = '[+] ' .. filename
-          end
+          local modified = vim.bo[props.buf].modified
 
           local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-          return { { icon, guifg = color }, { ' ' }, { filename } }
+          return {
+            { icon, guifg = color },
+            { ' ' },
+            { filename },
+            modified and { ' ●', guifg = colors.peach } or {},
+          }
         end,
       })
     end,
@@ -79,21 +82,6 @@ return {
         show_close_icon = false,
         separator_style = 'slant',
         always_show_bufferline = true,
-      })
-
-      opts.highlights = opts.highlights or {}
-      local colors = require('catppuccin.palettes').get_palette()
-      local separator_fg = colors.surface0
-      opts.highlights = require('catppuccin.groups.integrations.bufferline').get({
-        custom = {
-          all = {
-            fill = { fg = colors.overlay2, bg = colors.surface0 },
-            separator = { fg = separator_fg, bg = colors.none },
-            separator_visible = { fg = separator_fg, bg = colors.none },
-            separator_selected = { fg = separator_fg, bg = colors.none },
-            offset_separator = { fg = separator_fg, bg = colors.none },
-          },
-        },
       })
     end,
   },
@@ -115,6 +103,7 @@ return {
     dependencies = { 'echasnovski/mini.icons' },
     event = 'VeryLazy',
     config = function(_, opts)
+      local statusline = require('utils.statusline')
       opts.options = vim.tbl_deep_extend('force', opts.options, {
         globalstatus = true,
         icons_enabled = true,
@@ -123,6 +112,10 @@ return {
         section_separators = { left = '', right = '' },
       })
       opts.sections = opts.sections or {}
+      table.insert(opts.sections.lualine_x, {
+        statusline.attached_clients,
+        padding = statusline.padding,
+      })
       opts.sections.lualine_z = {}
 
       require('lualine').setup(opts)
