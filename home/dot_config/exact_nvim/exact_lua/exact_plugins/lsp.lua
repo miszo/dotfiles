@@ -132,7 +132,6 @@ return {
           },
         },
         eslint = {
-          root_dir = get_root_dir,
           settings = {
             codeActionOnSave = {
               enable = true,
