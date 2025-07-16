@@ -91,6 +91,12 @@ M.attached_clients = function()
   return table.concat(clients, ' ')
 end
 
+M.show_attached_clients = function()
+  local clients = M.attached_clients()
+
+  return #clients > 0
+end
+
 M.padding = {
   left = 2,
   right = 1,

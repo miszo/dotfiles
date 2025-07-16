@@ -115,6 +115,7 @@ return {
       table.insert(opts.sections.lualine_x, {
         statusline.attached_clients,
         padding = statusline.padding,
+        cond = statusline.show_attached_clients,
       })
       opts.sections.lualine_z = {}
 
