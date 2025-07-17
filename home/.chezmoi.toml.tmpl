@@ -105,6 +105,7 @@ chezmoiToken = {{ onepasswordRead "op://dev/chezmoi GitHub API Token/token" $opP
 accountId = {{ $opWorkAccountId }}
 vaultId = {{ $opWorkVaultId }}
 itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode).id | quote }}
+token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccountCode | quote }}
 {{- end }}
 
 {{- if not $isWork }}
