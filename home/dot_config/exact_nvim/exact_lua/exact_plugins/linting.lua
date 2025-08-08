@@ -1,6 +1,6 @@
 -- only run linters if a configuration file is found for the below linters
 local linter_root_markers = {
-  biomejs = { 'biome.json', 'biome.jsonc' },
+  biome = { 'biome.json', 'biome.jsonc' },
   eslint_d = {
     'eslint.config.js',
     'eslint.config.mjs',
@@ -17,19 +17,19 @@ local linter_root_markers = {
   },
 }
 
-local biome_or_eslint_d = function(bufnr)
-  local has_biome_config = next(vim.fs.find(linter_root_markers['biomejs'], { upward = true }))
+local biome_or_eslint = function()
+  local has_biome_config = next(vim.fs.find(linter_root_markers['biome'], { upward = true }))
   local has_eslint_config = next(vim.fs.find(linter_root_markers['eslint_d'], { upward = true }))
 
   if has_biome_config then
-    return { 'biomejs' }
+    return { 'biome' }
   end
 
   if has_eslint_config then
     return { 'eslint_d' }
   end
 
-  return { 'biomejs' }
+  return {}
 end
 
 ---@module "lazy"
@@ -84,13 +84,13 @@ return {
       -- Go
       go = { 'golangcilint' },
 
-      typescript = biome_or_eslint_d(),
-      javascript = biome_or_eslint_d(),
-      typescriptreact = biome_or_eslint_d(),
-      javascriptreact = biome_or_eslint_d(),
+      typescript = biome_or_eslint(),
+      javascript = biome_or_eslint(),
+      typescriptreact = biome_or_eslint(),
+      javascriptreact = biome_or_eslint(),
 
       -- Lua
-      lua = { 'luacheck' },
+      -- lua = { 'luacheck' },
 
       -- Shell
       sh = { 'shellcheck' },
@@ -117,28 +117,9 @@ return {
     })
 
     -- Manual linting command
-    vim.keymap.set('n', '<leader>ll', function()
+    vim.keymap.set('n', '<leader>cl', function()
       lint.try_lint()
       vim.notify('Linting...', vim.log.levels.INFO, { title = 'nvim-lint' })
     end, { desc = 'Trigger linting for current file' })
-
-    -- Show linter status
-    vim.keymap.set('n', '<leader>li', function()
-      local linters = lint.linters_by_ft[vim.bo.filetype] or {}
-      if #linters == 0 then
-        print('No linters configured for filetype: ' .. vim.bo.filetype)
-      else
-        print('Linters for ' .. vim.bo.filetype .. ': ' .. table.concat(linters, ', '))
-
-        -- Show which tools are being used
-        if vim.bo.filetype == 'php' then
-          if string.find(pint_cmd, 'mason') then
-            print('Using Mason pint: ' .. pint_cmd)
-          else
-            print('Using system pint: ' .. pint_cmd)
-          end
-        end
-      end
-    end, { desc = 'Show available linters for current filetype' })
   end,
 }

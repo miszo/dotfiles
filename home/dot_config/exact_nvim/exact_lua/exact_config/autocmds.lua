@@ -135,7 +135,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local wk = require('which-key')
     wk.add({
-      { '<leader>cl', Snacks.picker.lsp_config, desc = 'Lsp Info' },
+      { '<leader>ci', Snacks.picker.lsp_config, desc = 'Lsp Info' },
       { 'gD', Snacks.picker.lsp_declarations, desc = 'Goto Declaration' },
       { 'gr', Snacks.picker.lsp_references, nowait = true, desc = 'References' },
       { 'gI', Snacks.picker.lsp_implementations, desc = 'Goto Implementation' },

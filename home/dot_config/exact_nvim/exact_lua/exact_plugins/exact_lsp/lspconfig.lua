@@ -12,6 +12,20 @@ local get_shorter_source_name = function(source)
   local shorter_source_names = {
     ['Lua Diagnostics.'] = 'Lua',
     ['Lua Syntax Check.'] = 'Lua',
+    ['luacheck'] = 'LuaCheck',
+    ['ts_error_translator'] = 'TS Error Translator',
+    ['ruby_lsp'] = 'Ruby',
+    ['eslint'] = 'ESLint',
+    ['tsserver'] = 'TypeScript',
+    ['jsonls'] = 'JSON',
+    ['html-lsp'] = 'HTML',
+    ['css-lsp'] = 'CSS',
+    ['gopls'] = 'Go',
+    ['bashls'] = 'Bash',
+    ['dockerls'] = 'Docker',
+    ['graphql'] = 'GraphQL',
+    ['yaml-language-server'] = 'YAML',
+    ['phpactor'] = 'PHP Actor',
   }
   return shorter_source_names[source] or source
 end
@@ -92,7 +106,7 @@ return {
       -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
       vim.lsp.enable({ 'ruby_lsp' })
 
-      vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx)
+      vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_publishDiagnostics] = function(err, result, ctx)
         require('ts-error-translator').translate_diagnostics(err, result, ctx)
         vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
       end
@@ -102,7 +116,6 @@ return {
         ':checkhealth lsp-capabilities',
         { desc = 'Show LSP capabilities' }
       )
-
       local formatter = UserUtil.lsp.formatter({
         name = 'eslint: lsp',
         primary = false,

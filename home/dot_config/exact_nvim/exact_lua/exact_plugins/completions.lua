@@ -46,16 +46,10 @@ return {
           ['<CR>'] = { 'accept', 'fallback' },
 
           ['<Tab>'] = {
-            function(cmp)
-              return cmp.select_next()
-            end,
-            'snippet_forward',
+            UserUtil.cmp.map({ 'snippet_forward', 'ai_accept' }),
             'fallback',
           },
           ['<S-Tab>'] = {
-            function(cmp)
-              return cmp.select_prev()
-            end,
             'snippet_backward',
             'fallback',
           },

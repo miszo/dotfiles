@@ -114,4 +114,12 @@ return {
       mini_icons.mock_nvim_web_devicons()
     end,
   },
+  {
+    'sphamba/smear-cursor.nvim',
+    event = 'VeryLazy',
+    opts = {
+      hide_target_hack = true,
+      cursor_color = 'none',
+    },
+  },
 }

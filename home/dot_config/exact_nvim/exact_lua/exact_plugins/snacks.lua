@@ -115,6 +115,27 @@ end
 ---@class snacks.picker.Config
 local picker = {
   enabled = true,
+  ui_select = true,
+  win = {
+    input = {
+      wo = {
+        foldcolumn = '0',
+      },
+      keys = {
+        ['<C-q>'] = { 'qflist_append', mode = { 'n', 'i' } },
+      },
+    },
+    list = {
+      wo = {
+        foldcolumn = '0',
+      },
+    },
+    preview = {
+      wo = {
+        foldcolumn = '0',
+      },
+    },
+  },
   sources = {
     explorer = {
       actions = {
@@ -320,6 +341,7 @@ return {
       {'<leader>fg', function() Snacks.picker.git_files() end, desc = 'Find Git Files'},
       {'<leader>fp', function() Snacks.picker.projects() end, desc = 'Projects'},
       {'<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent'},
+      {'<leader>fR', function() Snacks.picker.resume() end, desc = 'Resume'},
       {'<leader>fN', function() Snacks.notifier.show_history() end, desc = 'Notification History'},
       -- git
       {'<leader>gb', function() Snacks.picker.git_branches() end, desc = 'Git Branches'},

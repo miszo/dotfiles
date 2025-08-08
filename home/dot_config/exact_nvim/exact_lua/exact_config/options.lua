@@ -42,7 +42,11 @@ vim.o.confirm = true -- Confirm before overwriting files
 vim.o.cursorline = true -- Highlight the current line
 vim.o.expandtab = true -- Use spaces instead of tabs
 
+vim.o.smoothscroll = true
 vim.o.foldlevel = 99 -- Open all folds by default
+vim.o.foldmethod = 'expr' -- Use indentation for folding
+vim.o.foldexpr = "v:lua.require'util'.ui.foldexpr()"
+vim.o.foldtext = ''
 
 vim.o.grepformat = '%f:%l:%c:%m' -- Format for grep results
 vim.o.grepprg = 'rg --vimgrep'
@@ -79,7 +83,6 @@ vim.o.wildmode = 'longest:full,full' -- Use longest common prefix for command co
 vim.o.winminwidth = 5 -- Minimum width of a window
 vim.o.wrap = false -- Disable line wrapping
 
-vim.o.foldmethod = 'indent' -- Use indentation for folding
 vim.o.formatexpr = "v:lua.require'util'.formatting.formatexpr()"
 
 -- Undercurl
