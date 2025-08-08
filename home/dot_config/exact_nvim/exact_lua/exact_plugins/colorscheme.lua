@@ -6,46 +6,79 @@ return {
     lazy = false,
     name = 'catppuccin',
     priority = 1000,
-    config = function(_, opts)
+    opts = function()
       local colors = require('catppuccin.palettes').get_palette()
-      opts.flavour = 'mocha'
-      opts.transparent_background = false
-
-      opts.integrations = opts.integrations or {}
-      opts.integrations = vim.tbl_deep_extend('force', opts.integrations, {
-        blink_cmp = true,
-        cmp = true,
-        fidget = true,
-        grug_far = true,
-        harpoon = true,
-        mason = true,
-        neotree = true,
-        navic = {
-          enabled = true,
-          custom_bg = colors.mantle,
+      ---@type CatppuccinOptions
+      return {
+        flavour = 'mocha',
+        transparent_background = false,
+        term_colors = true,
+        styles = {
+          comments = { 'italic' },
+          conditionals = {},
+          functions = { 'italic' },
+          keywords = {},
+          strings = {},
+          variables = {},
+          numbers = {},
+          operators = {},
+          types = {},
         },
-        render_markdown = true,
-        snacks = true,
-        which_key = true,
-      })
-
-      opts.highlight_overrides = opts.highlight_overrides or {}
-      opts.highlight_overrides = {
-        all = function(c)
-          return {
-            PackageInfoOutdatedVersion = { fg = c.peach },
-            PackageInfoUpToDateVersion = { fg = c.green },
-            PackageInfoInErrorVersion = { fg = c.red },
-            SnacksIndent = { link = 'Whitespace' },
-            SnacksIndentScope = { fg = c.text },
-            SnacksPickerGitStatusIgnored = { link = 'NonText' },
-            NormalFloat = { bg = c.mantle },
-            FloatBorder = { bg = c.mantle },
-            FloatTitle = { bg = c.mantle },
-          }
-        end,
+        integrations = {
+          blink_cmp = true,
+          fidget = true,
+          dadbod_ui = true,
+          flash = true,
+          grug_far = true,
+          gitsigns = true,
+          harpoon = true,
+          indent_blankline = { enabled = true },
+          lsp_trouble = true,
+          mason = true,
+          markdown = true,
+          mini = true,
+          native_lsp = {
+            enabled = true,
+            underlines = {
+              errors = { 'undercurl' },
+              hints = { 'undercurl' },
+              warnings = { 'undercurl' },
+              information = { 'undercurl' },
+            },
+            inlay_hints = { background = true },
+          },
+          navic = {
+            enabled = true,
+            custom_bg = colors.mantle,
+          },
+          neotest = true,
+          noice = true,
+          notify = true,
+          render_markdown = true,
+          semantic_tokens = true,
+          snacks = true,
+          treesitter = true,
+          treesitter_context = true,
+          which_key = true,
+        },
+        highlight_overrides = {
+          all = function(c)
+            return {
+              PackageInfoOutdatedVersion = { fg = c.peach },
+              PackageInfoUpToDateVersion = { fg = c.green },
+              PackageInfoInErrorVersion = { fg = c.red },
+              SnacksIndent = { link = 'Whitespace' },
+              SnacksIndentScope = { fg = c.text },
+              SnacksPickerGitStatusIgnored = { link = 'NonText' },
+              NormalFloat = { bg = c.mantle },
+              FloatBorder = { bg = c.mantle },
+              FloatTitle = { bg = c.mantle },
+            }
+          end,
+        },
       }
-
+    end,
+    config = function(_, opts)
       require('catppuccin').setup(opts)
       vim.cmd.colorscheme('catppuccin-mocha')
     end,

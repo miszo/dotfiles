@@ -1,32 +1,67 @@
 ---@module "lazy"
 ---@type LazySpec[]
 return {
+  -- ui components
+  { 'MunifTanjim/nui.nvim', lazy = true },
+
+  -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   {
     'folke/noice.nvim',
+    event = 'VeryLazy',
     dependencies = {
       'MunifTanjim/nui.nvim',
     },
-    opts = function(_, opts)
-      table.insert(opts.presets, {
+    opts = {
+      lsp = {
+        progress = {
+          enabled = false, -- disable LSP progress messages
+        },
+      },
+      messages = {
+        enabled = false, -- enables the Noice message UI
+      },
+      routes = {
+        {
+          filter = {
+            event = 'notify',
+            find = 'No information available',
+          },
+          opts = { skip = true },
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
         lsp_doc_border = true,
-      })
-      opts.lsp = opts.lsp or {}
-      opts.lsp.progress = opts.lsp.progress or {}
-      opts.lsp.progress.enabled = false
-      opts.messages = {
-        enabled = false,
-      }
-      opts.routes = {
-        filter = { event = 'notify', find = 'No information available' },
-        opts = { skip = true },
-      }
-    end,
-    keys = {
-      { '<leader>nd', '<cmd>NoiceDismiss<CR>', desc = 'Dismiss Noice Message' },
+      },
     },
+    -- stylua: ignore
+    keys = {
+      { '<leader>sn', '', desc = '+noice'},
+      { '<S-Enter>', function() require('noice').redirect(vim.fn.getcmdline()) end, mode = 'c', desc = 'Redirect Cmdline' },
+      { '<leader>snl', function() require('noice').cmd('last') end, desc = 'Noice Last Message' },
+      { '<leader>snh', function() require('noice').cmd('history') end, desc = 'Noice History' },
+      { '<leader>sna', function() require('noice').cmd('all') end, desc = 'Noice All' },
+      { '<leader>snd', function() require('noice').cmd('dismiss') end, desc = 'Dismiss All' },
+      { '<leader>snt', function() require('noice').cmd('pick') end, desc = 'Noice Picker (Telescope/FzfLua)' },
+      { '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'Scroll Backward', mode = {'i', 'n', 's'}},
+      { '<c-b>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'Scroll Backward', mode = {'i', 'n', 's'}},
+    },
+    config = function(_, opts)
+      -- HACK: noice shows messages from before it was enabled,
+      -- but this is not ideal when Lazy is installing plugins,
+      -- so clear the messages in this case.
+      if vim.o.filetype == 'lazy' then
+        vim.cmd([[messages clear]])
+      end
+      require('noice').setup(opts)
+    end,
   },
   {
     'j-hui/fidget.nvim',
+    -- pin to a specific commit to avoid UI changes
+    commit = '4ec7bed6c86b671ddde03ca1b227343cfa3e65fa',
     opts = {
       notification = {
         window = {
@@ -36,10 +71,9 @@ return {
       },
     },
   },
-  -- filename
   {
     'b0o/incline.nvim',
-    dependencies = { 'catppuccin/nvim' },
+    dependencies = { 'catppuccin/nvim', 'echasnovski/mini.icons' },
     event = 'BufReadPre',
     priority = 1200,
     config = function()
@@ -70,56 +104,14 @@ return {
       })
     end,
   },
-  -- buffer line
-  {
-    'akinsho/bufferline.nvim',
-    dependencies = { 'catppuccin/nvim' },
-    event = 'VeryLazy',
-    opts = function(_, opts)
-      opts.options = opts.options or {}
-      opts.options = vim.tbl_extend('force', opts.options, {
-        show_buffer_close_icons = false,
-        show_close_icon = false,
-        separator_style = 'slant',
-        always_show_bufferline = true,
-      })
-    end,
-  },
-
   {
     'echasnovski/mini.icons',
     lazy = true,
     config = function()
-      local icons = require('utils.icons').get_icons()
+      local icons = UserUtil.icons.get_icons()
       local mini_icons = require('mini.icons')
       mini_icons.setup(icons)
       mini_icons.mock_nvim_web_devicons()
-    end,
-  },
-
-  -- Extend lualine
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'echasnovski/mini.icons' },
-    event = 'VeryLazy',
-    config = function(_, opts)
-      local statusline = require('utils.statusline')
-      opts.options = vim.tbl_deep_extend('force', opts.options, {
-        globalstatus = true,
-        icons_enabled = true,
-        theme = 'catppuccin',
-        component_separators = { left = '', right = '' },
-        section_separators = { left = '', right = '' },
-      })
-      opts.sections = opts.sections or {}
-      table.insert(opts.sections.lualine_x, {
-        statusline.attached_clients,
-        padding = statusline.padding,
-        cond = statusline.show_attached_clients,
-      })
-      opts.sections.lualine_z = {}
-
-      require('lualine').setup(opts)
     end,
   },
 }
