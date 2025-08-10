@@ -16,6 +16,7 @@ local get_shorter_source_name = function(source)
     ['ts_error_translator'] = 'TS Error Translator',
     ['ruby_lsp'] = 'Ruby',
     ['eslint'] = 'ESLint',
+    ['eslint_d'] = 'ESLint',
     ['tsserver'] = 'TypeScript',
     ['jsonls'] = 'JSON',
     ['html-lsp'] = 'HTML',
@@ -80,27 +81,8 @@ return {
             [vim.diagnostic.severity.INFO] = UserConfig.icons.diagnostics.Info,
             [vim.diagnostic.severity.HINT] = UserConfig.icons.diagnostics.Hint,
           },
-          numhl = {
-            [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-            [vim.diagnostic.severity.WARN] = 'WarningMsg',
-          },
+          numhl = { [vim.diagnostic.severity.ERROR] = 'ErrorMsg', [vim.diagnostic.severity.WARN] = 'WarningMsg' },
         },
-      })
-
-      vim.lsp.config('*', {
-        capabilities = (function()
-          local capabilities = require('blink.cmp').get_lsp_capabilities()
-          capabilities.textDocument.foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-          }
-          return capabilities
-        end)(),
-        flags = { debounce_text_changes = 150 },
-        on_attach = function(client, _)
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentRangeFormattingProvider = false
-        end,
       })
 
       -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
@@ -116,6 +98,7 @@ return {
         ':checkhealth lsp-capabilities',
         { desc = 'Show LSP capabilities' }
       )
+
       local formatter = UserUtil.lsp.formatter({
         name = 'eslint: lsp',
         primary = false,

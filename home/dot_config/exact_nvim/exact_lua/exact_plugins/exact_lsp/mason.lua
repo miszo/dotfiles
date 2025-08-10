@@ -6,6 +6,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local mason = require('mason')
     local mason_lspconfig = require('mason-lspconfig')
@@ -48,15 +49,9 @@ return {
 
     mason_tool_installer.setup({
       ensure_installed = {
-        -- dap
-        'codelldb',
-        'delve',
-        'js-debug-adapter',
-        'php-debug-adapter',
         -- linter
         'biome',
         'erb-lint',
-        'eslint_d',
         -- 'hadolint',
         'luacheck',
         'markdownlint-cli2',

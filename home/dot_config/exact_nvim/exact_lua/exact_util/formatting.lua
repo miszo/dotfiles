@@ -43,16 +43,8 @@ end
 ---@param buf? number
 function M.info(buf)
   buf = buf or vim.api.nvim_get_current_buf()
-  local gaf = vim.g.autoformat == nil or vim.g.autoformat
-  local baf = vim.b[buf].autoformat
-  local enabled = M.enabled(buf)
   local lines = {
     '# Status',
-    ('- [%s] global **%s**'):format(gaf and 'x' or ' ', gaf and 'enabled' or 'disabled'),
-    ('- [%s] buffer **%s**'):format(
-      enabled and 'x' or ' ',
-      baf == nil and 'inherit' or baf and 'enabled' or 'disabled'
-    ),
   }
   local have = false
   for _, formatter in ipairs(M.resolve(buf)) do
@@ -67,54 +59,13 @@ function M.info(buf)
   if not have then
     lines[#lines + 1] = '\n***No formatters available for this buffer.***'
   end
-  UserUtil.lazyCoreUtil[enabled and 'info' or 'warn'](
-    table.concat(lines, '\n'),
-    { title = 'LazyFormat (' .. (enabled and 'enabled' or 'disabled') .. ')' }
-  )
-end
-
----@param buf? number
-function M.enabled(buf)
-  buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
-  local gaf = vim.g.autoformat
-  local baf = vim.b[buf].autoformat
-
-  -- If the buffer has a local value, use that
-  if baf ~= nil then
-    return baf
-  end
-
-  -- Otherwise use the global value if set, or true by default
-  return gaf == nil or gaf
-end
-
----@param buf? boolean
-function M.toggle(buf)
-  M.enable(not M.enabled(), buf)
-end
-
----@param enable? boolean
----@param buf? boolean
-function M.enable(enable, buf)
-  if enable == nil then
-    enable = true
-  end
-  if buf then
-    vim.b.autoformat = enable
-  else
-    vim.g.autoformat = enable
-    vim.b.autoformat = nil
-  end
-  M.info()
+  UserUtil.lazyCoreUtil.info(table.concat(lines, '\n'), { title = 'Format' })
 end
 
 ---@param opts? {force?:boolean, buf?:number}
 function M.format(opts)
   opts = opts or {}
   local buf = opts.buf or vim.api.nvim_get_current_buf()
-  if not ((opts and opts.force) or M.enabled(buf)) then
-    return
-  end
 
   local done = false
   for _, formatter in ipairs(M.resolve(buf)) do
@@ -129,61 +80,6 @@ function M.format(opts)
   if not done and opts and opts.force then
     UserUtil.lazyCoreUtil.warn('No formatter available', { title = 'LazyVim' })
   end
-end
-
-function M.health()
-  local Config = require('lazy.core.config')
-  local has_plugin = Config.spec.plugins['none-ls.nvim']
-  local has_extra = vim.tbl_contains(Config.spec.modules, 'lazyvim.plugins.extras.lsp.none-ls')
-  if has_plugin and not has_extra then
-    UserUtil.lazyCoreUtil.warn({
-      '`conform.nvim` and `nvim-lint` are now the default formatters and linters in LazyVim.',
-      '',
-      'You can use those plugins together with `none-ls.nvim`,',
-      'but you need to enable the `lazyvim.plugins.extras.lsp.none-ls` extra,',
-      'for formatting to work correctly.',
-      '',
-      'In case you no longer want to use `none-ls.nvim`, just remove the spec from your config.',
-    })
-  end
-end
-
-function M.setup()
-  M.health()
-
-  -- Autoformat autocmd
-  vim.api.nvim_create_autocmd('BufWritePre', {
-    group = vim.api.nvim_create_augroup('UserFormat', {}),
-    callback = function(event)
-      M.format({ buf = event.buf })
-    end,
-  })
-
-  -- Manual format
-  vim.api.nvim_create_user_command('UserFormat', function()
-    M.format({ force = true })
-  end, { desc = 'Format selection or buffer' })
-
-  -- Format info
-  vim.api.nvim_create_user_command('UserFormatInfo', function()
-    M.info()
-  end, { desc = 'Show info about the formatters for the current buffer' })
-end
-
----@param buf? boolean
-function M.snacks_toggle(buf)
-  return Snacks.toggle({
-    name = 'Auto Format (' .. (buf and 'Buffer' or 'Global') .. ')',
-    get = function()
-      if not buf then
-        return vim.g.autoformat == nil or vim.g.autoformat
-      end
-      return UserUtil.formatting.enabled()
-    end,
-    set = function(state)
-      UserUtil.formatting.enable(state, buf)
-    end,
-  })
 end
 
 return M

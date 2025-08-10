@@ -413,4 +413,11 @@ return {
       require('mini.hipatterns').setup(opts)
     end,
   },
+  {
+    'b0o/SchemaStore.nvim',
+    lazy = true,
+    version = false, -- last release is way too old
+  },
+  -- library used by other plugins
+  { 'nvim-lua/plenary.nvim', lazy = true },
 }

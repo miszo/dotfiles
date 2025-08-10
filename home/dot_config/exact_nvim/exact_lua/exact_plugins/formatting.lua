@@ -1,13 +1,6 @@
-local root_pattern = require('lspconfig.util').root_pattern
-
-local biome_or_prettier = function(bufnr)
-  local has_biome_config = root_pattern('biome.json', 'biome.jsonc')(vim.api.nvim_buf_get_name(bufnr))
-
-  if has_biome_config then
-    return { 'biome' }
-  end
-
-  local has_prettier_config = root_pattern(
+local formatter_root_markers = {
+  biome = { 'biome.json', 'biome.jsonc' },
+  prettier = {
     '.prettierrc',
     '.prettierrc.json',
     '.prettierrc.yml',
@@ -19,8 +12,17 @@ local biome_or_prettier = function(bufnr)
     '.prettierrc.toml',
     'prettier.config.js',
     'prettier.config.cjs',
-    'prettier.config.mjs'
-  )(bufnr)
+    'prettier.config.mjs',
+  },
+}
+
+local biome_or_prettier = function()
+  local has_biome_config = next(vim.fs.find(formatter_root_markers['biome'], { upward = true }))
+  local has_prettier_config = next(vim.fs.find(formatter_root_markers['prettier'], { upward = true }))
+
+  if has_biome_config then
+    return { 'biome' }
+  end
 
   if has_prettier_config then
     return { 'prettierd', lsp_format = 'fallback' }
@@ -29,10 +31,9 @@ local biome_or_prettier = function(bufnr)
   return { 'prettierd', lsp_format = 'fallback' }
 end
 
-local filetypes_with_dynamic_formatter = {
+local ft_with_js_formatter = {
   'astro',
   'svelte',
-  'markdown',
   'graphql',
   'javascriptreact',
   'typescriptreact',
@@ -40,9 +41,13 @@ local filetypes_with_dynamic_formatter = {
   'javascript',
   'json',
   'jsonc',
+  'typescript',
+}
+
+local ft_with_prettier = {
+  'markdown',
   'markdown.mdx',
   'handlebars',
-  'typescript',
   'yaml',
   'css',
   'less',
@@ -102,8 +107,11 @@ return {
         sh = { 'shfmt' },
         bash = { 'shfmt' },
       }
-      for _, ft in ipairs(filetypes_with_dynamic_formatter) do
-        opts.formatters_by_ft[ft] = biome_or_prettier
+      for _, ft in ipairs(ft_with_js_formatter) do
+        opts.formatters_by_ft[ft] = biome_or_prettier()
+      end
+      for _, ft in ipairs(ft_with_prettier) do
+        opts.formatters_by_ft[ft] = { 'prettierd', lsp_format = 'fallback' }
       end
       opts.default_format_opts = {
         timeout_ms = 3000,

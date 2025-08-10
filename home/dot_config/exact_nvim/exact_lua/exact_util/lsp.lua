@@ -42,8 +42,8 @@ function M.formatter(opts)
       local clients = M.get_clients(UserUtil.lazyCoreUtil.merge({}, filter, { bufnr = buf }))
       ---@param client vim.lsp.Client
       local ret = vim.tbl_filter(function(client)
-        return client.supports_method(vim.lsp.protocol.Methods.textDocument_formatting)
-          or client.supports_method(vim.lsp.protocol.Methods.textDocument_rangeFormatting)
+        return client:supports_method(vim.lsp.protocol.Methods.textDocument_formatting)
+          or client:supports_method(vim.lsp.protocol.Methods.textDocument_rangeFormatting)
       end, clients)
       ---@param client vim.lsp.Client
       return vim.tbl_map(function(client)

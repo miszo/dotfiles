@@ -6,7 +6,6 @@ return {
     'saghen/blink.cmp',
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'Fildo7525/pretty_hover',
     },
     version = '*',
     config = function()

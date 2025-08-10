@@ -21,7 +21,6 @@ vim.opt.fillchars = {
 vim.spell = true
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
-vim.g.autoformat = true -- Enable autoformatting by default
 
 vim.scriptencoding = 'utf-8'
 vim.o.encoding = 'utf-8'

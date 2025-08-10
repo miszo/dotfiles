@@ -1,13 +1,5 @@
 local util = require('lspconfig.util')
 
--- local astro_plugin = {
---   enableForWorkspaceTypeScriptVersions = true,
---   location = vim.fs.normalize(
---     vim.fs.joinpath(vim.fn.stdpath('data'), 'mason/packages/astro-language-server/node_modules/@astrojs/ts-plugin')
---   ),
---   name = '@astrojs/ts-plugin',
--- }
-
 ---@type vim.lsp.Config
 return {
   cmd = { 'astro-ls', '--stdio' },

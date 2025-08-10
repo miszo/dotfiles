@@ -315,6 +315,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         },
       })
 
+      if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
+        local win = vim.api.nvim_get_current_win()
+        vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+      end
+
       local highlight_augroup = augroup('lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = attach_event.buf,
@@ -338,3 +343,29 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd('LspNotify', {
+  callback = function(event)
+    if event.data.method == vim.lsp.protocol.Methods.textDocument_didOpen then
+      vim.lsp.foldclose('imports', vim.fn.bufwinid(event.buf))
+    end
+  end,
+})
+
+-- Autoformat autocmd
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('UserFormat', {}),
+  callback = function(event)
+    UserUtil.formatting.format({ buf = event.buf })
+  end,
+})
+
+-- Manual format
+vim.api.nvim_create_user_command('Format', function()
+  UserUtil.formatting.format({ force = true })
+end, { desc = 'Format selection or buffer' })
+
+-- Format info
+vim.api.nvim_create_user_command('FormatInfo', function()
+  UserUtil.formatting.info()
+end, { desc = 'Show info about the formatters for the current buffer' })

@@ -28,8 +28,10 @@ return {
         'theHamsta/nvim-dap-virtual-text',
         opts = {},
       },
+      'mason-org/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+      'leoluz/nvim-dap-go',
     },
-
     keys = {
       {
         '<leader>dB',
@@ -165,33 +167,6 @@ return {
         desc = 'Eval',
         mode = { 'n', 'v' },
       },
-    },
-
-    config = function()
-      vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
-
-      for name, sign in pairs(UserConfig.icons.dap) do
-        sign = type(sign) == 'table' and sign or { sign }
-        vim.fn.sign_define(
-          'Dap' .. name,
-          { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] }
-        )
-      end
-
-      -- setup dap config by VsCode launch.json file
-      local vscode = require('dap.ext.vscode')
-      local json = require('plenary.json')
-      vscode.json_decode = function(str)
-        return vim.json.decode(json.json_strip_comments(str))
-      end
-    end,
-  },
-
-  -- fancy UI for the debugger
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = { 'nvim-neotest/nvim-nio' },
-    keys = {
       {
         '<leader>du',
         function()
@@ -208,16 +183,47 @@ return {
         mode = { 'n', 'v' },
       },
     },
-    opts = {},
-    config = function(_, opts)
+
+    config = function()
       local dap = require('dap')
       local dapui = require('dapui')
-      dapui.setup(opts)
+      local dapvt = require('nvim-dap-virtual-text')
+      local mason_dap = require('mason-nvim-dap')
+
+      dapui.setup()
+
+      mason_dap.setup({
+        automatic_setup = true,
+        ensure_installed = {
+          'codelldb',
+          'delve',
+          'js-debug-adapter',
+          'php-debug-adapter',
+        },
+      })
+
+      vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
+
+      for name, sign in pairs(UserConfig.icons.dap) do
+        sign = type(sign) == 'table' and sign or { sign }
+        vim.fn.sign_define(
+          'Dap' .. name,
+          { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] }
+        )
+      end
+
+      -- setup dap config by VsCode launch.json file
+      local vscode = require('dap.ext.vscode')
+      local json = require('plenary.json')
+      vscode.json_decode = function(str)
+        return vim.json.decode(json.json_strip_comments(str))
+      end
+
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
-      require('nvim-dap-virtual-text').setup({})
+      dapvt.setup({})
 
       for _, adapter in pairs({ 'node', 'chrome' }) do
         local pwa_adapter = 'pwa-' .. adapter

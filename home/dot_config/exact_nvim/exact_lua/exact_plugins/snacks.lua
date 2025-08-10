@@ -6,20 +6,6 @@ local bigfile = { enabled = true }
 local dashboard = {
   width = 80,
   preset = {
-    pick = {
-      name = 'snacks',
-      commands = {
-        files = 'files',
-        live_grep = 'grep',
-        oldfiles = 'recent',
-      },
-
-      ---@param source string
-      ---@param opts? snacks.picker.Config
-      open = function(source, opts)
-        return Snacks.picker.pick(source, opts)
-      end,
-    },
     header = [[
     ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
     ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
@@ -73,6 +59,10 @@ local indent = {
   },
 }
 
+---@class snacks.input.Config
+local input = {
+  enabled = true,
+}
 ---@class snacks.notifier.Config
 local notifier = {
   enabled = true,
@@ -115,27 +105,6 @@ end
 ---@class snacks.picker.Config
 local picker = {
   enabled = true,
-  ui_select = true,
-  win = {
-    input = {
-      wo = {
-        foldcolumn = '0',
-      },
-      keys = {
-        ['<C-q>'] = { 'qflist_append', mode = { 'n', 'i' } },
-      },
-    },
-    list = {
-      wo = {
-        foldcolumn = '0',
-      },
-    },
-    preview = {
-      wo = {
-        foldcolumn = '0',
-      },
-    },
-  },
   sources = {
     explorer = {
       actions = {
@@ -317,6 +286,7 @@ return {
       dashboard = dashboard,
       image = image,
       indent = indent,
+      input = input,
       picker = picker,
       quickfile = quickfile,
       scratch = scratch,

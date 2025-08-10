@@ -1,7 +1,7 @@
 -- only run linters if a configuration file is found for the below linters
 local linter_root_markers = {
   biome = { 'biome.json', 'biome.jsonc' },
-  eslint_d = {
+  eslint = {
     'eslint.config.js',
     'eslint.config.mjs',
     'eslint.config.cjs',
@@ -14,23 +14,52 @@ local linter_root_markers = {
     '.eslintrc.yaml',
     '.eslintrc.yml',
     '.eslintrc.json',
+    '.eslintrc.jsonc',
+    '.eslintrc.mjs',
+    '.eslintrc.mts',
+    '.eslintrc.cts',
+    '.eslintrc',
   },
 }
 
+local function debounce(ms, fn)
+  local timer = vim.uv.new_timer()
+  return function(...)
+    local argv = { ... }
+    timer:start(ms, 0, function()
+      timer:stop()
+      vim.schedule_wrap(fn)(unpack(argv))
+    end)
+  end
+end
+
 local biome_or_eslint = function()
   local has_biome_config = next(vim.fs.find(linter_root_markers['biome'], { upward = true }))
-  local has_eslint_config = next(vim.fs.find(linter_root_markers['eslint_d'], { upward = true }))
+  local has_eslint_config = next(vim.fs.find(linter_root_markers['eslint'], { upward = true }))
 
   if has_biome_config then
     return { 'biome' }
   end
 
   if has_eslint_config then
-    return { 'eslint_d' }
+    return { 'eslint' }
   end
 
   return {}
 end
+
+local ft_with_js_linter = {
+  'astro',
+  'svelte',
+  'graphql',
+  'javascriptreact',
+  'typescriptreact',
+  'vue',
+  'javascript',
+  'json',
+  'jsonc',
+  'typescript',
+}
 
 ---@module "lazy"
 ---@type LazySpec[]
@@ -84,11 +113,6 @@ return {
       -- Go
       go = { 'golangcilint' },
 
-      typescript = biome_or_eslint(),
-      javascript = biome_or_eslint(),
-      typescriptreact = biome_or_eslint(),
-      javascriptreact = biome_or_eslint(),
-
       -- Lua
       -- lua = { 'luacheck' },
 
@@ -101,19 +125,25 @@ return {
       php = { 'pint' },
     }
 
+    for _, ft in ipairs(ft_with_js_linter) do
+      lint.linters_by_ft[ft] = biome_or_eslint()
+    end
+
+    local function try_lint()
+      if vim.opt_local.modifiable:get() then
+        -- Only lint if linters are available for this filetype
+        local linters = lint.linters_by_ft[vim.bo.filetype]
+        if linters and #linters > 0 then
+          lint.try_lint()
+        end
+      end
+    end
+
     -- Auto-lint on save and text changes
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
       group = lint_augroup,
-      callback = function()
-        if vim.opt_local.modifiable:get() then
-          -- Only lint if linters are available for this filetype
-          local linters = lint.linters_by_ft[vim.bo.filetype]
-          if linters and #linters > 0 then
-            lint.try_lint()
-          end
-        end
-      end,
+      callback = debounce(100, try_lint),
     })
 
     -- Manual linting command

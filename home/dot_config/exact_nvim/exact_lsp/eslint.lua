@@ -5,7 +5,7 @@
 local util = require('lspconfig.util')
 local lsp = vim.lsp
 
----@type vim.lsp.Config
+--- @type vim.lsp.Config
 return {
   cmd = { 'vscode-eslint-language-server', '--stdio' },
   filetypes = {
@@ -22,7 +22,7 @@ return {
   },
   workspace_required = true,
   on_attach = function(client, bufnr)
-    vim.api.nvim_buf_create_user_command(0, 'EslintFixAll', function()
+    vim.api.nvim_buf_create_user_command(0, 'LspEslintFixAll', function()
       client:request_sync('workspace/executeCommand', {
         command = 'eslint.applyAllFixes',
         arguments = {
