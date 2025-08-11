@@ -16,7 +16,7 @@ local function get_args(config)
   return config
 end
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {

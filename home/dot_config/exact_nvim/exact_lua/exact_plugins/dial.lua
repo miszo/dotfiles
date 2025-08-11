@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
@@ -27,6 +27,20 @@ return {
       local logical_alias = augend.constant.new({
         elements = { '&&', '||' },
         word = false,
+        cyclic = true,
+      })
+
+      local hexcolor_alias = augend.hexcolor.new({ case = 'lower' })
+
+      local let_const_alias = augend.constant.new({
+        elements = { 'let', 'const' },
+        word = true,
+        cyclic = true,
+      })
+
+      local ts_cast_alias = augend.constant.new({
+        elements = { 'as', 'satisfies' },
+        word = true,
         cyclic = true,
       })
 
@@ -107,6 +121,7 @@ return {
           markdown = 'markdown',
           sass = 'css',
           scss = 'css',
+          less = 'css',
           python = 'python',
         },
         groups = {
@@ -123,6 +138,8 @@ return {
             logical_alias,
             augend.semver.alias.semver,
             augend.constant.new({ elements = { 'start', 'end' } }),
+            augend.constant.new({ elements = { 'top', 'bottom' } }),
+            augend.constant.new({ elements = { 'on', 'off' } }),
             augend.case.new({
               types = { 'PascalCase', 'camelCase', 'snake_case', 'kebab-case', 'SCREAMING_SNAKE_CASE' },
             }),
@@ -134,24 +151,24 @@ return {
             }),
           },
           vue = {
-            augend.constant.new({ elements = { 'let', 'const' } }),
-            augend.hexcolor.new({ case = 'lower' }),
-            augend.hexcolor.new({ case = 'upper' }),
-            augend.constant.new({ elements = { 'as', 'satisfies' } }),
-            augend.constant.new({ elements = { '&&', '||' } }),
+            let_const_alias,
+            ts_cast_alias,
+            hexcolor_alias,
+            logical_alias,
           },
           typescript = {
-            augend.constant.new({ elements = { 'let', 'const' } }),
-            augend.constant.new({ elements = { 'as', 'satisfies' } }),
-            augend.constant.new({ elements = { '&&', '||' } }),
+            let_const_alias,
+            ts_cast_alias,
+            hexcolor_alias,
+            logical_alias,
+          },
+          javascript = {
+            let_const_alias,
+            hexcolor_alias,
+            logical_alias,
           },
           css = {
-            augend.hexcolor.new({
-              case = 'lower',
-            }),
-            augend.hexcolor.new({
-              case = 'upper',
-            }),
+            hexcolor_alias,
           },
           markdown = {
             augend.misc.alias.markdown_header, -- markdown header (##, ###, ####, etc.)

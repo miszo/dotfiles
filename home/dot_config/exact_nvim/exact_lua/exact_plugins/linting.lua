@@ -24,6 +24,15 @@ local linter_root_markers = {
 
 local function debounce(ms, fn)
   local timer = vim.uv.new_timer()
+
+  if not timer then
+    -- If timer creation fails, fallback to immediate execution
+    vim.notify('Failed to create timer, executing function immediately.', vim.log.levels.WARN, { title = 'nvim-lint' })
+    return function(...)
+      local argv = { ... }
+      fn(unpack(argv))
+    end
+  end
   return function(...)
     local argv = { ... }
     timer:start(ms, 0, function()
@@ -61,7 +70,7 @@ local ft_with_js_linter = {
   'typescript',
 }
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   'mfussenegger/nvim-lint',
@@ -123,6 +132,7 @@ return {
 
       -- PHP/Laravel
       php = { 'pint' },
+      sql = { 'sqlfluff' },
     }
 
     for _, ft in ipairs(ft_with_js_linter) do

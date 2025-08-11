@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   -- ui components
@@ -78,24 +78,29 @@ return {
     priority = 1200,
     config = function()
       local colors = require('catppuccin.palettes').get_palette()
+      local devicons = require('nvim-web-devicons')
       require('incline').setup({
+        window = {
+          zindex = 50,
+          padding = { left = 1, right = 1 },
+          margin = { vertical = 0, horizontal = 0 },
+        },
         highlight = {
           groups = {
             InclineNormal = { guibg = colors.crust, guifg = colors.lavender },
             InclineNormalNC = { guibg = colors.none, guifg = colors.overlay2 },
           },
         },
-        window = { margin = { vertical = 0, horizontal = 0 } },
         hide = {
-          cursorline = true,
+          cursorline = false,
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           local modified = vim.bo[props.buf].modified
 
-          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+          local ft_icon, ft_color = devicons.get_icon_color(filename)
           return {
-            { icon, guifg = color },
+            ft_icon and { ft_icon, guifg = ft_color } or '',
             { ' ' },
             { filename },
             modified and { ' ●', guifg = colors.peach } or {},

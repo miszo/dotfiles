@@ -16,9 +16,15 @@ local formatter_root_markers = {
   },
 }
 
+---@param formatter string
+local function has_formatter_config(formatter)
+  local has_config = next(vim.fs.find(formatter_root_markers[formatter], { upward = true }))
+  return has_config ~= nil
+end
+
 local biome_or_prettier = function()
-  local has_biome_config = next(vim.fs.find(formatter_root_markers['biome'], { upward = true }))
-  local has_prettier_config = next(vim.fs.find(formatter_root_markers['prettier'], { upward = true }))
+  local has_biome_config = has_formatter_config('biome')
+  local has_prettier_config = has_formatter_config('prettier')
 
   if has_biome_config then
     return { 'biome' }
@@ -28,7 +34,8 @@ local biome_or_prettier = function()
     return { 'prettierd', lsp_format = 'fallback' }
   end
 
-  return { 'prettierd', lsp_format = 'fallback' }
+  -- fallback to lsp formatting
+  return { lsp_format = true }
 end
 
 local ft_with_js_formatter = {
@@ -56,7 +63,17 @@ local ft_with_prettier = {
   'eruby',
 }
 
----@module "lazy"
+local sql_ft = { 'sql', 'mysql', 'plsql' }
+
+local prettier_or_lsp = function()
+  local has_prettier_config = has_formatter_config('prettier')
+  if has_prettier_config then
+    return { 'prettierd', lsp_format = 'fallback' }
+  end
+  return { lsp_format = true }
+end
+
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
@@ -65,6 +82,14 @@ return {
     cmd = 'ConformInfo',
     event = 'BufReadPre',
     keys = {
+      {
+        '<leader>cf',
+        function()
+          require('conform').format({ timeout_ms = 3000 })
+        end,
+        mode = { 'n', 'v' },
+        desc = 'Format buffer',
+      },
       {
         '<leader>cF',
         function()
@@ -111,7 +136,10 @@ return {
         opts.formatters_by_ft[ft] = biome_or_prettier()
       end
       for _, ft in ipairs(ft_with_prettier) do
-        opts.formatters_by_ft[ft] = { 'prettierd', lsp_format = 'fallback' }
+        opts.formatters_by_ft[ft] = prettier_or_lsp()
+      end
+      for _, ft in ipairs(sql_ft) do
+        opts.formatters_by_ft[ft] = { 'sqlfluff' }
       end
       opts.default_format_opts = {
         timeout_ms = 3000,
@@ -121,6 +149,9 @@ return {
       }
       opts.formatters = {
         injected = { options = { ignore_errors = true } },
+        sqlfluff = {
+          args = { 'format', '--dialect=ansi', '-' },
+        },
       }
     end,
     config = function(_, opts)

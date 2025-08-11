@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   -- Session management. This saves your session in the background,

@@ -273,7 +273,7 @@ local zen = {
   },
 }
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
@@ -302,7 +302,6 @@ return {
       {'<leader>,', function() Snacks.picker.buffers() end, desc = 'Buffers'},
       {'<leader>/', function() Snacks.picker.grep() end, desc = 'Grep'},
       {'<leader>:', function() Snacks.picker.command_history() end, desc = 'Command History'},
-      {'<leader>n', function() Snacks.picker.notifications() end, desc = 'Notification History'},
       {'<leader>e', function() Snacks.explorer() end, desc = 'File Explorer'},
       -- find
       {'<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffers'},
@@ -313,6 +312,7 @@ return {
       {'<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent'},
       {'<leader>fR', function() Snacks.picker.resume() end, desc = 'Resume'},
       {'<leader>fN', function() Snacks.notifier.show_history() end, desc = 'Notification History'},
+      {'<leader>fP', function() Snacks.picker.notifications() end, desc = 'Notifications'},
       -- git
       {'<leader>gb', function() Snacks.picker.git_branches() end, desc = 'Git Branches'},
       {'<leader>gl', function() Snacks.picker.git_log() end, desc = 'Git Log'},
@@ -353,7 +353,6 @@ return {
       {'<leader>Z', function() Snacks.zen.zoom() end, desc = 'Toggle Zoom'},
       {'<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer'},
       {'<leader>S', function() Snacks.scratch.select() end, desc = 'Select Scratch Buffer'},
-      {'<leader>n', function() Snacks.notifier.show_history() end, desc = 'Notification History'},
       {'<leader>bs', scratch_delete_all, desc = 'Delete all scratch buffers'},
       {'<leader>cR', function() Snacks.rename.rename_file() end, desc = 'Rename File'},
       {'<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse', mode = {'n', 'v'}},

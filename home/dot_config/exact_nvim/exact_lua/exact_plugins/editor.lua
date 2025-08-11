@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
 
@@ -334,6 +334,7 @@ return {
         vim.keymap.set({ 'n' }, '<leader>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
       end
       local pi = require('package-info')
+      map('', '', '+Package Info')
       map('s', pi.show, 'Show package info')
       map('h', pi.hide, 'Hide package info')
       map('n', pi.toggle, 'Toggle package info')
@@ -349,6 +350,7 @@ return {
     build = 'npm install',
     cmd = { 'SwaggerPreview', 'SwaggerPreviewStop', 'SwaggerPreviewToggle' },
     keys = {
+      { '<leader>O', '', desc = '+OpenAPI Swagger' },
       {
         '<leader>Os',
         function()

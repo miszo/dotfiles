@@ -246,7 +246,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.lsp.buf.code_action({
               apply = true,
               context = {
-                only = { 'source' },
+                only = { 'source.fixAll', 'source' },
                 diagnostics = {},
               },
             })

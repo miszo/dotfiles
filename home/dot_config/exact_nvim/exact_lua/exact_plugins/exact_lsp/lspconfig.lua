@@ -16,7 +16,6 @@ local get_shorter_source_name = function(source)
     ['ts_error_translator'] = 'TS Error Translator',
     ['ruby_lsp'] = 'Ruby',
     ['eslint'] = 'ESLint',
-    ['eslint_d'] = 'ESLint',
     ['tsserver'] = 'TypeScript',
     ['jsonls'] = 'JSON',
     ['html-lsp'] = 'HTML',
@@ -44,7 +43,7 @@ local function format_diagnostic(diagnostic)
   )
 end
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {

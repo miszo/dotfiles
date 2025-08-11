@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   { 'L3MON4D3/LuaSnip', keys = {} },
@@ -6,6 +6,7 @@ return {
     'saghen/blink.cmp',
     dependencies = {
       'rafamadriz/friendly-snippets',
+      'kristijanhusak/vim-dadbod-completion',
     },
     version = '*',
     config = function()
@@ -17,7 +18,7 @@ return {
           nerd_font_variant = 'normal',
         },
         sources = {
-          default = { 'laravel', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+          default = { 'dadbod', 'laravel', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
           per_filetype = {
             codecompanion = { 'codecompanion' },
             sql = { 'snippets', 'dadbod', 'dbee', 'buffer' },
@@ -34,6 +35,10 @@ return {
             },
             cmdline = {
               min_keyword_length = 2,
+            },
+            dadbod = {
+              name = 'Dadbod',
+              module = 'vim_dadbod_completion.blink',
             },
           },
         },
