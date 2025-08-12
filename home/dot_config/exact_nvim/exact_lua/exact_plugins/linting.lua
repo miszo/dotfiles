@@ -47,7 +47,7 @@ local biome_or_eslint = function()
   local has_eslint_config = next(vim.fs.find(linter_root_markers['eslint'], { upward = true }))
 
   if has_biome_config then
-    return { 'biome' }
+    return { 'biomejs' }
   end
 
   if has_eslint_config then
