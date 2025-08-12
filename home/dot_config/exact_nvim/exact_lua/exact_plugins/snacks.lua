@@ -314,7 +314,6 @@ return {
       {'<leader>fN', function() Snacks.notifier.show_history() end, desc = 'Notification History'},
       {'<leader>fP', function() Snacks.picker.notifications() end, desc = 'Notifications'},
       -- git
-      {'<leader>gb', function() Snacks.picker.git_branches() end, desc = 'Git Branches'},
       {'<leader>gl', function() Snacks.picker.git_log() end, desc = 'Git Log'},
       {'<leader>gL', function() Snacks.picker.git_log_line() end, desc = 'Git Log Line'},
       {'<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status'},

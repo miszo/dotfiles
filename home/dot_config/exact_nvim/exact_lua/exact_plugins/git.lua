@@ -55,7 +55,6 @@ return {
       map('n', '[H', function()
         gs.nav_hunk('first')
       end, 'First Hunk')
-      map('n', '<leader>gt', gs.toggle_current_line_blame, 'Toggle Current Line Blame')
       map({ 'n', 'v' }, '<leader>ghs', ':Gitsigns stage_hunk<CR>', 'Stage Hunk')
       map({ 'n', 'v' }, '<leader>ghr', ':Gitsigns reset_hunk<CR>', 'Reset Hunk')
       map('n', '<leader>ghS', gs.stage_buffer, 'Stage Buffer')
@@ -75,15 +74,20 @@ return {
       map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'GitSigns Select Hunk')
     end,
     config = function(_, opts)
+      local gs = require('gitsigns')
+      gs.setup(opts)
       Snacks.toggle({
         name = 'Git Signs',
         get = function()
           return require('gitsigns.config').config.signcolumn
         end,
         set = function(state)
-          require('gitsigns').toggle_signs(state)
+          gs.toggle_signs(state)
         end,
       }):map('<leader>uG')
+
+      vim.keymap.set('n', '<leader>gb', gs.blame, { desc = 'Git blame' })
+      vim.keymap.set('n', '<leader>gt', gs.toggle_current_line_blame, { desc = 'Toggle current line blame' })
     end,
   },
   -- Generate link to file in the repository
