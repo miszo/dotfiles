@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
@@ -14,7 +14,7 @@ return {
       opts.lsp.progress = opts.lsp.progress or {}
       opts.lsp.progress.enabled = false
       opts.messages = {
-        enabled = false,
+        enabled = true,
       }
       opts.routes = {
         filter = { event = 'notify', find = 'No information available' },
@@ -27,12 +27,10 @@ return {
   },
   {
     'j-hui/fidget.nvim',
-    -- pin to a specific commit to avoid UI changes
-    commit = '4ec7bed6c86b671ddde03ca1b227343cfa3e65fa',
     opts = {
       notification = {
         window = {
-          winblend = 100,
+          winblend = 0,
           border = 'rounded',
         },
       },

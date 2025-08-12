@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
@@ -53,9 +53,9 @@ return {
             SnacksIndent = { link = 'Whitespace' },
             SnacksIndentScope = { fg = c.text },
             SnacksPickerGitStatusIgnored = { link = 'NonText' },
-            NormalFloat = { bg = c.mantle },
-            FloatBorder = { bg = c.mantle },
-            FloatTitle = { bg = c.mantle },
+            NormalFloat = { bg = c.base },
+            FloatBorder = { bg = c.base },
+            FloatTitle = { bg = c.base },
           }
         end,
       }

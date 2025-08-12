@@ -51,7 +51,7 @@ local filetypes_with_dynamic_formatter = {
   'eruby',
 }
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   {

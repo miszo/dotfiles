@@ -40,7 +40,7 @@ local ts_preferences = {
 --- Set 8GB for tsserver memory limit
 local max_ts_server_memory = 8192
 
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   -- tools

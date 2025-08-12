@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   -- Go forward/backward with square brackets
@@ -201,16 +201,5 @@ return {
         showMissingFiles = false,
       })
     end,
-  },
-  -- Which key
-  {
-    'folke/which-key.nvim',
-    optional = true,
-    opts = {
-      spec = {
-        { '<leader>n', group = 'PackageInfo' },
-        { '<leader>O', group = 'OpenAPI Swagger' },
-      },
-    },
   },
 }

@@ -60,7 +60,6 @@ return {
   },
   {
     'j-hui/fidget.nvim',
-    -- pin to a specific commit to avoid UI changes
     opts = {
       notification = {
         window = {

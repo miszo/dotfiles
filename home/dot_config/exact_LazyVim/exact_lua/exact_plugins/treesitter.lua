@@ -1,4 +1,4 @@
----@module "lazy"
+---@module 'lazy'
 ---@type LazySpec[]
 return {
   { 'nvim-treesitter/playground', cmd = 'TSPlaygroundToggle' },
