@@ -48,13 +48,13 @@ return {
     'mason-org/mason.nvim',
     opts = function(_, opts)
       vim.tbl_deep_extend('force', {}, opts.ensure_installed, {
-        'angular-language-server',
+        'angularls',
         'css-lsp',
         'luacheck',
-        'selene',
         'shfmt',
         'stylua',
         'tailwindcss-language-server',
+        'typos_lsp',
         'vue',
         'vtsls',
       })
@@ -85,7 +85,6 @@ return {
       inlay_hints = { enabled = false },
       servers = {
         cssls = {},
-        sourcekit = {},
         ruby_lsp = {
           mason = false,
           cmd = { vim.fn.expand('~/.asdf/shims/ruby-lsp') },
@@ -171,7 +170,6 @@ return {
               castNumberToInteger = true,
             },
             diagnostics = {
-              disable = { 'incomplete-signature-doc', 'trailing-space' },
               groupSeverity = {
                 strong = 'Warning',
                 strict = 'Warning',
@@ -190,15 +188,9 @@ return {
                 ['unbalanced'] = 'Opened',
                 ['unused'] = 'Opened',
               },
-              unusedLocalExclude = { '_*' },
             },
-            format = {
-              enable = false,
-              defaultConfig = {
-                indent_style = 'space',
-                indent_size = '2',
-                continuation_indent_size = '2',
-              },
+            completion = {
+              callSnippet = 'Replace',
             },
           },
         },
