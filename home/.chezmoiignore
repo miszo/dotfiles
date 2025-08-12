@@ -47,6 +47,7 @@ README.md
 
 # Neovim lock files
 .config/nvim/lazy-lock.json
+.config/LazyVim/lazy-lock.json
 
 # Karabiner automatic backups
 .config/karabiner/automatic_backups
