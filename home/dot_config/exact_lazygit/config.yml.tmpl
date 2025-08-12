@@ -4,6 +4,10 @@
 services:
   {{ .lazygit.work.serviceName | quote }}: {{ .lazygit.work.serviceValue | quote }}
 {{- end }}
+os:
+  edit: "open_in_nvim {{filename}}"
+  editAtLine: "open_in_nvim {{filename}} {{line}}"
+  shellFunctionsFile: {{ joinPath .chezmoi.homeDir ".config" "zsh" ".zsh_lazygit" | quote }}
 gui:
   showFileIcons: true
   nerdFontsVersion: "3"
