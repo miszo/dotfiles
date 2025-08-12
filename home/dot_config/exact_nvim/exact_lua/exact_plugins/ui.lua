@@ -61,11 +61,10 @@ return {
   {
     'j-hui/fidget.nvim',
     -- pin to a specific commit to avoid UI changes
-    commit = '4ec7bed6c86b671ddde03ca1b227343cfa3e65fa',
     opts = {
       notification = {
         window = {
-          winblend = 100,
+          winblend = 0,
           border = 'rounded',
         },
       },
@@ -93,6 +92,8 @@ return {
         },
         hide = {
           cursorline = false,
+          focused_win = false,
+          only_win = true,
         },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')

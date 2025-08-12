@@ -271,6 +271,14 @@ local zen = {
     diagnostics = true,
     inlay_hints = false,
   },
+  show = {
+    statusline = false,
+    tabline = false,
+  },
+  win = {
+    style = 'zen',
+    zindex = 60,
+  },
 }
 
 ---@module 'lazy'
