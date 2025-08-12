@@ -1,103 +1,61 @@
 local M = {}
 
-local function lsp_status_short()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients({ bufnr = bufnr })
-
-  if #clients == 0 then
-    return '' -- Return empty string when no LSP
-  end
-
-  local names = {}
-  local icon = UserUtil.icons.get_statusline_icon('lsp')
-  for _, client in ipairs(clients) do
-    if client.name ~= 'copilot' then
-      table.insert(names, client.name)
-    end
-  end
-
-  return icon .. ' ' .. table.concat(names, ', ')
+function M.filename_fmt(str)
+  return Snacks.picker.util.truncpath(str, 40)
 end
 
-local function formatter_status()
-  local ok, conform = pcall(require, 'conform')
-  if not ok then
-    return ''
+function M.filename_color()
+  local color = require('catppuccin.palettes').get_palette()
+  if vim.bo.modified then
+    return { fg = color.peach }
   end
 
-  local formatters = conform.list_formatters_to_run(0)
-  if #formatters == 0 then
-    return ''
+  if vim.bo.readonly then
+    return { fg = color.overlay2 }
   end
 
-  local formatter_names = {}
-  local icon = UserUtil.icons.get_statusline_icon('formatter')
-  for _, formatter in ipairs(formatters) do
-    table.insert(formatter_names, formatter.name)
+  return { fg = color.text }
+end
+
+local function get_copilot_status()
+  local status = require('copilot.status').data.status
+  if status == 'InProgress' then
+    return 'pending'
+  elseif status == 'Warning' then
+    return 'error'
+  else
+    return 'ok'
   end
-
-  return icon .. ' ' .. table.concat(formatter_names, ', ')
 end
 
-local function linter_status()
-  local ok, lint = pcall(require, 'lint')
-  if not ok then
-    return ''
-  end
+local function get_copilot_color()
+  local color = require('catppuccin.palettes').get_palette()
+  local colors = {
+    ok = color.lavender,
+    error = color.red,
+    pending = color.peach,
+  }
 
-  local linters = lint.linters_by_ft[vim.bo.filetype] or {}
-  local icon = UserUtil.icons.get_statusline_icon('linter')
-  if #linters == 0 then
-    return ''
-  end
+  local status = get_copilot_status()
 
-  return icon .. ' ' .. table.concat(linters, ', ')
+  return {
+    fg = colors[status],
+  }
 end
 
-local function safe_lsp_status()
-  local ok, result = pcall(lsp_status_short)
-  return ok and result or ''
-end
-
-local function safe_formatter_status()
-  local ok, result = pcall(formatter_status)
-  return ok and result or ''
-end
-
-local function safe_linter_status()
-  local ok, result = pcall(linter_status)
-  return ok and result or ''
-end
-
-M.attached_clients = function()
-  local lsp_clients = safe_lsp_status()
-  local formatters = safe_formatter_status()
-  local linters = safe_linter_status()
-
-  local clients = vim.tbl_filter(function(client)
-    return client ~= ''
-  end, {
-    lsp_clients,
-    formatters,
-    linters,
-  })
-
-  if #clients == 0 then
-    return '' -- Return empty string when no clients
-  end
-
-  return table.concat(clients, ' ')
-end
-
-M.show_attached_clients = function()
-  local clients = M.attached_clients()
-
+local function has_copilot()
+  local clients = package.loaded['copilot'] and vim.lsp.get_clients({ bufnr = 0, name = 'copilot' })
   return #clients > 0
 end
 
-M.padding = {
-  left = 2,
-  right = 1,
-}
+function M.copilot()
+  return {
+    function()
+      return UserConfig.icons.kinds.Copilot
+    end,
+    cond = has_copilot,
+    color = get_copilot_color,
+  }
+end
 
 return M

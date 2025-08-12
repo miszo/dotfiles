@@ -468,6 +468,44 @@ return {
   {
     'echasnovski/mini.move',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      mappings = {
+        left = '<M-h>',
+        right = '<M-l>',
+        down = '<M-j>',
+        up = '<M-k>',
+        line_left = '<M-h>',
+        line_right = '<M-l>',
+        line_down = '<M-j>',
+        line_up = '<M-k>',
+      },
+      options = {
+        reindent_linewise = true,
+      },
+    },
+  },
+  {
+    'SmiteshP/nvim-navic',
+    lazy = true,
+    init = function()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(event)
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          local buf = event.buf
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol) then
+            require('nvim-navic').attach(client, buf)
+          end
+        end,
+      })
+    end,
+    opts = function()
+      return {
+        separator = ' ',
+        highlight = true,
+        depth_limit = 5,
+        icons = UserConfig.icons.kinds,
+        lazy_update_context = true,
+      }
+    end,
   },
 }

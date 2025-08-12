@@ -60,10 +60,7 @@ end, { desc = 'Delete Other Buffers' })
 map('n', '<leader>bD', '<cmd>:bd<cr>', { desc = 'Delete Buffer and Window' })
 
 map({ 'n', 'x' }, 'D', '"_d', { desc = 'Delete without yank' })
-
--- better indenting
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+map('n', 'x', '"_x', { desc = 'Delete without yank' })
 
 -- Add undo break-points
 map('i', ',', ',<c-g>u')
