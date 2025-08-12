@@ -63,6 +63,15 @@ local indent = {
 local input = {
   enabled = true,
 }
+
+---@class snacks.lazygit.Config
+local lazygit = {
+  enabled = true,
+  win = {
+    border = 'rounded',
+  },
+}
+
 ---@class snacks.notifier.Config
 local notifier = {
   enabled = true,
@@ -295,6 +304,7 @@ return {
       image = image,
       indent = indent,
       input = input,
+      lazygit = lazygit,
       picker = picker,
       quickfile = quickfile,
       scratch = scratch,
