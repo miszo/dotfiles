@@ -92,6 +92,24 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
+    keys = {
+      {
+        '<leader>gy',
+        function()
+          require('gitlinker').get_buf_range_url('n')
+        end,
+        mode = 'n',
+        desc = 'GitLinker: Get URL for current buffer',
+      },
+      {
+        '<leader>gy',
+        function()
+          require('gitlinker').get_buf_range_url('v')
+        end,
+        mode = 'v',
+        desc = 'GitLinker: Get URL for selected range',
+      },
+    },
     config = function()
       local callbacks = {}
       local gitlab_host = os.getenv('GITLINKER_GITLAB_HOST')
