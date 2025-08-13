@@ -95,6 +95,11 @@ local explorer_trash = function(picker)
   if #paths == 0 then
     return
   end
+  -- if paths contains the root directory, do not trash and notify the user
+  if vim.tbl_contains(paths, vim.fn.getcwd()) then
+    Snacks.notify.error('Cannot trash the root directory: ' .. vim.fn.getcwd())
+    return
+  end
   local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ':p:~:.') or #paths .. ' files'
   explorer_api.confirm('Trash ' .. what .. '?', function()
     for _, path in ipairs(paths) do
