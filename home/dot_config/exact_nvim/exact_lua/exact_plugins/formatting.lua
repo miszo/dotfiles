@@ -35,7 +35,7 @@ local get_js_formatter = function()
   end
 
   -- fallback to lsp formatting
-  return { lsp_format = true }
+  return { lsp_format = 'fallback' }
 end
 
 local ft_with_js_formatter = {
@@ -70,7 +70,7 @@ local prettier_or_lsp = function()
   if has_prettier_config then
     return { 'prettierd', lsp_format = 'fallback' }
   end
-  return { lsp_format = true }
+  return { lsp_format = 'fallback' }
 end
 
 ---@module 'lazy'

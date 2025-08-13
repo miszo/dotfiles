@@ -16,12 +16,21 @@ local get_shorter_source_name = function(source)
     ['ts_error_translator'] = 'TS Error Translator',
     ['ruby_lsp'] = 'Ruby',
     ['eslint'] = 'ESLint',
+    ['biome'] = 'Biome',
+    ['pyright'] = 'Pyright',
+    ['clangd'] = 'Clangd',
+    ['rust_analyzer'] = 'Rust Analyzer',
+    ['jdtls'] = 'Java',
+    ['sumneko_lua'] = 'Lua',
+    ['pylsp'] = 'Python LSP',
+    ['bashls'] = 'Bash LSP',
+    ['docker_compose_language_service'] = 'Docker Compose',
+    ['dockerfile_language_server'] = 'Dockerfile',
     ['tsserver'] = 'TypeScript',
     ['jsonls'] = 'JSON',
     ['html-lsp'] = 'HTML',
     ['css-lsp'] = 'CSS',
     ['gopls'] = 'Go',
-    ['bashls'] = 'Bash',
     ['dockerls'] = 'Docker',
     ['graphql'] = 'GraphQL',
     ['yaml-language-server'] = 'YAML',
@@ -98,15 +107,13 @@ return {
         { desc = 'Show LSP capabilities' }
       )
 
-      local formatter = UserUtil.lsp.formatter({
+      local eslint_formatter = UserUtil.lsp.formatter({
         name = 'eslint: lsp',
         primary = false,
         priority = 200,
         filter = 'eslint',
       })
-
-      -- register the formatter with LazyVim
-      UserUtil.formatting.register(formatter)
+      UserUtil.formatting.register(eslint_formatter)
     end,
   },
 }

@@ -35,4 +35,14 @@ return {
     local root_dir = vim.fs.dirname(vim.fs.find(root_files, { path = cwd, upward = true })[1])
     on_dir(root_dir)
   end,
+  on_attach = function(_, bufnr)
+    -- Register a command to fix all issues in the current buffer
+    vim.api.nvim_buf_create_user_command(bufnr, 'LspBiomeFixAll', function()
+      vim.lsp.buf.code_action({
+        bufnr = bufnr,
+        apply = true,
+        context = { only = { 'source.fixAll.biome' } },
+      })
+    end, {})
+  end,
 }

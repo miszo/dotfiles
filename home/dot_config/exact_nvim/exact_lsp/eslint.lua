@@ -23,7 +23,7 @@ return {
   workspace_required = true,
   on_attach = function(client, bufnr)
     vim.api.nvim_buf_create_user_command(0, 'LspEslintFixAll', function()
-      client:request_sync('workspace/executeCommand', {
+      client:request_sync(vim.lsp.protocol.Methods.workspace_executeCommand, {
         command = 'eslint.applyAllFixes',
         arguments = {
           {
