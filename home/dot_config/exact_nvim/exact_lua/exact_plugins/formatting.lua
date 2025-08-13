@@ -22,7 +22,7 @@ local function has_formatter_config(formatter)
   return has_config ~= nil
 end
 
-local biome_or_prettier = function()
+local get_js_formatter = function()
   local has_biome_config = has_formatter_config('biome')
   local has_prettier_config = has_formatter_config('prettier')
 
@@ -133,7 +133,7 @@ return {
         bash = { 'shfmt' },
       }
       for _, ft in ipairs(ft_with_js_formatter) do
-        opts.formatters_by_ft[ft] = biome_or_prettier()
+        opts.formatters_by_ft[ft] = get_js_formatter()
       end
       for _, ft in ipairs(ft_with_prettier) do
         opts.formatters_by_ft[ft] = prettier_or_lsp()

@@ -50,7 +50,6 @@ return {
     mason_tool_installer.setup({
       ensure_installed = {
         -- linter
-        'biome',
         'erb-lint',
         -- 'hadolint',
         'luacheck',

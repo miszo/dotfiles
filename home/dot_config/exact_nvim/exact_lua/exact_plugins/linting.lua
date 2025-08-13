@@ -1,8 +1,3 @@
--- only run linters if a configuration file is found for the below linters
-local linter_root_markers = {
-  biome = { 'biome.json', 'biome.jsonc' },
-}
-
 local function debounce(ms, fn)
   local timer = vim.uv.new_timer()
 
@@ -21,16 +16,6 @@ local function debounce(ms, fn)
       vim.schedule_wrap(fn)(unpack(argv))
     end)
   end
-end
-
-local biome_or_eslint = function()
-  local has_biome_config = next(vim.fs.find(linter_root_markers['biome'], { upward = true }))
-
-  if has_biome_config then
-    return { 'biomejs' }
-  end
-
-  return {}
 end
 
 local ft_with_js_linter = {
@@ -53,16 +38,13 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local lint = require('lint')
-
-    -- Configure custom linters using Mason-managed tools
-    local mason_bin_dir = vim.fn.stdpath('data') .. '/mason/bin'
-
     -- Customize golangcilint to ignore exit codes (golangci-lint exits with code 1-3 when issues are found)
     local golangcilint = require('lint').linters.golangcilint
     golangcilint.ignore_exitcode = true
 
     -- Configure Laravel Pint for linting (using --test mode)
-    local pint_cmd = vim.fn.executable(mason_bin_dir .. '/pint') == 1 and mason_bin_dir .. '/pint' or 'pint'
+    local pint_mason_path = UserUtil.mason.get_package_install_path('pint')
+    local pint_cmd = vim.fn.executable(pint_mason_path) == 1 and pint_mason_path or 'pint'
 
     lint.linters.pint = {
       cmd = pint_cmd,
@@ -108,11 +90,14 @@ return {
 
       -- PHP/Laravel
       php = { 'pint' },
+
+      -- SQL
       sql = { 'sqlfluff' },
     }
 
+    -- JavaScript/TypeScript linters - make sure we don't any linters that conflict with the LSP
     for _, ft in ipairs(ft_with_js_linter) do
-      lint.linters_by_ft[ft] = biome_or_eslint()
+      lint.linters_by_ft[ft] = {}
     end
 
     local function try_lint()
@@ -137,5 +122,15 @@ return {
       lint.try_lint()
       vim.notify('Linting...', vim.log.levels.INFO, { title = 'nvim-lint' })
     end, { desc = 'Trigger linting for current file' })
+
+    -- print linters available for current filetype
+    vim.keymap.set('n', '<leader>cL', function()
+      local linters = lint.linters_by_ft[vim.bo.filetype]
+      if linters and #linters > 0 then
+        vim.notify('Available linters: ' .. table.concat(linters, ', '), vim.log.levels.INFO, { title = 'nvim-lint' })
+      else
+        vim.notify('No linters available for this filetype', vim.log.levels.WARN, { title = 'nvim-lint' })
+      end
+    end, { desc = 'Show available linters for current filetype' })
   end,
 }
