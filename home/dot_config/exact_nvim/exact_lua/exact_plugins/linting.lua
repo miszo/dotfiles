@@ -1,25 +1,6 @@
 -- only run linters if a configuration file is found for the below linters
 local linter_root_markers = {
   biome = { 'biome.json', 'biome.jsonc' },
-  eslint = {
-    'eslint.config.js',
-    'eslint.config.mjs',
-    'eslint.config.cjs',
-    'eslint.config.ts',
-    'eslint.config.mts',
-    'eslint.config.cts',
-    -- deprecated
-    '.eslintrc.js',
-    '.eslintrc.cjs',
-    '.eslintrc.yaml',
-    '.eslintrc.yml',
-    '.eslintrc.json',
-    '.eslintrc.jsonc',
-    '.eslintrc.mjs',
-    '.eslintrc.mts',
-    '.eslintrc.cts',
-    '.eslintrc',
-  },
 }
 
 local function debounce(ms, fn)
@@ -44,14 +25,9 @@ end
 
 local biome_or_eslint = function()
   local has_biome_config = next(vim.fs.find(linter_root_markers['biome'], { upward = true }))
-  local has_eslint_config = next(vim.fs.find(linter_root_markers['eslint'], { upward = true }))
 
   if has_biome_config then
     return { 'biomejs' }
-  end
-
-  if has_eslint_config then
-    return { 'eslint' }
   end
 
   return {}
