@@ -27,7 +27,7 @@ local biome_or_prettier = function()
   local has_prettier_config = has_formatter_config('prettier')
 
   if has_biome_config then
-    return { 'biome' }
+    return { 'biome-check' }
   end
 
   if has_prettier_config then
