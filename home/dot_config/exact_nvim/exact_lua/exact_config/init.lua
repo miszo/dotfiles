@@ -3,7 +3,6 @@ local M = {}
 M.icons = {
   misc = {
     dots = '󰇘',
-    debugger = '',
   },
   dap = {
     Stopped = { '󰁕 ', 'DiagnosticWarn', 'DapStoppedLine' },
@@ -65,6 +64,16 @@ M.icons = {
     Unit = ' ',
     Value = ' ',
     Variable = '󰀫 ',
+  },
+  statusline = {
+    debugger = ' ',
+    mcphub = '󱙺 ',
+    mcphub_stopped = '󱙻 ',
+    mcphub_warning = '󱚠 ',
+    codecompanion = ' ',
+    copilot = ' ',
+    copilot_stopped = ' ',
+    copilot_warning = ' ',
   },
 }
 

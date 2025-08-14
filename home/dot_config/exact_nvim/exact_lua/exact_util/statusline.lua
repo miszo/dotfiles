@@ -5,56 +5,61 @@ function M.filename_fmt(str)
 end
 
 function M.filename_color()
-  local color = require('catppuccin.palettes').get_palette()
   if vim.bo.modified then
-    return { fg = color.peach }
+    return { fg = Snacks.util.color('Constant', 'fg') }
   end
 
   if vim.bo.readonly then
-    return { fg = color.overlay2 }
+    return { fg = Snacks.util.color('Comment', 'fg') }
   end
 
-  return { fg = color.text }
+  return { fg = Snacks.util.color('Normal', 'fg') }
 end
 
-local function get_copilot_status()
-  local status = require('copilot.status').data.status
-  if status == 'InProgress' then
-    return 'pending'
-  elseif status == 'Warning' then
-    return 'error'
-  else
-    return 'ok'
-  end
-end
-
-local function get_copilot_color()
-  local color = require('catppuccin.palettes').get_palette()
-  local colors = {
-    ok = color.lavender,
-    error = color.red,
-    pending = color.peach,
-  }
-
-  local status = get_copilot_status()
-
-  return {
-    fg = colors[status],
-  }
-end
-
-local function has_copilot()
-  local clients = package.loaded['copilot'] and vim.lsp.get_clients({ bufnr = 0, name = 'copilot' })
-  return #clients > 0
-end
-
-function M.copilot()
+function M.mcphub()
   return {
     function()
-      return UserConfig.icons.kinds.Copilot
+      -- Check if MCPHub is loaded
+      if not vim.g.loaded_mcphub then
+        return UserConfig.icons.statusline.mcphub_stopped .. '-'
+      end
+
+      local count = vim.g.mcphub_servers_count or 0
+      local status = vim.g.mcphub_status or 'stopped'
+      local executing = vim.g.mcphub_executing
+
+      -- Show "-" when stopped
+      if status == 'stopped' then
+        return UserConfig.icons.statusline.mcphub_stopped .. '-'
+      end
+
+      if status == 'starting' or status == 'restarting' then
+        return UserConfig.icons.statusline.mcphub_warning
+      end
+
+      -- Show spinner when executing, starting, or restarting
+      if executing then
+        local frames = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+        local frame = math.floor(vim.loop.now() / 100) % #frames + 1
+        return UserConfig.icons.statusline.mcphub .. frames[frame]
+      end
+
+      return UserConfig.icons.statusline.mcphub .. count
     end,
-    cond = has_copilot,
-    color = get_copilot_color,
+    color = function()
+      if not vim.g.loaded_mcphub then
+        return { fg = Snacks.util.color('Comment', 'fg') } -- not loaded
+      end
+
+      local status = vim.g.mcphub_status or 'stopped'
+      if status == 'ready' or status == 'restarted' then
+        return { fg = Snacks.util.color('DiagnosticSignHint', 'fg') } -- connected
+      elseif status == 'starting' or status == 'restarting' then
+        return { fg = Snacks.util.color('DiagnosticSignWarn', 'fg') } -- connecting
+      else
+        return { fg = Snacks.util.color('DiagnosticSignError', 'fg') } -- error or stopped
+      end
+    end,
   }
 end
 

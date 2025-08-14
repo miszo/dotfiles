@@ -30,6 +30,7 @@ local dashboard = {
       { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
       { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
       { icon = '󱌢 ', key = 'm', desc = 'Mason', action = ":lua require('mason.ui').open()" },
+      { icon = '󱙺', key = 'M', desc = 'MCP Hub', action = ':MCPHub' },
       { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
     },
   },

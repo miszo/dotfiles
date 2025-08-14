@@ -31,6 +31,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 ### ai
 
 + [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim)
++ []
 ### animation
 
 + [sphamba/smear-cursor.nvim](https://dotfyle.com/plugins/sphamba/smear-cursor.nvim)
@@ -82,6 +83,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 
 + [ruifm/gitlinker.nvim](https://dotfyle.com/plugins/ruifm/gitlinker.nvim)
 + [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
++ [echasnovski/mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
 ### icon
 
 + [echasnovski/mini.icons](https://dotfyle.com/plugins/echasnovski/mini.icons)
