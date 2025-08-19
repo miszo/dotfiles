@@ -326,6 +326,7 @@ return {
       {'<leader>/', function() Snacks.picker.grep() end, desc = 'Grep'},
       {'<leader>:', function() Snacks.picker.command_history() end, desc = 'Command History'},
       {'<leader>e', function() Snacks.explorer() end, desc = 'File Explorer'},
+      {'<leader>fe', function() Snacks.explorer() end, desc = 'File Explorer'},
       -- find
       {'<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffers'},
       {'<leader>fc', function() Snacks.picker.files({cwd = vim.fn.stdpath('config')}) end, desc = 'Find Config File'},
