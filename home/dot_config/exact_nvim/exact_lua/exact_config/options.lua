@@ -65,7 +65,7 @@ vim.o.scrolloff = 8 -- Keep 8 lines visible above/below cursor
 vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' } -- Options to save in session files
 vim.o.shiftround = true -- Round indent to multiple of 'shiftwidth'
 vim.o.shiftwidth = 2 -- Number of spaces for each indentation level
-vim.o.showmode = true -- Don't show mode in command line
+vim.o.showmode = false -- Don't show mode in command line
 vim.o.smartindent = true -- Smart indentation
 vim.o.splitbelow = true -- New horizontal splits appear below the current window
 vim.o.splitkeep = 'cursor' -- Keep the same cursor position when splitting windows
@@ -79,6 +79,7 @@ vim.o.undolevels = 10000 -- Number of undo levels to keep
 vim.o.updatetime = 200 -- Time in milliseconds to wait before triggering CursorHold
 vim.o.virtualedit = 'block' -- Allow cursor to move in block mode
 vim.o.wildmode = 'longest:full,full' -- Use longest common prefix for command completion
+vim.o.wildignore = '*/node_modules/*'
 vim.o.winminwidth = 5 -- Minimum width of a window
 vim.o.wrap = false -- Disable line wrapping
 

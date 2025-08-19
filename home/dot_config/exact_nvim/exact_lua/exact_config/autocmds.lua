@@ -352,6 +352,16 @@ vim.api.nvim_create_autocmd('LspNotify', {
   end,
 })
 
+-- Disable the diagnostics in files from ther `/node_modules/` directory
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte', 'astro' },
+  callback = function()
+    if vim.fn.expand('%:p'):match('/node_modules/') then
+      vim.diagnostic.enable(false)
+    end
+  end,
+})
+
 -- Autoformat autocmd
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup('UserFormat', {}),

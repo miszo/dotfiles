@@ -10,8 +10,25 @@ return {
       'folke/noice.nvim',
       'SmiteshP/nvim-navic',
     },
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- set an empty statusline till lualine loads
+        vim.o.statusline = ' '
+      else
+        -- hide the statusline on the starter page
+        vim.o.laststatus = 0
+      end
+    end,
+
     opts = function()
-      return {
+      local lualine_require = require('lualine_require')
+      lualine_require.require = require
+
+      local icons = UserConfig.icons
+      vim.o.laststatus = vim.g.lualine_laststatus
+
+      local opts = {
         options = {
           globalstatus = true,
           theme = 'catppuccin',
@@ -28,10 +45,10 @@ return {
             {
               'diagnostics',
               symbols = {
-                error = UserConfig.icons.diagnostics.Error,
-                warn = UserConfig.icons.diagnostics.Warn,
-                info = UserConfig.icons.diagnostics.Info,
-                hint = UserConfig.icons.diagnostics.Hint,
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
               },
             },
             { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
@@ -62,6 +79,17 @@ return {
             },
             {
               function()
+                return require('noice').api.status.mode.get()
+              end,
+              cond = function()
+                return package.loaded['noice'] and require('noice').api.status.mode.has()
+              end,
+              color = function()
+                return { fg = Snacks.util.color('Constant') }
+              end,
+            },
+            {
+              function()
                 return UserConfig.icons.statusline.debugger .. require('dap').status()
               end,
               cond = function()
@@ -81,9 +109,9 @@ return {
             {
               'diff',
               symbols = {
-                added = UserConfig.icons.git.added,
-                modified = UserConfig.icons.git.modified,
-                removed = UserConfig.icons.git.removed,
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict
@@ -101,6 +129,8 @@ return {
           lualine_z = { 'location' },
         },
       }
+
+      return opts
     end,
     config = function(_, opts)
       require('lualine').setup(opts)
