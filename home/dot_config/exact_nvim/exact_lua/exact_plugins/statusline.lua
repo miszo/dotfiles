@@ -64,7 +64,6 @@ return {
           },
           lualine_x = {
             'copilot',
-            UserUtil.statusline.mcphub(),
             'codecompanion',
             {
               function()

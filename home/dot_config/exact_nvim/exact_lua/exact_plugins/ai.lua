@@ -58,16 +58,6 @@ return {
     end,
   },
   {
-    'ravitemer/mcphub.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-    build = 'npm install -g mcp-hub@latest', -- Installs `mcp-hub` node binary globally
-    config = function()
-      require('mcphub').setup()
-    end,
-  },
-  {
     'olimorris/codecompanion.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -75,7 +65,6 @@ return {
       'MeanderingProgrammer/render-markdown.nvim',
       'j-hui/fidget.nvim',
       'echasnovski/mini.diff',
-      'ravitemer/mcphub.nvim',
       'ravitemer/codecompanion-history.nvim',
     },
     cmd = {
@@ -159,21 +148,6 @@ return {
         },
       },
       extensions = {
-        mcphub = {
-          callback = 'mcphub.extensions.codecompanion',
-          opts = {
-            -- MCP Tools
-            make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
-            show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
-            add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
-            show_result_in_chat = true, -- Show tool results directly in chat buffer
-            format_tool = nil, -- function(tool_name:string, tool: CodeCompanion.Agent.Tool) : string Function to format tool names to show in the chat buffer
-            -- MCP Resources
-            make_vars = true, -- Convert MCP resources to #variables for prompts
-            -- MCP Prompts
-            make_slash_commands = true, -- Add MCP prompts as /slash commands
-          },
-        },
         history = {
           enabled = true,
           opts = {
@@ -186,7 +160,7 @@ return {
             auto_generate_title = true,
             title_generation_opts = {
               adapter = chat_adapter,
-              model = copilot_model,
+              model = chat_model,
             },
           },
         },
@@ -216,7 +190,6 @@ return {
       { '<leader>ar', ':CodeCompanion /optimize<cr>', mode = { 'v' }, desc = 'Code Companion Refactor' },
       { '<leader>as', ':CodeCompanion /spell<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Spell' },
       { '<leader>at', ':CodeCompanion /tests<cr>', mode = { 'v' }, desc = 'Code Companion Generate Test' },
-      { '<leader>am', ':MCPHub<cr>', desc = 'Open MCP Hub' },
     },
   },
 }

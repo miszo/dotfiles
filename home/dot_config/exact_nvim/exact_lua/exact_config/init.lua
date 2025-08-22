@@ -67,9 +67,6 @@ M.icons = {
   },
   statusline = {
     debugger = ' ',
-    mcphub = '󱙺 ',
-    mcphub_stopped = '󱙻 ',
-    mcphub_warning = '󱚠 ',
     codecompanion = ' ',
     copilot = ' ',
     copilot_stopped = ' ',

@@ -21,16 +21,26 @@ local dashboard = {
       { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
       { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
       { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+      { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
       {
         icon = ' ',
         key = 'c',
         desc = 'Config',
         action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
       },
-      { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
+      {
+        icon = '',
+        key = 'g',
+        desc = 'Lazygit',
+        action = ':lua Snacks.lazygit()',
+        enabled = function()
+          local has_lazygit = vim.fn.executable('lazygit') == 1
+          local is_git_repo = vim.fn.isdirectory('.git') == 1
+          return has_lazygit and is_git_repo
+        end,
+      },
       { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
       { icon = '󱌢 ', key = 'm', desc = 'Mason', action = ":lua require('mason.ui').open()" },
-      { icon = '󱙺', key = 'M', desc = 'MCP Hub', action = ':MCPHub' },
       { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
     },
   },
@@ -326,7 +336,6 @@ return {
       {'<leader>/', function() Snacks.picker.grep() end, desc = 'Grep'},
       {'<leader>:', function() Snacks.picker.command_history() end, desc = 'Command History'},
       {'<leader>e', function() Snacks.explorer() end, desc = 'File Explorer'},
-      {'<leader>fe', function() Snacks.explorer() end, desc = 'File Explorer'},
       -- find
       {'<leader>fb', function() Snacks.picker.buffers() end, desc = 'Buffers'},
       {'<leader>fc', function() Snacks.picker.files({cwd = vim.fn.stdpath('config')}) end, desc = 'Find Config File'},
