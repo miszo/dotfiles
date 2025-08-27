@@ -2,10 +2,16 @@ Host *
   IdentityAgent "~/.1password/agent.sock"
 
 {{ if not .computer.isWork -}}
-Host {{ .ssh.homelab.host | trim }}
-  HostName {{ .ssh.homelab.hostName | trim }}
-  User {{ .ssh.homelab.user | trim }}
-  IdentityFile ~/.ssh/homelab.pub
+Host {{ .ssh.homelab_01.host | trim }}
+  HostName {{ .ssh.homelab_01.hostName | trim }}
+  User {{ .ssh.homelab_01.user | trim }}
+  IdentityFile ~/.ssh/homelab_01.pub
+  IdentitiesOnly yes
+
+Host {{ .ssh.homelab_02.host | trim }}
+  HostName {{ .ssh.homelab_02.hostName | trim }}
+  User {{ .ssh.homelab_02.user | trim }}
+  IdentityFile ~/.ssh/homelab_02.pub
   IdentitiesOnly yes
 
 Host {{ .ssh.unifi.host | trim }}

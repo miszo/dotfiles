@@ -109,11 +109,17 @@ token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccount
 {{- end }}
 
 {{- if not $isWork }}
-[data.ssh.homelab]
-host = {{ onepasswordRead "op://dev/Homelab SSH key/Host" $opPersonalAccountCode | quote }}
-hostName = {{ onepasswordRead "op://dev/Homelab SSH key/HostName" $opPersonalAccountCode | quote }}
-user = {{ onepasswordRead "op://dev/Homelab SSH key/User" $opPersonalAccountCode | quote }}
-publicKey = {{ onepasswordRead "op://dev/Homelab SSH key/public key" $opPersonalAccountCode | quote }}
+[data.ssh.homelab_01]
+host = {{ onepasswordRead "op://dev/Homelab_01 SSH key/Host" $opPersonalAccountCode | quote }}
+hostName = {{ onepasswordRead "op://dev/Homelab_01 SSH key/HostName" $opPersonalAccountCode | quote }}
+user = {{ onepasswordRead "op://dev/Homelab_01 SSH key/User" $opPersonalAccountCode | quote }}
+publicKey = {{ onepasswordRead "op://dev/Homelab_01 SSH key/public key" $opPersonalAccountCode | quote }}
+
+[data.ssh.homelab_02]
+host = {{ onepasswordRead "op://dev/Homelab_02 SSH key/Host" $opPersonalAccountCode | quote }}
+hostName = {{ onepasswordRead "op://dev/Homelab_02 SSH key/HostName" $opPersonalAccountCode | quote }}
+user = {{ onepasswordRead "op://dev/Homelab_02 SSH key/User" $opPersonalAccountCode | quote }}
+publicKey = {{ onepasswordRead "op://dev/Homelab_02 SSH key/public key" $opPersonalAccountCode | quote }}
 
 [data.ssh.unifi]
 host = {{ onepasswordRead "op://dev/Unifi SSH key/Host" $opPersonalAccountCode | quote }}
