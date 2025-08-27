@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 ratio = [1, 2, 4]
 sort_sensitive = true
 sort_dir_first = true
@@ -101,6 +101,16 @@ bizarre_retry = 5
 [plugins]
 preload = []
 prepend_previewers = [{ mime = "image/heic", run = "heic" }]
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
 
 [log]
 enabled = false

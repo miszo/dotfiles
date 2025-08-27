@@ -1,4 +1,3 @@
 # vim: syntax=sh
-
-{{- onepasswordRead "op://Employee/Envs/notesPlain" .op.work.accountCode }}
+{{ onepasswordRead "op://Employee/Envs/notesPlain" .op.work.accountCode }}
 export GITLAB_API_TOKEN={{ .glab.token | quote }}

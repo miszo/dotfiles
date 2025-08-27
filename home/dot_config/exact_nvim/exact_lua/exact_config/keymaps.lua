@@ -21,16 +21,6 @@ map({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>wa<cr><esc>', { desc = 'Save all open
 -- Disable continuations
 map('n', '<leader>o', 'o<Esc>^Da', opts)
 
--- Split window
-map('n', 'ss', ':split<Return>', opts)
-map('n', 'sv', ':vsplit<Return>', opts)
-
--- Move window
-map('n', 'sh', '<C-w>h')
-map('n', 'sk', '<C-w>k')
-map('n', 'sj', '<C-w>j')
-map('n', 'sl', '<C-w>l')
-
 -- Resize window using <ctrl> arrow keys
 map('n', '<C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
 map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
@@ -125,9 +115,17 @@ map('t', '<C-/>', '<cmd>close<cr>', { desc = 'Hide Terminal' })
 map('t', '<c-_>', '<cmd>close<cr>', { desc = 'which_key_ignore' })
 
 -- windows
+map('n', 'ss', ':split<Return>', { desc = 'Split Window Below', remap = true })
+map('n', 'sv', ':vsplit<Return>', { desc = 'Split Window Right', remap = true })
 map('n', '<leader>-', '<C-W>s', { desc = 'Split Window Below', remap = true })
-map('n', '<leader>|', '<C-W>v', { desc = 'Split Window Right', remap = true })
+map('n', '<leader>\\', '<C-W>v', { desc = 'Split Window Right', remap = true })
 map('n', '<leader>wd', '<C-W>c', { desc = 'Delete Window', remap = true })
+
+-- move window
+map('n', 'sh', '<C-w>h')
+map('n', 'sk', '<C-w>k')
+map('n', 'sj', '<C-w>j')
+map('n', 'sl', '<C-w>l')
 Snacks.toggle.zoom():map('<leader>wm'):map('<leader>uZ')
 Snacks.toggle.zen():map('<leader>uz')
 

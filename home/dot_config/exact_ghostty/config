@@ -2,6 +2,7 @@
 font-family = MonoLisa Variable
 font-family = Symbols Nerd Font Mono
 font-size = 14
+font-feature = +calt,+liga,+ss02
 adjust-underline-position = 4
 
 # mouse

@@ -49,6 +49,9 @@ README.md
 .config/nvim/lazy-lock.json
 .config/LazyVim/lazy-lock.json
 
+# Yazi plugins
+.config/yazi/plugins
+
 # Karabiner automatic backups
 .config/karabiner/automatic_backups
 
@@ -81,6 +84,7 @@ Support
 {{ end -}}
 
 {{ if .computer.isWork -}}
-.ssh/homelab.pub
+.ssh/homelab_01.pub
+.ssh/homelab_02.pub
 .ssh/unifi.pub
 {{ end -}}
