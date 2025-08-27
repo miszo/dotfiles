@@ -1,9 +1,11 @@
 [[ssh-keys]]
+item = "Git SSH key"
 account = {{ .op.personal.accountName | quote }}
 vault = {{ .op.personal.vaultName | quote }}
 
 {{ if .computer.isWork -}}
 [[ssh-keys]]
+item = "Git SSH key"
 account = {{ .op.work.accountName | quote }}
 vault = {{ .op.work.vaultName | quote }}
 {{ end -}}
