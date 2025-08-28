@@ -3,7 +3,7 @@
 return {
   {
     'folke/which-key.nvim',
-    dependencies = { 'echasnovski/mini.icons' },
+    dependencies = { 'nvim-mini/mini.icons' },
     opts = {
       preset = 'helix',
       win = {

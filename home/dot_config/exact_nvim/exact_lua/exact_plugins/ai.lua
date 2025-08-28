@@ -64,7 +64,7 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'MeanderingProgrammer/render-markdown.nvim',
       'j-hui/fidget.nvim',
-      'echasnovski/mini.diff',
+      'nvim-mini/mini.diff',
       'ravitemer/codecompanion-history.nvim',
     },
     cmd = {

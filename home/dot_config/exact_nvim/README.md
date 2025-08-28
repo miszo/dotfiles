@@ -6,7 +6,7 @@
 
 ## Special shoutouts
 
-+ [ThePrimeagen](https://github.com/ThePrimeagen), [TJ Devries](https://github.com/tjdevries), [Chris Power](https://github.com/cpow) and [Adib Hanna](https://github.com/adibhanna) for their amazing work in the NeoVim community. You've all been a huge inspiration and a great source of knowledge. 
++ [ThePrimeagen](https://github.com/ThePrimeagen), [TJ DeVries](https://github.com/tjdevries), [Chris Power](https://github.com/cpow) and [Adib Hanna](https://github.com/adibhanna) for their amazing work in the NeoVim community. You've all been a huge inspiration and a great source of knowledge. 
 + [folke](https://github.com/folke) for creating amazing plugins and inspiring the community.
 + [echasnovski](https://github.com/echasnovski) for creating the `mini.nvim` plugin suite, which is a great source of inspiration and utility.
 
@@ -40,7 +40,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
 ### color
 
-+ [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
++ [nvim-mini/mini.hipatterns](https://dotfyle.com/plugins/nvim-mini/mini.hipatterns)
 ### colorscheme
 
 + [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
@@ -50,7 +50,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
 + [danymat/neogen](https://dotfyle.com/plugins/danymat/neogen)
 + [folke/ts-comments.nvim](https://dotfyle.com/plugins/folke/ts-comments.nvim)
-+ [echasnovski/mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
++ [nvim-mini/mini.comment](https://dotfyle.com/plugins/nvim-mini/mini.comment)
 ### completion
 
 + [zbirenbaum/copilot.lua](https://dotfyle.com/plugins/zbirenbaum/copilot.lua)
@@ -68,12 +68,12 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 ### editing-support
 
 + [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
-+ [echasnovski/mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
-+ [echasnovski/mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
++ [nvim-mini/mini.ai](https://dotfyle.com/plugins/nvim-mini/mini.ai)
++ [nvim-mini/mini.pairs](https://dotfyle.com/plugins/nvim-mini/mini.pairs)
 + [monaqa/dial.nvim](https://dotfyle.com/plugins/monaqa/dial.nvim)
 + [gbprod/yanky.nvim](https://dotfyle.com/plugins/gbprod/yanky.nvim)
 + [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
-+ [echasnovski/mini.move](https://dotfyle.com/plugins/echasnovski/mini.move)
++ [nvim-mini/mini.move](https://dotfyle.com/plugins/nvim-mini/mini.move)
 + [Wansmer/treesj](https://dotfyle.com/plugins/Wansmer/treesj)
 + [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
 ### formatting
@@ -83,10 +83,10 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 
 + [ruifm/gitlinker.nvim](https://dotfyle.com/plugins/ruifm/gitlinker.nvim)
 + [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
-+ [echasnovski/mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
++ [nvim-mini/mini.diff](https://dotfyle.com/plugins/nvim-mini/mini.diff)
 ### icon
 
-+ [echasnovski/mini.icons](https://dotfyle.com/plugins/echasnovski/mini.icons)
++ [nvim-mini/mini.icons](https://dotfyle.com/plugins/nvim-mini/mini.icons)
 ### keybinding
 
 + [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
@@ -105,7 +105,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [ThePrimeagen/harpoon](https://dotfyle.com/plugins/ThePrimeagen/harpoon)
 ### motion
 
-+ [echasnovski/mini.bracketed](https://dotfyle.com/plugins/echasnovski/mini.bracketed)
++ [nvim-mini/mini.bracketed](https://dotfyle.com/plugins/nvim-mini/mini.bracketed)
 + [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
 ### nvim-dev
 
@@ -139,7 +139,7 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 ### syntax
 
 + [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-+ [echasnovski/mini.surround](https://dotfyle.com/plugins/echasnovski/mini.surround)
++ [nvim-mini/mini.surround](https://dotfyle.com/plugins/nvim-mini/mini.surround)
 + [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
 ### test
 

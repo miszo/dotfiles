@@ -76,7 +76,7 @@ return {
   },
   {
     'b0o/incline.nvim',
-    dependencies = { 'catppuccin/nvim', 'echasnovski/mini.icons' },
+    dependencies = { 'catppuccin/nvim', 'nvim-mini/mini.icons' },
     event = 'BufReadPre',
     priority = 1200,
     config = function()
@@ -115,7 +115,7 @@ return {
     end,
   },
   {
-    'echasnovski/mini.icons',
+    'nvim-mini/mini.icons',
     lazy = true,
     config = function()
       local icons = UserUtil.icons.get_icons()

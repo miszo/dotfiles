@@ -344,14 +344,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd('LspNotify', {
-  callback = function(event)
-    if event.data.method == vim.lsp.protocol.Methods.textDocument_didOpen then
-      vim.lsp.foldclose('imports', vim.fn.bufwinid(event.buf))
-    end
-  end,
-})
-
 -- Disable the diagnostics in files from ther `/node_modules/` directory
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte', 'astro' },

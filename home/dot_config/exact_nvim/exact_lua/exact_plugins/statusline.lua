@@ -5,7 +5,7 @@ return {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
     dependencies = {
-      'echasnovski/mini.icons',
+      'nvim-mini/mini.icons',
       'catppuccin/nvim',
       'folke/noice.nvim',
       'SmiteshP/nvim-navic',
