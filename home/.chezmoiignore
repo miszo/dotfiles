@@ -82,9 +82,3 @@ Support
 .config/zsh/.zsh_work_env.zsh
 .config/zsh/.zsh_work_functions.zsh
 {{ end -}}
-
-{{ if .computer.isWork -}}
-.ssh/homelab_01.pub
-.ssh/homelab_02.pub
-.ssh/unifi.pub
-{{ end -}}

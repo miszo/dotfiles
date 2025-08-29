@@ -1,7 +1,6 @@
 Host *
   IdentityAgent "~/.1password/agent.sock"
 
-{{ if not .computer.isWork -}}
 Host {{ .ssh.homelab_01.host | trim }}
   HostName {{ .ssh.homelab_01.hostName | trim }}
   User {{ .ssh.homelab_01.user | trim }}
@@ -19,4 +18,3 @@ Host {{ .ssh.unifi.host | trim }}
   User {{ .ssh.unifi.user | trim }}
   IdentityFile ~/.ssh/unifi.pub
   IdentitiesOnly yes
-{{ end -}}

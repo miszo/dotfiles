@@ -108,7 +108,6 @@ itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode)
 token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccountCode | quote }}
 {{- end }}
 
-{{- if not $isWork }}
 [data.ssh.homelab_01]
 host = {{ onepasswordRead "op://dev/Homelab_01 SSH key/Host" $opPersonalAccountCode | quote }}
 hostName = {{ onepasswordRead "op://dev/Homelab_01 SSH key/HostName" $opPersonalAccountCode | quote }}
@@ -126,7 +125,6 @@ host = {{ onepasswordRead "op://dev/Unifi SSH key/Host" $opPersonalAccountCode |
 hostName = {{ onepasswordRead "op://dev/Unifi SSH key/HostName" $opPersonalAccountCode | quote }}
 user = {{ onepasswordRead "op://dev/Unifi SSH key/User" $opPersonalAccountCode | quote }}
 publicKey = {{ onepasswordRead "op://dev/Unifi SSH key/public key" $opPersonalAccountCode | quote }}
-{{- end }}
 
 [data.tealdeer]
 cacheDir = {{ joinPath .chezmoi.homeDir ".cache" "tealdeer" | quote }}
