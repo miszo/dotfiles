@@ -1,3 +1,7 @@
+{{ if .computer.isWork }}
+{{- onepasswordRead "op://Employee/persistent ssh/notesPlain" .op.work.accountCode -}}
+{{ end }}
+
 Include /Users/miszo/.colima/ssh_config
 
 Host *
@@ -5,18 +9,11 @@ Host *
 
 Host {{ .ssh.homelab01.host | trim }}
   HostName {{ .ssh.homelab01.hostName | trim }}
-  User {{ .ssh.homelab01.user | trim }}
-  IdentityFile ~/.ssh/homelab01.pub
-  IdentitiesOnly yes
 
 Host {{ .ssh.homelab02.host | trim }}
   HostName {{ .ssh.homelab02.hostName | trim }}
-  User {{ .ssh.homelab02.user | trim }}
-  IdentityFile ~/.ssh/homelab02.pub
-  IdentitiesOnly yes
 
 Host {{ .ssh.unifi.host | trim }}
   HostName {{ .ssh.unifi.hostName | trim }}
-  User {{ .ssh.unifi.user | trim }}
-  IdentityFile ~/.ssh/unifi.pub
-  IdentitiesOnly yes
+
+Include ~/.ssh/1Password/config

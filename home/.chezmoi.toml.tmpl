@@ -111,20 +111,14 @@ token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccount
 [data.ssh.homelab01]
 host = {{ onepasswordRead "op://dev/Homelab01 SSH key/Host" $opPersonalAccountCode | quote }}
 hostName = {{ onepasswordRead "op://dev/Homelab01 SSH key/HostName" $opPersonalAccountCode | quote }}
-user = {{ onepasswordRead "op://dev/Homelab01 SSH key/User" $opPersonalAccountCode | quote }}
-publicKey = {{ onepasswordRead "op://dev/Homelab01 SSH key/public key" $opPersonalAccountCode | quote }}
 
 [data.ssh.homelab02]
 host = {{ onepasswordRead "op://dev/Homelab02 SSH key/Host" $opPersonalAccountCode | quote }}
 hostName = {{ onepasswordRead "op://dev/Homelab02 SSH key/HostName" $opPersonalAccountCode | quote }}
-user = {{ onepasswordRead "op://dev/Homelab02 SSH key/User" $opPersonalAccountCode | quote }}
-publicKey = {{ onepasswordRead "op://dev/Homelab02 SSH key/public key" $opPersonalAccountCode | quote }}
 
 [data.ssh.unifi]
 host = {{ onepasswordRead "op://dev/Unifi SSH key/Host" $opPersonalAccountCode | quote }}
 hostName = {{ onepasswordRead "op://dev/Unifi SSH key/HostName" $opPersonalAccountCode | quote }}
-user = {{ onepasswordRead "op://dev/Unifi SSH key/User" $opPersonalAccountCode | quote }}
-publicKey = {{ onepasswordRead "op://dev/Unifi SSH key/public key" $opPersonalAccountCode | quote }}
 
 [data.tealdeer]
 cacheDir = {{ joinPath .chezmoi.homeDir ".cache" "tealdeer" | quote }}

@@ -71,6 +71,7 @@ Public
 Support
 
 **/.DS_Store
+.ssh/1Password
 
 {{ if not .computer.isWork -}}
 .config/git/config-work
