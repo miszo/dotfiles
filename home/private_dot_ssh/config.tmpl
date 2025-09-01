@@ -1,6 +1,7 @@
-{{ if .computer.isWork }}
+{{- if .computer.isWork }}
 {{- onepasswordRead "op://Employee/persistent ssh/notesPlain" .op.work.accountCode -}}
-{{ end }}
+
+{{ end -}}
 
 Include /Users/miszo/.colima/ssh_config
 
