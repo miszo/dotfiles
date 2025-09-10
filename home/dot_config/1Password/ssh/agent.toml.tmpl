@@ -1,9 +1,10 @@
-[[ssh-keys]]
-account = {{ .op.personal.accountName | quote }}
-vault = {{ .op.personal.vaultName | quote }}
-
 {{ if .computer.isWork -}}
 [[ssh-keys]]
 account = {{ .op.work.accountName | quote }}
 vault = {{ .op.work.vaultName | quote }}
+
 {{ end -}}
+
+[[ssh-keys]]
+account = {{ .op.personal.accountName | quote }}
+vault = {{ .op.personal.vaultName | quote }}
