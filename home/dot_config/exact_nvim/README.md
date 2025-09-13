@@ -100,9 +100,6 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 
 + [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
 + [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
-### marks
-
-+ [ThePrimeagen/harpoon](https://dotfyle.com/plugins/ThePrimeagen/harpoon)
 ### motion
 
 + [nvim-mini/mini.bracketed](https://dotfyle.com/plugins/nvim-mini/mini.bracketed)
@@ -134,7 +131,6 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [folke/edgy.nvim](https://dotfyle.com/plugins/folke/edgy.nvim)
 ### statusline
 
-+ [b0o/incline.nvim](https://dotfyle.com/plugins/b0o/incline.nvim)
 + [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
 ### syntax
 

@@ -75,46 +75,6 @@ return {
     },
   },
   {
-    'b0o/incline.nvim',
-    dependencies = { 'catppuccin/nvim', 'nvim-mini/mini.icons' },
-    event = 'BufReadPre',
-    priority = 1200,
-    config = function()
-      local colors = require('catppuccin.palettes').get_palette()
-      local devicons = require('nvim-web-devicons')
-      require('incline').setup({
-        window = {
-          zindex = 50,
-          padding = { left = 1, right = 1 },
-          margin = { vertical = 0, horizontal = 0 },
-        },
-        highlight = {
-          groups = {
-            InclineNormal = { guibg = colors.crust, guifg = colors.lavender },
-            InclineNormalNC = { guibg = colors.none, guifg = colors.overlay2 },
-          },
-        },
-        hide = {
-          cursorline = false,
-          focused_win = false,
-          only_win = true,
-        },
-        render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          local modified = vim.bo[props.buf].modified
-
-          local ft_icon, ft_color = devicons.get_icon_color(filename)
-          return {
-            ft_icon and { ft_icon, guifg = ft_color } or '',
-            { ' ' },
-            { filename },
-            modified and { ' ●', guifg = colors.peach } or {},
-          }
-        end,
-      })
-    end,
-  },
-  {
     'nvim-mini/mini.icons',
     lazy = true,
     config = function()
