@@ -9,7 +9,7 @@ adjust-underline-position = 4
 mouse-hide-while-typing = true
 
 # theme
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 cursor-style = bar
 cursor-invert-fg-bg = true
 cursor-style-blink = false
