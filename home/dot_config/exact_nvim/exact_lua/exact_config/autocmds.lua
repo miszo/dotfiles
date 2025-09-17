@@ -109,12 +109,6 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  callback = function()
-    pcall(vim.treesitter.start)
-  end,
-})
-
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup('lsp-attach'),
   callback = function(attach_event)

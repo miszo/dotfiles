@@ -1,7 +1,6 @@
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
-  { 'nvim-treesitter/playground', cmd = 'TSPlaygroundToggle' },
   {
     'folke/which-key.nvim',
     opts = {
@@ -16,40 +15,31 @@ return {
   -- syntax highlighting.
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
-    build = function()
-      require('nvim-treesitter.install').update({ with_sync = true })()
-    end,
+    branch = 'main',
     dependencies = {
       'windwp/nvim-ts-autotag',
       'RRethy/nvim-treesitter-endwise',
       'nvim-treesitter/nvim-treesitter-textobjects',
       'nvim-treesitter/nvim-treesitter-context',
-      { 'LiadOz/nvim-dap-repl-highlights', commit = 'a7512fc0a0de0c0be8d58983939856dda6f72451' },
+      { 'LiadOz/nvim-dap-repl-highlights' },
     },
-    event = { 'LazyFile', 'VeryLazy' },
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-    init = function(plugin)
-      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-      -- Luckily, the only things that those plugins need are the custom queries, which we make available
-      -- during startup.
-      require('lazy.core.loader').add_to_rtp(plugin)
-      require('nvim-treesitter.query_predicates')
+    build = function()
+      local TS = require('nvim-treesitter')
+      if not TS.get_installed then
+        UserUtil.lazyCoreUtil.error(
+          'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.'
+        )
+        return
+      end
+      vim.cmd.TSUpdate()
     end,
-    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    keys = {
-      { '<c-space>', desc = 'Increment Selection' },
-      { '<bs>', desc = 'Decrement Selection', mode = 'x' },
-    },
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    event = { 'LazyFile', 'VeryLazy' },
+    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
+    opts_extend = { 'ensure_installed' },
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
     opts = {
-      autoinstall = true,
-      sync_install = false,
-      highlight = { enable = true, additional_vim_regex_highlighting = false },
-      indent = { enable = true },
       ensure_installed = {
         'angular',
         'bash',
@@ -97,115 +87,114 @@ return {
         'yaml',
         'zig',
       },
-      query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { 'BufWrite', 'CursorHold' },
-      },
-      playground = {
-        enable = true,
-        disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-        persist_queries = true, -- Whether the query persists across vim sessions
-        keybindings = {
-          toggle_query_editor = 'o',
-          toggle_hl_groups = 'i',
-          toggle_injected_languages = 't',
-          toggle_anonymous_nodes = 'a',
-          toggle_language_display = 'I',
-          focus_language = 'f',
-          unfocus_language = 'F',
-          update = 'R',
-          goto_node = '<cr>',
-          show_help = '?',
-        },
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<C-space>',
-          node_incremental = '<C-space>',
-          scope_incremental = false,
-          node_decremental = '<bs>',
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['af'] = { query = '@function.outer', desc = 'around a function' },
-            ['if'] = { query = '@function.inner', desc = 'inner part of a function' },
-            ['ac'] = { query = '@class.outer', desc = 'around a class' },
-            ['ic'] = { query = '@class.inner', desc = 'inner part of a class' },
-            ['ai'] = { query = '@conditional.outer', desc = 'around an if statement' },
-            ['ii'] = { query = '@conditional.inner', desc = 'inner part of an if statement' },
-            ['al'] = { query = '@loop.outer', desc = 'around a loop' },
-            ['il'] = { query = '@loop.inner', desc = 'inner part of a loop' },
-            ['ap'] = { query = '@parameter.outer', desc = 'around parameter' },
-            ['ip'] = { query = '@parameter.inner', desc = 'inside a parameter' },
-          },
-          selection_modes = {
-            ['@parameter.outer'] = 'v', -- charwise
-            ['@parameter.inner'] = 'v', -- charwise
-            ['@function.outer'] = 'v', -- charwise
-            ['@conditional.outer'] = 'V', -- linewise
-            ['@loop.outer'] = 'V', -- linewise
-            ['@class.outer'] = '<c-v>', -- blockwise
-          },
-          include_surrounding_whitespace = false,
-        },
-        move = {
-          enable = true,
-          goto_next_start = {
-            [']f'] = '@function.outer',
-            [']c'] = '@class.outer',
-            [']a'] = '@parameter.inner',
-          },
-          goto_next_end = {
-            [']F'] = '@function.outer',
-            [']C'] = '@class.outer',
-            [']A'] = '@parameter.inner',
-          },
-          goto_previous_start = {
-            ['[f'] = '@function.outer',
-            ['[c'] = '@class.outer',
-            ['[a'] = '@parameter.inner',
-          },
-          goto_previous_end = {
-            ['[F'] = '@function.outer',
-            ['[C'] = '@class.outer',
-            ['[A'] = '@parameter.inner',
-          },
-        },
-      },
     },
     ---@param opts TSConfig
     config = function(_, opts)
-      local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+      if vim.fn.executable('tree-sitter') == 0 then
+        UserUtil.lazyCoreUtil.error({
+          '**treesitter-main** requires the `tree-sitter` CLI executable to be installed.',
+          'Run `:checkhealth nvim-treesitter` for more information.',
+        })
+        return
+      end
+      if type(opts.ensure_installed) ~= 'table' then
+        UserUtil.lazyCoreUtil.error('`nvim-treesitter` opts.ensure_installed must be a table')
+      end
 
-      parser_config.blade = {
-        install_info = {
-          url = 'https://github.com/EmranMR/tree-sitter-blade',
-          files = { 'src/parser.c' },
-          branch = 'main',
-        },
-        filetype = 'blade',
-      }
+      local TS = require('nvim-treesitter')
+      if not TS.get_installed then
+        UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
+        return
+      end
+      TS.setup(opts)
 
-      -- MDX
-      vim.filetype.add({
-        extension = {
-          mdx = 'mdx',
-        },
-        pattern = {
-          ['.*%.blade%.php'] = 'blade',
-        },
+      local needed = UserUtil.dedup(opts.ensure_installed --[[@as string[] ]])
+      UserUtil.ui.installed = TS.get_installed('parsers')
+
+      local install = vim.tbl_filter(function(lang) ---@param lang string
+        return not UserUtil.ui.have(lang)
+      end, needed)
+
+      if #install > 0 then
+        TS.install(install, { summary = true }):await(function()
+          UserUtil.ui.installed = TS.get_installed('parsers')
+        end)
+      end
+
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function(ev)
+          if UserUtil.ui.have(ev.match) then
+            pcall(vim.treesitter.start)
+          end
+        end,
       })
-      vim.treesitter.language.register('markdown', 'mdx')
 
-      require('nvim-treesitter.configs').setup(opts)
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'TSUpdate',
+        callback = function()
+          require('nvim-treesitter.parsers').blade = {
+            install_info = {
+              url = 'https://github.com/EmranMR/tree-sitter-blade',
+            },
+          }
+          -- MDX
+          vim.filetype.add({
+            extension = {
+              mdx = 'mdx',
+            },
+            pattern = {
+              ['.*%.blade%.php'] = 'blade',
+            },
+          })
+          vim.treesitter.language.register('markdown', 'mdx')
+        end,
+      })
+    end,
+  },
+
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
+    event = 'VeryLazy',
+    opts = {},
+    keys = function()
+      local moves = {
+        goto_next_start = { [']f'] = '@function.outer', [']c'] = '@class.outer', [']a'] = '@parameter.inner' },
+        goto_next_end = { [']F'] = '@function.outer', [']C'] = '@class.outer', [']A'] = '@parameter.inner' },
+        goto_previous_start = { ['[f'] = '@function.outer', ['[c'] = '@class.outer', ['[a'] = '@parameter.inner' },
+        goto_previous_end = { ['[F'] = '@function.outer', ['[C'] = '@class.outer', ['[A'] = '@parameter.inner' },
+      }
+      local ret = {} ---@type LazyKeysSpec[]
+      for method, keymaps in pairs(moves) do
+        for key, query in pairs(keymaps) do
+          local desc = query:gsub('@', ''):gsub('%..*', '')
+          desc = desc:sub(1, 1):upper() .. desc:sub(2)
+          desc = (key:sub(1, 1) == '[' and 'Prev ' or 'Next ') .. desc
+          desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and ' End' or ' Start')
+          ret[#ret + 1] = {
+            key,
+            function()
+              -- don't use treesitter if in diff mode and the key is one of the c/C keys
+              if vim.wo.diff and key:find('[cC]') then
+                return vim.cmd('normal! ' .. key)
+              end
+              require('nvim-treesitter-textobjects.move')[method](query, 'textobjects')
+            end,
+            desc = desc,
+            mode = { 'n', 'x', 'o' },
+            silent = true,
+          }
+        end
+      end
+      return ret
+    end,
+    config = function(_, opts)
+      local TS = require('nvim-treesitter-textobjects')
+      if not TS.setup then
+        UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
+        return
+      end
+      TS.setup(opts)
     end,
   },
 
