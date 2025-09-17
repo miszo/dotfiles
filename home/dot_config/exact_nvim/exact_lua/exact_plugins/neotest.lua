@@ -15,38 +15,6 @@ return {
       'lawrence-laz/neotest-zig',
       'mfussenegger/nvim-dap',
     },
-    -- opts = function(_, opts)
-    --   opts.discovery = {
-    --     enabled = false,
-    --   }
-    --   opts.adapters = {
-    --     require('neotest-jest')({
-    --       cwd = function()
-    --         return vim.fn.getcwd()
-    --       end,
-    --       jest_test_discovery = true,
-    --     }),
-    --     require('neotest-vitest'),
-    --     require('neotest-go')({
-    --       dap_go_enabled = true,
-    --     }),
-    --     require('neotest-rspec'),
-    --     require('neotest-zig'),
-    --   }
-    --   opts.status = {
-    --     virtual_text = true,
-    --   }
-    --   opts.output = {
-    --     open_on_run = true,
-    --   }
-    --   opts.quickfix = {
-    --     open = function()
-    --       require('trouble').open({ mode = 'quickfix', focus = false })
-    --     end,
-    --   }
-    --
-    --   return opts
-    -- end,
     opts = {
       adapters = {
         ['neotest-jest'] = {

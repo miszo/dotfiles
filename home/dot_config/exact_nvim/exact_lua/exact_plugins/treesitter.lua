@@ -47,6 +47,7 @@ return {
         'c',
         'cpp',
         'css',
+        'dap_repl',
         'diff',
         'dockerfile',
         'gitignore',
@@ -90,6 +91,8 @@ return {
     },
     ---@param opts TSConfig
     config = function(_, opts)
+      require('nvim-dap-repl-highlights').setup()
+
       if vim.fn.executable('tree-sitter') == 0 then
         UserUtil.lazyCoreUtil.error({
           '**treesitter-main** requires the `tree-sitter` CLI executable to be installed.',
