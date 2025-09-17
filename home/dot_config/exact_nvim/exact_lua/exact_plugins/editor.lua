@@ -23,6 +23,12 @@ return {
         mode = { 'n', 'v' },
         desc = 'Search and Replace',
       },
+      {
+        '<leader>sR',
+        ':GrugFarWithin<cr>',
+        mode = { 'v', 'x' },
+        desc = 'Search and Replace whithin selection',
+      },
     },
   },
 
