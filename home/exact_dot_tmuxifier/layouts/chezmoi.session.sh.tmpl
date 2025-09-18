@@ -1,11 +1,11 @@
 # vim: syntax=sh
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
-session_root {{ joinPath .chezmoi.homeDir ".config" | quote }}
+session_root {{ joinPath .chezmoi.sourceDir ".." | quote }}
 
 # Create session with specified name if it does not already exist. If no
 # argument is given, session name will be based on layout file name.
-if initialize_session "dotconfig"; then
+if initialize_session "chezmoi"; then
   new_window "editor"
   new_window "shell"
   select_window 1
