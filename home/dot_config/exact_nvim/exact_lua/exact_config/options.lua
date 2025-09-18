@@ -44,7 +44,7 @@ vim.o.expandtab = true -- Use spaces instead of tabs
 vim.o.smoothscroll = true
 vim.o.foldlevel = 99 -- Open all folds by default
 vim.o.foldmethod = 'expr' -- Use indentation for folding
-vim.o.foldexpr = 'v:lua.UserUtil.ui.foldexpr()' -- Use treesitter for folding if available
+vim.o.foldexpr = 'v:lua.UserUtil.treesitter.foldexpr()' -- Use treesitter for folding if available
 vim.o.foldtext = ''
 
 vim.o.grepformat = '%f:%l:%c:%m' -- Format for grep results
@@ -54,7 +54,7 @@ vim.o.ignorecase = true -- Ignore case in search patterns
 vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase letters
 
 vim.o.inccommand = 'nosplit' -- Show live command preview
-vim.o.indentexpr = 'v:lua.UserUtil.ui.indentexpr()' -- Use treesitter for indentation if available
+vim.o.indentexpr = 'v:lua.UserUtil.treesitter.indentexpr()' -- Use treesitter for indentation if available
 vim.o.jumpoptions = 'view' -- Jump to previous location in jump list
 vim.o.laststatus = 3 -- Global status line
 vim.o.linebreak = true -- Break long lines at word boundaries
@@ -84,7 +84,7 @@ vim.o.wildignore = '*/node_modules/*'
 vim.o.winminwidth = 5 -- Minimum width of a window
 vim.o.wrap = false -- Disable line wrapping
 
-vim.o.formatexpr = "v:lua.require'util'.formatting.formatexpr()"
+vim.o.formatexpr = 'v:lua.UserUtil.formatting.formatexpr()'
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

@@ -91,47 +91,56 @@ return {
     },
     ---@param opts TSConfig
     config = function(_, opts)
+      local TS = require('nvim-treesitter')
+      -- have to setup dap repl highlights before treesitter
       require('nvim-dap-repl-highlights').setup()
 
-      if vim.fn.executable('tree-sitter') == 0 then
-        UserUtil.lazyCoreUtil.error({
+      -- checks for treesitter main branch
+      if not TS.get_installed then
+        return UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
+      elseif vim.fn.executable('tree-sitter') == 0 then
+        return UserUtil.lazyCoreUtil.error({
           '**treesitter-main** requires the `tree-sitter` CLI executable to be installed.',
           'Run `:checkhealth nvim-treesitter` for more information.',
         })
-        return
-      end
-      if type(opts.ensure_installed) ~= 'table' then
-        UserUtil.lazyCoreUtil.error('`nvim-treesitter` opts.ensure_installed must be a table')
+      elseif type(opts.ensure_installed) ~= 'table' then
+        return UserUtil.lazyCoreUtil.error('`nvim-treesitter` opts.ensure_installed must be a table')
       end
 
-      local TS = require('nvim-treesitter')
-      if not TS.get_installed then
-        UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
-        return
-      end
+      -- setup treesitter
       TS.setup(opts)
 
-      local needed = UserUtil.dedup(opts.ensure_installed --[[@as string[] ]])
-      UserUtil.ui.installed = TS.get_installed('parsers')
+      UserUtil.treesitter.get_installed(true) -- initialize installed langs
 
-      local install = vim.tbl_filter(function(lang) ---@param lang string
-        return not UserUtil.ui.have(lang)
-      end, needed)
-
+      -- install missing parsers
+      local install = vim.tbl_filter(function(lang)
+        return not UserUtil.treesitter.have(lang)
+      end, opts.ensure_installed or {})
       if #install > 0 then
         TS.install(install, { summary = true }):await(function()
-          UserUtil.ui.installed = TS.get_installed('parsers')
+          UserUtil.treesitter.get_installed(true) -- refresh the installed langs
         end)
       end
 
+      -- treesitter highlighting
       vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('user_nvim_treesitter', { clear = true }),
         callback = function(ev)
-          if UserUtil.ui.have(ev.match) then
+          if UserUtil.treesitter.have(ev.match) then
             pcall(vim.treesitter.start)
+
+            -- check if ftplugins changed foldexpr/indentexpr
+            for _, option in ipairs({ 'foldexpr', 'indentexpr' }) do
+              local expr = 'v:lua.UserUtil.treesitter.' .. option .. '()'
+              if vim.opt_global[option]:get() == expr then
+                vim.opt_local[option] = expr
+              end
+            end
           end
         end,
       })
 
+      -- add blade custom parser
       vim.api.nvim_create_autocmd('User', {
         pattern = 'TSUpdate',
         callback = function()
@@ -140,15 +149,17 @@ return {
               url = 'https://github.com/EmranMR/tree-sitter-blade',
             },
           }
-          -- MDX
+          -- MDX support
           vim.filetype.add({
             extension = {
               mdx = 'mdx',
             },
+            -- blade files pattern
             pattern = {
               ['.*%.blade%.php'] = 'blade',
             },
           })
+          -- register mdx as markdown for treesitter
           vim.treesitter.language.register('markdown', 'mdx')
         end,
       })

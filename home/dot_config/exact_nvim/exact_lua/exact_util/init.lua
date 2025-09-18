@@ -6,7 +6,7 @@ local mini = require('util.mini')
 local lsp = require('util.lsp')
 local plugins = require('util.plugins')
 local statusline = require('util.statusline')
-local ui = require('util.ui')
+local treesitter = require('util.treesitter')
 
 local M = {
   formatting = formatting,
@@ -17,7 +17,7 @@ local M = {
   lsp = lsp,
   plugins = plugins,
   statusline = statusline,
-  ui = ui,
+  treesitter = treesitter,
 }
 
 ---@generic T
