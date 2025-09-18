@@ -1,3 +1,9 @@
+local function has_bun_in_project()
+  local bun_markers = { 'bun.lockb', 'bunfig.toml' }
+  local root_dir = vim.fs.root(0, bun_markers)
+  return root_dir ~= nil
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -5,13 +11,17 @@ return {
     'nvim-neotest/neotest',
     commit = '3c81345c28cd639fcc02843ed3653be462f47024',
     dependencies = {
+      -- neotest dependencies
+      'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
+      -- adapters dependencies
       'nvim-treesitter/nvim-treesitter',
+      -- adapters
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
+      'arthur944/neotest-bun',
       'nvim-neotest/neotest-go',
       'olimorris/neotest-rspec',
-      'nvim-neotest/nvim-nio',
       'lawrence-laz/neotest-zig',
       'mfussenegger/nvim-dap',
     },
@@ -83,6 +93,11 @@ return {
       end
 
       if opts.adapters then
+        -- Dynamically add bun adapter if bun project detected
+        if has_bun_in_project() then
+          opts.adapters['neotest-bun'] = {}
+        end
+
         local adapters = {}
         for name, config in pairs(opts.adapters or {}) do
           if type(name) == 'number' then
