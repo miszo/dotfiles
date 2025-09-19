@@ -64,7 +64,10 @@ return {
       'dmmulroy/ts-error-translator.nvim',
       'saghen/blink.cmp',
     },
-    config = function()
+    config = vim.schedule_wrap(function()
+      -- setup auto formatting with lsp
+      UserUtil.formatting.register(UserUtil.lsp.formatter())
+
       vim.diagnostic.config({
         virtual_text = {
           spacing = 4,
@@ -114,6 +117,6 @@ return {
         filter = 'eslint',
       })
       UserUtil.formatting.register(eslint_formatter)
-    end,
+    end),
   },
 }
