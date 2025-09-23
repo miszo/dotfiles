@@ -9,7 +9,8 @@ end
 return {
   {
     'nvim-neotest/neotest',
-    commit = '3c81345c28cd639fcc02843ed3653be462f47024',
+    -- latest version with working jest adapter
+    version = '5.9',
     dependencies = {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
@@ -25,6 +26,7 @@ return {
       'lawrence-laz/neotest-zig',
       'mfussenegger/nvim-dap',
     },
+    ---@type neotest.Config
     opts = {
       adapters = {
         ['neotest-jest'] = {
@@ -43,6 +45,9 @@ return {
       discovery = {
         enabled = false,
       },
+      floating = {
+        border = 'rounded',
+      },
       status = { virtual_text = true },
       output = { open_on_run = true },
       quickfix = {
@@ -51,6 +56,7 @@ return {
         end,
       },
     },
+    ---@param opts neotest.Config
     config = function(_, opts)
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
