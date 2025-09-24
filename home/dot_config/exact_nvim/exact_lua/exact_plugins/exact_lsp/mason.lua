@@ -1,3 +1,58 @@
+---@type string[]
+local lsp_ensure_installed = {
+  'angularls',
+  'astro',
+  'bashls',
+  'biome',
+  'css_variables',
+  'cssls',
+  'cssmodules_ls',
+  'docker_compose_language_service',
+  'dockerls',
+  'eslint',
+  'gopls',
+  'intelephense',
+  'jsonls',
+  'lua_ls',
+  'marksman',
+  'phpactor',
+  'prismals',
+  'svelte',
+  'tailwindcss',
+  'vtsls',
+  'vue_ls',
+  'yamlls',
+  'zls',
+}
+
+---@type string[]
+local linters_ensure_installed = {
+  'erb-lint',
+  'hadolint',
+  'luacheck',
+  'markdownlint-cli2',
+  'phpcs',
+  'shellcheck',
+  'sqlfluff',
+}
+
+---@type string[]
+local formatters_ensure_installed = {
+  'blade-formatter',
+  'erb-formatter',
+  'gofumpt',
+  'goimports',
+  'markdown-toc',
+  'php-cs-fixer',
+  'prettierd',
+  'rubocop',
+  'shfmt',
+  'stylua',
+}
+
+---@type string[]
+local tools_ensure_installed = { unpack(linters_ensure_installed), unpack(formatters_ensure_installed) }
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -6,6 +61,8 @@ return {
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
+  build = ':MasonUpdate',
+  keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local mason = require('mason')
@@ -19,59 +76,13 @@ return {
     })
 
     mason_lspconfig.setup({
-      ensure_installed = {
-        'angularls',
-        'astro',
-        'bashls',
-        'biome',
-        'css_variables',
-        'cssls',
-        'cssmodules_ls',
-        'docker_compose_language_service',
-        'dockerls',
-        'eslint',
-        'gopls',
-        'intelephense',
-        'jsonls',
-        'lua_ls',
-        'marksman',
-        'phpactor',
-        'prismals',
-        'svelte',
-        'tailwindcss',
-        'vtsls',
-        'vue_ls',
-        'yamlls',
-        'zls',
-      },
+      ensure_installed = lsp_ensure_installed,
       automatic_installation = true,
     })
 
     mason_tool_installer.setup({
-      ensure_installed = {
-        -- linter
-        'erb-lint',
-        -- 'hadolint',
-        'luacheck',
-        'markdownlint-cli2',
-        'phpcs',
-        'shellcheck',
-        'sqlfluff',
-        -- formatter
-        'blade-formatter',
-        'erb-formatter',
-        'gofumpt',
-        'goimports',
-        'markdown-toc',
-        'php-cs-fixer',
-        'prettierd',
-        'rubocop',
-        'shfmt',
-        'stylua',
-      },
+      ensure_installed = tools_ensure_installed,
       run_on_start = true,
     })
-
-    vim.keymap.set('n', '<leader>cm', '<cmd>Mason<cr>', { desc = 'Mason' })
   end,
 }

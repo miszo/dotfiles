@@ -220,7 +220,12 @@ return {
   },
   {
     'Wansmer/treesj',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
+    },
     config = function()
       local tsj = require('treesj')
       tsj.setup({

@@ -9,7 +9,10 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
     },
     keys = {
       { '<leader>r', '', desc = '+refactor', mode = { 'n', 'v' } },

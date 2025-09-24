@@ -24,7 +24,7 @@ local function get_angular_core_version()
     return ''
   end
 
-  local angular_core_version = json.dependencies['@angular/core']
+  local angular_core_version = json.dependencies['@angular/core'] ---@type string?
 
   angular_core_version = angular_core_version and angular_core_version:match('%d+%.%d+%.%d+')
 
@@ -44,12 +44,6 @@ local default_angular_core_version = get_angular_core_version()
 local ngserver_exe = vim.fn.exepath('ngserver')
 local ngserver_path = #(ngserver_exe or '') > 0 and vim.fs.dirname(vim.uv.fs_realpath(ngserver_exe)) or '?'
 local extension_path = vim.fs.normalize(vim.fs.joinpath(ngserver_path, '../../../'))
-local tsserver_plugin_path = vim.fs.normalize(
-  vim.fs.joinpath(
-    vim.fn.stdpath('data'),
-    '/mason/packages/angular-language-server/node_modules/@angular/language-server'
-  )
-)
 
 -- angularls will get module by `require.resolve(PROBE_PATH, MODULE_NAME)` of nodejs
 local ts_probe_dirs = vim.iter({ extension_path, default_probe_dir }):join(',')

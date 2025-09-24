@@ -1,5 +1,5 @@
 local function has_bun_in_project()
-  local bun_markers = { 'bun.lockb', 'bunfig.toml' }
+  local bun_markers = { 'bun.lockb', 'bun.lock', 'bunfig.toml' }
   local root_dir = vim.fs.root(0, bun_markers)
   return root_dir ~= nil
 end
@@ -10,13 +10,16 @@ return {
   {
     'nvim-neotest/neotest',
     -- latest version with working jest adapter
-    version = '5.9',
+    -- version = '5.9',
     dependencies = {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       -- adapters dependencies
-      'nvim-treesitter/nvim-treesitter',
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
       -- adapters
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',

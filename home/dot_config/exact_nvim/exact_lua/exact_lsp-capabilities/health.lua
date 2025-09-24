@@ -64,12 +64,26 @@ M.check = function()
       { 'Selection Range', caps.selectionRangeProvider },
     }
 
-    for _, cap in ipairs(capability_list) do
-      if cap[2] then
-        vim.health.ok(cap[1])
-      else
-        vim.health.info('⚠️' .. cap[1] .. ' (not supported)')
-      end
+    local supported_capabilities = vim.tbl_filter(function(cap)
+      return cap[2]
+    end, capability_list)
+
+    for _, cap in ipairs(supported_capabilities) do
+      vim.health.ok(cap[1])
+    end
+
+    local unsupported_capabilities = vim.tbl_filter(function(cap)
+      return not cap[2]
+    end, capability_list)
+
+    if #unsupported_capabilities == 0 then
+      goto continue
+    else
+      vim.health.warn('Unsupported capabilities:')
+    end
+
+    for _, cap in ipairs(unsupported_capabilities) do
+      vim.health.info(cap[1])
     end
 
     ::continue::

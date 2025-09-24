@@ -61,7 +61,10 @@ return {
     'olimorris/codecompanion.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
       'MeanderingProgrammer/render-markdown.nvim',
       'j-hui/fidget.nvim',
       'nvim-mini/mini.diff',

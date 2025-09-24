@@ -305,6 +305,14 @@ local zen = {
   },
 }
 
+local function build_dependencies()
+  if vim.fn.executable('npm') == 1 then
+    vim.fn.system({ 'npm', 'install', '-g', '@mermaid-js/mermaid-cli' })
+  else
+    vim.notify('npm is not installed. Please install npm to use snacks.nvim', 'error')
+  end
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -312,6 +320,8 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
+    -- for rendering mermaid diagrams
+    build = build_dependencies,
     ---@type snacks.Config
     opts = {
       bigfile = bigfile,
