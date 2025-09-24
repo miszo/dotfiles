@@ -4,6 +4,10 @@
 services:
   {{ .lazygit.work.serviceName | quote }}: {{ .lazygit.work.serviceValue | quote }}
 {{- end }}
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 os:
   edit: open_in_nvim {{"{{"}}filename{{"}}"}}
   editAtLine: open_in_nvim {{"{{"}}filename{{"}}"}} {{"{{"}}line{{"}}"}}
