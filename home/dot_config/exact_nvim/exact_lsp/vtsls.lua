@@ -1,11 +1,16 @@
+local update_imports_on_file_move = { enabled = 'always' }
+
 local ts_preferences = {
+  includeCompletionsForModuleExports = true,
+  includeCompletionsForImportStatements = true,
   importModuleSpecifier = 'non-relative',
   preferTypeOnlyAutoImports = true,
   quoteStyle = 'single',
   useAliasesForRenames = false,
+  updateImportsOnFileMove = update_imports_on_file_move,
 }
 
-local inlayHints = {
+local inlay_hints = {
   enumMemberValues = { enabled = true },
   functionLikeReturnTypes = { enabled = true },
   parameterNames = { enabled = 'literals' },
@@ -13,8 +18,6 @@ local inlayHints = {
   propertyDeclarationTypes = { enabled = true },
   variableTypes = { enabled = false },
 }
-
-local updateImportsOnFileMove = { enabled = 'always' }
 
 local suggest = {
   completeFunctionCalls = true,
@@ -82,18 +85,23 @@ return {
   settings = {
     complete_function_calls = false,
     typescript = {
-      updateImportsOnFileMove = updateImportsOnFileMove,
+      format = {
+        enable = false,
+      },
+      updateImportsOnFileMove = update_imports_on_file_move,
       suggest = suggest,
-      inlayHints = inlayHints,
+      inlayHints = inlay_hints,
       preferences = ts_preferences,
       tsserver = {
         maxTsServerMemory = max_ts_server_memory,
+        useSeparateSyntaxServer = true,
+        enablePromptUseWorkspaceTsdk = false,
       },
     },
     javascript = {
-      updateImportsOnFileMove = updateImportsOnFileMove,
+      updateImportsOnFileMove = update_imports_on_file_move,
       suggest = suggest,
-      inlayHints = inlayHints,
+      inlayHints = inlay_hints,
       preferences = ts_preferences,
     },
     vtsls = {

@@ -7,6 +7,7 @@ local lsp = require('util.lsp')
 local plugins = require('util.plugins')
 local statusline = require('util.statusline')
 local treesitter = require('util.treesitter')
+local zen = require('util.zen')
 
 local M = {
   formatting = formatting,
@@ -18,6 +19,7 @@ local M = {
   plugins = plugins,
   statusline = statusline,
   treesitter = treesitter,
+  zen = zen,
 }
 
 ---@generic T

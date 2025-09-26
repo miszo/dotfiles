@@ -52,6 +52,37 @@ local function format_diagnostic(diagnostic)
   )
 end
 
+---@type vim.diagnostic.Opts.VirtualText
+local virtual_text = {
+  spacing = 4,
+  prefix = '',
+  format = format_diagnostic,
+}
+
+---@return boolean|vim.diagnostic.Opts.VirtualText
+local function get_virtual_text()
+  if UserUtil.zen.is_zen_active() then
+    return { unpack(virtual_text), current_line = true }
+  end
+  return { unpack(virtual_text), severity = { max = vim.diagnostic.severity.WARN } }
+end
+
+---@type vim.diagnostic.Opts.VirtualLines
+local virtual_lines = {
+  format = format_diagnostic,
+  severity = {
+    min = vim.diagnostic.severity.ERROR,
+  },
+}
+
+---@return boolean|vim.diagnostic.Opts.VirtualLines
+local function get_virtual_lines()
+  if UserUtil.zen.is_zen_active() then
+    return false
+  end
+  return virtual_lines
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -69,20 +100,8 @@ return {
       UserUtil.formatting.register(UserUtil.lsp.formatter())
 
       vim.diagnostic.config({
-        virtual_text = {
-          spacing = 4,
-          prefix = '',
-          format = format_diagnostic,
-          severity = {
-            max = vim.diagnostic.severity.WARN,
-          },
-        },
-        virtual_lines = {
-          format = format_diagnostic,
-          severity = {
-            min = vim.diagnostic.severity.ERROR,
-          },
-        },
+        virtual_text = get_virtual_text,
+        virtual_lines = get_virtual_lines,
         underline = true,
         severity_sort = true,
         signs = {
@@ -97,7 +116,7 @@ return {
       })
 
       -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
-      vim.lsp.enable({ 'ruby_lsp' })
+      vim.lsp.enable({ 'ruby_lsp' }, true)
 
       vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_publishDiagnostics] = function(err, result, ctx)
         require('ts-error-translator').translate_diagnostics(err, result, ctx)

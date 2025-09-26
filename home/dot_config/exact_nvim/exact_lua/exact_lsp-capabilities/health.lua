@@ -62,6 +62,7 @@ M.check = function()
       { 'Rename', caps.renameProvider },
       { 'Folding Range', caps.foldingRangeProvider },
       { 'Selection Range', caps.selectionRangeProvider },
+      { 'Inlay hints', caps.inlayHintProvider },
     }
 
     local supported_capabilities = vim.tbl_filter(function(cap)

@@ -199,6 +199,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end
 
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
+    end
+
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_definition, attach_event.buf) then
       wk.add({
         { 'gd', Snacks.picker.lsp_definitions, desc = 'Goto Definition' },

@@ -99,3 +99,5 @@ vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 vim.lsp.set_log_level('OFF')
 
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
+
+vim.g.is_zen_active = false

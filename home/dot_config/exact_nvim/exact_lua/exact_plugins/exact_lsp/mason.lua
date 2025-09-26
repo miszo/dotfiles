@@ -11,6 +11,7 @@ local lsp_ensure_installed = {
   'dockerls',
   'eslint',
   'gopls',
+  'harper_ls',
   'intelephense',
   'jsonls',
   'lua_ls',
