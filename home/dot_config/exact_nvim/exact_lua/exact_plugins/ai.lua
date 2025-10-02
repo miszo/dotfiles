@@ -25,9 +25,18 @@ local copilot_sonnet_strategy = {
 return {
   {
     'zbirenbaum/copilot.lua',
+    dependencies = {
+      {
+        'copilotlsp-nvim/copilot-lsp',
+        init = function()
+          vim.g.copilot_nes_debounce = 500
+        end,
+      },
+    },
     cmd = 'Copilot',
     build = ':Copilot auth',
     event = 'BufReadPost',
+    ---@type CopilotConfig
     opts = {
       copilot_model = copilot_model,
       suggestion = {
@@ -38,6 +47,14 @@ return {
           accept = false, -- handled by completion plugin
           next = '<M-]>',
           prev = '<M-[>',
+        },
+      },
+      nes = {
+        enabled = true,
+        keymap = {
+          accept_and_goto = '<leader>p',
+          accept = false,
+          dismiss = '<Esc>',
         },
       },
       panel = { enabled = false },
