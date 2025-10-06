@@ -18,7 +18,9 @@
     "model_parameters": []
   },
   "buffer_font_family": "MonoLisa Variable",
-  "buffer_font_fallbacks": ["Symbols Nerd Font Mono"],
+  "buffer_font_fallbacks": [
+    "Symbols Nerd Font Mono"
+  ],
   "buffer_font_features": {
     "calt": true,
     "liga": true,
@@ -82,21 +84,75 @@
     "use_smartcase_find": true,
     "toggle_relative_line_numbers": true
   },
+  "diagnostics_max_severity": "warning",
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    },
+    "include_warnings": true,
+    "lsp_pull_diagnostics": {
+      "enabled": true
+    }
+  },
   "languages": {
     "Ruby": {
-      "language_servers": ["ruby-lsp", "rubocop", "!solargraph"]
+      "language_servers": [
+        "ruby-lsp",
+        "rubocop",
+        "!solargraph"
+      ]
     },
     "TypeScript": {
-      "language_servers": ["vtsls", "!typescript-language-server"]
+      "language_servers": [
+        "vtsls",
+        "eslint",
+        "!typescript-language-server"
+      ],
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "TSX": {
-      "language_servers": ["vtsls", "!typescript-language-server"]
+      "language_servers": [
+        "vtsls",
+        "eslint",
+        "!typescript-language-server"
+      ],
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "JavaScript": {
-      "language_servers": ["vtsls", "!typescript-language-server"]
+      "language_servers": [
+        "vtsls",
+        "eslint",
+        "!typescript-language-server"
+      ],
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     }
   },
   "lsp": {
+    "eslint": {
+      "settings": {
+        "workingDirectory": {
+          "mode": "auto"
+        },
+        "problems": {
+          "shortenToSingleLine": false
+        },
+        "codeAction": {
+          "disableRuleComment": {
+            "enable": true,
+            "location": "separateLine"
+          },
+          "showDocumentation": {
+            "enable": true
+          }
+        }
+      }
+    },
     "vtsls": {
       "settings": {
         "complete_function_calls": false,
@@ -165,7 +221,9 @@
                 "enableForWorkspaceTypeScriptVersions": true,
                 "location": "~/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
                 "name": "@vue/language-server",
-                "languages": ["vue"]
+                "languages": [
+                  "vue"
+                ]
               }
             ]
           }
