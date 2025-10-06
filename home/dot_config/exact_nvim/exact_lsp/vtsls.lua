@@ -20,11 +20,11 @@ local inlay_hints = {
 }
 
 local suggest = {
-  completeFunctionCalls = true,
+  completeFunctionCalls = false,
 }
 
 --- Set 8GB for tsserver memory limit
-local max_ts_server_memory = 8192
+local max_ts_server_memory = 8092
 
 ---@type vim.lsp.Config
 return {
@@ -36,51 +36,6 @@ return {
     'typescript',
     'typescriptreact',
     'typescript.tsx',
-  },
-  init_options = {
-    plugins = {
-      {
-        enableForWorkspaceTypeScriptVersions = true,
-        location = vim.fs.normalize(
-          vim.fs.joinpath(
-            vim.fn.stdpath('data'),
-            '/mason/packages/angular-language-server/node_modules/@angular/language-server'
-          )
-        ),
-        name = '@angular/language-server',
-      },
-      {
-        enableForWorkspaceTypeScriptVersions = true,
-        location = vim.fs.normalize(
-          vim.fs.joinpath(
-            vim.fn.stdpath('data'),
-            'mason/packages/astro-language-server/node_modules/@astrojs/ts-plugin'
-          )
-        ),
-        name = '@astrojs/ts-plugin',
-      },
-      {
-        enableForWorkspaceTypeScriptVersions = true,
-        location = vim.fs.normalize(
-          vim.fs.joinpath(
-            vim.fn.stdpath('data'),
-            'mason/packages/svelte-language-server/node_modules/typescript-svelte-plugin'
-          )
-        ),
-        name = 'typescript-svelte-plugin',
-      },
-      {
-        enableForWorkspaceTypeScriptVersions = true,
-        location = vim.fs.normalize(
-          vim.fs.joinpath(
-            vim.fn.stdpath('data'),
-            '/mason/packages/vue-language-server/node_modules/@vue/language-server'
-          )
-        ),
-        name = '@vue/language-server',
-        languages = { 'vue' },
-      },
-    },
   },
   settings = {
     complete_function_calls = false,
@@ -96,6 +51,49 @@ return {
         maxTsServerMemory = max_ts_server_memory,
         useSeparateSyntaxServer = true,
         enablePromptUseWorkspaceTsdk = false,
+        globalPlugins = {
+          {
+            enableForWorkspaceTypeScriptVersions = true,
+            location = vim.fs.normalize(
+              vim.fs.joinpath(
+                vim.fn.stdpath('data'),
+                '/mason/packages/angular-language-server/node_modules/@angular/language-server'
+              )
+            ),
+            name = '@angular/language-server',
+          },
+          {
+            enableForWorkspaceTypeScriptVersions = true,
+            location = vim.fs.normalize(
+              vim.fs.joinpath(
+                vim.fn.stdpath('data'),
+                'mason/packages/astro-language-server/node_modules/@astrojs/ts-plugin'
+              )
+            ),
+            name = '@astrojs/ts-plugin',
+          },
+          {
+            enableForWorkspaceTypeScriptVersions = true,
+            location = vim.fs.normalize(
+              vim.fs.joinpath(
+                vim.fn.stdpath('data'),
+                'mason/packages/svelte-language-server/node_modules/typescript-svelte-plugin'
+              )
+            ),
+            name = 'typescript-svelte-plugin',
+          },
+          {
+            enableForWorkspaceTypeScriptVersions = true,
+            location = vim.fs.normalize(
+              vim.fs.joinpath(
+                vim.fn.stdpath('data'),
+                '/mason/packages/vue-language-server/node_modules/@vue/language-server'
+              )
+            ),
+            name = '@vue/language-server',
+            languages = { 'vue' },
+          },
+        },
       },
     },
     javascript = {
@@ -103,6 +101,11 @@ return {
       suggest = suggest,
       inlayHints = inlay_hints,
       preferences = ts_preferences,
+      tsserver = {
+        maxTsServerMemory = max_ts_server_memory,
+        useSeparateSyntaxServer = true,
+        enablePromptUseWorkspaceTsdk = false,
+      },
     },
     vtsls = {
       autoUseWorkspaceTsdk = true,

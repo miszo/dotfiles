@@ -6,5 +6,9 @@
   ],
   "diagnostics.unusedLocalExclude": [
     "_*"
+  ],
+  "diagnostics.globals": [
+    "vim",
+    "current_number"
   ]
 }

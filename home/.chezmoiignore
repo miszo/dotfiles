@@ -55,6 +55,9 @@ README.md
 # Karabiner automatic backups
 .config/karabiner/automatic_backups
 
+# Zed prompts
+.config/zed/prompts
+
 # Ignore MacOS files
 .CFUserTextEncoding
 .DS_Store

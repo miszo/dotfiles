@@ -1,0 +1,273 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "agent": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    },
+    "model_parameters": []
+  },
+  "buffer_font_family": "MonoLisa Variable",
+  "buffer_font_fallbacks": ["Symbols Nerd Font Mono"],
+  "buffer_font_features": {
+    "calt": true,
+    "liga": true,
+    "ss02": true
+  },
+  "icon_theme": "Catppuccin Mocha",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "inlay_hints": {
+    "enabled": true,
+    "show_background": true
+  },
+  "show_whitespaces": "all",
+  "file_finder": {
+    "file_icons": true
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "terminal": {
+    "dock": "right"
+  },
+  "git_panel": {
+    "dock": "right"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "indent_guides": {
+    "enabled": true
+  },
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 14,
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Frappé",
+    "dark": "Catppuccin Mocha"
+  },
+  "experimental.theme_overrides": {
+    "syntax": {
+      "comment": {
+        "font_style": "italic"
+      },
+      "comment.doc": {
+        "font_style": "italic"
+      },
+      "function": {
+        "font_style": "italic"
+      }
+    }
+  },
+  "vim": {
+    "default_mode": "normal",
+    "use_system_clipboard": "always",
+    "use_smartcase_find": true,
+    "toggle_relative_line_numbers": true
+  },
+  "languages": {
+    "Ruby": {
+      "language_servers": ["ruby-lsp", "rubocop", "!solargraph"]
+    },
+    "TypeScript": {
+      "language_servers": ["vtsls", "!typescript-language-server"]
+    },
+    "TSX": {
+      "language_servers": ["vtsls", "!typescript-language-server"]
+    },
+    "JavaScript": {
+      "language_servers": ["vtsls", "!typescript-language-server"]
+    }
+  },
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "complete_function_calls": false,
+        "typescript": {
+          "format": {
+            "enable": false
+          },
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          },
+          "suggest": {
+            "completeFunctionCalls": false
+          },
+          "inlayHints": {
+            "enumMemberValues": {
+              "enabled": true
+            },
+            "functionLikeReturnTypes": {
+              "enabled": true
+            },
+            "parameterNames": {
+              "enabled": "literals"
+            },
+            "parameterTypes": {
+              "enabled": true
+            },
+            "propertyDeclarationTypes": {
+              "enabled": true
+            },
+            "variableTypes": {
+              "enabled": false
+            }
+          },
+          "preferences": {
+            "includeCompletionsForModuleExports": true,
+            "includeCompletionsForImportStatements": true,
+            "importModuleSpecifier": "non-relative",
+            "preferTypeOnlyAutoImports": true,
+            "quoteStyle": "single",
+            "useAliasesForRenames": false,
+            "updateImportsOnFileMove": {
+              "enabled": "always"
+            }
+          },
+          "tsserver": {
+            "maxTsServerMemory": 8092,
+            "useSeparateSyntaxServer": true,
+            "enablePromptUseWorkspaceTsdk": false,
+            "globalPlugins": [
+              {
+                "enableForWorkspaceTypeScriptVersions": true,
+                "location": "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/@angular/language-server",
+                "name": "@angular/language-server"
+              },
+              {
+                "enableForWorkspaceTypeScriptVersions": true,
+                "location": "~/.local/share/nvim/mason/packages/astro-language-server/node_modules/@astrojs/ts-plugin",
+                "name": "@astrojs/ts-plugin"
+              },
+              {
+                "enableForWorkspaceTypeScriptVersions": true,
+                "location": "~/.local/share/nvim/mason/packages/svelte-language-server/node_modules/typescript-svelte-plugin",
+                "name": "typescript-svelte-plugin"
+              },
+              {
+                "enableForWorkspaceTypeScriptVersions": true,
+                "location": "~/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                "name": "@vue/language-server",
+                "languages": ["vue"]
+              }
+            ]
+          }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          },
+          "suggest": {
+            "completeFunctionCalls": false
+          },
+          "inlayHints": {
+            "enumMemberValues": {
+              "enabled": true
+            },
+            "functionLikeReturnTypes": {
+              "enabled": true
+            },
+            "parameterNames": {
+              "enabled": "literals"
+            },
+            "parameterTypes": {
+              "enabled": true
+            },
+            "propertyDeclarationTypes": {
+              "enabled": true
+            },
+            "variableTypes": {
+              "enabled": false
+            }
+          },
+          "preferences": {
+            "includeCompletionsForModuleExports": true,
+            "includeCompletionsForImportStatements": true,
+            "importModuleSpecifier": "non-relative",
+            "preferTypeOnlyAutoImports": true,
+            "quoteStyle": "single",
+            "useAliasesForRenames": false,
+            "updateImportsOnFileMove": {
+              "enabled": "always"
+            }
+          },
+          "tsserver": {
+            "maxTsServerMemory": 8092,
+            "useSeparateSyntaxServer": true,
+            "enablePromptUseWorkspaceTsdk": false
+          }
+        },
+        "vtsls": {
+          "autoUseWorkspaceTsdk": true,
+          "enableMoveToFileCodeAction": true,
+          "experimental": {
+            "maxInlayHintLength": 30,
+            "completion": {
+              "enableServerSideFuzzyMatch": true
+            }
+          }
+        }
+      }
+    },
+    "ruby-lsp": {
+      "initialization_options": {
+        "bundleGemfile": "~/.ruby-lsp/Gemfile",
+        "enabledFeatures": [
+          "codeActions",
+          "completion",
+          "definition",
+          "diagnostics",
+          "documentHighlights",
+          "documentLink",
+          "documentSymbols",
+          "foldingRanges",
+          "formatting",
+          "hover",
+          "selectionRanges",
+          "semanticHighlighting",
+          "signatureHelp",
+          "typeHierarchy",
+          "workspaceSymbol"
+        ],
+        "experimentalFeaturesEnabled": false,
+        "formatter": "auto",
+        "indexing": {
+          "excludedPatterns": [
+            "**/test/**/*",
+            "**/spec/**/*",
+            "**/db/**/*",
+            "**/vendor/**/*",
+            "**/.git",
+            "**/.svn",
+            "**/.hg",
+            "**/CVS",
+            "**/.DS_Store",
+            "**/tmp/**/*",
+            "**/node_modules/**/*",
+            "**/bower_components/**/*",
+            "**/dist/**/*",
+            "**/.git/objects/**",
+            "**/.git/subtree-cache/**"
+          ]
+        }
+      }
+    }
+  }
+}

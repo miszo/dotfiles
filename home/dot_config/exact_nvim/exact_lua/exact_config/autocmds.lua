@@ -370,11 +370,42 @@ vim.api.nvim_create_user_command('FormatInfo', function()
   UserUtil.formatting.info()
 end, { desc = 'Show info about the formatters for the current buffer' })
 
+-- Handle file renames for LSP in Oil
 vim.api.nvim_create_autocmd('User', {
   pattern = 'OilActionsPost',
   callback = function(event)
     if event.data.actions.type == 'move' then
       Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
     end
+  end,
+})
+
+-- Auto toggle relative number
+local number_augroup = augroup('numbertoggle', {})
+
+local function set_relativenumber(is_relative, redraw)
+  local is_insert_mode = vim.api.nvim_get_mode().mode == 'i'
+
+  vim.o.number = not is_relative or is_insert_mode or current_number
+  vim.o.relativenumber = is_relative and not is_insert_mode
+
+  if redraw then
+    vim.cmd('redraw')
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
+  pattern = '*',
+  group = number_augroup,
+  callback = function(event)
+    set_relativenumber(true, event.event == 'CmdlineEnter')
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
+  pattern = '*',
+  group = number_augroup,
+  callback = function(event)
+    set_relativenumber(false, event.event == 'CmdlineEnter')
   end,
 })
