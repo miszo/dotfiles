@@ -47,7 +47,6 @@ README.md
 
 # Neovim lock files
 .config/nvim/lazy-lock.json
-.config/LazyVim/lazy-lock.json
 
 # Yazi plugins
 .config/yazi/plugins
