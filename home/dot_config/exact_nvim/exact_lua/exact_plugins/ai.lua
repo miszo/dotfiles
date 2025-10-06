@@ -171,6 +171,7 @@ return {
         history = {
           enabled = true,
           opts = {
+            keymap = 'gh',
             continue_last_chat = false,
             delete_on_clearing_chat = false,
             picker = 'snacks',
@@ -181,6 +182,11 @@ return {
             title_generation_opts = {
               adapter = chat_adapter,
               model = chat_model,
+            },
+            picker_keymaps = {
+              rename = { n = 'r', i = '<C-r>' },
+              delete = { n = 'd', i = '<C-d>' },
+              duplicate = { n = '<C-y>', i = '<C-y>' },
             },
           },
         },
@@ -205,6 +211,7 @@ return {
       { '<leader>ad', ':CodeCompanion /doc<cr>', mode = { 'v' }, desc = 'Code Companion Documentation' },
       { '<leader>ax', ':CodeCompanion /explain<cr>', mode = { 'v' }, desc = 'Code Companion Explain' },
       { '<leader>af', ':CodeCompanion /fix<cr>', mode = { 'v' }, desc = 'Code Companion Fix' },
+      { '<leader>ah', ':CodeCompanionHistory<cr>', mode = { 'n' }, desc = 'Code Companion History' },
       { '<leader>ai', ':CodeCompanion<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt' },
       { '<leader>al', ':CodeCompanion /lsp<cr>', mode = { 'n', 'v' }, desc = 'Code Companion LSP' },
       { '<leader>ar', ':CodeCompanion /optimize<cr>', mode = { 'v' }, desc = 'Code Companion Refactor' },
