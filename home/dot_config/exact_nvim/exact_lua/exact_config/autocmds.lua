@@ -34,26 +34,29 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
   end,
 })
 
+local filetypes_to_close_with_q = {
+  'PlenaryTestPopup',
+  'codecompanion',
+  'checkhealth',
+  'dbout',
+  'gitsigns-blame',
+  'grug-far',
+  'help',
+  'lspinfo',
+  'neotest-output',
+  'neotest-output-panel',
+  'neotest-summary',
+  'notify',
+  'qf',
+  'startuptime',
+  'tsplayground',
+  'snacks_dashboard',
+}
+
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup('close_with_q'),
-  pattern = {
-    'PlenaryTestPopup',
-    'checkhealth',
-    'dbout',
-    'gitsigns-blame',
-    'grug-far',
-    'help',
-    'lspinfo',
-    'neotest-output',
-    'neotest-output-panel',
-    'neotest-summary',
-    'notify',
-    'qf',
-    'startuptime',
-    'tsplayground',
-    'snacks_dashboard',
-  },
+  pattern = filetypes_to_close_with_q,
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
@@ -394,10 +397,33 @@ local function set_relativenumber(is_relative, redraw)
   end
 end
 
+local filetypes_excluded_from_relativenumber = { unpack(filetypes_to_close_with_q) }
+
+--- Determine if the current buffer is excluded from relative number toggling
+---@param buftype string|nil
+---@param filetype string|nil
+---@return boolean
+local function is_excluded_from_relativenumber(buftype, filetype)
+  if buftype == 'terminal' then
+    return true
+  end
+  for _, ft in ipairs(filetypes_excluded_from_relativenumber) do
+    if filetype == ft then
+      return true
+    end
+  end
+  return false
+end
+
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   pattern = '*',
   group = number_augroup,
   callback = function(event)
+    local buftype = vim.bo[event.buf].buftype
+    local filetype = vim.bo[event.buf].filetype
+    if is_excluded_from_relativenumber(buftype, filetype) then
+      return
+    end
     set_relativenumber(true, event.event == 'CmdlineEnter')
   end,
 })
@@ -406,6 +432,12 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEn
   pattern = '*',
   group = number_augroup,
   callback = function(event)
+    local buftype = vim.bo[event.buf].buftype
+    local filetype = vim.bo[event.buf].filetype
+    if is_excluded_from_relativenumber(buftype, filetype) then
+      return
+    end
+
     set_relativenumber(false, event.event == 'CmdlineEnter')
   end,
 })
