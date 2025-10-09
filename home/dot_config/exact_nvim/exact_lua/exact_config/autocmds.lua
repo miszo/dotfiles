@@ -403,7 +403,7 @@ local filetypes_excluded_from_relativenumber = { unpack(filetypes_to_close_with_
 ---@param buftype string|nil
 ---@param filetype string|nil
 ---@return boolean
-local function is_excluded_from_relativenumber(buftype, filetype)
+local function is_excluded_from_linenumber(buftype, filetype)
   if buftype == 'terminal' then
     return true
   end
@@ -421,7 +421,9 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'Cmdline
   callback = function(event)
     local buftype = vim.bo[event.buf].buftype
     local filetype = vim.bo[event.buf].filetype
-    if is_excluded_from_relativenumber(buftype, filetype) then
+    if is_excluded_from_linenumber(buftype, filetype) then
+      vim.opt_local.number = false
+      vim.opt_local.relativenumber = false
       return
     end
     set_relativenumber(true, event.event == 'CmdlineEnter')
@@ -434,7 +436,7 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEn
   callback = function(event)
     local buftype = vim.bo[event.buf].buftype
     local filetype = vim.bo[event.buf].filetype
-    if is_excluded_from_relativenumber(buftype, filetype) then
+    if is_excluded_from_linenumber(buftype, filetype) then
       return
     end
 

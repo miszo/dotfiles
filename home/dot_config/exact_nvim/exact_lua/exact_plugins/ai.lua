@@ -1,4 +1,4 @@
-local copilot_model = 'gpt-4.1'
+local copilot_model = 'gpt-4o'
 local chat_adapter = 'copilot'
 local chat_model = 'claude-sonnet-4'
 
@@ -193,14 +193,6 @@ return {
     },
     config = function(_, opts)
       require('codecompanion').setup(opts)
-
-      vim.api.nvim_create_autocmd('BufEnter', {
-        pattern = 'codecompanion',
-        callback = function()
-          vim.opt_local.relativenumber = false
-          vim.opt_local.number = false
-        end,
-      })
     end,
     keys = {
       { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
