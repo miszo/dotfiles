@@ -52,7 +52,7 @@ local formatters_ensure_installed = {
 }
 
 ---@type string[]
-local tools_ensure_installed = { unpack(linters_ensure_installed), unpack(formatters_ensure_installed) }
+local tools_ensure_installed = vim.tbl_extend('keep', linters_ensure_installed, formatters_ensure_installed)
 
 ---@module 'lazy'
 ---@type LazySpec[]

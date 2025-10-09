@@ -62,9 +62,9 @@ local virtual_text = {
 ---@return boolean|vim.diagnostic.Opts.VirtualText
 local function get_virtual_text()
   if UserUtil.zen.is_zen_active() then
-    return { unpack(virtual_text), current_line = true }
+    return vim.tbl_extend('keep', virtual_text, { current_line = true })
   end
-  return { unpack(virtual_text), severity = { max = vim.diagnostic.severity.WARN } }
+  return vim.tbl_extend('keep', virtual_text, { severity = { max = vim.diagnostic.severity.WARN } })
 end
 
 ---@type vim.diagnostic.Opts.VirtualLines

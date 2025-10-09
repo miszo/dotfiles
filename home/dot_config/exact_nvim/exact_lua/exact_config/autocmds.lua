@@ -389,8 +389,8 @@ local number_augroup = augroup('numbertoggle', {})
 local function set_relativenumber(is_relative, redraw)
   local is_insert_mode = vim.api.nvim_get_mode().mode == 'i'
 
-  vim.o.number = not is_relative or is_insert_mode or current_number
-  vim.o.relativenumber = is_relative and not is_insert_mode
+  vim.opt_local.number = not is_relative or is_insert_mode or current_number
+  vim.opt_local.relativenumber = is_relative and not is_insert_mode
 
   if redraw then
     vim.cmd('redraw')
@@ -401,8 +401,9 @@ local filetypes_to_skip_line_numbering = {
   'codecompanion',
 }
 
+---@type string[]
 local filetypes_excluded_from_line_numbering =
-  { unpack(filetypes_to_close_with_q), unpack(filetypes_to_skip_line_numbering) }
+  vim.tbl_extend('keep', filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
 
 --- Determine if the current buffer is excluded from line numbering
 ---@param buftype string|nil
@@ -442,6 +443,8 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEn
     local buftype = vim.bo[event.buf].buftype
     local filetype = vim.bo[event.buf].filetype
     if is_excluded_from_linenumber(buftype, filetype) then
+      vim.opt_local.number = false
+      vim.opt_local.relativenumber = false
       return
     end
 
