@@ -397,9 +397,14 @@ local function set_relativenumber(is_relative, redraw)
   end
 end
 
-local filetypes_excluded_from_relativenumber = { unpack(filetypes_to_close_with_q) }
+local filetypes_to_skip_line_numbering = {
+  'codecompanion',
+}
 
---- Determine if the current buffer is excluded from relative number toggling
+local filetypes_excluded_from_line_numbering =
+  { unpack(filetypes_to_close_with_q), unpack(filetypes_to_skip_line_numbering) }
+
+--- Determine if the current buffer is excluded from line numbering
 ---@param buftype string|nil
 ---@param filetype string|nil
 ---@return boolean
@@ -407,7 +412,7 @@ local function is_excluded_from_linenumber(buftype, filetype)
   if buftype == 'terminal' then
     return true
   end
-  for _, ft in ipairs(filetypes_excluded_from_relativenumber) do
+  for _, ft in ipairs(filetypes_excluded_from_line_numbering) do
     if filetype == ft then
       return true
     end
