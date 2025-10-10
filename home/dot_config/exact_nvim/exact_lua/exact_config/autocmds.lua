@@ -386,32 +386,39 @@ vim.api.nvim_create_autocmd('User', {
 -- Auto toggle relative number
 local number_augroup = augroup('numbertoggle', {})
 
-local function set_relativenumber(is_relative, redraw)
+local function set_relativenumber(is_relative)
   local is_insert_mode = vim.api.nvim_get_mode().mode == 'i'
 
   vim.opt_local.number = not is_relative or is_insert_mode or current_number
   vim.opt_local.relativenumber = is_relative and not is_insert_mode
-
-  if redraw then
-    vim.cmd('redraw')
-  end
 end
 
 local filetypes_to_skip_line_numbering = {
   'codecompanion',
+  'lazy',
+  'mason',
+  'snacks_picker_input',
+  'snacks_picker_results',
 }
 
 ---@type string[]
 local filetypes_excluded_from_line_numbering =
   vim.tbl_extend('keep', filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
 
+local buftypes_excluded_from_line_numbering = {
+  'nofile',
+  'terminal',
+}
+
 --- Determine if the current buffer is excluded from line numbering
 ---@param buftype string|nil
 ---@param filetype string|nil
 ---@return boolean
 local function is_excluded_from_linenumber(buftype, filetype)
-  if buftype == 'terminal' then
-    return true
+  for _, bt in ipairs(buftypes_excluded_from_line_numbering) do
+    if buftype == bt then
+      return true
+    end
   end
   for _, ft in ipairs(filetypes_excluded_from_line_numbering) do
     if filetype == ft then
@@ -424,30 +431,37 @@ end
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'CmdlineLeave', 'WinEnter' }, {
   pattern = '*',
   group = number_augroup,
-  callback = function(event)
-    local buftype = vim.bo[event.buf].buftype
-    local filetype = vim.bo[event.buf].filetype
+  callback = function(args)
+    local buftype = vim.bo[args.buf].buftype
+    local filetype = vim.bo[args.buf].filetype
     if is_excluded_from_linenumber(buftype, filetype) then
       vim.opt_local.number = false
       vim.opt_local.relativenumber = false
-      return
+    else
+      set_relativenumber(true)
     end
-    set_relativenumber(true, event.event == 'CmdlineEnter')
+
+    if args.event == 'CmdlineLeave' then
+      vim.cmd('redraw')
+    end
   end,
 })
 
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEnter', 'WinLeave' }, {
   pattern = '*',
   group = number_augroup,
-  callback = function(event)
-    local buftype = vim.bo[event.buf].buftype
-    local filetype = vim.bo[event.buf].filetype
+  callback = function(args)
+    local buftype = vim.bo[args.buf].buftype
+    local filetype = vim.bo[args.buf].filetype
     if is_excluded_from_linenumber(buftype, filetype) then
       vim.opt_local.number = false
       vim.opt_local.relativenumber = false
-      return
+    else
+      set_relativenumber(false)
     end
 
-    set_relativenumber(false, event.event == 'CmdlineEnter')
+    if args.event == 'CmdlineEnter' then
+      vim.cmd('redraw')
+    end
   end,
 })
