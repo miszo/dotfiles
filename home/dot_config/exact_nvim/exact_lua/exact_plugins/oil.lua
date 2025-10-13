@@ -43,6 +43,7 @@ return {
           ['q'] = { 'actions.close', mode = 'n' },
           ['<leader>u'] = 'actions.refresh',
           ['-'] = { 'actions.parent', mode = 'n' },
+          ['<BS>'] = { 'actions.parent', mode = 'n' },
           ['_'] = { 'actions.open_cwd', mode = 'n' },
           ['`'] = { 'actions.cd', mode = 'n' },
           ['gs'] = { 'actions.change_sort', mode = 'n' },
