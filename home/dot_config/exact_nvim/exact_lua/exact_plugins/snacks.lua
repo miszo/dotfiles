@@ -212,6 +212,19 @@ local scratch_delete_all = function()
   vim.notify('Deleted ' .. count .. ' scratch buffer(s)', 'info')
 end
 
+---@type snacks.win.Keys
+local scratch_delete_buffer = {
+  '<C-d>',
+  function(self)
+    local buf_name = vim.api.nvim_buf_get_name(self.buf)
+    os.remove(buf_name)
+    vim.api.nvim_buf_delete(self.buf, { force = true })
+    vim.notify('Deleted scratch buffer' .. buf_name, 'info')
+  end,
+  desc = 'Delete buffer',
+  mode = { 'n', 'x' },
+}
+
 ---@type snacks.win.Config
 local ts_win = {
   keys = {
@@ -221,17 +234,23 @@ local ts_win = {
       desc = 'Execute buffer',
       mode = { 'n', 'x' },
     },
-    ['delete'] = {
-      '<C-d>',
+    ['delete'] = scratch_delete_buffer,
+  },
+}
+
+---@type snacks.win.Config
+local lua_win = {
+  keys = {
+    ['source'] = {
+      '<C-s>',
       function(self)
-        local buf_name = vim.api.nvim_buf_get_name(self.buf)
-        os.remove(buf_name)
-        vim.api.nvim_buf_delete(self.buf, { force = true })
-        vim.notify('Deleted scratch buffer' .. buf_name, 'info')
+        local name = 'scratch.' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(self.buf), ':e')
+        Snacks.debug.run({ buf = self.buf, name = name })
       end,
-      desc = 'Delete buffer',
+      desc = 'Source buffer',
       mode = { 'n', 'x' },
     },
+    ['delete'] = scratch_delete_buffer,
   },
 }
 
@@ -254,19 +273,7 @@ local scratch = {
   end,
   ---@type table<string, snacks.win.Config>
   win_by_ft = {
-    lua = {
-      keys = {
-        ['source'] = {
-          '<C-s>',
-          function(self)
-            local name = 'scratch.' .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(self.buf), ':e')
-            Snacks.debug.run({ buf = self.buf, name = name })
-          end,
-          desc = 'Source buffer',
-          mode = { 'n', 'x' },
-        },
-      },
-    },
+    lua = lua_win,
     typescript = ts_win,
     javascript = ts_win,
   },
