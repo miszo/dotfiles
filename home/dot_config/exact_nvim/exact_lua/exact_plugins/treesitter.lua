@@ -126,16 +126,34 @@ return {
       vim.api.nvim_create_autocmd('FileType', {
         group = vim.api.nvim_create_augroup('user_nvim_treesitter', { clear = true }),
         callback = function(ev)
-          if UserUtil.treesitter.have(ev.match) then
-            pcall(vim.treesitter.start)
+          local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
+          if not UserUtil.treesitter.have(ft) then
+            return
+          end
 
-            -- check if ftplugins changed foldexpr/indentexpr
-            for _, option in ipairs({ 'foldexpr', 'indentexpr' }) do
-              local expr = 'v:lua.UserUtil.treesitter.' .. option .. '()'
-              if vim.opt_global[option]:get() == expr then
-                vim.opt_local[option] = expr
-              end
-            end
+          ---@param feat string
+          ---@param query string
+          local function enabled(feat, query)
+            local f = opts[feat] or {} ---@type lazyvim.TSFeat
+            return f.enable ~= false
+              and not (type(f.disable) == 'table' and vim.tbl_contains(f.disable, lang))
+              and UserUtil.treesitter.have(ft, query)
+          end
+
+          -- highlighting
+          if enabled('highlight', 'highlights') then
+            pcall(vim.treesitter.start, ev.buf)
+          end
+
+          -- indents
+          if enabled('indent', 'indents') then
+            vim.api.nvim_set_option_value('indentexpr', 'v:lua.UserUtil.treesitter.indentexpr()', { scope = 'local' })
+          end
+
+          -- folds
+          if enabled('folds', 'folds') then
+            vim.api.nvim_set_option_value('foldmethod', 'expr', { scope = 'local' })
+            vim.api.nvim_set_option_value('foldexpr', 'v:lua.UserUtil.treesitter.foldexpr()', { scope = 'local' })
           end
         end,
       })

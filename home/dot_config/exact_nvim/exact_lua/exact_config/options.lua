@@ -43,8 +43,6 @@ vim.o.expandtab = true -- Use spaces instead of tabs
 
 vim.o.smoothscroll = true
 vim.o.foldlevel = 99 -- Open all folds by default
-vim.o.foldmethod = 'expr' -- Use indentation for folding
-vim.o.foldexpr = 'v:lua.UserUtil.treesitter.foldexpr()' -- Use treesitter for folding if available
 vim.o.foldtext = ''
 
 vim.o.grepformat = '%f:%l:%c:%m' -- Format for grep results
@@ -54,7 +52,6 @@ vim.o.ignorecase = true -- Ignore case in search patterns
 vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase letters
 
 vim.o.inccommand = 'nosplit' -- Show live command preview
-vim.o.indentexpr = 'v:lua.UserUtil.treesitter.indentexpr()' -- Use treesitter for indentation if available
 vim.o.jumpoptions = 'view' -- Jump to previous location in jump list
 vim.o.laststatus = 3 -- Global status line
 vim.o.linebreak = true -- Break long lines at word boundaries
