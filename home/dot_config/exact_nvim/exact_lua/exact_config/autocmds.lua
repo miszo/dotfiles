@@ -122,12 +122,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     map('gl', vim.diagnostic.open_float, 'Open Diagnostic Float')
-    map('K', function()
-      vim.lsp.buf.hover({ border = 'rounded' })
-    end, 'Hover Documentation')
-
-    map('<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Vertical Split')
-    map('<leader>h', '<cmd>split | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Horizontal Split')
 
     local wk = require('which-key')
     wk.add({
@@ -203,27 +197,54 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
     end
 
-    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_signatureHelp, attach_event.buf) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_hover, attach_event.buf) then
       wk.add({
         {
-          'gK',
-          vim.lsp.buf.signature_help,
-          desc = 'Signature Help',
+          'K',
+          function()
+            vim.lsp.buf.hover({ border = 'rounded' })
+          end,
+          desc = 'Hover Documentation',
         },
       })
+    end
+
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol, attach_event.buf) then
       wk.add({
-        {
-          '<c-k>',
-          vim.lsp.buf.signature_help,
-          mode = 'i',
-          desc = 'Signature Help',
-        },
+        '<leader>ss',
+        function()
+          Snacks.picker.lsp_symbols({
+            filter = UserConfig.kind_filter,
+            layout = { preset = 'vscode', preview = 'main' },
+          })
+        end,
+        desc = 'LSP Symbols',
+      })
+    end
+
+    if client and client:supports_method(vim.lsp.protocol.Methods.workspace_symbol, attach_event.buf) then
+      wk.add({
+        '<leader>sS',
+        function()
+          Snacks.picker.lsp_workspace_symbols({ filter = UserConfig.kind_filter })
+        end,
+        desc = 'LSP Workspace Symbols',
       })
     end
 
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_definition, attach_event.buf) then
       wk.add({
         { 'gd', Snacks.picker.lsp_definitions, desc = 'Goto Definition' },
+        {
+          '<leader>v',
+          '<cmd>vsplit | lua Snacks.picker.lsp_definitions()<cr>',
+          desc = 'Goto Definition in Vertical Split',
+        },
+        {
+          '<leader>h',
+          '<cmd>split | lua Snacks.picker.lsp_definitions()<cr>',
+          desc = 'Goto Definition in Horizontal Split',
+        },
       })
     end
 
