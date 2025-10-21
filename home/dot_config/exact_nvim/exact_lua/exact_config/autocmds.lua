@@ -125,10 +125,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('K', function()
       vim.lsp.buf.hover({ border = 'rounded' })
     end, 'Hover Documentation')
-    map('gs', vim.lsp.buf.signature_help, 'Signature Documentation')
-    map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
     map('<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Vertical Split')
+    map('<leader>h', '<cmd>split | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Horizontal Split')
 
     local wk = require('which-key')
     wk.add({
@@ -149,9 +148,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       },
       {
         '<leader>sS',
-        function()
-          Snacks.picker.lsp_workspace_symbols()
-        end,
+        Snacks.picker.lsp_workspace_symbols,
         desc = 'LSP Workspace Symbols',
       },
     })
@@ -206,6 +203,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
     end
 
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_signatureHelp, attach_event.buf) then
+      wk.add({
+        {
+          'gK',
+          vim.lsp.buf.signature_help,
+          desc = 'Signature Help',
+        },
+      })
+      wk.add({
+        {
+          '<c-k>',
+          vim.lsp.buf.signature_help,
+          mode = 'i',
+          desc = 'Signature Help',
+        },
+      })
+    end
+
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_definition, attach_event.buf) then
       wk.add({
         { 'gd', Snacks.picker.lsp_definitions, desc = 'Goto Definition' },
@@ -226,9 +241,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       wk.add({
         {
           '<leader>cR',
-          function()
-            Snacks.rename.rename_file()
-          end,
+          Snacks.rename.rename_file(),
           desc = 'Rename File',
         },
       })
