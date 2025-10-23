@@ -145,6 +145,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { 'gI', Snacks.picker.lsp_implementations, desc = 'Goto Implementation' },
       { 'gy', Snacks.picker.lsp_type_definitions, desc = 'Goto T[y]pe Definition' },
       {
+        'gai',
+        Snacks.picker.lsp_incoming_calls,
+        desc = 'C[a]lls Incoming',
+      },
+      {
+        'gao',
+        Snacks.picker.lsp_outgoing_calls,
+        desc = 'C[a]lls Outgoing',
+      },
+      {
         '<leader>ss',
         function()
           Snacks.picker.lsp_symbols({
