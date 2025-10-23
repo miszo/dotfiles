@@ -1,0 +1,27 @@
+{
+  "Lua": {
+    "runtime": {
+      "version": "LuaJIT",
+      "path": [
+        "lua/?.lua",
+        "lua/?/init.lua",
+        "lua/?/?.lua",
+        "plugin/?.lua",
+        "ftplugin/?.lua",
+        "spec/?.lua"
+      ]
+    },
+    "workspace": {
+      "library": [
+        "${3rd}/luassert/library",
+        "${addons}/busted/library"
+      ],
+      "checkThirdParty": false
+    },
+    "diagnostics.globals": [
+      "vim",
+      "setup",
+      "teardown"
+    ]
+  }
+}

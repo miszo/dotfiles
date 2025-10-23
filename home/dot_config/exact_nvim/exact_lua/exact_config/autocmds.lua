@@ -112,10 +112,24 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   end,
 })
 
+vim.api.nvim_create_autocmd('BufEnter', {
+  group = augroup('change_nx_config'),
+  callback = function(event)
+    local clients = vim.lsp.get_clients({ bufnr = event.buf })
+    for _, client in ipairs(clients) do
+      if client.name == 'vtsls' then
+        UserUtil.nx.adjust_config_for_nx(client, event.buf)
+      end
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup('lsp-attach'),
   callback = function(attach_event)
     local client = vim.lsp.get_client_by_id(attach_event.data.client_id)
+
+    UserUtil.nx.adjust_config_for_nx(client, attach_event.buf)
 
     local map = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = attach_event.buf, desc = 'LSP: ' .. desc })

@@ -111,7 +111,7 @@ return {
       autoUseWorkspaceTsdk = true,
       enableMoveToFileCodeAction = true,
       experimental = {
-        maxInlayHintLength = 30,
+        maxInlayHintLength = 24,
         completion = {
           enableServerSideFuzzyMatch = true,
         },
@@ -123,7 +123,8 @@ return {
     -- As stated in the documentation above, this LSP supports monorepos and simple projects.
     -- We select then from the project root, which is identified by the presence of a package
     -- manager lock file.
-    local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock', { '.git' } }
+    local root_markers =
+      { 'tsconfig.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock', { '.git' } }
     -- We fallback to the current working directory if no project root is found
     local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
 

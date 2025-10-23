@@ -48,6 +48,7 @@ local ft_with_js_formatter = {
   'javascript',
   'json',
   'jsonc',
+  'json5',
   'typescript',
 }
 
@@ -151,6 +152,14 @@ return {
         injected = { options = { ignore_errors = true } },
         sqlfluff = {
           args = { 'format', '--dialect=ansi', '-' },
+        },
+        biome = {
+          require_cwd = true,
+        },
+        prettierd = {
+          condition = function(ctx)
+            return has_formatter_config('prettier')
+          end,
         },
       }
     end,

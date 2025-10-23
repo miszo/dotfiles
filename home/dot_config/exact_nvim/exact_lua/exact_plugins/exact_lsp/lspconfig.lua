@@ -94,6 +94,7 @@ return {
       'mason-org/mason-lspconfig.nvim',
       'dmmulroy/ts-error-translator.nvim',
       'saghen/blink.cmp',
+      'mrjones2014/codesettings.nvim',
     },
     config = vim.schedule_wrap(function()
       -- setup auto formatting with lsp
@@ -113,6 +114,13 @@ return {
           },
           numhl = { [vim.diagnostic.severity.ERROR] = 'ErrorMsg', [vim.diagnostic.severity.WARN] = 'WarningMsg' },
         },
+      })
+
+      vim.lsp.config('lua_ls', {
+        before_init = function(_, config)
+          local codesettings = require('codesettings')
+          config = codesettings.with_local_settings(config.name, config)
+        end,
       })
 
       -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
