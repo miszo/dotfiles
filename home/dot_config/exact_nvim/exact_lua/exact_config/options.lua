@@ -59,7 +59,7 @@ vim.o.list = true -- Show whitespace characters
 vim.o.mouse = 'a' -- Enable mouse support in all modes
 vim.o.pumblend = 10 -- Make popup menu slightly transparent
 vim.o.pumheight = 10 -- Limit popup menu height
-vim.o.scrolloff = 20 -- Keep 20 lines visible above/below cursor
+vim.o.scrolloff = 20 -- Keep 20 lines visible above/below cursor-
 vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' } -- Options to save in session files
 vim.o.shiftround = true -- Round indent to multiple of 'shiftwidth'
 vim.o.shiftwidth = 2 -- Number of spaces for each indentation level
@@ -98,3 +98,6 @@ vim.lsp.set_log_level('OFF')
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 
 vim.g.is_zen_active = false
+
+--- @type ''|'double'|'single'|'shadow'|'rounded'|'solid'|'bold'|'none'
+vim.g.border_style = 'rounded'

@@ -78,7 +78,7 @@ local input = {
 local lazygit = {
   enabled = true,
   win = {
-    border = 'rounded',
+    border = vim.g.border_style,
   },
 }
 

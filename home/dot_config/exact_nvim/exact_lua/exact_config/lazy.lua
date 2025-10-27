@@ -43,7 +43,7 @@ require('lazy').setup({
     notify = true,
   },
   ui = {
-    border = 'rounded',
+    border = vim.g.border_style,
   },
   performance = {
     rtp = {

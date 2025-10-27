@@ -15,7 +15,7 @@ return {
           'icon',
         },
         keymaps_help = {
-          border = 'rounded',
+          border = vim.g.border_style,
         },
         delete_to_trash = true,
         watch_for_changes = true,

@@ -49,7 +49,7 @@ return {
         enabled = false,
       },
       floating = {
-        border = 'rounded',
+        border = vim.g.border_style,
       },
       status = { virtual_text = true },
       output = { open_on_run = true },

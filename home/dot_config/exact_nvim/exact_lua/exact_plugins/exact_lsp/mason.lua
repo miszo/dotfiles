@@ -72,7 +72,7 @@ return {
 
     mason.setup({
       ui = {
-        border = 'rounded',
+        border = vim.g.border_style,
       },
     })
 

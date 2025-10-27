@@ -1,13 +1,3 @@
-local function get_diagnostic_sign(severity)
-  local diagnostic_signs = {
-    [vim.diagnostic.severity.ERROR] = UserConfig.icons.diagnostics.Error,
-    [vim.diagnostic.severity.WARN] = UserConfig.icons.diagnostics.Warn,
-    [vim.diagnostic.severity.INFO] = UserConfig.icons.diagnostics.Info,
-    [vim.diagnostic.severity.HINT] = UserConfig.icons.diagnostics.Hint,
-  }
-  return diagnostic_signs[severity]
-end
-
 local get_shorter_source_name = function(source)
   local shorter_source_names = {
     ['Lua Diagnostics.'] = 'Lua',
@@ -41,46 +31,9 @@ end
 
 local function format_diagnostic(diagnostic)
   if not diagnostic.source or not diagnostic.code then
-    return string.format('%s %s', get_diagnostic_sign(diagnostic.severity), diagnostic.message)
+    return diagnostic.message
   end
-  return string.format(
-    '%s %s (%s): %s',
-    get_diagnostic_sign(diagnostic.severity),
-    get_shorter_source_name(diagnostic.source),
-    diagnostic.code,
-    diagnostic.message
-  )
-end
-
----@type vim.diagnostic.Opts.VirtualText
-local virtual_text = {
-  spacing = 4,
-  prefix = '',
-  format = format_diagnostic,
-}
-
----@return boolean|vim.diagnostic.Opts.VirtualText
-local function get_virtual_text()
-  if UserUtil.zen.is_zen_active() then
-    return vim.tbl_extend('keep', virtual_text, { current_line = true })
-  end
-  return vim.tbl_extend('keep', virtual_text, { severity = { max = vim.diagnostic.severity.WARN } })
-end
-
----@type vim.diagnostic.Opts.VirtualLines
-local virtual_lines = {
-  format = format_diagnostic,
-  severity = {
-    min = vim.diagnostic.severity.ERROR,
-  },
-}
-
----@return boolean|vim.diagnostic.Opts.VirtualLines
-local function get_virtual_lines()
-  if UserUtil.zen.is_zen_active() then
-    return false
-  end
-  return virtual_lines
+  return string.format('%s (%s: %s)', diagnostic.message, get_shorter_source_name(diagnostic.source), diagnostic.code)
 end
 
 ---@module 'lazy'
@@ -101,8 +54,10 @@ return {
       UserUtil.formatting.register(UserUtil.lsp.formatter())
 
       vim.diagnostic.config({
-        virtual_text = get_virtual_text,
-        virtual_lines = get_virtual_lines,
+        -- virtual_text = get_virtual_text,
+        -- virtual_lines = get_virtual_lines,
+        virtual_text = false,
+        virtual_lines = false,
         underline = true,
         severity_sort = true,
         signs = {
@@ -167,5 +122,27 @@ return {
       })
       UserUtil.formatting.register(eslint_formatter)
     end),
+  },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy',
+    priority = 1000,
+    opts = {
+      options = {
+        use_icons_from_diagnostic = false,
+        set_arrow_to_diag_color = true,
+        multilines = {
+          enabled = true,
+          always_show = true,
+          trim_whitespaces = true,
+          tabstop = 4,
+        },
+        format = format_diagnostic,
+      },
+    },
+    config = function(_, opts)
+      require('tiny-inline-diagnostic').setup(opts)
+      vim.diagnostic.open_float = require('tiny-inline-diagnostic.override').open_float
+    end,
   },
 }

@@ -135,7 +135,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set('n', keys, func, { buffer = attach_event.buf, desc = 'LSP: ' .. desc })
     end
 
-    map('gl', vim.diagnostic.open_float, 'Open Diagnostic Float')
+    map('gl', function()
+      vim.diagnostic.open_float({ border = vim.g.border_style })
+    end, 'Open Diagnostic Float')
 
     local wk = require('which-key')
     wk.add({
@@ -226,7 +228,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         {
           'K',
           function()
-            vim.lsp.buf.hover({ border = 'rounded' })
+            vim.lsp.buf.hover({ border = vim.g.border_style })
           end,
           desc = 'Hover Documentation',
         },

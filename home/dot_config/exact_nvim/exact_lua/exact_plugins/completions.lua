@@ -1,4 +1,4 @@
----@module 'lazy'
+---@module "lazy"
 ---@type LazySpec[]
 return {
   { 'L3MON4D3/LuaSnip', keys = {} },
@@ -39,6 +39,7 @@ return {
             dadbod = {
               name = 'Dadbod',
               module = 'vim_dadbod_completion.blink',
+              score_offset = 100,
             },
           },
         },
@@ -89,7 +90,7 @@ return {
           },
           documentation = {
             window = {
-              border = 'rounded',
+              border = vim.g.border_style,
               scrollbar = false,
               winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
             },
