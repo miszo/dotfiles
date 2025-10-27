@@ -112,7 +112,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile', 'BufEnter' }, {
   group = augroup('change_nx_config'),
   callback = function(event)
     local clients = vim.lsp.get_clients({ bufnr = event.buf })
