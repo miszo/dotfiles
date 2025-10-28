@@ -37,6 +37,7 @@ return {
             return vim.fn.getcwd()
           end,
           jest_test_discovery = true,
+          jestConfigFile = UserUtil.nx.get_jest_config_path,
         },
         ['neotest-vitest'] = {},
         ['neotest-go'] = {

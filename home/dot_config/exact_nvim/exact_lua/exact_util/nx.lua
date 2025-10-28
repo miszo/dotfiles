@@ -4,6 +4,7 @@ local fallback_apps_dir = 'apps'
 local fallback_libs_dir = 'libs'
 local workspace_import_module_specifier = 'non-relative'
 local fallback_library_import_module_specifier = 'project-relative'
+local fallback_jest_config_path = vim.fs.joinpath(vim.fn.getcwd(), 'jest.config.js')
 
 local function get_nx_root(bufnr)
   return vim.fs.root(bufnr, { 'nx.json' })
@@ -25,6 +26,26 @@ local function get_nx_config(bufnr)
   local nx_config = vim.fn.json_decode((table.concat(vim.fn.readfile(nx_json_path), '\n')))
 
   return nx_config
+end
+
+local function get_nx_apps_dir(bufnr)
+  local nx_config = get_nx_config(bufnr)
+
+  if not nx_config or not nx_config.workspaceLayout then
+    return fallback_apps_dir
+  end
+
+  return nx_config.workspaceLayout.appsDir or fallback_apps_dir
+end
+
+local function get_nx_libs_dir(bufnr)
+  local nx_config = get_nx_config(bufnr)
+
+  if not nx_config or not nx_config.workspaceLayout then
+    return fallback_libs_dir
+  end
+
+  return nx_config.workspaceLayout.libsDir or fallback_libs_dir
 end
 
 local function get_codesettings_root(bufnr)
@@ -65,8 +86,8 @@ function M.adjust_config_for_nx(client, bufnr)
   local root_path = get_nx_root(bufnr)
 
   -- join root path if code root path is available
-  local apps_dir = vim.fs.joinpath(root_path, nx_config.workspaceLayout.appsDir or fallback_apps_dir)
-  local libs_dir = vim.fs.joinpath(root_path, nx_config.workspaceLayout.libsDir or fallback_libs_dir)
+  local apps_dir = vim.fs.joinpath(root_path, get_nx_apps_dir(bufnr))
+  local libs_dir = vim.fs.joinpath(root_path, get_nx_libs_dir(bufnr))
   local code_settings = get_codesettings_config(bufnr)
 
   local is_app_or_lib = vim.startswith(buf_path, apps_dir) or vim.startswith(buf_path, libs_dir)
@@ -146,6 +167,25 @@ function M.adjust_config_for_nx(client, bufnr)
   end
 
   client.notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, { settings = client.config.settings })
+end
+
+function M.get_jest_config_path(file_path)
+  local bufnr = vim.uri_to_bufnr(vim.uri_from_fname(file_path))
+  local nx_root = get_nx_root(bufnr)
+  local apps_dir = get_nx_apps_dir(bufnr)
+  local libs_dir = get_nx_libs_dir(bufnr)
+
+  if not nx_root then
+    return fallback_jest_config_path
+  end
+
+  if string.find(file_path, apps_dir) then
+    return vim.fs.joinpath(string.match(file_path, apps_dir .. '/([^/]+)'), 'jest.config.js')
+  elseif string.find(file_path, libs_dir) then
+    return vim.fs.joinpath(string.match(file_path, libs_dir .. '/([^/]+)'), 'jest.config.js')
+  end
+
+  return fallback_jest_config_path
 end
 
 return M
