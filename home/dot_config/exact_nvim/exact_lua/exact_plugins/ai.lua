@@ -31,11 +31,16 @@ return {
         init = function()
           vim.g.copilot_nes_debounce = 500
         end,
+        opts = {
+          nes = {
+            move_count_threshold = 3,
+          },
+        },
       },
     },
     cmd = 'Copilot',
     build = ':Copilot auth',
-    event = 'BufReadPost',
+    event = 'InsertEnter',
     ---@type CopilotConfig
     opts = {
       copilot_model = copilot_model,
