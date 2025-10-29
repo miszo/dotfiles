@@ -88,59 +88,17 @@ local notifier = {
   style = 'fancy',
 }
 
----@param picker snacks.Picker
-local explorer_trash = function(picker)
-  local Tree = require('snacks.explorer.tree')
-  local explorer_api = require('snacks.explorer.actions')
-  if vim.fn.executable('trash') == 0 then
-    vim.api.nvim_echo({
-      { '- Trash utility not installed. Make sure to install it first\n', nil },
-      { '- In macOS run `brew install trash`\n', nil },
-      { '- Or delete the custom `explorer_trash` action in Snacks explorer', nil },
-    }, false, {})
-    return
-  end
-  ---@type string[]
-  local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
-  if #paths == 0 then
-    return
-  end
-  -- if paths contains the root directory, do not trash and notify the user
-  if vim.tbl_contains(paths, vim.fn.getcwd()) then
-    Snacks.notify.error('Cannot trash the root directory: ' .. vim.fn.getcwd())
-    return
-  end
-  local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ':p:~:.') or #paths .. ' files'
-  explorer_api.confirm('Trash ' .. what .. '?', function()
-    for _, path in ipairs(paths) do
-      local ok, err = pcall(function()
-        vim.system({ 'trash', vim.fn.fnameescape(path) })
-      end)
-      if not ok then
-        Snacks.notify.error('Failed to trash `' .. path .. '`:\n- ' .. err)
-      end
-      Tree:refresh(vim.fs.dirname(path))
-    end
-    picker.list:set_selected() -- clear selection
-    explorer_api.update(picker)
-  end)
-end
+---@class snacks.explorer.Config
+local explorer = {
+  replace_netrw = true,
+  trash = true,
+}
 
 ---@class snacks.picker.Config
 local picker = {
   enabled = true,
   sources = {
     explorer = {
-      actions = {
-        explorer_trash = explorer_trash,
-      },
-      win = {
-        list = {
-          keys = {
-            ['d'] = 'explorer_trash',
-          },
-        },
-      },
       hidden = true,
       layout = {
         preset = 'sidebar',
@@ -353,6 +311,7 @@ return {
     opts = {
       bigfile = bigfile,
       dashboard = dashboard,
+      explorer = explorer,
       image = image,
       indent = indent,
       input = input,
