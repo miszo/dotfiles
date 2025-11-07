@@ -1,8 +1,8 @@
 # dotfiles/home/dot_config/exact_nvim
 
-<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugins?style=for-the-badge" /></a>
-<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/leaderkey?style=for-the-badge" /></a>
-<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugin-manager?style=for-the-badge" /></a>
+<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugins?style=flat" /></a>
+<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/leaderkey?style=flat" /></a>
+<a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugin-manager?style=flat" /></a>
 
 ## Special shoutouts
 
@@ -10,9 +10,10 @@
 + [folke](https://github.com/folke) for creating amazing plugins and inspiring the community.
 + [echasnovski](https://github.com/echasnovski) for creating the `mini.nvim` plugin suite, which is a great source of inspiration and utility.
 
+
 ## Install Instructions
 
- > Install requires Neovim 0.9+. Always review the code before installing a configuration.
+ > Install requires Neovim 0.11+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -31,34 +32,29 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 ### ai
 
 + [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim)
-+ []
 ### animation
 
 + [sphamba/smear-cursor.nvim](https://dotfyle.com/plugins/sphamba/smear-cursor.nvim)
 ### bars-and-lines
 
 + [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
-### color
-
-+ [nvim-mini/mini.hipatterns](https://dotfyle.com/plugins/nvim-mini/mini.hipatterns)
 ### colorscheme
 
 + [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
 ### comment
 
 + [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
++ [folke/ts-comments.nvim](https://dotfyle.com/plugins/folke/ts-comments.nvim)
 + [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
 + [danymat/neogen](https://dotfyle.com/plugins/danymat/neogen)
-+ [folke/ts-comments.nvim](https://dotfyle.com/plugins/folke/ts-comments.nvim)
-+ [nvim-mini/mini.comment](https://dotfyle.com/plugins/nvim-mini/mini.comment)
 ### completion
 
 + [zbirenbaum/copilot.lua](https://dotfyle.com/plugins/zbirenbaum/copilot.lua)
 ### debugging
 
-+ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
-+ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
 + [rcarriga/nvim-dap-ui](https://dotfyle.com/plugins/rcarriga/nvim-dap-ui)
++ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
++ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
 ### dependency-management
 
 + [vuki656/package-info.nvim](https://dotfyle.com/plugins/vuki656/package-info.nvim)
@@ -67,15 +63,15 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [folke/trouble.nvim](https://dotfyle.com/plugins/folke/trouble.nvim)
 ### editing-support
 
++ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
++ [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
 + [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
-+ [nvim-mini/mini.ai](https://dotfyle.com/plugins/nvim-mini/mini.ai)
-+ [nvim-mini/mini.pairs](https://dotfyle.com/plugins/nvim-mini/mini.pairs)
 + [monaqa/dial.nvim](https://dotfyle.com/plugins/monaqa/dial.nvim)
 + [gbprod/yanky.nvim](https://dotfyle.com/plugins/gbprod/yanky.nvim)
-+ [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
-+ [nvim-mini/mini.move](https://dotfyle.com/plugins/nvim-mini/mini.move)
 + [Wansmer/treesj](https://dotfyle.com/plugins/Wansmer/treesj)
-+ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
+### file-explorer
+
++ [stevearc/oil.nvim](https://dotfyle.com/plugins/stevearc/oil.nvim)
 ### formatting
 
 + [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
@@ -83,31 +79,28 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 
 + [ruifm/gitlinker.nvim](https://dotfyle.com/plugins/ruifm/gitlinker.nvim)
 + [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
-+ [nvim-mini/mini.diff](https://dotfyle.com/plugins/nvim-mini/mini.diff)
-### icon
-
-+ [nvim-mini/mini.icons](https://dotfyle.com/plugins/nvim-mini/mini.icons)
 ### keybinding
 
 + [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
 ### lsp
 
 + [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
-+ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
++ [rachartier/tiny-inline-diagnostic.nvim](https://dotfyle.com/plugins/rachartier/tiny-inline-diagnostic.nvim)
 + [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
++ [mrjones2014/codesettings.nvim](https://dotfyle.com/plugins/mrjones2014/codesettings.nvim)
 + [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
++ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
 ### markdown-and-latex
 
 + [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
 + [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
 ### motion
 
-+ [nvim-mini/mini.bracketed](https://dotfyle.com/plugins/nvim-mini/mini.bracketed)
 + [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
 ### nvim-dev
 
-+ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
 + [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
++ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
 + [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
 ### plugin-manager
 
@@ -134,11 +127,11 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
 ### syntax
 
-+ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-+ [nvim-mini/mini.surround](https://dotfyle.com/plugins/nvim-mini/mini.surround)
 + [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
++ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
 ### test
 
++ [nvim-neotest/neotest-jest](https://dotfyle.com/plugins/nvim-neotest/neotest-jest)
 + [nvim-neotest/neotest](https://dotfyle.com/plugins/nvim-neotest/neotest)
 ### tmux
 
@@ -153,8 +146,10 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + angularls
 + astro
 + bashls
++ clangd
 + cssls
 + cssmodules_ls
++ denols
 + docker_compose_language_service
 + dockerls
 + eslint
@@ -162,11 +157,15 @@ NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 + graphql
 + html
 + intelephense
++ jdtls
 + jsonls
 + lua_ls
 + marksman
 + phpactor
 + prismals
++ pylsp
++ pyright
++ rust_analyzer
 + svelte
 + tailwindcss
 + tsserver
