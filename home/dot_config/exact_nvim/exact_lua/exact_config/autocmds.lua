@@ -34,21 +34,29 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 local group_active_cursorline = augroup('active_cursorline')
 
+local filetypes_to_skip_cursorline = {
+  'lazy',
+  'snacks_picker_input',
+  'snacks_picker_results',
+  'snacks_dashboard',
+}
+
 -- highlight current line only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   group = group_active_cursorline,
   callback = function(args)
-    if vim.bo[args.buf].filetype == 'snacks_dashboard' then
-      return
+    if not vim.tbl_contains(filetypes_to_skip_cursorline, vim.bo[args.buf].filetype) then
+      vim.opt_local.cursorline = true
     end
-    vim.opt_local.cursorline = true
   end,
 })
 
 vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
   group = group_active_cursorline,
-  callback = function()
-    vim.opt_local.cursorline = false
+  callback = function(args)
+    if not vim.bo[args.buf].filetype == 'snacks_dashboard' then
+      vim.opt_local.cursorline = false
+    end
   end,
 })
 
