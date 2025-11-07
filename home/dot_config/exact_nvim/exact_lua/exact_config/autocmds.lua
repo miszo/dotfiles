@@ -37,7 +37,10 @@ local group_active_cursorline = augroup('active_cursorline')
 -- highlight current line only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   group = group_active_cursorline,
-  callback = function()
+  callback = function(args)
+    if vim.bo[args.buf].filetype == 'snacks_dashboard' then
+      return
+    end
     vim.opt_local.cursorline = true
   end,
 })
