@@ -340,7 +340,7 @@ return {
   -- NPM Package info
   {
     'vuki656/package-info.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim', 'catppuccin/nvim' },
+    dependencies = { 'MunifTanjim/nui.nvim' },
     ft = { 'json' },
     opts = {
       autostart = true,
