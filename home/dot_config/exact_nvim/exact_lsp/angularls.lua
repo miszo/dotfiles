@@ -2,10 +2,6 @@
 -- in order to use your projects configured versions.
 local fs, fn, uv = vim.fs, vim.fn, vim.uv
 
-local root_dir = vim.fn.getcwd()
-local node_modules_dir = vim.fs.find('node_modules', { path = root_dir, upward = true })[1]
-local project_root = node_modules_dir and vim.fs.dirname(node_modules_dir) or '?'
-
 local function collect_node_modules(root_dir)
   local results = {}
 
@@ -69,6 +65,7 @@ return {
         :totable(),
       ','
     )
+
     local cmd = {
       'ngserver',
       '--stdio',
@@ -79,10 +76,22 @@ return {
       '--angularCoreVersion',
       get_angular_core_version(root_dir),
     }
+
     return vim.lsp.rpc.start(cmd, dispatchers)
   end,
   filetypes = { 'typescript', 'html', 'htmlangular' },
-  root_markers = { 'angular.json', 'nx.json' },
+  root_dir = function(bufnr, on_dir)
+    local root_markers = { 'angular.json', 'nx.json' }
+    local project_root = fs.root(bufnr, root_markers) or vim.fn.getcwd()
+    local angular_core_version = get_angular_core_version(project_root)
+
+    -- only start if @angular/core is present in the project
+    if angular_core_version == '' then
+      return
+    end
+
+    on_dir(project_root)
+  end,
   on_attach = function(client)
     --HACK: disable angular renaming capability due to duplicate rename popping up
     client.server_capabilities.renameProvider = false

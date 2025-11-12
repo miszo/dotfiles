@@ -159,6 +159,14 @@ return {
         end,
       })
 
+      -- add angular suppport for template files
+      vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+        pattern = { '*.component.html', '*.container.html' },
+        callback = function()
+          vim.treesitter.start(nil, 'angular')
+        end,
+      })
+
       -- add blade custom parser
       vim.api.nvim_create_autocmd('User', {
         pattern = 'TSUpdate',
