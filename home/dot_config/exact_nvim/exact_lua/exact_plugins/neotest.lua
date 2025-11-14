@@ -9,8 +9,6 @@ end
 return {
   {
     'nvim-neotest/neotest',
-    -- latest version with working jest adapter
-    -- version = '5.9',
     dependencies = {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
@@ -37,7 +35,6 @@ return {
             return vim.fn.getcwd()
           end,
           jest_test_discovery = true,
-          jestConfigFile = UserUtil.nx.get_jest_config_path,
         },
         ['neotest-vitest'] = {},
         ['neotest-go'] = {
