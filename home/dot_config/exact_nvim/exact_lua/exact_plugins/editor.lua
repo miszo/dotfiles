@@ -263,11 +263,29 @@ return {
         },
       },
     },
+    specs = {
+      'folke/snacks.nvim',
+      opts = function(_, opts)
+        return vim.tbl_deep_extend('force', opts or {}, {
+          picker = {
+            actions = require('trouble.sources.snacks').actions,
+            win = {
+              input = {
+                keys = {
+                  ['<c-t>'] = {
+                    'trouble_open',
+                    mode = { 'n', 'i' },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end,
+    },
     keys = {
       { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
       { '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
-      { '<leader>cs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
-      { '<leader>cS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
       { '<leader>xL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
       { '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
       {
@@ -305,7 +323,7 @@ return {
   -- in your project and loads them into a browsable list.
   {
     'folke/todo-comments.nvim',
-    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    cmd = { 'TodoTrouble' },
     event = 'LazyFile',
     opts = {},
     keys = {
@@ -329,8 +347,20 @@ return {
         '<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>',
         desc = 'Todo/Fix/Fixme (Trouble)',
       },
-      { '<leader>st', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
-      { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>', desc = 'Todo/Fix/Fixme' },
+      {
+        '<leader>st',
+        function()
+          Snacks.picker.todo_comments()
+        end,
+        desc = 'Todo',
+      },
+      {
+        '<leader>sT',
+        function()
+          Snacks.picker.todo_comments({ keywords = { 'TODO', 'FIX', 'FIXME' } })
+        end,
+        desc = 'Todo/Fix/Fixme',
+      },
     },
   },
   -- Word navigation
