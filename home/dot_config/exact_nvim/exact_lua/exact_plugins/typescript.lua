@@ -1,7 +1,19 @@
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
-  { 'dmmulroy/ts-error-translator.nvim' },
+  {
+    'dmmulroy/ts-error-translator.nvim',
+    opts = {
+      auto_attach = true,
+      servers = {
+        'angularls',
+        'astro',
+        'svelte',
+        'vtsls',
+        'vue_ls',
+      },
+    },
+  },
   {
     'dmmulroy/tsc.nvim',
     lazy = true,

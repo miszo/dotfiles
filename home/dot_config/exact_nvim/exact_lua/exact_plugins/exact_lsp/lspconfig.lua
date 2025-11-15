@@ -45,7 +45,6 @@ return {
     dependencies = {
       'mason-org/mason.nvim',
       'mason-org/mason-lspconfig.nvim',
-      'dmmulroy/ts-error-translator.nvim',
       'saghen/blink.cmp',
       'mrjones2014/codesettings.nvim',
     },
@@ -80,11 +79,6 @@ return {
 
       -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
       vim.lsp.enable({ 'ruby_lsp' }, true)
-
-      vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_publishDiagnostics] = function(err, result, ctx)
-        require('ts-error-translator').translate_diagnostics(err, result, ctx)
-        vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
-      end
 
       if vim.lsp.is_enabled and vim.lsp.is_enabled('denols') and vim.lsp.is_enabled('vtsls') then
         ---@param server string
