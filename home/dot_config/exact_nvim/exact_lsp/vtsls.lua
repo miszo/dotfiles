@@ -36,6 +36,9 @@ return {
     'typescript',
     'typescriptreact',
     'typescript.tsx',
+    'vue',
+    'astro',
+    'svelte',
   },
   settings = {
     complete_function_calls = false,
@@ -92,6 +95,7 @@ return {
             ),
             name = '@vue/language-server',
             languages = { 'vue' },
+            configNamespace = 'typescript',
           },
         },
       },

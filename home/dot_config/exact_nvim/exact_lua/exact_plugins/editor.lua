@@ -13,10 +13,16 @@ return {
         function()
           local grug = require('grug-far')
           local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
+          local files_filter = ext and ext ~= '' and '*.' .. ext or nil
+          local frontend_exts = { 'js', 'jsx', 'ts', 'tsx' }
+          if vim.tbl_contains(frontend_exts, ext) then
+            files_filter = '*.{' .. table.concat(frontend_exts, ',') .. '}'
+          end
+
           grug.open({
             transient = true,
             prefills = {
-              filesFilter = ext and ext ~= '' and '*.' .. ext or nil,
+              filesFilter = files_filter,
             },
           })
         end,

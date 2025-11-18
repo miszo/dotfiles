@@ -107,6 +107,7 @@ return {
     codeAction = {
       disableRuleComment = {
         enable = true,
+        commentStyle = 'block',
         location = 'separateLine',
       },
       showDocumentation = {
