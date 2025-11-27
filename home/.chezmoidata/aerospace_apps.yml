@@ -6,6 +6,7 @@ aerospace_apps:
     - 'com.apple.Safari'
     - 'org.mozilla.com.zen.browser'
     - 'com.duckduckgo.macos.browser'
+    - 'com.kagi.kagimacOS'
   workspace_d:
     - 'com.figma.Desktop'
   workspace_m:
