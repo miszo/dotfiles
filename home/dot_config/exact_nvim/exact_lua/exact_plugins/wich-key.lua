@@ -1,14 +1,13 @@
+---@diagnostic disable: missing-fields
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
   {
     'folke/which-key.nvim',
     dependencies = { 'nvim-mini/mini.icons' },
+    ---@type wk.Config
     opts = {
       preset = 'helix',
-      win = {
-        col = 1,
-      },
       spec = {
         {
           mode = { 'n', 'v' },
@@ -56,6 +55,13 @@ return {
           require('which-key').show({ global = false })
         end,
         desc = 'Buffer Keymaps (which-key)',
+      },
+      {
+        '<c-w><space>',
+        function()
+          require('which-key').show({ keys = '<c-w>', loop = true })
+        end,
+        desc = 'Window Hydra Mode (which-key)',
       },
     },
   },

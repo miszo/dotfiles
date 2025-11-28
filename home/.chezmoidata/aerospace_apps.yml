@@ -1,7 +1,6 @@
 aerospace_apps:
   workspace_1:
     - 'us.zoom.xos'
-    - 'co.teamport.around'
   workspace_b:
     - 'com.apple.Safari'
     - 'org.mozilla.com.zen.browser'
@@ -15,7 +14,6 @@ aerospace_apps:
   workspace_t:
     - 'com.mitchellh.ghostty'
   workspace_v:
-    - 'notion.id'
     - 'com.kitze.sizzy'
   workspace_w:
     - 'com.google.Chrome'
@@ -35,7 +33,6 @@ aerospace_apps:
     - 'com.1password.1password'
     - 'dev.kdrag0n.MacVirt'
     - 'com.jordanbaird.Ice'
-    - 'com.macpaw.CleanMyMac-setapp'
     - 'com.iBoysoft.NTFS-Assistant-website-setapp'
     - 'org.languagetool.desktop'
     - 'com.shure.motivmix'
