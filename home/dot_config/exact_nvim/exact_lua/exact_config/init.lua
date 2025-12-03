@@ -90,6 +90,7 @@ M.kind_filter = {
     'Property',
     'Struct',
     'Trait',
+    'Variable',
   },
   markdown = false,
   help = false,
@@ -108,6 +109,7 @@ M.kind_filter = {
     'Property',
     'Struct',
     'Trait',
+    'Variable',
   },
 }
 
