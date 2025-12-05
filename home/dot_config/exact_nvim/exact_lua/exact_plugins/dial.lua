@@ -143,12 +143,6 @@ return {
             augend.case.new({
               types = { 'PascalCase', 'camelCase', 'snake_case', 'kebab-case', 'SCREAMING_SNAKE_CASE' },
             }),
-            augend.paren.new({
-              patterns = { { "'", "'" }, { '"', '"' }, { '`', '`' } }, -- single, double, and backtick quotes
-              nested = false,
-              escape_char = [[\]],
-              cyclic = true,
-            }),
           },
           vue = {
             let_const_alias,
