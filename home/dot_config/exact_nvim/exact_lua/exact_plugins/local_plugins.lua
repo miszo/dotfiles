@@ -2,9 +2,9 @@
 ---@type LazySpec[]
 return {
   {
-    dir = vim.g.local_plugins_path .. 'copy-filepath',
+    dir = vim.g.local_plugins_path .. 'yank-filepath',
     config = function()
-      require('local_plugins.copy-filepath').setup()
+      require('local_plugins.yank-filepath.init').setup()
     end,
   },
 }
