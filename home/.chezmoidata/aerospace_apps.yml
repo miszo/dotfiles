@@ -25,6 +25,7 @@ aerospace_apps:
     - 'com.apple.systempreferences'
     - 'com.apple.ActivityMonitor'
     - 'com.apple.AppStore'
+    - 'com.apple.clock'
     - 'com.apple.MobileSMS'
     - 'com.apple.Music'
     - 'com.apple.podcasts'
