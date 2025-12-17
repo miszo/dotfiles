@@ -8,7 +8,8 @@ async function isSpecialGitOperation() {
       'rebase in progress',
       'You are currently merging',
       'All conflicts fixed',
-      'Merging'
+      'Merging',
+      'Merge branch'
     ];
 
     return specialOperations.some(op => stdout.toLowerCase().includes(op.toLowerCase()));

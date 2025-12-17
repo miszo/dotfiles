@@ -116,9 +116,17 @@ function add_git_hook() {
     echo "Git hook '$hook_name' added successfully from $source_path"
 }
 
-function add_git_hooks() {
+function add_git_hook_conventional_commit_msg() {
     add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "conventional-commit-msg" | quote }} "commit-msg"
+}
+
+function add_git_hook_js_pre_commit() {
     add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "js-pre-commit" | quote }} "pre-commit"
+}
+
+function add_git_hooks() {
+    add_git_hook_conventional_commit_msg
+    add_git_hook_js_pre_commit
 }
 
 function export_app_settings {
