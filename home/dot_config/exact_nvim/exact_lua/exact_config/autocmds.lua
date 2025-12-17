@@ -66,6 +66,35 @@ vim.api.nvim_create_autocmd('FileType', {
   command = 'wincmd L',
 })
 
+-- open devdocs in vertical split
+-- make devdocs buffers non-modifiable
+-- make devdocs buffers non-listable
+-- close devdocs window with q
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function(args)
+    local file_path = vim.api.nvim_buf_get_name(args.buf)
+    local devdocs_path = vim.fn.stdpath('data') .. '/devdocs'
+    if file_path:find(devdocs_path, 1, true) then
+      vim.cmd('wincmd L')
+      vim.bo[args.buf].modifiable = false
+      vim.bo[args.buf].buflisted = false
+      vim.schedule(function()
+        vim.keymap.set('n', 'q', function()
+          vim.cmd('close')
+          pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
+        end, {
+          buffer = args.buf,
+          silent = true,
+          desc = 'Quit buffer',
+        })
+      end)
+    end
+  end,
+})
+
+-- close the devdocs window with q
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = augroup('highlight_yank'),
@@ -329,12 +358,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       wk.add({
         { 'gd', Snacks.picker.lsp_definitions, desc = 'Goto Definition' },
         {
-          '<leader>v',
+          '<leader>V',
           '<cmd>vsplit | lua Snacks.picker.lsp_definitions()<cr>',
           desc = 'Goto Definition in Vertical Split',
         },
         {
-          '<leader>h',
+          '<leader>H',
           '<cmd>split | lua Snacks.picker.lsp_definitions()<cr>',
           desc = 'Goto Definition in Horizontal Split',
         },
