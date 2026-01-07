@@ -12,6 +12,7 @@ local lsp_ensure_installed = {
   'eslint',
   'gopls',
   'harper_ls',
+  'home_assistant',
   'intelephense',
   'jsonls',
   'lua_ls',
