@@ -51,7 +51,7 @@ return {
           ['<CR>'] = { 'accept', 'fallback' },
 
           ['<Tab>'] = {
-            UserUtil.cmp.map({ 'snippet_forward', 'ai_accept' }),
+            UserUtil.cmp.map({ 'sidekick_nes', 'snippet_forward', 'ai_accept' }),
             'fallback',
           },
           ['<S-Tab>'] = {

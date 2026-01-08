@@ -1,28 +1,9 @@
 local copilot_model = 'gpt-4o'
-local chat_adapter = 'copilot'
-local chat_model = 'claude-sonnet-4'
-
-local copilot_sonnet_strategy = {
-  adapter = {
-    name = chat_adapter,
-    model = chat_model,
-  },
-  roles = {
-    ---The header name for the LLM's messages
-    ---@type string|fun(adapter: CodeCompanion.Adapter): string
-    llm = function(adapter)
-      return 'CodeCompanion (' .. adapter.formatted_name .. ', ' .. adapter.model.name .. ')'
-    end,
-
-    ---The header name for your messages
-    ---@type string
-    user = 'Miszo',
-  },
-}
 
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
+  -- GitHub Copilot - Inline suggestions and LSP server
   {
     'zbirenbaum/copilot.lua',
     dependencies = {
@@ -49,12 +30,14 @@ return {
           prev = '<M-[>',
         },
       },
+      -- NES UI is handled by sidekick.nvim for better visualization
+      -- copilot.lua keeps the LSP running (required by sidekick)
       nes = {
-        enabled = true,
+        enabled = false, -- sidekick.nvim handles NES UI
         keymap = {
-          accept_and_goto = '<leader>p',
+          accept_and_goto = false, -- use sidekick's Tab-based navigation
           accept = false,
-          dismiss = '<Esc>',
+          dismiss = false,
         },
       },
       panel = { enabled = false },
@@ -65,6 +48,7 @@ return {
     },
     config = function(_, opts)
       require('copilot').setup(opts)
+      -- Register copilot suggestion accept action for blink.cmp
       UserUtil.cmp.actions.ai_accept = function()
         if require('copilot.suggestion').is_visible() then
           UserUtil.cmp.create_undo()
@@ -74,140 +58,227 @@ return {
       end
     end,
   },
+
+  -- Sidekick - NES visualization and AI CLI integration
   {
-    'olimorris/codecompanion.nvim',
-    tag = 'v17.33.0',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-      },
-      'MeanderingProgrammer/render-markdown.nvim',
-      'j-hui/fidget.nvim',
-      'ravitemer/codecompanion-history.nvim',
-    },
-    cmd = {
-      'CodeCompanion',
-      'CodeCompanionChat',
-      'CodeCompanionActions',
-      'CodeCompanionAdd',
-    },
+    'folke/sidekick.nvim',
+    dependencies = { 'zbirenbaum/copilot.lua' }, -- needs copilot LSP
     opts = {
-      strategies = {
-        chat = vim.tbl_deep_extend('force', copilot_sonnet_strategy, {
-          slash_commands = {
-            ['buffer'] = {
-              opts = {
-                provider = 'snacks',
-              },
-            },
-            ['terminal'] = {
-              ---@param chat CodeCompanion.Chat
-              callback = function(chat)
-                Snacks.picker.buffers({
-                  title = 'Terminals',
-                  hidden = true,
-                  actions = {
-                    ---@param picker snacks.Picker
-                    add_to_chat = function(picker)
-                      picker:close()
-                      local items = picker:selected({ fallback = true })
-                      vim.iter(items):each(function(item)
-                        local id = '<buf>' .. chat.context:make_id_from_buf(item.buf) .. '</buf>'
-                        local lines = vim.api.nvim_buf_get_lines(item.buf, 0, -1, false)
-                        local content = table.concat(lines, '\n')
-
-                        chat:add_message({
-                          role = 'user',
-                          content = 'Terminal content from buffer '
-                            .. item.buf
-                            .. ' ('
-                            .. item.file
-                            .. '):\n'
-                            .. content,
-                        }, { reference = id, visible = false })
-
-                        chat.context:add({
-                          bufnr = item.buf,
-                          id = id,
-                          source = '',
-                        })
-                      end)
-                    end,
-                  },
-                  win = { input = { keys = { ['<CR>'] = { 'add_to_chat', mode = { 'i', 'n' } } } } },
-                  filter = {
-                    filter = function(item)
-                      return vim.bo[item.buf].buftype == 'terminal'
-                    end,
-                  },
-                  main = { file = false },
-                })
-              end,
-              description = 'Insert terminal output',
-              opts = {
-                provider = 'snacks',
-              },
-            },
-          },
-        }),
-        inline = copilot_sonnet_strategy,
-        cmd = copilot_sonnet_strategy,
-      },
-      display = {
-        action_pallete = {
-          provider = 'snacks',
+      -- Next Edit Suggestions configuration
+      nes = {
+        enabled = true,
+        debounce = 100,
+        trigger = {
+          events = { 'ModeChanged i:n', 'TextChanged', 'User SidekickNesDone' },
+        },
+        clear = {
+          events = { 'TextChangedI', 'InsertEnter' },
+          esc = true,
         },
         diff = {
-          enabled = true,
-          close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
-          layout = 'vertical', -- vertical|horizontal split for default provider
-          opts = { 'internal', 'filler', 'closeoff', 'algorithm:patience', 'followwrap', 'linematch:120' },
+          inline = 'words', -- word-level inline diffs
         },
       },
-      extensions = {
-        history = {
-          enabled = true,
-          opts = {
-            keymap = 'gh',
-            continue_last_chat = false,
-            delete_on_clearing_chat = false,
-            picker = 'snacks',
-            enable_logging = false,
-            dir_to_save = vim.fn.stdpath('data') .. '/codecompanion-history',
-            auto_save = true,
-            auto_generate_title = true,
-            title_generation_opts = {
-              adapter = chat_adapter,
-              model = chat_model,
-            },
-            picker_keymaps = {
-              rename = { n = 'r', i = '<C-r>' },
-              delete = { n = 'd', i = '<C-d>' },
-              duplicate = { n = '<C-y>', i = '<C-y>' },
-            },
+
+      -- Signs configuration
+      signs = {
+        enabled = true,
+        icon = ' ',
+      },
+
+      -- Jump configuration
+      jump = {
+        jumplist = true, -- add entries to jumplist when navigating
+      },
+
+      -- CLI Tools Integration
+      cli = {
+        watch = true, -- auto-reload files modified by AI tools
+
+        -- Window configuration for AI CLI tools
+        win = {
+          layout = 'right', -- right split for OpenCode terminal
+          wo = {},
+          bo = {},
+
+          -- Split configuration (for right layout)
+          split = {
+            width = 80, -- 80 columns for the right split
+            height = 0, -- use default height
+          },
+
+          -- Terminal keymaps
+          keys = {
+            buffers = { '<c-b>', 'buffers', mode = 'nt', desc = 'open buffer picker' },
+            files = { '<c-f>', 'files', mode = 'nt', desc = 'open file picker' },
+            hide_n = { 'q', 'hide', mode = 'n', desc = 'hide the terminal window' },
+            hide_ctrl_q = { '<c-q>', 'hide', mode = 'n', desc = 'hide the terminal window' },
+            hide_ctrl_dot = { '<c-.>', 'hide', mode = 'nt', desc = 'hide the terminal window' },
+            hide_ctrl_z = { '<c-z>', 'hide', mode = 'nt', desc = 'hide the terminal window' },
+            prompt = { '<c-p>', 'prompt', mode = 't', desc = 'insert prompt or context' },
+            stopinsert = { '<c-q>', 'stopinsert', mode = 't', desc = 'enter normal mode' },
+            -- Navigate windows in terminal mode
+            nav_left = { '<c-h>', 'nav_left', expr = true, desc = 'navigate to the left window' },
+            nav_down = { '<c-j>', 'nav_down', expr = true, desc = 'navigate to the below window' },
+            nav_up = { '<c-k>', 'nav_up', expr = true, desc = 'navigate to the above window' },
+            nav_right = { '<c-l>', 'nav_right', expr = true, desc = 'navigate to the right window' },
           },
         },
+        -- Tmux multiplexer for persistent sessions
+        mux = {
+          backend = 'tmux',
+          enabled = true,
+          create = 'terminal', -- create sessions in Neovim terminal
+        },
+        -- AI CLI Tools configuration
+        tools = {
+          claude = { cmd = { 'claude' } },
+          codex = { cmd = { 'codex', '--enable', 'web_search_request' } },
+          copilot = { cmd = { 'copilot', '--banner' } },
+          cursor = { cmd = { 'cursor-agent' } },
+          gemini = { cmd = { 'gemini' } },
+          opencode = {
+            cmd = { 'opencode' },
+            -- Workaround for OpenCode issue #445
+            env = { OPENCODE_THEME = 'system' },
+          },
+        },
+
+        -- Prompt library for common tasks
+        prompts = {
+          changes = 'Can you review my changes?',
+          diagnostics = 'Can you help me fix the diagnostics in {file}?\n{diagnostics}',
+          diagnostics_all = 'Can you help me fix these diagnostics?\n{diagnostics_all}',
+          document = 'Add documentation to {function|line}',
+          explain = 'Explain {this}',
+          fix = 'Can you fix {this}?',
+          optimize = 'How can {this} be optimized?',
+          review = 'Can you review {file} for any issues or improvements?',
+          tests = 'Can you write tests for {this}?',
+          -- Simple context prompts
+          buffers = '{buffers}',
+          file = '{file}',
+          line = '{line}',
+          position = '{position}',
+          quickfix = '{quickfix}',
+          selection = '{selection}',
+          ['function'] = '{function}',
+          class = '{class}',
+        },
+
+        -- Preferred picker for file selection
+        picker = 'snacks', -- use Snacks.nvim picker
+      },
+
+      -- Copilot status tracking
+      copilot = {
+        status = {
+          enabled = true,
+          level = vim.log.levels.WARN,
+        },
+      },
+
+      -- UI configuration
+      ui = {
+        icons = UserConfig.icons.ai_sidekick,
       },
     },
-    config = function(_, opts)
-      require('codecompanion').setup(opts)
-    end,
+
+    -- Keybindings for sidekick
     keys = {
-      { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
-      { '<leader>aa', ':CodeCompanionChat<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Chat' },
-      { '<leader>ae', ':CodeCompanionChat Add<cr>', mode = { 'v' }, desc = 'Code Companion Add' },
-      { '<leader>ap', ':CodeCompanionActions<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Actions Palette' },
-      { '<leader>ad', ':CodeCompanion /doc<cr>', mode = { 'v' }, desc = 'Code Companion Documentation' },
-      { '<leader>ax', ':CodeCompanion /explain<cr>', mode = { 'v' }, desc = 'Code Companion Explain' },
-      { '<leader>af', ':CodeCompanion /fix<cr>', mode = { 'v' }, desc = 'Code Companion Fix' },
-      { '<leader>ah', ':CodeCompanionHistory<cr>', mode = { 'n' }, desc = 'Code Companion History' },
-      { '<leader>ai', ':CodeCompanion<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Inline Prompt' },
-      { '<leader>al', ':CodeCompanion /lsp<cr>', mode = { 'n', 'v' }, desc = 'Code Companion LSP' },
-      { '<leader>ar', ':CodeCompanion /optimize<cr>', mode = { 'v' }, desc = 'Code Companion Refactor' },
-      { '<leader>as', ':CodeCompanion /spell<cr>', mode = { 'n', 'v' }, desc = 'Code Companion Spell' },
-      { '<leader>at', ':CodeCompanion /tests<cr>', mode = { 'v' }, desc = 'Code Companion Generate Test' },
+      -- Tab navigation for Next Edit Suggestions
+      {
+        '<tab>',
+        function()
+          -- Jump to or apply next edit suggestion
+          if not require('sidekick').nes_jump_or_apply() then
+            return '<Tab>' -- fallback to normal tab
+          end
+        end,
+        expr = true,
+        desc = 'Sidekick: Goto/Apply Next Edit Suggestion',
+        mode = { 'n' },
+      },
+
+      -- AI commands prefix: <leader>a
+      {
+        '<leader>aa',
+        function()
+          require('sidekick.cli').toggle({ name = 'opencode', focus = true })
+        end,
+        desc = 'Sidekick: Toggle CLI',
+      },
+
+      {
+        '<leader>as',
+        function()
+          require('sidekick.cli').select()
+        end,
+        desc = 'Sidekick: Select CLI Tool',
+      },
+
+      {
+        '<leader>ad',
+        function()
+          require('sidekick.cli').close()
+        end,
+        desc = 'Sidekick: Close/Detach CLI Session',
+      },
+
+      {
+        '<leader>at',
+        function()
+          local util = require('lualine.components.sidekick.util')
+          util.set_user_action(true)
+          require('sidekick.cli').send({ msg = '{this}' })
+          vim.defer_fn(function()
+            util.set_user_action(false)
+          end, 2000)
+        end,
+        mode = { 'x', 'n' },
+        desc = 'Sidekick: Send This (context)',
+      },
+
+      {
+        '<leader>af',
+        function()
+          local util = require('lualine.components.sidekick.util')
+          util.set_user_action(true)
+          require('sidekick.cli').send({ msg = '{file}' })
+          vim.defer_fn(function()
+            util.set_user_action(false)
+          end, 2000)
+        end,
+        desc = 'Sidekick: Send File',
+      },
+
+      {
+        '<leader>av',
+        function()
+          local util = require('lualine.components.sidekick.util')
+          util.set_user_action(true)
+          require('sidekick.cli').send({ msg = '{selection}' })
+          vim.defer_fn(function()
+            util.set_user_action(false)
+          end, 2000)
+        end,
+        mode = { 'x' },
+        desc = 'Sidekick: Send Visual Selection',
+      },
+
+      {
+        '<leader>ap',
+        function()
+          local util = require('lualine.components.sidekick.util')
+          util.set_user_action(true)
+          require('sidekick.cli').prompt()
+          vim.defer_fn(function()
+            util.set_user_action(false)
+          end, 2000)
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Sidekick: Select Prompt',
+      },
     },
   },
 }

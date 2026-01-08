@@ -67,10 +67,20 @@ M.icons = {
   },
   statusline = {
     debugger = ' ',
-    codecompanion = ' ',
+    ai_sidekick = ' ',
     copilot = ' ',
     copilot_stopped = ' ',
     copilot_warning = ' ',
+  },
+  ai_sidekick = {
+    attached = ' ',
+    started = ' ',
+    installed = ' ',
+    missing = ' ',
+    external_attached = '󰖩 ',
+    external_started = '󰖪 ',
+    terminal_attached = ' ',
+    terminal_started = ' ',
   },
 }
 

@@ -64,7 +64,7 @@ return {
           },
           lualine_x = {
             'copilot',
-            'codecompanion',
+            'sidekick',
             {
               function()
                 return require('noice').api.status.command.get()
