@@ -97,6 +97,11 @@ local explorer = {
 ---@class snacks.picker.Config
 local picker = {
   enabled = true,
+  actions = {
+    sidekick_send = function(...)
+      return require('sidekick.cli.picker.snacks').send(...)
+    end,
+  },
   sources = {
     explorer = {
       hidden = true,
@@ -145,6 +150,16 @@ local picker = {
     },
     recent = {
       hidden = true,
+    },
+  },
+  win = {
+    input = {
+      keys = {
+        ['<M-a>'] = {
+          'sidekick_send',
+          mode = { 'n', 'i' },
+        },
+      },
     },
   },
 }
