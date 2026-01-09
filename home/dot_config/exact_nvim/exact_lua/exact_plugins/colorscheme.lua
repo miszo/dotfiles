@@ -91,6 +91,8 @@ return {
               NormalFloat = { bg = c.base },
               FloatBorder = { bg = c.base },
               FloatTitle = { bg = c.base },
+              SidekickDiffAdd = { link = 'DiffAdd' },
+              SidekickDiffDelete = { link = 'DiffDelete' },
             }
           end,
         },

@@ -67,7 +67,7 @@ M.icons = {
   },
   statusline = {
     debugger = ' ',
-    ai_sidekick = ' ',
+    ai_sidekick = '󰚩 ',
     copilot = ' ',
     copilot_stopped = ' ',
     copilot_warning = ' ',

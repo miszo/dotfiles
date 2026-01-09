@@ -64,7 +64,19 @@ return {
           },
           lualine_x = {
             'copilot',
-            'sidekick',
+            --- Sidekick CLI status
+            {
+              function()
+                local status = require('sidekick.status').cli()
+                return UserConfig.icons.statusline.ai_sidekick .. (#status > 1 and #status or '')
+              end,
+              cond = function()
+                return #require('sidekick.status').cli() > 0
+              end,
+              color = function()
+                return { fg = Snacks.util.color('Special') }
+              end,
+            },
             {
               function()
                 return require('noice').api.status.command.get()

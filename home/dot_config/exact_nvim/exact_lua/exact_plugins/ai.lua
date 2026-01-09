@@ -10,7 +10,7 @@ return {
       {
         'copilotlsp-nvim/copilot-lsp',
         init = function()
-          vim.g.copilot_nes_debounce = 500
+          vim.g.copilot_nes_debounce = 100
         end,
       },
     },
@@ -63,14 +63,15 @@ return {
   {
     'folke/sidekick.nvim',
     dependencies = { 'zbirenbaum/copilot.lua' }, -- needs copilot LSP
+    ---@type sidekick.Config
     opts = {
       -- Next Edit Suggestions configuration
       nes = {
         enabled = true,
         debounce = 100,
-        trigger = {
-          events = { 'ModeChanged i:n', 'TextChanged', 'User SidekickNesDone' },
-        },
+        -- trigger = {
+        --   events = { 'ModeChanged i:n', 'TextChanged', 'User SidekickNesDone' },
+        -- },
         clear = {
           events = { 'TextChangedI', 'InsertEnter' },
           esc = true,
@@ -79,34 +80,28 @@ return {
           inline = 'words', -- word-level inline diffs
         },
       },
-
       -- Signs configuration
       signs = {
         enabled = true,
-        icon = ' ',
+        icon = UserConfig.icons.kinds.Copilot,
       },
-
       -- Jump configuration
       jump = {
         jumplist = true, -- add entries to jumplist when navigating
       },
-
       -- CLI Tools Integration
       cli = {
         watch = true, -- auto-reload files modified by AI tools
-
         -- Window configuration for AI CLI tools
         win = {
           layout = 'right', -- right split for OpenCode terminal
           wo = {},
           bo = {},
-
           -- Split configuration (for right layout)
           split = {
-            width = 80, -- 80 columns for the right split
+            width = 140, -- 140 columns for the right split
             height = 0, -- use default height
           },
-
           -- Terminal keymaps
           keys = {
             buffers = { '<c-b>', 'buffers', mode = 'nt', desc = 'open buffer picker' },
@@ -143,7 +138,6 @@ return {
             env = { OPENCODE_THEME = 'system' },
           },
         },
-
         -- Prompt library for common tasks
         prompts = {
           changes = 'Can you review my changes?',
@@ -165,11 +159,9 @@ return {
           ['function'] = '{function}',
           class = '{class}',
         },
-
         -- Preferred picker for file selection
         picker = 'snacks', -- use Snacks.nvim picker
       },
-
       -- Copilot status tracking
       copilot = {
         status = {
@@ -177,29 +169,39 @@ return {
           level = vim.log.levels.WARN,
         },
       },
-
       -- UI configuration
       ui = {
         icons = UserConfig.icons.ai_sidekick,
       },
     },
-
+    config = function(_, opts)
+      require('sidekick').setup(opts)
+      UserUtil.cmp.actions.ai_nes = function()
+        local Nes = require('sidekick.nes')
+        if Nes.have() and (Nes.jump() or Nes.apply()) then
+          return true
+        end
+      end
+    end,
     -- Keybindings for sidekick
     keys = {
       -- Tab navigation for Next Edit Suggestions
       {
         '<tab>',
-        function()
-          -- Jump to or apply next edit suggestion
-          if not require('sidekick').nes_jump_or_apply() then
-            return '<Tab>' -- fallback to normal tab
-          end
-        end,
+        UserUtil.cmp.map({ 'ai_nes' }, '<tab>'),
         expr = true,
         desc = 'Sidekick: Goto/Apply Next Edit Suggestion',
         mode = { 'n' },
       },
-
+      -- ctrl-dot to toggle CLI terminal
+      {
+        '<c-.>',
+        function()
+          require('sidekick.cli').toggle({ name = 'opencode', focus = true })
+        end,
+        desc = 'Sidekick: Toggle CLI Terminal',
+        mode = { '' },
+      },
       -- AI commands prefix: <leader>a
       {
         '<leader>aa',
@@ -208,7 +210,6 @@ return {
         end,
         desc = 'Sidekick: Toggle CLI',
       },
-
       {
         '<leader>as',
         function()
@@ -216,7 +217,6 @@ return {
         end,
         desc = 'Sidekick: Select CLI Tool',
       },
-
       {
         '<leader>ad',
         function()
@@ -224,57 +224,33 @@ return {
         end,
         desc = 'Sidekick: Close/Detach CLI Session',
       },
-
       {
         '<leader>at',
         function()
-          local util = require('lualine.components.sidekick.util')
-          util.set_user_action(true)
           require('sidekick.cli').send({ msg = '{this}' })
-          vim.defer_fn(function()
-            util.set_user_action(false)
-          end, 2000)
         end,
         mode = { 'x', 'n' },
         desc = 'Sidekick: Send This (context)',
       },
-
       {
         '<leader>af',
         function()
-          local util = require('lualine.components.sidekick.util')
-          util.set_user_action(true)
           require('sidekick.cli').send({ msg = '{file}' })
-          vim.defer_fn(function()
-            util.set_user_action(false)
-          end, 2000)
         end,
         desc = 'Sidekick: Send File',
       },
-
       {
         '<leader>av',
         function()
-          local util = require('lualine.components.sidekick.util')
-          util.set_user_action(true)
           require('sidekick.cli').send({ msg = '{selection}' })
-          vim.defer_fn(function()
-            util.set_user_action(false)
-          end, 2000)
         end,
         mode = { 'x' },
         desc = 'Sidekick: Send Visual Selection',
       },
-
       {
         '<leader>ap',
         function()
-          local util = require('lualine.components.sidekick.util')
-          util.set_user_action(true)
           require('sidekick.cli').prompt()
-          vim.defer_fn(function()
-            util.set_user_action(false)
-          end, 2000)
         end,
         mode = { 'n', 'x' },
         desc = 'Sidekick: Select Prompt',
