@@ -32,6 +32,30 @@
       ".git/**"
     ]
   },
+  "command": {
+    "git-commit": {
+      "template": "git add all changes && git commit A good commit message with conventional commits style && git push",
+      "description": "Generates a git commit message based on the changes made",
+      "agent": "build"
+    },
+    "lint": {
+      "template": "Run the projects linter on the codebase and fix any issues found. ESLint for JS/TS",
+      "description": "Lints the codebase and fixes issues",
+      "agent": "build"
+    }
+  },
+  "mcp": {
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
+      "enabled": false,
+    },
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/sse",
+      "enabled": false
+    }
+  },
   "keybinds": {
     "input_newline": "ctrl+n"
   },
