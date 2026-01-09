@@ -18,6 +18,7 @@ return {
       },
     },
     config = function()
+      vim.g.mkdp_browser = 'Google Chrome'
       vim.cmd([[do FileType]])
     end,
   },
