@@ -1,5 +1,3 @@
-local copilot_model = 'gpt-4o'
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -19,7 +17,6 @@ return {
     event = 'InsertEnter',
     ---@type CopilotConfig
     opts = {
-      copilot_model = copilot_model,
       suggestion = {
         enabled = true,
         auto_trigger = true,
