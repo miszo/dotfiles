@@ -303,32 +303,6 @@ return {
   {
     'chaoren/vim-wordmotion',
   },
-  -- NPM Package info
-  {
-    'vuki656/package-info.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    ft = { 'json' },
-    opts = {
-      autostart = true,
-      hide_up_to_date = true,
-      hide_unstable_versions = false,
-      package_manager = 'pnpm',
-    },
-    keys = function()
-      local function map(key, cmd, desc)
-        vim.keymap.set({ 'n' }, '<leader>n' .. key, cmd, { desc = desc, silent = true, noremap = true })
-      end
-      local pi = require('package-info')
-      map('', '', '+Package Info')
-      map('s', pi.show, 'Show package info')
-      map('h', pi.hide, 'Hide package info')
-      map('n', pi.toggle, 'Toggle package info')
-      map('u', pi.update, 'Update package')
-      map('d', pi.delete, 'Delete package')
-      map('i', pi.install, 'Install package')
-      map('v', pi.change_version, 'Change package version')
-    end,
-  },
   -- Open openapi preview in swagger-ui
   {
     'vinnymeller/swagger-preview.nvim',

@@ -82,9 +82,6 @@ return {
         highlight_overrides = {
           all = function(c)
             return {
-              PackageInfoOutdatedVersion = { fg = c.peach },
-              PackageInfoUpToDateVersion = { fg = c.green },
-              PackageInfoInErrorVersion = { fg = c.red },
               SnacksIndent = { link = 'Whitespace' },
               SnacksIndentScope = { fg = c.text },
               SnacksPickerGitStatusIgnored = { link = 'NonText' },

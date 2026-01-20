@@ -72,6 +72,14 @@ M.icons = {
     copilot_stopped = ' ',
     copilot_warning = ' ',
   },
+  package = {
+    installing = '󰏗 ',
+    updating = '󰚰 ',
+    deleting = '󰆴 ',
+    fetching = '󰄉 ',
+    success = '󰄬 ',
+    error = '󰅙 ',
+  },
   ai_sidekick = {
     attached = ' ',
     started = ' ',
