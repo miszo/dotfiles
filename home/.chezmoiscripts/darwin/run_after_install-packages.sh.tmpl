@@ -34,7 +34,7 @@ function install_gh_extensions() {
 
 function update_gh_extensions() {
   echo "Updating gh extensions..."
-  gh extension upgrade --all
+  GH_TOKEN={{ $ghToken | quote }} gh extension upgrade --all
   echo "Finished updating gh extensions."
 }
 
