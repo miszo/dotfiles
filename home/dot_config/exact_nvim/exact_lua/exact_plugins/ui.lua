@@ -57,6 +57,14 @@ return {
           },
           view = 'mini',
         },
+        -- route nvim-treesitter notifications to mini view
+        {
+          filter = {
+            event = 'notify',
+            find = 'nvim-treesitter',
+          },
+          view = 'mini',
+        },
       },
       presets = {
         bottom_search = false,
