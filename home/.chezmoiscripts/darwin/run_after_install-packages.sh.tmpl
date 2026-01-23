@@ -26,8 +26,16 @@ function install_gh_extensions() {
   echo "Installing gh extensions..."
   {{ $ghToken := .gh.token -}}
   {{ range .packages.gh.extensions -}}
+  echo "Installing gh extension: {{ . }} ..."
   GH_TOKEN={{ $ghToken | quote }} gh extension install {{ . }}
   {{ end -}}
+  echo "Finished installing gh extensions."
+}
+
+function update_gh_extensions() {
+  echo "Updating gh extensions..."
+  gh extension upgrade --all
+  echo "Finished updating gh extensions."
 }
 
 function install_uv_tools() {
@@ -36,10 +44,19 @@ function install_uv_tools() {
   {{ end }}
 }
 
+function update_uv_tools() {
+  {{ range .uv_tools }}
+    uv tool upgrade {{ . }}
+  {{ end }}
+}
+
 function main() {
   brew_bundle
   asdf_install
   install_gh_extensions
+  update_gh_extensions
+  install_uv_tools
+  update_uv_tools
   update_theme
 }
 

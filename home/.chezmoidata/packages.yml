@@ -3,5 +3,4 @@ packages:
     extensions:
       - 'nektos/gh-act'
       - 'joaom00/gh-b'
-      - 'github/gh-copilot'
       - 'dlvhdr/gh-dash'
