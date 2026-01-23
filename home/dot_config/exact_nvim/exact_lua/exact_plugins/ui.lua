@@ -49,7 +49,10 @@ return {
             event = 'notify',
             ---@param msg NoiceMessage
             cond = function(msg)
-              return vim.tbl_contains({ 'pkg-version.nvim', 'mason.nvim', 'nvim-treesitter' }, get_noice_title(msg))
+              return vim.tbl_contains(
+                { 'pkg-version.nvim', 'mason.nvim', 'nvim-treesitter', 'lazy.nvim' },
+                get_noice_title(msg)
+              )
             end,
           },
           view = 'mini',
