@@ -7,7 +7,7 @@ function brew_bundle() {
 
 function brew_update {
   brew update &&
-  brew upgrade &&
+  brew upgrade --greedy &&
   brew cleanup
 }
 
