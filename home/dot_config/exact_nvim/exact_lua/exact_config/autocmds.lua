@@ -135,6 +135,7 @@ local filetypes_to_close_with_q = {
   'codecompanion',
   'checkhealth',
   'dbout',
+  'git',
   'gitsigns-blame',
   'grug-far',
   'help',
@@ -550,7 +551,6 @@ local function set_relativenumber(is_relative)
 end
 
 local filetypes_to_skip_line_numbering = {
-  'codecompanion',
   'lazy',
   'mason',
   'snacks_picker_input',
