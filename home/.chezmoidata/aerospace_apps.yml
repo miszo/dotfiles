@@ -14,12 +14,11 @@ aerospace_apps:
   workspace_t:
     - 'com.mitchellh.ghostty'
   workspace_v:
-    - 'com.kitze.sizzy'
+    - 'com.hnc.Discord'
   workspace_w:
     - 'com.google.Chrome'
   workspace_y:
     - 'com.tinyspeck.slackmacgap'
-    - 'com.hnc.Discord'
   floating:
     - 'com.apple.finder'
     - 'com.apple.systempreferences'
