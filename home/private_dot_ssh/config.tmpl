@@ -1,9 +1,10 @@
 {{- if .computer.isWork }}
 {{- onepasswordRead "op://Employee/persistent ssh/notesPlain" .op.work.accountCode -}}
-
-{{ end -}}
+{{ end }}
 
 Include /Users/miszo/.colima/ssh_config
+
+Include ~/.ssh/1Password/config
 
 Host *
   IdentityAgent "~/.1password/agent.sock"
@@ -16,5 +17,3 @@ Host {{ .ssh.homelab02.host | trim }}
 
 Host {{ .ssh.unifi.host | trim }}
   HostName {{ .ssh.unifi.hostName | trim }}
-
-Include ~/.ssh/1Password/config
