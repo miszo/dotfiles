@@ -4,16 +4,35 @@
 
 Include /Users/miszo/.colima/ssh_config
 
-Include ~/.ssh/1Password/config
+Host {{ .ssh.github.host | trim }}
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/identities/github.pub
 
-Host *
-  IdentityAgent "~/.1password/agent.sock"
+{{ if .computer.isWork -}}
+Host {{ .ssh.gitlab.host | trim }}
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/identities/gitlab.pub
 
+{{ else -}}
 Host {{ .ssh.homelab01.host | trim }}
   HostName {{ .ssh.homelab01.hostName | trim }}
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/identities/homelab01.pub
 
 Host {{ .ssh.homelab02.host | trim }}
   HostName {{ .ssh.homelab02.hostName | trim }}
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/identities/homelab02.pub
 
 Host {{ .ssh.unifi.host | trim }}
   HostName {{ .ssh.unifi.hostName | trim }}
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/identities/unifi.pub
+
+{{ end -}}
+
+Host *
+  IdentityAgent ~/.1password/agent.sock
+
+Host *
+  SetEnv TERM=xterm-256color

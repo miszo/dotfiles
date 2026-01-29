@@ -75,7 +75,11 @@ Support
 **/.DS_Store
 .ssh/1Password
 
-{{ if not .computer.isWork -}}
+{{ if .computer.isWork -}}
+.ssh/identities/homelab01.pub
+.ssh/identities/homelab02.pub
+.ssh/identities/unifi.pub
+{{ else -}}
 .config/git/config-work
 .config/glab-cli
 .config/op/plugins/used_items/glab.json
@@ -84,4 +88,6 @@ Support
 .config/zsh/.zsh_work_aliases.zsh
 .config/zsh/.zsh_work_env.zsh
 .config/zsh/.zsh_work_functions.zsh
+.ssh/identities/gitlab.pub
 {{ end -}}
+
