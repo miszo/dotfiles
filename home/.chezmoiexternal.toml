@@ -31,6 +31,14 @@ refreshPeriod = "168h"
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-toggle.sh"
 refreshPeriod = "168h"
+# superpowers for opencode
+[".config/opencode/superpowers"]
+type = "archive"
+url = "https://github.com/miszo/superpowers/archive/refs/heads/main.tar.gz"
+exact = true
+stripComponents = 1
+refreshPeriod = "168h"
+# tmuxifier
 [".tmuxifier"]
 type = "archive"
 url = "https://github.com/jimeh/tmuxifier/archive/master.tar.gz"
