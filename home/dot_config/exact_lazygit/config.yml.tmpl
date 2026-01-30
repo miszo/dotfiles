@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
 # vim: syntax=yaml
+notARepository: "skip"
 {{ if .computer.isWork -}}
 services:
   {{ .lazygit.work.serviceName | quote }}: {{ .lazygit.work.serviceValue | quote }}
