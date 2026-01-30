@@ -2,7 +2,7 @@
 {{- onepasswordRead "op://Employee/persistent ssh/notesPlain" .op.work.accountCode -}}
 {{ end }}
 
-Include /Users/miszo/.colima/ssh_config
+Include {{ joinPath .chezmoi.homeDir ".config" ".colima" "ssh_config" }}
 
 Host {{ .ssh.github.host | trim }}
   IdentitiesOnly yes
