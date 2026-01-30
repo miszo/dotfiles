@@ -11,7 +11,6 @@ mouse-hide-while-typing = true
 # theme
 theme = Catppuccin Mocha
 cursor-style = bar
-cursor-invert-fg-bg = true
 cursor-style-blink = false
 background-opacity = 1
 background-blur = 0
@@ -39,4 +38,5 @@ keybind=super+ctrl+d=new_split:right
 keybind=super+alt+d=new_split:down
 keybind=super+shift+r=reload_config
 
+config-file = ?config-zsh
 config-file = ?config-tmux

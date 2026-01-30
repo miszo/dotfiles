@@ -62,14 +62,12 @@ zinit snippet "$ZDOTDIR/plugins/opencode.zsh"
 zinit snippet "$ZDOTDIR/plugins/pnpm.zsh"
 
 # Keybindings
-bindkey "^p" history-search-backward
-bindkey "^n" history-search-forward
-bindkey "^[w" kill-region
-bindkey "^[b" backward-word
-bindkey "^[f" forward-word
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
-bindkey  "^[[3~"  delete-char
+bindkey "^p" history-search-backward         # Ctrl+p: search backward in history
+bindkey "^n" history-search-forward          # Ctrl+n: search forward in history
+bindkey '^u' backward-kill-line              # Ctrl+U: delete whole line backwards
+bindkey "^a" beginning-of-line               # Ctrl+a: move to beginning of line
+bindkey "^e" end-of-line                     # Ctrl+e: move to end of line
+bindkey  "^[[3~" delete-char                 # Delete key
 
 # History
 HISTSIZE=5000

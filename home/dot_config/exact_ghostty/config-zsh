@@ -1,0 +1,25 @@
+# vim: syntax=ghostty
+
+# keybinds for zsh
+# https://www.eso.org/~ndelmott/ascii.html
+
+# esc+b
+keybind=alt+right=text:\x1be
+
+# esc+f
+keybind=alt+left=text:\x1bb
+
+# ctrl+w
+keybind=alt+backspace=text:\x17
+
+# esc+delete
+keybind=alt+delete=text:\x1b\x7f
+
+# ctrl+a
+keybind=super+left=text:\x01
+
+# ctrl+e
+keybind=super+right=text:\x05
+
+# ctrl+u
+keybind=super+backspace=text:\x15
