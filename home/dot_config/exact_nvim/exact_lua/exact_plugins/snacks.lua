@@ -264,7 +264,6 @@ local statuscolumn = {
 local terminal = {
   win = {
     style = 'terminal',
-    position = 'float',
   },
 }
 

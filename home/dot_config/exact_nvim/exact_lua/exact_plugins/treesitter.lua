@@ -170,11 +170,21 @@ return {
       vim.api.nvim_create_autocmd('User', {
         pattern = 'TSUpdate',
         callback = function()
-          require('nvim-treesitter.parsers').blade = {
+          local parsers = require('nvim-treesitter.parsers')
+          parsers.blade = {
             install_info = {
               url = 'https://github.com/EmranMR/tree-sitter-blade',
             },
           }
+          parsers.just = {
+            install_info = {
+              url = 'https://github.com/IndianBoy42/tree-sitter-just', -- local path or git repo
+              files = { 'src/parser.c', 'src/scanner.c' },
+              branch = 'main',
+            },
+            maintainers = { '@IndianBoy42' },
+          }
+
           -- MDX support
           vim.filetype.add({
             extension = {
