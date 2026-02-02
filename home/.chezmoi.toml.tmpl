@@ -106,6 +106,7 @@ accountId = {{ $opWorkAccountId }}
 vaultId = {{ $opWorkVaultId }}
 itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode).id | quote }}
 token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccountCode | quote }}
+apiHost = {{ onepasswordRead "op://Employee/GitLab CLI token/api host" $opWorkAccountCode | quote }}
 {{- end }}
 
 [data.ssh.github]
