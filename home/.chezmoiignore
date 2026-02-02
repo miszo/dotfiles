@@ -75,6 +75,13 @@ Support
 **/.DS_Store
 .ssh/1Password
 
+# Opencode dependencies
+.config/opencode/node_modules
+.config/opencode/package.json
+.config/opencode/bun.lock
+.config/opencode/.gitignore
+
+
 {{ if .computer.isWork -}}
 .ssh/identities/homelab01.pub
 .ssh/identities/homelab02.pub
