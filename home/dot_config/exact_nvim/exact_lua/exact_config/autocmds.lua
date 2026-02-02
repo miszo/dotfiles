@@ -3,7 +3,7 @@
 ---@return integer augroup_id
 local function augroup(name, opts)
   opts = opts or { clear = true }
-  return vim.api.nvim_create_augroup('user_nvim_' .. name, opts)
+  return vim.api.nvim_create_augroup('miszo/' .. name, opts)
 end
 
 -- Check if we need to reload the file when it changed
@@ -514,7 +514,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- Autoformat autocmd
 vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('UserFormat', {}),
+  group = vim.api.nvim_create_augroup('miszo/format', {}),
   callback = function(event)
     UserUtil.formatting.format({ buf = event.buf })
   end,

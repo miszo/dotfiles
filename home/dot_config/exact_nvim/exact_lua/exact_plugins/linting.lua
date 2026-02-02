@@ -111,7 +111,7 @@ return {
     end
 
     -- Auto-lint on save and text changes
-    local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+    local lint_augroup = vim.api.nvim_create_augroup('miszo/lint', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
       group = lint_augroup,
       callback = debounce(100, try_lint),

@@ -1,7 +1,7 @@
 local M = {}
 
 -- Namespace for virtual text
-local ns_id = vim.api.nvim_create_namespace('pkg-version')
+local ns_id = vim.api.nvim_create_namespace('miszo/pkg-version')
 
 ---Compare semver versions
 ---@param current string Current version from package.json
@@ -10,12 +10,12 @@ local ns_id = vim.api.nvim_create_namespace('pkg-version')
 local function is_outdated(current, latest)
   -- Remove leading ^ or ~ or >= etc.
   local clean_current = current:gsub('^[~^>=<]+', '')
-  
+
   -- Simple semver comparison (not perfect but works for most cases)
   if clean_current == latest then
     return false
   end
-  
+
   -- If versions are different, consider outdated
   -- TODO: Implement proper semver comparison if needed
   return true
@@ -27,37 +27,31 @@ end
 ---@param version_info VersionInfo
 function M.show(bufnr, dependency, version_info)
   local config = require('local_plugins.pkg-version.config')
-  
+
   if not config.options.virtual_text.enabled then
     return
   end
-  
+
   local latest = version_info.latest
   local current = dependency.version:gsub('^[~^>=<]+', '')
-  
+
   local outdated = is_outdated(dependency.version, latest)
-  
+
   -- Hide up-to-date packages if configured
   if config.options.virtual_text.hide_up_to_date and not outdated then
     return
   end
-  
+
   local text, hl_group
-  
+
   if outdated then
-    text = string.format('%s%s', 
-      config.options.virtual_text.prefix,
-      latest
-    )
+    text = string.format('%s%s', config.options.virtual_text.prefix, latest)
     hl_group = config.options.virtual_text.highlight.outdated
   else
-    text = string.format('%s%s ✓', 
-      config.options.virtual_text.prefix,
-      latest
-    )
+    text = string.format('%s%s ✓', config.options.virtual_text.prefix, latest)
     hl_group = config.options.virtual_text.highlight.up_to_date
   end
-  
+
   vim.api.nvim_buf_set_extmark(bufnr, ns_id, dependency.line, 0, {
     virt_text = { { text, hl_group } },
     virt_text_pos = 'eol',
@@ -71,14 +65,14 @@ end
 ---@param error_msg string Error message
 function M.show_error(bufnr, dependency, error_msg)
   local config = require('local_plugins.pkg-version.config')
-  
+
   if not config.options.virtual_text.enabled then
     return
   end
-  
+
   local text = config.options.virtual_text.prefix .. '✗ ' .. error_msg
   local hl_group = config.options.virtual_text.highlight.error
-  
+
   vim.api.nvim_buf_set_extmark(bufnr, ns_id, dependency.line, 0, {
     virt_text = { { text, hl_group } },
     virt_text_pos = 'eol',
@@ -107,12 +101,12 @@ end
 ---@param bufnr number Buffer number
 function M.refresh(bufnr)
   M.clear(bufnr)
-  
+
   local parser = require('local_plugins.pkg-version.parser')
   local cache = require('local_plugins.pkg-version.cache')
-  
+
   local dependencies = parser.get_all_dependencies(bufnr)
-  
+
   -- Fetch all outdated info in a single call
   local registry = require('local_plugins.pkg-version.registry')
   registry.fetch_all_outdated(bufnr, function(data, err)
@@ -120,7 +114,7 @@ function M.refresh(bufnr)
       vim.notify('Failed to fetch package versions: ' .. err, vim.log.levels.WARN)
       return
     end
-    
+
     -- Now show virtual text for each dependency
     for _, dep in ipairs(dependencies) do
       local pkg_info = data[dep.name]

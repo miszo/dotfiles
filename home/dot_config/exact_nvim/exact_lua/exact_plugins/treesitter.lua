@@ -124,7 +124,7 @@ return {
 
       -- treesitter highlighting
       vim.api.nvim_create_autocmd('FileType', {
-        group = vim.api.nvim_create_augroup('user_nvim_treesitter', { clear = true }),
+        group = vim.api.nvim_create_augroup('miszo/nvim_treesitter', { clear = true }),
         callback = function(ev)
           local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
           if not UserUtil.treesitter.have(ft) then

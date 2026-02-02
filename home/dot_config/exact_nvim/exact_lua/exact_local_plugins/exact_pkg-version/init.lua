@@ -7,7 +7,7 @@ function M.setup(user_config)
   config.setup(user_config)
 
   -- Setup autocmds
-  local augroup = vim.api.nvim_create_augroup('PkgVersion', { clear = true })
+  local augroup = vim.api.nvim_create_augroup('miszo/PkgVersion', { clear = true })
 
   -- Auto-show on package.json open
   if config.options.autostart then

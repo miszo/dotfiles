@@ -1,7 +1,6 @@
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
-
   -- search/replace in multiple files
   {
     'MagicDuck/grug-far.nvim',
@@ -255,6 +254,43 @@ return {
     },
   },
 
+  -- Edit quickfix like a buffer
+  {
+    'stevearc/quicker.nvim',
+    ft = 'qf',
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {},
+    keys = {
+      {
+        '<leader>xq',
+        function()
+          require('quicker').toggle()
+        end,
+        desc = 'Quickfix List (Quicker)',
+      },
+      {
+        '<leader>xl',
+        function()
+          require('quicker').toggle({ list = 'loclist' })
+        end,
+        desc = 'Location List (Quicker)',
+      },
+      {
+        '>',
+        function()
+          require('quicker').expand({ before = 2, after = 2, add_to_existing = true })
+        end,
+      },
+      {
+        '<',
+        function()
+          require('quicker').collapse()
+        end,
+      },
+    },
+  },
+
   -- Finds and lists all of the TODO, HACK, BUG, etc comment
   -- in your project and loads them into a browsable list.
   {
@@ -392,6 +428,16 @@ return {
             target = '%1/%2.test.tsx',
             context = 'test',
           },
+          {
+            pattern = '(.*)/(.*).js$',
+            target = '%1/%2.test.js',
+            context = 'test',
+          },
+          {
+            pattern = '(.*)/(.*).jsx$',
+            target = '%1/%2.test.jsx',
+            context = 'test',
+          },
           -- Back from tests to files
           {
             pattern = '(.*)/(.*).test.ts$',
@@ -401,6 +447,16 @@ return {
           {
             pattern = '(.*)/(.*).test.tsx$',
             target = '%1/%2.tsx',
+            context = 'source',
+          },
+          {
+            pattern = '(.*)/(.*).test.js$',
+            target = '%1/%2.js',
+            context = 'source',
+          },
+          {
+            pattern = '(.*)/(.*).test.jsx$',
+            target = '%1/%2.jsx',
             context = 'source',
           },
         },
@@ -466,5 +522,23 @@ return {
         lazy_update_context = true,
       }
     end,
+  },
+  {
+    'barrettruth/import-cost.nvim',
+    build = 'sh install.sh npm',
+    opts = {
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+        'vue',
+        'svelte',
+        'astro',
+      },
+    },
+    config = true,
   },
 }

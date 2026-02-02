@@ -53,8 +53,6 @@ return {
       UserUtil.formatting.register(UserUtil.lsp.formatter())
 
       vim.diagnostic.config({
-        -- virtual_text = get_virtual_text,
-        -- virtual_lines = get_virtual_lines,
         virtual_text = false,
         virtual_lines = false,
         underline = true,
@@ -67,6 +65,9 @@ return {
             [vim.diagnostic.severity.HINT] = UserConfig.icons.diagnostics.Hint,
           },
           numhl = { [vim.diagnostic.severity.ERROR] = 'ErrorMsg', [vim.diagnostic.severity.WARN] = 'WarningMsg' },
+        },
+        float = {
+          border = vim.g.border_style,
         },
       })
 
