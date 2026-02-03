@@ -122,6 +122,9 @@ return {
     'rachartier/tiny-inline-diagnostic.nvim',
     event = 'VeryLazy',
     priority = 1000,
+
+    ---@module 'tiny-inline-diagnostic'
+    ---@type PluginConfig
     opts = {
       options = {
         use_icons_from_diagnostic = false,
@@ -133,6 +136,9 @@ return {
           tabstop = 4,
         },
         format = format_diagnostic,
+        virt_texts = {
+          priority = 5120,
+        },
       },
     },
     config = function(_, opts)
