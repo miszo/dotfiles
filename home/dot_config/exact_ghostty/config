@@ -1,3 +1,6 @@
+# disable auto-update - handled by homebrew
+auto-update = off
+
 # fonts
 font-family = MonoLisa Variable
 font-family = Symbols Nerd Font Mono
@@ -37,6 +40,10 @@ keybind=super+shift+n=new_window
 keybind=super+ctrl+d=new_split:right
 keybind=super+alt+d=new_split:down
 keybind=super+shift+r=reload_config
+
+keybind=super+m=unbind
+keybind=super+enter=unbind
+keybind=super+ctrl+f=unbind
 
 config-file = ?config-zsh
 config-file = ?config-tmux
