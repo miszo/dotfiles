@@ -523,22 +523,4 @@ return {
       }
     end,
   },
-  {
-    'barrettruth/import-cost.nvim',
-    build = 'sh install.sh npm',
-    opts = {
-      filetypes = {
-        'javascript',
-        'javascriptreact',
-        'javascript.jsx',
-        'typescript',
-        'typescriptreact',
-        'typescript.tsx',
-        'vue',
-        'svelte',
-        'astro',
-      },
-    },
-    config = true,
-  },
 }

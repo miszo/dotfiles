@@ -99,6 +99,7 @@ vaultId = {{ $opPersonalVaultId }}
 itemId = {{ (onepassword "GitHub CLI token" $opPersonalVaultName $opPersonalAccountCode).id | quote }}
 token = {{ onepasswordRead "op://dev/GitHub CLI token/token" $opPersonalAccountCode | quote }}
 chezmoiToken = {{ onepasswordRead "op://dev/chezmoi GitHub API Token/token" $opPersonalAccountCode | quote }}
+mcpToken = {{ onepasswordRead "op://dev/GitHub PAT - MCP/token" $opPersonalAccountCode | quote }}
 
 {{- if $isWork }}
 [data.glab]

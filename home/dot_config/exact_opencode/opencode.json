@@ -15,16 +15,6 @@
     },
     "lsp": "allow",
   },
-  "agent": {
-    "code-reviewer": {
-      "description": "Reviews code for best practices and potential issues",
-      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
-      "permission": {
-        "edit": "deny",
-        "task": "deny",
-      },
-    },
-  },
   "watcher": {
     "ignore": [
       "node_modules/**",
@@ -48,20 +38,53 @@
     "sentry": {
       "type": "remote",
       "url": "https://mcp.sentry.dev/mcp",
-      "enabled": false,
+      "enabled": false
     },
     "atlassian": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/sse",
       "enabled": false
     },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:GH_MCP_TOKEN}",
+        "X-MCP-Toolsets": "repos,issues",
+        "X-MCP-Readonly": "true"
+      },
+      "enabled": false
+    },
+    "gitlab": {
+      "type": "local",
+      "command": [
+        "glab",
+        "mcp",
+        "serve"
+      ],
+      "enabled": false
+    },
     "chrome-devtools": {
       "type": "local",
-      "command": ["npx", "chrome-devtools-mcp@latest"],
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "enabled": false
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "playwright-mcp@latest"
+      ],
       "enabled": false
     }
   },
   "keybinds": {
-    "input_newline": "ctrl+n"
-  },
+    "input_submit": "alt+return",
+    "input_newline": "return"
+  }
 }

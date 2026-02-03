@@ -26,7 +26,7 @@ function update_all {
   brew_update &&
   zinit_update &&
   uv_update &&
-  GH_TOKEN=$OCTO_TOKEN gh extension upgrade --all &&
+  gh extension upgrade --all &&
   asdf reshim
 }
 
