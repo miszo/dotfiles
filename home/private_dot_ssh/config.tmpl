@@ -15,16 +15,19 @@ Host {{ .ssh.gitlab.host | trim }}
 
 {{ else -}}
 Host {{ .ssh.homelab01.host | trim }}
+  User {{ .ssh.homelab01.user | trim }}
   HostName {{ .ssh.homelab01.hostName | trim }}
   IdentitiesOnly yes
   IdentityFile ~/.ssh/identities/homelab01.pub
 
 Host {{ .ssh.homelab02.host | trim }}
+  User {{ .ssh.homelab02.user | trim }}
   HostName {{ .ssh.homelab02.hostName | trim }}
   IdentitiesOnly yes
   IdentityFile ~/.ssh/identities/homelab02.pub
 
 Host {{ .ssh.unifi.host | trim }}
+  user {{ .ssh.unifi.user | trim }}
   HostName {{ .ssh.unifi.hostName | trim }}
   IdentitiesOnly yes
   IdentityFile ~/.ssh/identities/unifi.pub
