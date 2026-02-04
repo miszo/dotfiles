@@ -108,18 +108,17 @@ vaultId = {{ $opWorkVaultId }}
 itemId = {{ (onepassword "GitLab CLI token" $opWorkVaultName $opWorkAccountCode).id | quote }}
 token = {{ onepasswordRead "op://Employee/GitLab CLI token/token" $opWorkAccountCode | quote }}
 apiHost = {{ onepasswordRead "op://Employee/GitLab CLI token/api host" $opWorkAccountCode | quote }}
+
 {{- end }}
 
 [data.ssh.github]
 host = {{ onepasswordRead "op://dev/GitHub SSH key/Host" $opPersonalAccountCode | quote }}
 identityFileContent = {{ onepasswordRead "op://dev/GitHub SSH key/public key" $opPersonalAccountCode | quote }}
-
-{{- if $isWork }}
+{{ if $isWork }}
 [data.ssh.gitlab]
 host = {{ onepasswordRead "op://Employee/GitLab SSH key/Host" $opWorkAccountCode | quote }}
 identityFileContent = {{ onepasswordRead "op://Employee/GitLab SSH key/public key" $opWorkAccountCode | quote }}
-
-{{ else -}}
+{{ else }}
 [data.ssh.homelab01]
 host = {{ onepasswordRead "op://dev/Homelab01 SSH key/Host" $opPersonalAccountCode | quote }}
 hostName = {{ onepasswordRead "op://dev/Homelab01 SSH key/HostName" $opPersonalAccountCode | quote }}
@@ -137,8 +136,7 @@ host = {{ onepasswordRead "op://dev/Unifi SSH key/Host" $opPersonalAccountCode |
 hostName = {{ onepasswordRead "op://dev/Unifi SSH key/HostName" $opPersonalAccountCode | quote }}
 user = {{ onepasswordRead "op://dev/Unifi SSH key/User" $opPersonalAccountCode | quote }}
 identityFileContent = {{ onepasswordRead "op://dev/Unifi SSH key/public key" $opPersonalAccountCode | quote }}
-
-{{ end -}}
+{{ end }}
 
 [data.tealdeer]
 cacheDir = {{ joinPath .chezmoi.homeDir ".cache" "tealdeer" | quote }}
