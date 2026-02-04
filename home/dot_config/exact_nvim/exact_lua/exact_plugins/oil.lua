@@ -72,6 +72,12 @@ return {
             return name == '.DS_Store' or name == 'thumbs.db' or name == '..'
           end,
         },
+        float = {
+          border = vim.g.border_style,
+        },
+        confirmation = {
+          border = vim.g.border_style,
+        },
       })
       vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent directory' })
 
