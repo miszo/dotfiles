@@ -107,7 +107,7 @@ return {
             hide_ctrl_q = { '<c-q>', 'hide', mode = 'n', desc = 'hide the terminal window' },
             hide_ctrl_dot = { '<c-.>', 'hide', mode = 'nt', desc = 'hide the terminal window' },
             hide_ctrl_z = { '<c-z>', 'hide', mode = 'nt', desc = 'hide the terminal window' },
-            prompt = { '<c-p>', 'prompt', mode = 't', desc = 'insert prompt or context' },
+            prompt = { '<c-o>', 'prompt', mode = 't', desc = 'insert prompt or context' },
             stopinsert = { '<c-q>', 'stopinsert', mode = 't', desc = 'enter normal mode' },
             -- Navigate windows in terminal mode
             nav_left = { '<c-h>', 'nav_left', expr = true, desc = 'navigate to the left window' },
