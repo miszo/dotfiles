@@ -3,23 +3,36 @@
 return {
   -- Markdown preview
   {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    build = function()
-      require('lazy').load({ plugins = { 'markdown-preview.nvim' } })
-      vim.fn['mkdp#util#install']()
-    end,
+    'selimacerbas/markdown-preview.nvim',
+    cmd = { 'MarkdownPreview', 'MarkdownPreviewStop', 'MarkdownPreviewRefresh' },
+    dependencies = { 'selimacerbas/live-server.nvim' },
     keys = {
       {
-        '<leader>cp',
-        ft = 'markdown',
-        '<cmd>MarkdownPreviewToggle<cr>',
-        desc = 'Markdown Preview',
+        '<leader>mps',
+        ft = { 'markdown', 'markdown.mdx' },
+        '<cmd>MarkdownPreview<cr>',
+        desc = 'Markdown: Start preview',
+      },
+      {
+        '<leader>mpS',
+        ft = { 'markdown', 'markdown.mdx' },
+        '<cmd>MarkdownPreviewStop<cr>',
+        desc = 'Markdown: Stop preview',
+      },
+
+      {
+        '<leader>mpr',
+        ft = { 'markdown', 'markdown.mdx' },
+        '<cmd>MarkdownPreviewRefresh<cr>',
+        desc = 'Markdown: Refresh preview',
       },
     },
     config = function()
-      vim.g.mkdp_browser = 'Google Chrome'
-      vim.cmd([[do FileType]])
+      require('markdown_preview').setup({
+        port = 8421,
+        open_browser = true,
+        debounce_ms = 300,
+      })
     end,
   },
   -- Markdown rendering
@@ -32,7 +45,7 @@ return {
       },
       'nvim-mini/mini.icons',
     }, -- if you use standalone mini plugins
-    ft = { 'markdown', 'markdown.mdx', 'codecompanion' },
+    ft = { 'markdown', 'markdown.mdx' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {

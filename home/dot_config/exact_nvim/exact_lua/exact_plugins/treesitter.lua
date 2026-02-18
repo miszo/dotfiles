@@ -267,7 +267,9 @@ return {
       tsj.setup({
         use_default_keymaps = false,
       })
-      vim.keymap.set('n', '<leader>m', tsj.toggle, { desc = 'Toggle split/join code block' })
+      vim.keymap.set('n', '<leader>M', function()
+        tsj.toggle({ split = { recursive = true } })
+      end, { desc = 'Toggle split/join code block' })
     end,
   },
   -- Chezmoi syntax highlighting
