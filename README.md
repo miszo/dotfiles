@@ -18,17 +18,17 @@ need the [1Password CLI](https://developer.1password.com/docs/cli/) installed.
 To list possible commands just run:
 
 ```sh
-    make
+    just
 ```
 
 Bootstrap dependencies and git hooks with:
 
 ```sh
-    make bootstrap
+    just bootstrap
 ```
 
 To run `gitleaks` locally:
 
 ```sh
-    make gitleaks
+    just gitleaks
 ```
