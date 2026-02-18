@@ -2,6 +2,15 @@
   "$schema": "https://opencode.ai/config.json",
   "theme": "catppuccin",
   "model": "github-copilot/claude-sonnet-4.5",
+  "share": "disabled",
+  "agent": {
+    "plan": {
+      "model": "github-copilot/claude-opus-4.6"
+    },
+    "build": {
+      "model": "github-copilot/claude-sonnet-4.5"
+    }
+  },
   "permission": {
     "read": {
       "*": "allow",
@@ -11,7 +20,10 @@
     },
     "bash": {
       "*": "ask",
-      "git status": "allow"
+      "git status": "allow",
+      "git diff": "allow",
+      "cat": "allow",
+      "ls": "allow",
     },
     "lsp": "allow",
   },
