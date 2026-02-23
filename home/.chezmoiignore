@@ -81,11 +81,16 @@ Support
 .config/opencode/bun.lock
 .config/opencode/.gitignore
 
+# Claude config files
+.claude/**/*
 
 {{ if .computer.isWork -}}
 .ssh/identities/homelab01.pub
 .ssh/identities/homelab02.pub
 .ssh/identities/unifi.pub
+# Except for claude config and statusline script
+!.claude/settings.json
+!.claude/statusline.sh
 {{ else -}}
 .config/git/config-work
 .config/glab-cli

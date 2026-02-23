@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "defaultMode": "default"
+  },
+  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 2
+  },
+  "enabledPlugins": {
+    "superpowers@superpowers-dev": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true
+  },
+  "syntaxHighlightingDisabled": false,
+  "effortLevel": "medium"
+}
