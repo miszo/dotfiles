@@ -22,7 +22,7 @@ return {
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
       'arthur944/neotest-bun',
-      'nvim-neotest/neotest-go',
+      'fredrikaverpil/neotest-golang',
       'olimorris/neotest-rspec',
       'lawrence-laz/neotest-zig',
       'mfussenegger/nvim-dap',
@@ -37,7 +37,7 @@ return {
           jest_test_discovery = true,
         },
         ['neotest-vitest'] = {},
-        ['neotest-go'] = {
+        ['neotest-golang'] = {
           dap_go_enabled = true,
         },
         ['neotest-rspec'] = {},
