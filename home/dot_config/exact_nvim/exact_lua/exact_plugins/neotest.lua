@@ -4,6 +4,12 @@ local function has_bun_in_project()
   return root_dir ~= nil
 end
 
+local function has_go_in_project()
+  local go_markers = { 'go.mod', 'go.sum' }
+  local root_dir = vim.fs.root(0, go_markers)
+  return root_dir ~= nil
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -37,9 +43,6 @@ return {
           jest_test_discovery = true,
         },
         ['neotest-vitest'] = {},
-        ['neotest-golang'] = {
-          dap_go_enabled = true,
-        },
         ['neotest-rspec'] = {},
         ['neotest-zig'] = {},
       },
@@ -103,6 +106,13 @@ return {
         -- Dynamically add bun adapter if bun project detected
         if has_bun_in_project() then
           opts.adapters['neotest-bun'] = {}
+        end
+
+        -- Dynamically add golang adapter if go project detected
+        if has_go_in_project() then
+          opts.adapters['neotest-golang'] = {
+            dap_go_enabled = true,
+          }
         end
 
         local adapters = {}
