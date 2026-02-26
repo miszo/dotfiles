@@ -61,20 +61,57 @@ COST_FMT=$(printf '$%.2f' "$COST")
 # Duration
 DURATION_MS=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
 DURATION_SEC=$((DURATION_MS / 1000))
-MINS=$((DURATION_SEC / 60))
-SECS=$((DURATION_SEC % 60))
-DURATION_FMT="${MINS}m${SECS}s"
+
+# Format duration: show hours when >= 60 minutes
+if [ "$DURATION_SEC" -ge 3600 ]; then
+	# Hours, minutes, seconds
+	HOURS=$((DURATION_SEC / 3600))
+	REMAINDER=$((DURATION_SEC % 3600))
+	MINS=$((REMAINDER / 60))
+	SECS=$((REMAINDER % 60))
+	DURATION_FMT="${HOURS}h${MINS}m${SECS}s"
+else
+	# Just minutes and seconds
+	MINS=$((DURATION_SEC / 60))
+	SECS=$((DURATION_SEC % 60))
+	DURATION_FMT="${MINS}m${SECS}s"
+fi
 
 # Token counts
 INPUT_TOKENS=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 OUTPUT_TOKENS=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 TOTAL_TOKENS=$((INPUT_TOKENS + OUTPUT_TOKENS))
 
-# Format tokens with K suffix if over 1000
-if [ "$TOTAL_TOKENS" -ge 1000 ]; then
-  TOKENS_FMT="$((TOTAL_TOKENS / 1000))k"
+# Format tokens with proper suffixes and commas
+# 1,000,000+ = 1.23M (millions with 2 decimals)
+# 1,000+ = 3,078k (thousands with comma if >= 1000k)
+# <1,000 = 999 (plain number)
+if [ "$TOTAL_TOKENS" -ge 1000000 ]; then
+	# Format as millions with 2 decimal places
+	MILLIONS=$((TOTAL_TOKENS / 1000000))
+	REMAINDER=$((TOTAL_TOKENS % 1000000))
+	DECIMALS=$((REMAINDER / 10000)) # Get 2 decimal places
+	# Add commas to millions if >= 1,000M
+	if [ "$MILLIONS" -ge 1000 ]; then
+		HIGH=$((MILLIONS / 1000))
+		LOW=$((MILLIONS % 1000))
+		TOKENS_FMT=$(printf "%d,%03d.%02dM" "$HIGH" "$LOW" "$DECIMALS")
+	else
+		TOKENS_FMT=$(printf "%d.%02dM" "$MILLIONS" "$DECIMALS")
+	fi
+elif [ "$TOTAL_TOKENS" -ge 1000 ]; then
+	# Format as thousands with comma separator
+	THOUSANDS=$((TOTAL_TOKENS / 1000))
+	# Add comma separator for thousands >= 1,000k (e.g., 3,078k)
+	if [ "$THOUSANDS" -ge 1000 ]; then
+		HIGH=$((THOUSANDS / 1000))
+		LOW=$((THOUSANDS % 1000))
+		TOKENS_FMT=$(printf "%d,%03dk" "$HIGH" "$LOW")
+	else
+		TOKENS_FMT="${THOUSANDS}k"
+	fi
 else
-  TOKENS_FMT="$TOTAL_TOKENS"
+	TOKENS_FMT="$TOTAL_TOKENS"
 fi
 
 # ============================================================================
@@ -84,40 +121,40 @@ CACHE_FILE="/tmp/claude-statusline-git-cache-$$"
 CACHE_MAX_AGE=5 # seconds
 
 cache_is_stale() {
-  if [ ! -f "$CACHE_FILE" ]; then
-    return 0
-  fi
-  # macOS uses -f %m, Linux uses -c %Y
-  if command -v stat >/dev/null 2>&1; then
-    MTIME=$(stat -f %m "$CACHE_FILE" 2>/dev/null || stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)
-    AGE=$(($(date +%s) - MTIME))
-    [ "$AGE" -gt "$CACHE_MAX_AGE" ] && return 0
-  fi
-  return 1
+	if [ ! -f "$CACHE_FILE" ]; then
+		return 0
+	fi
+	# macOS uses -f %m, Linux uses -c %Y
+	if command -v stat >/dev/null 2>&1; then
+		MTIME=$(stat -f %m "$CACHE_FILE" 2>/dev/null || stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)
+		AGE=$(($(date +%s) - MTIME))
+		[ "$AGE" -gt "$CACHE_MAX_AGE" ] && return 0
+	fi
+	return 1
 }
 
 GIT_INFO=""
 if cache_is_stale; then
-  if git rev-parse --git-dir >/dev/null 2>&1; then
-    BRANCH=$(git branch --show-current 2>/dev/null || echo "detached")
-    STAGED=$(git diff --cached --numstat 2>/dev/null | wc -l | tr -d ' ')
-    MODIFIED=$(git diff --numstat 2>/dev/null | wc -l | tr -d ' ')
-    UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
-    echo "$BRANCH|$STAGED|$MODIFIED|$UNTRACKED" >"$CACHE_FILE"
-  else
-    echo "|||" >"$CACHE_FILE"
-  fi
+	if git rev-parse --git-dir >/dev/null 2>&1; then
+		BRANCH=$(git branch --show-current 2>/dev/null || echo "detached")
+		STAGED=$(git diff --cached --numstat 2>/dev/null | wc -l | tr -d ' ')
+		MODIFIED=$(git diff --numstat 2>/dev/null | wc -l | tr -d ' ')
+		UNTRACKED=$(git ls-files --others --exclude-standard 2>/dev/null | wc -l | tr -d ' ')
+		echo "$BRANCH|$STAGED|$MODIFIED|$UNTRACKED" >"$CACHE_FILE"
+	else
+		echo "|||" >"$CACHE_FILE"
+	fi
 fi
 
 if [ -f "$CACHE_FILE" ]; then
-  IFS='|' read -r BRANCH STAGED MODIFIED UNTRACKED <"$CACHE_FILE"
-  if [ -n "$BRANCH" ]; then
-    GIT_STATUS=""
-    [ "$STAGED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${GREEN}+${STAGED}${RESET}"
-    [ "$MODIFIED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${YELLOW}~${MODIFIED}${RESET}"
-    [ "$UNTRACKED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${RED}?${UNTRACKED}${RESET}"
-    GIT_INFO="${OVERLAY2}│${RESET} ${ICON_GIT} ${MAUVE}${BRANCH}${RESET}${GIT_STATUS}"
-  fi
+	IFS='|' read -r BRANCH STAGED MODIFIED UNTRACKED <"$CACHE_FILE"
+	if [ -n "$BRANCH" ]; then
+		GIT_STATUS=""
+		[ "$STAGED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${GREEN}+${STAGED}${RESET}"
+		[ "$MODIFIED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${YELLOW}~${MODIFIED}${RESET}"
+		[ "$UNTRACKED" -gt 0 ] && GIT_STATUS="${GIT_STATUS} ${RED}?${UNTRACKED}${RESET}"
+		GIT_INFO="${OVERLAY2}│${RESET} ${ICON_GIT} ${MAUVE}${BRANCH}${RESET}${GIT_STATUS}"
+	fi
 fi
 
 # ============================================================================
@@ -125,13 +162,13 @@ fi
 # ============================================================================
 # Choose color based on usage threshold
 if [ "$PCT" -ge 90 ]; then
-  BAR_COLOR="$RED"
+	BAR_COLOR="$RED"
 elif [ "$PCT" -ge 70 ]; then
-  BAR_COLOR="$YELLOW"
+	BAR_COLOR="$YELLOW"
 elif [ "$PCT" -ge 50 ]; then
-  BAR_COLOR="$PEACH"
+	BAR_COLOR="$PEACH"
 else
-  BAR_COLOR="$GREEN"
+	BAR_COLOR="$GREEN"
 fi
 
 # Build 20-character progress bar for better granularity
