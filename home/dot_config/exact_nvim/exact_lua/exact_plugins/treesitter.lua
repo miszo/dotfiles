@@ -297,6 +297,16 @@ return {
       end, { desc = 'Toggle split/join code block' })
     end,
   },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup({
+        enable = true,
+        max_lines = 6,
+        trim_scope = 'outer',
+      })
+    end,
+  },
   -- Chezmoi syntax highlighting
   {
     'alker0/chezmoi.vim',
