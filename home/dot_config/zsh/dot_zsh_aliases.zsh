@@ -1,4 +1,5 @@
 alias vim="nvim"
+alias asdf="mise"
 alias npmplease="rm -rf node_modules/ && rm -f package-lock.json && npm install"
 alias pnpmplease="rm -rf node_modules/ && rm -f pnpm-lock.yaml && pnpm install"
 alias yarnplease="rm -rf node_modules/ && rm -f yarn.lock && yarn install"

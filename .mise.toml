@@ -1,0 +1,8 @@
+# Mise configuration for chezmoi project
+# https://mise.jdx.dev/configuration.html
+
+[tools]
+chezmoi = "latest"
+just = "1.46.0"
+node = "24.13.1"
+pnpm = "latest"

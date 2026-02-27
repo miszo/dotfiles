@@ -21,3 +21,6 @@ Desktop.ini
 nbproject/
 *.swp
 .vs/
+
+# Claude Code local settings
+**/.claude/settings.local.json

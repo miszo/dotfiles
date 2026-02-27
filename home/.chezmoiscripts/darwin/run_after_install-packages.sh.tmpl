@@ -8,14 +8,10 @@ function brew_bundle() {
   brew bundle --file={{ .brew.brewfilePath }}
 }
 
-function asdf_install() {
-  echo "Installing software dependency versions via asdf..."
-  while IFS= read -r plugin; do
-    asdf plugin add "${plugin}" || true # ignore fail
-    asdf install "${plugin}" || true # ignore fail
-  done < <(cut -d " " -f1 < {{ .brew.toolVersionsPath }})
-
-  asdf reshim
+function mise_install() {
+  echo "Installing software dependency versions via mise..."
+  mise install
+  mise reshim
 }
 function update_theme() {
   echo "You can update syntax highliting theme by running:"
@@ -52,7 +48,7 @@ function update_uv_tools() {
 
 function main() {
   brew_bundle
-  asdf_install
+  mise_install
   install_gh_extensions
   update_gh_extensions
   install_uv_tools

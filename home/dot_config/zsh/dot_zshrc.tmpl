@@ -43,7 +43,6 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 # Add in omz plugins
-zinit snippet OMZP::asdf
 zinit snippet OMZP::aws
 zinit snippet OMZP::brew
 zinit snippet OMZP::bun
@@ -121,6 +120,7 @@ compinit
 zinit cdreplay -q
 
 # Shell integrations
+eval "$(mise activate zsh)"
 eval "$(fzf --zsh)"
 eval "$(thefuck --alias)"
 eval "$(zoxide init --cmd cd zsh)"
@@ -137,16 +137,6 @@ export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:-1,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-
-# set java env variables
-[[ -f ~/.asdf/plugins/java/set-java-home.zsh ]] && . ~/.asdf/plugins/java/set-java-home.zsh || true
-
-# set golang env variables
-[[ -f ~/.asdf/plugins/golang/set-env.zsh ]] && . ~/.asdf/plugins/golang/set-env.zsh || true
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true
-
-# set rust env variables
-[[ -f "~/.asdf/installs/rust/1.93.1/env" ]] && . "~/.asdf/installs/rust/1.93.1/env" || true
 
 # run oh-my-posh
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/config.json)"
