@@ -31,6 +31,23 @@ return {
         )
         return
       end
+
+      -- Check if tree-sitter CLI is installed, install if missing
+      if vim.fn.executable('tree-sitter') == 0 then
+        vim.notify('Installing tree-sitter CLI via npm...', vim.log.levels.INFO)
+        local result = vim.fn.system('npm install -g tree-sitter-cli')
+        if vim.v.shell_error == 0 then
+          vim.notify('tree-sitter CLI installed successfully', vim.log.levels.INFO)
+        else
+          UserUtil.lazyCoreUtil.error({
+            'Failed to install tree-sitter CLI via npm.',
+            'Please install manually: npm install -g tree-sitter-cli',
+            'Error: ' .. result,
+          })
+          return
+        end
+      end
+
       vim.cmd.TSUpdate()
     end,
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
@@ -99,10 +116,18 @@ return {
       if not TS.get_installed then
         return UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
       elseif vim.fn.executable('tree-sitter') == 0 then
-        return UserUtil.lazyCoreUtil.error({
-          '**treesitter-main** requires the `tree-sitter` CLI executable to be installed.',
-          'Run `:checkhealth nvim-treesitter` for more information.',
-        })
+        UserUtil.lazyCoreUtil.info('Installing tree-sitter CLI via npm...')
+        local result = vim.fn.system('npm install -g tree-sitter-cli')
+        if vim.v.shell_error == 0 then
+          UserUtil.lazyCoreUtil.info('tree-sitter CLI installed successfully')
+        else
+          UserUtil.lazyCoreUtil.error({
+            'Failed to install tree-sitter CLI via npm.',
+            'Please install manually: npm install -g tree-sitter-cli',
+            'Error: ' .. result,
+          })
+          return
+        end
       elseif type(opts.ensure_installed) ~= 'table' then
         return UserUtil.lazyCoreUtil.error('`nvim-treesitter` opts.ensure_installed must be a table')
       end
