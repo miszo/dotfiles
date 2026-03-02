@@ -1063,7 +1063,7 @@
                         ]
                     },
                     {
-                        "description": "Change right_command+hjkl to arrow keys",
+                        "description": "Change left_command+hjkl to arrow keys",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -1075,7 +1075,7 @@
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
-                                        "mandatory": ["right_command"],
+                                        "mandatory": ["left_command"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -1092,7 +1092,7 @@
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
-                                        "mandatory": ["right_command"],
+                                        "mandatory": ["left_command"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -1109,7 +1109,7 @@
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
-                                        "mandatory": ["right_command"],
+                                        "mandatory": ["left_command"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -1126,7 +1126,7 @@
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
-                                        "mandatory": ["right_command"],
+                                        "mandatory": ["left_command"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -1232,6 +1232,16 @@
                         "product_id": 6519,
                         "vendor_id": 12951
                     },
+                    "manipulate_caps_lock_led": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": true,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 640,
+                        "vendor_id": 13364
+                    },
+                    "ignore": true,
                     "manipulate_caps_lock_led": false
                 }
             ],
