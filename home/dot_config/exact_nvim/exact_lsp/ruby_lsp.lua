@@ -44,5 +44,10 @@ return {
         '**/.git/subtree-cache/**',
       },
     },
+    addonSettings = {
+      ['Ruby LSP Rails'] = {
+        enablePendingMigrationsPrompt = false,
+      },
+    },
   },
 }
