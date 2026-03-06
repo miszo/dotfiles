@@ -70,7 +70,7 @@ async function getCommitMessage() {
 }
 
 function splitCommitMessage(message) {
-  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore)(\(([^)]+)\))?:\s*(.+)$/m;
+  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|ci|build)(\(([^)]+)\))?:\s*(.+)$/m;
 
   const match = message.match(conventionalCommitRegex);
 
