@@ -70,9 +70,10 @@ async function getCommitMessage() {
 }
 
 function splitCommitMessage(message) {
-  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|ci|build)(\(([^)]+)\))?:\s*(.+)$/m;
+  const [firstLine, ...rest] = message.split('\n');
+  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|ci|build)(\(([^)]+)\))?:\s*(.+)$/;
 
-  const match = message.match(conventionalCommitRegex);
+  const match = firstLine.match(conventionalCommitRegex);
 
   if (match) {
     const [, type, , existingScope, description] = match;
@@ -80,7 +81,8 @@ function splitCommitMessage(message) {
     return {
       type,
       existingScope,
-      description
+      description,
+      body: rest.join('\n')
     };
   }
 
@@ -91,11 +93,12 @@ function splitCommitMessage(message) {
 function transformCommitMessage(originalMessage, branchName) {
   const ticketKeyMatch = branchName.match(/([A-Z]+-\d+)/);
   const ticketKey = ticketKeyMatch ? ticketKeyMatch[1] : null;
-  const { type, existingScope, description } = splitCommitMessage(originalMessage);
+  const { type, existingScope, description, body } = splitCommitMessage(originalMessage);
 
   const scope = existingScope || ticketKey;
+  const header = `${type}(${scope}): ${description}`;
 
-  return `${type}(${scope}): ${description}`;
+  return body ? `${header}\n${body}` : header;
 }
 
 async function main() {
