@@ -24,3 +24,6 @@ nbproject/
 
 # Claude Code local settings
 **/.claude/settings.local.json
+
+# Pull request template
+miszo_task_*_pull_request_description.md
