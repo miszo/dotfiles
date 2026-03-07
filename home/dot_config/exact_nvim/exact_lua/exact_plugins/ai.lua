@@ -210,6 +210,9 @@ return {
       {
         '<leader>ao',
         function()
+          if vim.fn.executable('opencode') == 0 then
+            return UserUtil.lazyCoreUtil.info('OpenCode CLI not found')
+          end
           require('sidekick.cli').toggle({ name = 'opencode', focus = true })
         end,
         desc = 'Sidekick: Toggle OpenCode',
@@ -217,9 +220,22 @@ return {
       {
         '<leader>ac',
         function()
+          if vim.fn.executable('claude') == 0 then
+            return UserUtil.lazyCoreUtil.info('Claude CLI not found')
+          end
           require('sidekick.cli').toggle({ name = 'claude', focus = true })
         end,
         desc = 'Sidekick: Toggle Claude Code',
+      },
+      {
+        '<leader>ag',
+        function()
+          if vim.fn.executable('copilot') == 0 then
+            return UserUtil.lazyCoreUtil.info('GitHub Copilot CLI not found')
+          end
+          require('sidekick.cli').toggle({ name = 'copilot', focus = true })
+        end,
+        desc = 'Sidekick: Toggle GitHub Copilot CLI',
       },
       {
         '<leader>as',
