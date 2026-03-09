@@ -76,10 +76,9 @@ Support
 .ssh/1Password
 
 # Opencode dependencies
-.config/opencode/node_modules
-.config/opencode/package.json
-.config/opencode/bun.lock
-.config/opencode/.gitignore
+.config/opencode/**/*
+!.config/opencode/opencode.json
+!.config/opencode/tui.json
 
 # Claude config files
 .claude/**/*
@@ -90,6 +89,7 @@ Support
 .ssh/identities/unifi.pub
 # Except for claude config and statusline script
 !.claude/settings.json
+!.claude/keybindings.json
 !.claude/statusline.sh
 {{ else -}}
 .config/git/config-work

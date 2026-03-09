@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "catppuccin",
   "model": "github-copilot/claude-sonnet-4.5",
   "share": "disabled",
   "agent": {
@@ -8,7 +7,7 @@
       "model": "github-copilot/claude-opus-4.6"
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.5"
+      "model": "github-copilot/claude-opus-4.6"
     }
   },
   "permission": {
@@ -40,42 +39,8 @@
       "description": "Generates a git commit message based on the changes made",
       "agent": "build"
     },
-    "lint": {
-      "template": "Run the projects linter on the codebase and fix any issues found. ESLint for JS/TS",
-      "description": "Lints the codebase and fixes issues",
-      "agent": "build"
-    }
   },
   "mcp": {
-    "sentry": {
-      "type": "remote",
-      "url": "https://mcp.sentry.dev/mcp",
-      "enabled": false
-    },
-    "atlassian": {
-      "type": "remote",
-      "url": "https://mcp.atlassian.com/v1/sse",
-      "enabled": false
-    },
-    "github": {
-      "type": "remote",
-      "url": "https://api.githubcopilot.com/mcp",
-      "headers": {
-        "Authorization": "Bearer {env:GH_MCP_TOKEN}",
-        "X-MCP-Toolsets": "repos,issues",
-        "X-MCP-Readonly": "true"
-      },
-      "enabled": false
-    },
-    "gitlab": {
-      "type": "local",
-      "command": [
-        "glab",
-        "mcp",
-        "serve"
-      ],
-      "enabled": false
-    },
     "chrome-devtools": {
       "type": "local",
       "command": [
@@ -95,8 +60,4 @@
       "enabled": false
     }
   },
-  "keybinds": {
-    "input_submit": "alt+return",
-    "input_newline": "return"
-  }
 }
