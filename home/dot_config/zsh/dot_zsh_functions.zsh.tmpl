@@ -17,6 +17,20 @@ function zinit_update {
   zi delete --clean
 }
 
+function nvim_plugins_update {
+  echo "Updating Neovim plugins..."
+  nvim --headless "+Lazy! sync" +qa
+  echo "Updated Neovim plugins!"
+  
+  echo "Updating Mason tools..."
+  nvim --headless -c 'lua require("lazy").load({plugins = {"mason.nvim"}}); vim.cmd("MasonToolsUpdateSync"); vim.cmd("qa")'
+  echo "Updated Mason tools!"
+  
+  echo "Updating Treesitter parsers..."
+  nvim --headless -c 'lua require("nvim-treesitter").update(nil, {summary=true}):wait(); vim.cmd("qa")'
+  echo "Updated Treesitter parsers!"
+}
+
 function uv_update {
   uv tool upgrade --all &&
   uv clean
@@ -25,108 +39,109 @@ function uv_update {
 function update_all {
   brew_update &&
   zinit_update &&
+  nvim_plugins_update &&
   uv_update &&
   gh extension upgrade --all &&
   mise reshim
 }
 
 function miszo_git_local_config {
-    git config --local user.name {{ .name | quote }}
-    git config --local user.email {{ .git.personal.email | quote }}
-    echo "Local git user email changed to personal"
-    git config --local --get user.name
-    git config --local --get user.email
+  git config --local user.name {{ .name | quote }}
+  git config --local user.email {{ .git.personal.email | quote }}
+  echo "Local git user email changed to personal"
+  git config --local --get user.name
+  git config --local --get user.email
 }
 
 function git_clear_gone_branches {
-    git remote prune origin
-    git branch -vv | grep ': gone]'|  grep -v "\*" | awk '{ print $1; }' | xargs -I{} -n 1 git branch -D {}
-    git prune
+  git remote prune origin
+  git branch -vv | grep ': gone]'|  grep -v "\*" | awk '{ print $1; }' | xargs -I{} -n 1 git branch -D {}
+  git prune
 }
 
 function copy_branch {
-    git rev-parse --abbrev-ref HEAD | pbcopy
-    echo Copied branch name: \`$(pbpaste)\`
+  git rev-parse --abbrev-ref HEAD | pbcopy
+  echo Copied branch name: \`$(pbpaste)\`
 }
 
 function remove_docker_containers {
-    echo "Stop running docker containers"
-    docker stop $(docker ps -q)
-    echo "Remove docker containers"
-    docker rm $(docker ps -a -q)
+  echo "Stop running docker containers"
+  docker stop $(docker ps -q)
+  echo "Remove docker containers"
+  docker rm $(docker ps -a -q)
 }
 
 function remove_docker_images {
-    remove_docker_containers
-    echo "Remove docker images"
-    docker rmi $(docker images -f "dangling=true" -q)
+  remove_docker_containers
+  echo "Remove docker images"
+  docker rmi $(docker images -f "dangling=true" -q)
 }
 
 function clean_docker {
-    remove_docker_images
-    echo "Remove docker volumes"
-    docker volume rm $(docker volume ls -qf dangling=true)
-    echo "Docker cleanup done!"
+  remove_docker_images
+  echo "Remove docker volumes"
+  docker volume rm $(docker volume ls -qf dangling=true)
+  echo "Docker cleanup done!"
 }
 
 
 function git_pull_them_all {
-    for D in *; do
-        if [ -d "${D}/.git" ]; then
-            echo "Running git pull and clean branches in ${D}" && cd "${D}" && git pull && git_clear_gone_branches && cd .. && echo "Done!\n"
-        fi
-    done
+  for D in *; do
+      if [ -d "${D}/.git" ]; then
+          echo "Running git pull and clean branches in ${D}" && cd "${D}" && git pull && git_clear_gone_branches && cd .. && echo "Done!\n"
+      fi
+  done
 }
 
 function add_git_hook() {
-    # Check if both arguments are provided
-    if [[ $# -ne 2 ]]; then
-        echo "Usage: add_git_hook <source_path> <hook_name>"
-        return 1
-    fi
+  # Check if both arguments are provided
+  if [[ $# -ne 2 ]]; then
+      echo "Usage: add_git_hook <source_path> <hook_name>"
+      return 1
+  fi
 
-    local source_path="$1"
-    local hook_name="$2"
+  local source_path="$1"
+  local hook_name="$2"
 
-    # Robust Git repository check
-    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-        echo "Error: Not in a Git repository"
-        return 1
-    fi
+  # Robust Git repository check
+  if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+      echo "Error: Not in a Git repository"
+      return 1
+  fi
 
-    # Get the root directory of the Git repository
-    local git_root=$(git rev-parse --show-toplevel)
-    local git_hooks_dir="$git_root/.git/hooks"
+  # Get the root directory of the Git repository
+  local git_root=$(git rev-parse --show-toplevel)
+  local git_hooks_dir="$git_root/.git/hooks"
 
-    # Ensure the hooks directory exists
-    mkdir -p "$git_hooks_dir"
+  # Ensure the hooks directory exists
+  mkdir -p "$git_hooks_dir"
 
-    # Full path for the destination hook
-    local destination_hook="$git_hooks_dir/$hook_name"
+  # Full path for the destination hook
+  local destination_hook="$git_hooks_dir/$hook_name"
 
-    # Check if source path exists and is a file
-    if [[ ! -f "$source_path" ]]; then
-        echo "Error: Source path '$source_path' does not exist or is not a file"
-        return 1
-    fi
+  # Check if source path exists and is a file
+  if [[ ! -f "$source_path" ]]; then
+      echo "Error: Source path '$source_path' does not exist or is not a file"
+      return 1
+  fi
 
-    # Copy the hook file
-    cp "$source_path" "$destination_hook"
-    chmod +x "$destination_hook"
-    echo "Git hook '$hook_name' added successfully from $source_path"
+  # Copy the hook file
+  cp "$source_path" "$destination_hook"
+  chmod +x "$destination_hook"
+  echo "Git hook '$hook_name' added successfully from $source_path"
 }
 
 function add_git_hook_conventional_commit_msg() {
-    add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "conventional-commit-msg" | quote }} "commit-msg"
+  add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "conventional-commit-msg" | quote }} "commit-msg"
 }
 
 function add_git_hook_js_pre_commit() {
-    add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "js-pre-commit" | quote }} "pre-commit"
+  add_git_hook {{ joinPath .chezmoi.homeDir ".config" "git" "hooks" "js-pre-commit" | quote }} "pre-commit"
 }
 
 function add_git_hooks() {
-    add_git_hook_conventional_commit_msg
-    add_git_hook_js_pre_commit
+  add_git_hook_conventional_commit_msg
+  add_git_hook_js_pre_commit
 }
 
 function export_app_settings {
@@ -146,14 +161,14 @@ function export_all_settings {
   export_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
 }
 
-function import_all_settings {
   import_app_settings "Better Display" "pro.betterdisplay.BetterDisplay" {{ .exportedSettings.betterDisplayFilePath }}
   import_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
+  function import_all_settings {
 }
 
 function delete_recursively {
-    readonly folder_name=${1:?"node_modules"}
-    find . -name "$folder_name" -type d -prune -print -exec rm -rf '{}' \;
+  readonly folder_name=${1:?"node_modules"}
+  find . -name "$folder_name" -type d -prune -print -exec rm -rf '{}' \;
 }
 
 function confetti {
