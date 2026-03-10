@@ -174,3 +174,10 @@ function delete_recursively {
 function confetti {
   open raycast://extensions/raycast/raycast/confetti
 }
+
+function restart_colima {
+  local memory="${1:-4}"
+  echo "Restarting Colima..."
+  rm -rf {{ joinPath .chezmoi.homeDir ".colima" }} &&
+  colima start --memory="${memory}"
+}
