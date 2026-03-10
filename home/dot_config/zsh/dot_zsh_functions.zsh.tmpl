@@ -161,9 +161,9 @@ function export_all_settings {
   export_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
 }
 
+function import_all_settings {
   import_app_settings "Better Display" "pro.betterdisplay.BetterDisplay" {{ .exportedSettings.betterDisplayFilePath }}
   import_app_settings "Velja" "com.sindresorhus.Velja" {{ .exportedSettings.veljaFilePath }}
-  function import_all_settings {
 }
 
 function delete_recursively {
