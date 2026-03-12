@@ -1,0 +1,2542 @@
+{
+  "keyboard": "go60",
+  "firmware_api_version": "1",
+  "locale": "en-US",
+  "uuid": "",
+  "parent_uuid": "4e56323b-6509-491e-bd79-597c5908ce16",
+  "unlisted": false,
+  "date": 1773306182,
+  "creator": "miszo",
+  "title": "Miszo Voyager-Inspired Layout RGB enabled",
+  "notes": "Reference Voyager layout: https://configure.zsa.io/voyager/layouts/7yVbp/latest",
+  "tags": [],
+  "custom_defined_behaviors": "",
+  "custom_devicetree": "#if __has_include(<dt-bindings/zmk/rgb_colors.h>)\n  // --- RGB Palette (Optimized & Deduplicated) ---\n  #define C01_RGB 0xFFFF00\n  #define C01 &ug C01_RGB\n  #define C02_RGB 0x2700FF\n  #define C02 &ug C02_RGB\n  #define C03_RGB 0x00FF00\n  #define C03 &ug C03_RGB\n  #define C04_RGB 0x00FFFF\n  #define C04 &ug C04_RGB\n  #define C05_RGB 0x0100FF\n  #define C05 &ug C05_RGB\n  #define C06_RGB 0xFF0000\n  #define C06 &ug C06_RGB\n  #define C07_RGB 0xFF00FF\n  #define C07 &ug C07_RGB\n  #define C08_RGB 0xFF1B00\n  #define C08 &ug C08_RGB\n  #define C09_RGB 0x003D54\n  #define C09 &ug C09_RGB\n  #define C10_RGB 0xFF7B00\n  #define C10 &ug C10_RGB\n  #define C11_RGB 0xFF8660\n  #define C11 &ug C11_RGB\n  #define ___ &ug 0x000000\n\n  / {\n    underglow-layer {\n      compatible = \"zmk,underglow-layer\";\n\n      #ifdef LAYER_Base\n      Base {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Base>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Sys_Num\n      Sys_Num {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Sys_Num>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Sys_Nav\n      Sys_Nav {\n        bindings = <\n          ___ ___ C01 C01 C01 ___                                       C02 ___ ___ ___ ___ ___\n          C03 ___ C04 C04 C04 C02                                       C02 C05 C05 ___ ___ ___\n          C06 C04 C04 C04 C04 C02                                       C01 C01 C01 C01 ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ C04 C04 ___ ___ ___\n                  ___ C07 C07                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Sys_Nav>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Shortcuts\n      Shortcuts {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ C03                                       C05 C05 C05 ___ ___ ___\n          ___ ___ ___ ___ C08 C08                                       C01 C04 C06 ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       C01 C09 C10 ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Shortcuts>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Mouse\n      Mouse {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          C03 ___ ___ ___ C04 ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ C04 C04 ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ C05 C05 ___                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Mouse>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Magic\n      Magic {\n        bindings = <\n          C05 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C07\n          C06 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C06\n          C11 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C11\n          ___ ___ C04 C04 C04 C04                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Magic>;\n        fade-delay = <180>;\n      };\n      #endif\n\n    };\n  };\n  // --- Cleanup ---\n  #undef C01\n  #undef C01_RGB\n  #undef C02\n  #undef C02_RGB\n  #undef C03\n  #undef C03_RGB\n  #undef C04\n  #undef C04_RGB\n  #undef C05\n  #undef C05_RGB\n  #undef C06\n  #undef C06_RGB\n  #undef C07\n  #undef C07_RGB\n  #undef C08\n  #undef C08_RGB\n  #undef C09\n  #undef C09_RGB\n  #undef C10\n  #undef C10_RGB\n  #undef C11\n  #undef C11_RGB\n  #undef ___\n\n#endif\n\n// ==== PER-KEY-RGB <section begins> ====\n#if __has_include(<dt-bindings/zmk/rgb_colors.h>)\n  // --- RGB Palette (Optimized & Deduplicated) ---\n  #define C02 &ug 0x2700FF\n  #define C07 &ug 0xFF00FF\n  #define C03 &ug 0x00FF00\n  #define C01 &ug 0xFFFF00\n  #define C06 &ug 0x00FFFF\n  #define C04 &ug 0x0100FF\n  #define C05 &ug 0xFF0000\n  #define C08 &ug 0xFF1B00\n  #define C09 &ug 0x003D54\n  #define C10 &ug 0xFF7B00\n  #define C11 &ug 0xFF8660\n  #define ___ &ug 0x000000\n  / {\n    underglow-layer {\n      compatible = \"zmk,underglow-layer\";\n\n      #ifdef LAYER_Base\n      Base {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ C02 C07 C03 C01 ___                                       ___ C01 C03 C07 C02 ___\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Base>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Sys_Num\n      Sys_Num {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          C06 ___ ___ ___ ___ ___                                       C06 C06 C06 ___ ___ ___\n          C02 ___ ___ ___ C03 C03                                       C06 C06 C06 ___ ___ ___\n          ___ ___ C06 C06 C04 C04                                       C06 C06 C06 ___ ___ ___\n                  C01 C01 ___                                             ___ ___ ___\n                                      ___ ___ ___     C06 ___ ___\n        >;\n        layer-id = <LAYER_Sys_Num>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Sys_Nav\n      Sys_Nav {\n        bindings = <\n          ___ ___ C01 C01 C01 ___                                       C02 ___ ___ ___ ___ ___\n          C03 ___ C04 C04 C04 C02                                       C02 C04 C04 ___ ___ ___\n          C05 C06 C06 C06 C06 C02                                       C01 C01 C01 C01 ___ ___\n          ___ ___ ___ ___ ___ ___                                       ___ C06 C06 ___ ___ ___\n                  ___ C07 C07                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Sys_Nav>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Shortcuts\n      Shortcuts {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ ___ ___ C03                                       C04 C04 C04 ___ ___ ___\n          ___ ___ ___ ___ C08 C08                                       C01 C06 C05 ___ ___ ___\n          ___ ___ ___ ___ ___ ___                                       C01 C09 C10 ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Shortcuts>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Mouse\n      Mouse {\n        bindings = <\n          ___ ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ ___\n          C03 ___ ___ ___ C06 ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ C06 C06 ___                                       ___ ___ ___ ___ ___ ___\n          ___ ___ ___ C04 C04 ___                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Mouse>;\n        fade-delay = <180>;\n      };\n      #endif\n\n      #ifdef LAYER_Magic\n      Magic {\n        bindings = <\n          C04 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C07\n          C05 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C05\n          C11 ___ ___ ___ ___ ___                                       ___ ___ ___ ___ ___ C11\n          ___ ___ C06 C06 C06 C06                                       ___ ___ ___ ___ ___ ___\n                  ___ ___ ___                                             ___ ___ ___\n                                      ___ ___ ___     ___ ___ ___\n        >;\n        layer-id = <LAYER_Magic>;\n        fade-delay = <180>;\n      };\n      #endif\n    };\n  };\n  // --- Cleanup ---\n  #undef C02\n  #undef C07\n  #undef C03\n  #undef C01\n  #undef C06\n  #undef C04\n  #undef C05\n  #undef C08\n  #undef C09\n  #undef C10\n  #undef C11\n  #undef ___\n#endif\n// ==== PER-KEY-RGB <section ends> ====",
+  "config_parameters": [
+    {
+      "paramName": "EXPERIMENTAL_RGB_LAYER",
+      "value": "y"
+    },
+    {
+      "paramName": "EXPERIMENTAL_RGB_UNDERGLOW_AUTO_OFF_IDLE",
+      "value": "y"
+    }
+  ],
+  "layout_parameters": {
+    "cirque_touch_sensitivity": ""
+  },
+  "layer_names": [
+    "Base",
+    "Sys_Num",
+    "Sys_Nav",
+    "Shortcuts",
+    "Mouse",
+    "Magic"
+  ],
+  "layers": [
+    [
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "EQUAL"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N1"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N2"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N3"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N4"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N5"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N6"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N7"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N8"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N9"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N0"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "MINUS"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "TAB"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "Q"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "W"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "E"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "R"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "T"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "Y"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "U"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "I"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "O"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "P"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSLH"
+          }
+        ]
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "CAPS"
+          },
+          {
+            "value": "ESC"
+          }
+        ]
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "LGUI"
+          },
+          {
+            "value": "A"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "LALT"
+          },
+          {
+            "value": "S"
+          }
+        ],
+        "decoration": {
+          "background": "#ff00ff"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "LSHFT"
+          },
+          {
+            "value": "D"
+          }
+        ],
+        "decoration": {
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "LCTRL"
+          },
+          {
+            "value": "F"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "G"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "H"
+          }
+        ]
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "RCTRL"
+          },
+          {
+            "value": "J"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "RSHFT"
+          },
+          {
+            "value": "K"
+          }
+        ],
+        "decoration": {
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "RALT"
+          },
+          {
+            "value": "L"
+          }
+        ],
+        "decoration": {
+          "background": "#ff00ff"
+        }
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "RGUI"
+          },
+          {
+            "value": "SEMI"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "SQT"
+          }
+        ]
+      },
+      {
+        "value": "&magic"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "Z"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "X"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "V"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "B"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "N"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "M"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "COMMA"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DOT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "FSLH"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "RSHFT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "HOME"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LEFT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "RIGHT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DOWN"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "UP"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "END"
+          }
+        ]
+      },
+      {
+        "value": "&mo",
+        "params": [
+          {
+            "value": 3
+          }
+        ]
+      },
+      {
+        "value": "&hlt",
+        "params": [
+          {
+            "value": 1
+          },
+          {
+            "value": "DEL"
+          }
+        ]
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "LGUI"
+          },
+          {
+            "value": "SPACE"
+          }
+        ]
+      },
+      {
+        "value": "&ht",
+        "params": [
+          {
+            "value": "RGUI"
+          },
+          {
+            "value": "RET"
+          }
+        ]
+      },
+      {
+        "value": "&hlt",
+        "params": [
+          {
+            "value": 2
+          },
+          {
+            "value": "BSPC"
+          }
+        ]
+      },
+      {
+        "value": "Custom",
+        "params": [
+          {
+            "value": "&kp RA(RGUI)"
+          }
+        ],
+        "decoration": {
+          "label": "R_CMD"
+        }
+      }
+    ],
+    [
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "ESC"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F1"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F2"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F3"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F4"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F5"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F6"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F7"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F8"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F9"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F10"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F11"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "GRAVE"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N3"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N5"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N7"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N8"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N9"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_MINUS"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_SLASH"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "F12"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "GRAVE"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N6"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N7"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N8"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N9"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "N0"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N4"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N5"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N6"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_PLUS"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_MULTIPLY"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSPC"
+          }
+        ]
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LBKT"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "RBKT"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "LBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "RBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N1"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N2"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N3"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_DOT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "EQUAL"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "RET"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "COMMA"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "DOT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "KP_N0"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      }
+    ],
+    [
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&rgb_ug",
+        "params": [
+          {
+            "value": "RGB_EFR"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&rgb_ug",
+        "params": [
+          {
+            "value": "RGB_EFF"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&rgb_ug",
+        "params": [
+          {
+            "value": "RGB_TOG"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "PG_UP"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "UP"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "🌌",
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_VOL_DN"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_VOL_UP"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_MUTE"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_BRI_UP"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "PG_DN"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "HOME"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "END"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "Custom",
+        "params": [
+          {
+            "value": "&kp LC(LG(Q))"
+          }
+        ],
+        "decoration": {
+          "label": "💤",
+          "background": "#ff0000"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_PREV"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_NEXT"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_STOP"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_PP"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "C_BRI_DN"
+          }
+        ],
+        "decoration": {
+          "background": "#7a00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LEFT"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DOWN"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "UP"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "RIGHT"
+          }
+        ],
+        "decoration": {
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LS",
+                "params": [
+                  {
+                    "value": "TAB"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "Prev Tab",
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "TAB"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "Next Tab",
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LA",
+            "params": [
+              {
+                "value": "LBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#ff00ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LA",
+            "params": [
+              {
+                "value": "RBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "background": "#ff00ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      }
+    ],
+    [
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&caps_word",
+        "decoration": {
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "LG",
+                        "params": [
+                          {
+                            "value": "Y"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "z mic",
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "LG",
+                        "params": [
+                          {
+                            "value": "U"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "z video",
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "LG",
+                        "params": [
+                          {
+                            "value": "I"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "z hand",
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "BSPC"
+          }
+        ],
+        "decoration": {
+          "background": "#d9a521"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "DEL"
+          }
+        ],
+        "decoration": {
+          "background": "#d9a521"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "LG",
+                "params": [
+                  {
+                    "value": "N5"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "📸",
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "F"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "📐",
+          "background": "#b4f2f9"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "LG",
+                        "params": [
+                          {
+                            "value": "F12"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "ai chat",
+          "background": "#ff7c4d"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LG",
+            "params": [
+              {
+                "value": "LS",
+                "params": [
+                  {
+                    "value": "N4"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "📷",
+          "background": "#ffff00"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LA",
+            "params": [
+              {
+                "value": "LC",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "C"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "🖍️",
+          "background": "#008080"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "LA",
+                "params": [
+                  {
+                    "value": "LS",
+                    "params": [
+                      {
+                        "value": "N6"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "🎥",
+          "background": "#ffd900"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      }
+    ],
+    [
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LC",
+            "params": [
+              {
+                "value": "UP"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "🌌",
+          "background": "#00ff00"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&mkp",
+        "params": [
+          {
+            "value": "MCLK"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&mkp",
+        "params": [
+          {
+            "value": "RCLK"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&mkp",
+        "params": [
+          {
+            "value": "LCLK"
+          }
+        ],
+        "decoration": {
+          "background": "#00ffff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LG",
+            "params": [
+              {
+                "value": "LBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "Back",
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LG",
+            "params": [
+              {
+                "value": "RBKT"
+              }
+            ]
+          }
+        ],
+        "decoration": {
+          "label": "Forward",
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      }
+    ],
+    [
+      {
+        "value": "&out",
+        "params": [
+          {
+            "value": "OUT_BLE"
+          }
+        ],
+        "decoration": {
+          "background": "#0000ff"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&out",
+        "params": [
+          {
+            "value": "OUT_USB"
+          }
+        ],
+        "decoration": {
+          "background": "#ff00ff"
+        }
+      },
+      {
+        "value": "&bootloader",
+        "decoration": {
+          "background": "#ff0000"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&bootloader",
+        "decoration": {
+          "background": "#ff0000"
+        }
+      },
+      {
+        "value": "&reset",
+        "decoration": {
+          "color": "#C65B4D",
+          "background": "#FFE5DF"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&reset",
+        "decoration": {
+          "color": "#C65B4D",
+          "background": "#FFE5DF"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&bt_0",
+        "decoration": {
+          "background": "#b4f2f9"
+        }
+      },
+      {
+        "value": "&bt_1",
+        "decoration": {
+          "background": "#b4f2f9"
+        }
+      },
+      {
+        "value": "&bt_2",
+        "decoration": {
+          "background": "#b4f2f9"
+        }
+      },
+      {
+        "value": "&bt_3",
+        "decoration": {
+          "background": "#b4f2f9"
+        }
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&none"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      },
+      {
+        "value": "&trans"
+      }
+    ]
+  ],
+  "macros": [],
+  "inputListeners": [
+    {
+      "code": "&cirque_rh_listener",
+      "inputProcessors": [
+        {
+          "code": "&zip_xy_scaler",
+          "params": [
+            3,
+            1
+          ]
+        },
+        {
+          "code": "&zip_temp_layer",
+          "params": [
+            4,
+            500
+          ]
+        }
+      ]
+    },
+    {
+      "code": "&cirque_lh_listener",
+      "inputProcessors": [
+        {
+          "code": "&zip_xy_scaler",
+          "params": [
+            1,
+            2
+          ]
+        },
+        {
+          "code": "&zip_xy_transform",
+          "params": [
+            [
+              "INPUT_TRANSFORM_Y_INVERT"
+            ]
+          ]
+        },
+        {
+          "code": "&zip_xy_to_scroll_mapper",
+          "params": []
+        },
+        {
+          "code": "&zip_click_to_right_click_mapper",
+          "params": []
+        }
+      ]
+    }
+  ],
+  "holdTaps": [
+    {
+      "name": "&ht",
+      "description": "Hold-tap",
+      "bindings": [
+        "&kp",
+        "&kp"
+      ],
+      "tappingTermMs": 200,
+      "flavor": "tap-preferred",
+      "quickTapMs": 175,
+      "requirePriorIdleMs": 150
+    },
+    {
+      "name": "&hlt",
+      "description": "Layer-tap",
+      "bindings": [
+        "&mo",
+        "&kp"
+      ],
+      "tappingTermMs": 200,
+      "flavor": "tap-preferred",
+      "quickTapMs": 175
+    }
+  ],
+  "combos": []
+}
