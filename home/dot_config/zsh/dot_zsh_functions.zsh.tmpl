@@ -28,7 +28,7 @@ function nvim_plugins_update {
   
   echo "Updating Treesitter parsers..."
   nvim --headless -c 'lua require("nvim-treesitter").update(nil, {summary=true}):wait(); vim.cmd("qa")'
-  printf "\nUpdated Treesitter parsers!"
+  printf "\nUpdated Treesitter parsers!\n"
 }
 
 function uv_update {
