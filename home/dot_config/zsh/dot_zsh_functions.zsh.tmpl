@@ -28,7 +28,7 @@ function nvim_plugins_update {
   
   echo "Updating Treesitter parsers..."
   nvim --headless -c 'lua require("nvim-treesitter").update(nil, {summary=true}):wait(); vim.cmd("qa")'
-  echo "Updated Treesitter parsers!"
+  printf "\nUpdated Treesitter parsers!"
 }
 
 function uv_update {
@@ -173,11 +173,4 @@ function delete_recursively {
 
 function confetti {
   open raycast://extensions/raycast/raycast/confetti
-}
-
-function restart_colima {
-  local memory="${1:-4}"
-  echo "Restarting Colima..."
-  rm -rf {{ joinPath .chezmoi.homeDir ".colima" }} &&
-  colima start --memory="${memory}"
 }

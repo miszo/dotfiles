@@ -16,3 +16,4 @@ COMPLETION_WAITING_DOTS=true
 # tmuxifier
 export PATH="$HOME/.tmuxifier/bin:$PATH"
 # tmuxifier end
+export COLIMA_HOME="$HOME/.config/colima"
