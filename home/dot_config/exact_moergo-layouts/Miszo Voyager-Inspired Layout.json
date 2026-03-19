@@ -5,7 +5,7 @@
   "uuid": "",
   "parent_uuid": "55e4fc0f-a761-4bba-a7db-2da624b222f2",
   "unlisted": false,
-  "date": 1773306105,
+  "date": 1773306970,
   "creator": "miszo",
   "title": "Miszo Voyager-Inspired Layout",
   "notes": "Reference Voyager layout: https://configure.zsa.io/voyager/layouts/7yVbp/latest",
@@ -2266,7 +2266,7 @@
           "code": "&zip_xy_scaler",
           "params": [
             1,
-            2
+            3
           ]
         },
         {
