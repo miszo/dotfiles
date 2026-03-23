@@ -1,23 +1,23 @@
-local formatting = require('util.formatting')
 local cmp = require('util.cmp')
+local formatting = require('util.formatting')
 local icons = require('util.icons')
+local lsp = require('util.lsp')
 local mason = require('util.mason')
 local mini = require('util.mini')
 local nx = require('util.nx')
-local lsp = require('util.lsp')
 local plugins = require('util.plugins')
 local statusline = require('util.statusline')
 local treesitter = require('util.treesitter')
 local zen = require('util.zen')
 
 local M = {
-  formatting = formatting,
   cmp = cmp,
+  formatting = formatting,
   icons = icons,
+  lsp = lsp,
   mason = mason,
   mini = mini,
   nx = nx,
-  lsp = lsp,
   plugins = plugins,
   statusline = statusline,
   treesitter = treesitter,
