@@ -226,8 +226,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(attach_event)
     local client = vim.lsp.get_client_by_id(attach_event.data.client_id)
 
-    UserUtil.nx.adjust_config_for_nx(client, attach_event.buf)
-
     local map = function(keys, func, desc)
       vim.keymap.set('n', keys, func, { buffer = attach_event.buf, desc = 'LSP: ' .. desc })
     end
@@ -280,6 +278,58 @@ vim.api.nvim_create_autocmd('LspAttach', {
           },
         })
       end
+
+      UserUtil.nx.adjust_config_for_nx(client, attach_event.buf)
+
+      client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
+        ---@type string, string, lsp.Range
+        local action, uri, range = unpack(command.arguments)
+
+        local function move(newf)
+          client:request(vim.lsp.protocol.Methods.workspace_executeCommand, {
+            command = command.command,
+            arguments = { action, uri, range, newf },
+          })
+        end
+
+        local fname = vim.uri_to_fname(uri)
+        client:request(vim.lsp.protocol.Methods.workspace_executeCommand, {
+          command = 'typescript.tsserverRequest',
+          arguments = {
+            'getMoveToRefactoringFileSuggestions',
+            {
+              file = fname,
+              startLine = range.start.line + 1,
+              startOffset = range.start.character + 1,
+              endLine = range['end'].line + 1,
+              endOffset = range['end'].character + 1,
+            },
+          },
+        }, function(_, result)
+          ---@type string[]
+          local files = result.body.files
+          table.insert(files, 1, 'Enter new path...')
+          vim.ui.select(files, {
+            prompt = 'Select move destination:',
+            format_item = function(f)
+              return vim.fn.fnamemodify(f, ':~:.')
+            end,
+          }, function(f)
+            if f and f:find('^Enter new path') then
+              vim.ui.input({
+                prompt = 'Enter move destination:',
+                default = vim.fn.fnamemodify(fname, ':h') .. '/',
+                completion = 'file',
+              }, function(newf)
+                return newf and move(newf)
+              end)
+            elseif f then
+              move(f)
+            end
+          end)
+        end)
+      end
+
       wk.add({
         {
           '<leader>cM',
@@ -305,8 +355,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         {
           '<leader>cV',
           function()
-            vim.lsp.buf_request(
-              0,
+            client:request(
               vim.lsp.protocol.Methods.workspace_executeCommand,
               { command = 'typescript.selectTypeScriptVersion' }
             )

@@ -71,10 +71,6 @@ local function get_codesettings_config(bufnr)
 end
 
 function M.adjust_config_for_nx(client, bufnr)
-  if client.name ~= 'vtsls' then
-    return
-  end
-
   local nx_config = get_nx_config(bufnr)
 
   if not nx_config or not nx_config.workspaceLayout then
