@@ -20,6 +20,7 @@ aerospace_apps:
   workspace_y:
     - 'com.tinyspeck.slackmacgap'
   floating:
+    - 'com.apple.findmy'
     - 'com.apple.finder'
     - 'com.apple.systempreferences'
     - 'com.apple.ActivityMonitor'
