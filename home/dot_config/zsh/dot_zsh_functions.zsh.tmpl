@@ -171,6 +171,16 @@ function delete_recursively {
   find . -name "$folder_name" -type d -prune -print -exec rm -rf '{}' \;
 }
 
+
+function clear_start_colima {
+  local memory="${1:-4}"
+  echo "Removing Colima from home directory..."
+  rm -rf {{ joinPath .chezmoi.homeDir ".colima" }}
+  echo "Starting Colima with ${memory}GB of memory..."
+  colima start --memory="${memory}"
+}
+
+
 function confetti {
   open raycast://extensions/raycast/raycast/confetti
 }

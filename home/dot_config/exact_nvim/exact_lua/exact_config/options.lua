@@ -93,7 +93,7 @@ vim.opt.formatoptions:append({ 'r' })
 vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
 vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
 
-vim.lsp.set_log_level('OFF')
+vim.lsp.log.set_level(vim.lsp.log.levels.OFF)
 
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 
