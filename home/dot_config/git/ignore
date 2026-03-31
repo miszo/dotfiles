@@ -27,3 +27,5 @@ nbproject/
 
 # Pull request template
 miszo_task_*_pull_request_description.md
+
+miszo-ai-command_*.md
