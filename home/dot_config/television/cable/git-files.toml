@@ -7,8 +7,8 @@ requirements = ["git", "bat"]
 command = "git ls-files $(git rev-parse --show-toplevel)"
 
 [preview]
-command = "bat -n --color=always '{}'"
-env = { BAT_THEME = "ansi" }
+command = ["if [ -d '{}' ]; then eza -l --color always -a -s type --icons --no-permissions '{}'; else bat -n --color=always '{}'; fi", "bat -n --color=always '{}'"]
+env = { BAT_THEME = "Catppuccin Mocha" }
 
 [keybindings]
 f12 = "actions:edit"
