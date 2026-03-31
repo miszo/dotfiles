@@ -102,6 +102,8 @@ function load_zsh_config {
     fi
 }
 
+load_zsh_config tmux
+
 load_zsh_config credentials
 load_zsh_config env
 load_zsh_config functions
@@ -124,7 +126,6 @@ eval "$(mise activate zsh)"
 eval "$(fzf --zsh)"
 eval "$(thefuck --alias)"
 eval "$(zoxide init --cmd cd zsh)"
-eval "$(tmuxifier init -)"
 
 # 1password cli
 source ${HOME}/.config/op/plugins.sh

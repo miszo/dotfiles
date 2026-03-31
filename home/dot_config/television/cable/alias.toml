@@ -1,0 +1,14 @@
+[metadata]
+name = "alias"
+description = "A channel to select from shell aliases"
+
+[source]
+# you may need to adjust the command depending on your shell
+command = "cat ${XDG_CACHE_HOME:-$HOME/.cache}/tv-aliases.txt 2>/dev/null || (script -q /dev/null $SHELL -ic 'alias' 2>/dev/null | tr -d '\\r' > ${XDG_CACHE_HOME:-$HOME/.cache}/tv-aliases.txt && cat ${XDG_CACHE_HOME:-$HOME/.cache}/tv-aliases.txt)"
+output = "{split:=:0}"
+
+[preview]
+command = "grep -E '^(alias )?{split:=:0}=' ${XDG_CACHE_HOME:-$HOME/.cache}/tv-aliases.txt 2>/dev/null"
+
+[ui.preview_panel]
+size = 30

@@ -42,7 +42,9 @@ function update_all {
   nvim_plugins_update &&
   uv_update &&
   gh extension upgrade --all &&
-  mise reshim
+  mise reshim &&
+  tv update-channels &&
+  rm -f ${XDG_CACHE_HOME:-$HOME/.cache}/tv-aliases.txt
 }
 
 function miszo_git_local_config {

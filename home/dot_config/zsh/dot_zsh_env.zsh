@@ -13,7 +13,4 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 export HOMEBREW_NO_AUTO_UPDATE=1
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 COMPLETION_WAITING_DOTS=true
-# tmuxifier
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-# tmuxifier end
 export COLIMA_HOME="$HOME/.config/colima"
