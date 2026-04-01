@@ -46,6 +46,18 @@ return {
           })
           return
         end
+      else
+        local result = vim.fn.system('npm update -g tree-sitter-cli')
+        if vim.v.shell_error == 0 then
+          vim.notify('tree-sitter CLI updated successfully', vim.log.levels.INFO)
+        else
+          UserUtil.lazyCoreUtil.error({
+            'Failed to update tree-sitter CLI via npm.',
+            'Please update manually: npm update -g tree-sitter-cli',
+            'Error: ' .. result,
+          })
+          return
+        end
       end
 
       vim.cmd.TSUpdate()
