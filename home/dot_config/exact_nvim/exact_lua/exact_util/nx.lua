@@ -162,7 +162,7 @@ function M.adjust_config_for_nx(client, bufnr)
     })
   end
 
-  client.notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, { settings = client.config.settings })
+  client:notify(vim.lsp.protocol.Methods.workspace_didChangeConfiguration, { settings = client.config.settings })
 end
 
 function M.get_jest_config_path(file_path)

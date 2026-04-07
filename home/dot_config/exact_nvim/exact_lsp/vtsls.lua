@@ -12,8 +12,8 @@ local ts_preferences = {
 
 local inlay_hints = {
   enumMemberValues = { enabled = true },
-  functionLikeReturnTypes = { enabled = true },
-  parameterNames = { enabled = 'literals' },
+  functionLikeReturnTypes = { enabled = false },
+  parameterNames = { enabled = 'literals', suppressWhenArgumentMatchesName = true },
   parameterTypes = { enabled = true },
   propertyDeclarationTypes = { enabled = true },
   variableTypes = { enabled = false },
