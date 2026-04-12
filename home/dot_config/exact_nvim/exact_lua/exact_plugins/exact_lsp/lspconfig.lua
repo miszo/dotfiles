@@ -7,6 +7,7 @@ local get_shorter_source_name = function(source)
     ['ruby_lsp'] = 'Ruby',
     ['eslint'] = 'ESLint',
     ['biome'] = 'Biome',
+    ['oxlint'] = 'Oxlint',
     ['pyright'] = 'Pyright',
     ['clangd'] = 'Clangd',
     ['rust_analyzer'] = 'Rust Analyzer',

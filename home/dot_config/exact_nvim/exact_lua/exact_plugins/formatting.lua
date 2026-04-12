@@ -1,4 +1,14 @@
 local formatter_root_markers = {
+  oxfmt = {
+    '.oxfmtrc.json',
+    '.oxfmtrc.jsonc',
+    'oxfmt.config.ts',
+    'oxfmt.config.mts',
+    'oxfmt.config.cts',
+    'oxfmt.config.js',
+    'oxfmt.config.mjs',
+    'oxfmt.config.cjs',
+  },
   biome = { 'biome.json', 'biome.jsonc' },
   prettier = {
     '.prettierrc',
@@ -23,8 +33,13 @@ local function has_formatter_config(formatter)
 end
 
 local get_js_formatter = function()
+  local has_oxfmt_config = has_formatter_config('oxfmt')
   local has_biome_config = has_formatter_config('biome')
   local has_prettier_config = has_formatter_config('prettier')
+
+  if has_oxfmt_config then
+    return { 'oxfmt' }
+  end
 
   if has_biome_config then
     return { 'biome-check' }
@@ -152,6 +167,9 @@ return {
         injected = { options = { ignore_errors = true } },
         sqlfluff = {
           args = { 'format', '--dialect=ansi', '-' },
+        },
+        oxfmt = {
+          require_cwd = true,
         },
         biome = {
           require_cwd = true,

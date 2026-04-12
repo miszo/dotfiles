@@ -16,6 +16,8 @@ local lsp_ensure_installed = {
   'jsonls',
   'lua_ls',
   'marksman',
+  'oxfmt',
+  'oxlint',
   'phpactor',
   'prismals',
   'svelte',
