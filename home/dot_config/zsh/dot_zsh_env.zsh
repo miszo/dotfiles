@@ -14,3 +14,4 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 COMPLETION_WAITING_DOTS=true
 export COLIMA_HOME="$HOME/.config/colima"
+export MAS_NO_AUTO_INDEX=1
