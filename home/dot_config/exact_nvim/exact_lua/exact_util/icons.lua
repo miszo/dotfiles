@@ -38,8 +38,7 @@ local hl = {
 }
 
 local get_angular_root = function()
-  local root_patterns = { 'angular.json' }
-  return vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
+  return UserUtil.root.find(0, { 'angular.json' })
 end
 
 local get_angular_icons = function()

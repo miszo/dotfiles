@@ -52,14 +52,7 @@ return {
               },
             },
             { 'filetype', icon_only = true, separator = '', padding = { left = 1, right = 0 } },
-            {
-              'filename',
-              file_status = false,
-              newfile_status = true,
-              path = 1,
-              fmt = UserUtil.statusline.filename_fmt,
-              color = UserUtil.statusline.filename_color,
-            },
+            { UserUtil.statusline.pretty_path() },
             { 'navic', color_correction = 'dynamic' },
           },
           lualine_x = {

@@ -90,6 +90,10 @@ M.icons = {
     terminal_attached = ' ',
     terminal_started = ' ',
   },
+  file = {
+    modified = ' ',
+    readonly = ' ',
+  },
 }
 
 ---@type table<string, string[]|boolean>?

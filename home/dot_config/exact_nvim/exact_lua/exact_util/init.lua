@@ -6,6 +6,7 @@ local mason = require('util.mason')
 local mini = require('util.mini')
 local nx = require('util.nx')
 local plugins = require('util.plugins')
+local root = require('util.root')
 local statusline = require('util.statusline')
 local treesitter = require('util.treesitter')
 local zen = require('util.zen')
@@ -19,6 +20,7 @@ local M = {
   mini = mini,
   nx = nx,
   plugins = plugins,
+  root = root,
   statusline = statusline,
   treesitter = treesitter,
   zen = zen,
@@ -38,6 +40,8 @@ function M.dedup(list)
   end
   return ret
 end
+
+root.setup()
 
 _G.UserUtil = M
 

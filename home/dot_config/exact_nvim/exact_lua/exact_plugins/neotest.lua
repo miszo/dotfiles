@@ -1,13 +1,11 @@
 local function has_bun_in_project()
   local bun_markers = { 'bun.lockb', 'bun.lock', 'bunfig.toml' }
-  local root_dir = vim.fs.root(0, bun_markers)
-  return root_dir ~= nil
+  return UserUtil.root.find(0, bun_markers) ~= nil
 end
 
 local function has_go_in_project()
   local go_markers = { 'go.mod', 'go.sum' }
-  local root_dir = vim.fs.root(0, go_markers)
-  return root_dir ~= nil
+  return UserUtil.root.find(0, go_markers) ~= nil
 end
 
 ---@module 'lazy'
