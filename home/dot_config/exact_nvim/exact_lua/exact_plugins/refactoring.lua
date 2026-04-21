@@ -1,6 +1,3 @@
-local function pick()
-  require('refactoring').select_refactor()
-end
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -8,7 +5,7 @@ return {
     'ThePrimeagen/refactoring.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'nvim-lua/plenary.nvim',
+      'lewis6991/async.nvim',
       {
         'nvim-treesitter/nvim-treesitter',
         branch = 'main',
@@ -18,110 +15,86 @@ return {
       { '<leader>r', '', desc = '+refactor', mode = { 'n', 'v' } },
       {
         '<leader>rs',
-        pick,
-        mode = 'v',
-        desc = 'Refactor',
+        function()
+          require('refactoring').select_refactor()
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Select Refactor',
       },
       {
         '<leader>ri',
         function()
-          require('refactoring').refactor('Inline Variable')
+          return require('refactoring').inline_var()
         end,
-        mode = { 'n', 'v' },
+        mode = { 'n', 'x' },
+        expr = true,
         desc = 'Inline Variable',
       },
       {
-        '<leader>rb',
+        '<leader>rI',
         function()
-          require('refactoring').refactor('Extract Block')
+          return require('refactoring').inline_func()
         end,
-        desc = 'Extract Block',
+        mode = { 'n', 'x' },
+        expr = true,
+        desc = 'Inline Function',
       },
       {
         '<leader>rf',
         function()
-          require('refactoring').refactor('Extract Block To File')
+          return require('refactoring').extract_func()
         end,
-        desc = 'Extract Block To File',
-      },
-      {
-        '<leader>rP',
-        function()
-          require('refactoring').debug.printf({ below = false })
-        end,
-        desc = 'Debug Print',
-      },
-      {
-        '<leader>rp',
-        function()
-          require('refactoring').debug.print_var({ normal = true })
-        end,
-        desc = 'Debug Print Variable',
-      },
-      {
-        '<leader>rc',
-        function()
-          require('refactoring').debug.cleanup({})
-        end,
-        desc = 'Debug Cleanup',
-      },
-      {
-        '<leader>rf',
-        function()
-          require('refactoring').refactor('Extract Function')
-        end,
-        mode = 'v',
+        mode = { 'n', 'x' },
+        expr = true,
         desc = 'Extract Function',
       },
       {
         '<leader>rF',
         function()
-          require('refactoring').refactor('Extract Function To File')
+          return require('refactoring').extract_func_to_file()
         end,
-        mode = 'v',
+        mode = { 'n', 'x' },
+        expr = true,
         desc = 'Extract Function To File',
       },
       {
         '<leader>rx',
         function()
-          require('refactoring').refactor('Extract Variable')
+          return require('refactoring').extract_var()
         end,
-        mode = 'v',
+        mode = { 'n', 'x' },
+        expr = true,
         desc = 'Extract Variable',
+      },
+      {
+        '<leader>rP',
+        function()
+          return require('refactoring.debug').print_loc({ output_location = 'above' })
+        end,
+        expr = true,
+        desc = 'Debug Print Location',
       },
       {
         '<leader>rp',
         function()
-          require('refactoring').debug.print_var()
+          return require('refactoring.debug').print_var({ output_location = 'below' })
         end,
-        mode = 'v',
+        mode = { 'n', 'x' },
+        expr = true,
         desc = 'Debug Print Variable',
+      },
+      {
+        '<leader>rc',
+        function()
+          return require('refactoring.debug').cleanup({ restore_view = true })
+        end,
+        mode = { 'n', 'x' },
+        expr = true,
+        desc = 'Debug Cleanup',
       },
     },
     opts = {
-      prompt_func_return_type = {
-        go = false,
-        java = false,
-        cpp = false,
-        c = false,
-        h = false,
-        hpp = false,
-        cxx = false,
-      },
-      prompt_func_param_type = {
-        go = false,
-        java = false,
-        cpp = false,
-        c = false,
-        h = false,
-        hpp = false,
-        cxx = false,
-      },
-      printf_statements = {},
-      print_var_statements = {},
-      show_success_message = true, -- shows a message with information about the refactor on success
-      -- i.e. [Refactor] Inlined 3 variable occurrences
+      show_success_message = true,
     },
-    config = true,
   },
 }
