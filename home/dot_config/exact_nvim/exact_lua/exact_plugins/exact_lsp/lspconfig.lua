@@ -79,7 +79,21 @@ return {
         end,
       })
 
-      -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually
+      -- Ruby LSP is not installed by mason.nvim, so we need to enable it manually.
+      -- We override cmd as a function (matching nvim-lspconfig's signature) so it
+      -- wins the lsp/ruby_lsp.lua merge. Setting BUNDLE_GEMFILE + RUBYGEMS_GEMDEPS
+      -- redirects ruby-lsp to a global Gemfile (~/.config/ruby/Gemfile) instead of
+      -- composing with the project bundle.
+      vim.lsp.config('ruby_lsp', {
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start({
+            'env',
+            'BUNDLE_GEMFILE=' .. vim.fn.expand('~/.config/ruby/Gemfile'),
+            'RUBYGEMS_GEMDEPS=' .. vim.fn.expand('~/.config/ruby/Gemfile'),
+            vim.fn.expand('~/.local/share/mise/shims/ruby-lsp'),
+          }, dispatchers, config and config.root_dir and { cwd = config.cmd_cwd or config.root_dir })
+        end,
+      })
       vim.lsp.enable({ 'ruby_lsp' }, true)
 
       if vim.lsp.is_enabled and vim.lsp.is_enabled('denols') and vim.lsp.is_enabled('vtsls') then

@@ -1,11 +1,9 @@
 ---@type vim.lsp.Config
 return {
   mason = false,
-  cmd = { vim.fn.expand('~/.local/share/mise/shims/ruby-lsp') },
   filetypes = { 'ruby', 'eruby' },
   root_markers = { 'Gemfile', '.git' },
   init_options = {
-    bundleGemfile = vim.fn.expand('~/.ruby-lsp/Gemfile'),
     enabledFeatures = {
       'codeActions',
       'completion',
