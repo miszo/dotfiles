@@ -23,7 +23,7 @@ function nvim_plugins_update {
   echo "Updated Neovim plugins!"
   
   echo "Updating Mason tools..."
-  nvim --headless -c 'lua require("lazy").load({plugins = {"mason.nvim"}}); vim.cmd("MasonToolsUpdateSync"); vim.cmd("qa")'
+  nvim --headless -c 'lua require("lazy").load({plugins = {"mason.nvim","mason-tool-installer.nvim"}}); vim.cmd("MasonUpdate"); vim.cmd("MasonToolsUpdateSync"); vim.cmd("qa")'
   echo "Updated Mason tools!"
   
   echo "Updating Treesitter parsers..."
@@ -174,7 +174,7 @@ function delete_recursively {
 }
 
 
-function clear_start_colima {
+function fix_colima {
   local memory="${1:-4}"
   echo "Removing Colima from home directory..."
   rm -rf {{ joinPath .chezmoi.homeDir ".colima" }}
