@@ -1,42 +1,3 @@
-local get_shorter_source_name = function(source)
-  local shorter_source_names = {
-    ['Lua Diagnostics.'] = 'Lua',
-    ['Lua Syntax Check.'] = 'Lua',
-    ['luacheck'] = 'LuaCheck',
-    ['ts_error_translator'] = 'TS Error Translator',
-    ['ruby_lsp'] = 'Ruby',
-    ['eslint'] = 'ESLint',
-    ['biome'] = 'Biome',
-    ['oxlint'] = 'Oxlint',
-    ['pyright'] = 'Pyright',
-    ['clangd'] = 'Clangd',
-    ['rust_analyzer'] = 'Rust Analyzer',
-    ['jdtls'] = 'Java',
-    ['sumneko_lua'] = 'Lua',
-    ['pylsp'] = 'Python LSP',
-    ['bashls'] = 'Bash LSP',
-    ['docker_compose_language_service'] = 'Docker Compose',
-    ['dockerfile_language_server'] = 'Dockerfile',
-    ['tsserver'] = 'TypeScript',
-    ['jsonls'] = 'JSON',
-    ['html-lsp'] = 'HTML',
-    ['css-lsp'] = 'CSS',
-    ['gopls'] = 'Go',
-    ['dockerls'] = 'Docker',
-    ['graphql'] = 'GraphQL',
-    ['yaml-language-server'] = 'YAML',
-    ['phpactor'] = 'PHP Actor',
-  }
-  return shorter_source_names[source] or source
-end
-
-local function format_diagnostic(diagnostic)
-  if not diagnostic.source or not diagnostic.code then
-    return diagnostic.message
-  end
-  return string.format('%s (%s: %s)', diagnostic.message, get_shorter_source_name(diagnostic.source), diagnostic.code)
-end
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -150,7 +111,7 @@ return {
           trim_whitespaces = true,
           tabstop = 4,
         },
-        format = format_diagnostic,
+        format = UserUtil.diagnostic.format,
         virt_texts = {
           priority = 5120,
         },
@@ -158,7 +119,7 @@ return {
     },
     config = function(_, opts)
       require('tiny-inline-diagnostic').setup(opts)
-      vim.diagnostic.open_float = require('tiny-inline-diagnostic.override').open_float
+      vim.diagnostic.open_float = UserUtil.diagnostic.open_float
     end,
   },
 }
