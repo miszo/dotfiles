@@ -71,7 +71,7 @@ async function getCommitMessage() {
 
 function splitCommitMessage(message) {
   const [firstLine, ...rest] = message.split('\n');
-  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|ci|build)(\(([^)]+)\))?:\s*(.+)$/;
+  const conventionalCommitRegex = /^(feat|fix|docs|style|refactor|test|chore|ci|build|revert)(\(([^)]+)\))?:\s*(.+)$/;
 
   const match = firstLine.match(conventionalCommitRegex);
 
