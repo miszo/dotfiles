@@ -2,19 +2,18 @@
 # vim: syntax=toml
 
 [default_session]
-startup_command = "nvim"
 preview_command = "eza -l --color always -a -s type --icons --no-permissions {}"
 
 [[session]]
 name = "config"
 path = "~/.config"
-startup_command = "nvim"
+startup_command = "tmux rename-window editor && nvim"
 windows = ["shell"]
 
 [[session]]
 name = "chezmoi"
 path = "~/.local/share/chezmoi"
-startup_command = "nvim"
+startup_command = "tmux rename-window editor && nvim"
 windows = ["shell"]
 
 [[window]]
