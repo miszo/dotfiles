@@ -1,5 +1,3 @@
-local util = require('lspconfig.util')
-
 ---@type string[]
 local oxlint_config_files = {
   '.oxlintrc.json',
@@ -49,7 +47,7 @@ return {
     local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
 
     local filename = vim.api.nvim_buf_get_name(bufnr)
-    local config_files = util.insert_package_json(oxlint_config_files, 'oxlint', filename)
+    local config_files = UserUtil.lsp.insert_package_json(oxlint_config_files, 'oxlint', filename)
     local is_buffer_using_oxlint = vim.fs.find(config_files, {
       path = filename,
       type = 'file',

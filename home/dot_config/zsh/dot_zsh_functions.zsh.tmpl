@@ -31,6 +31,10 @@ function nvim_plugins_update {
   printf "\nUpdated Treesitter parsers!\n"
 }
 
+function nvim_lspconfig_drift {
+  {{ joinPath .chezmoi.homeDir ".config" "nvim" "scripts" "check-lspconfig-drift" }} "$@"
+}
+
 function uv_update {
   uv tool upgrade --all &&
   uv clean

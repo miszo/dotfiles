@@ -2,7 +2,6 @@
 ---
 --- Additional messages you can handle: `eslint/noConfig`
 
-local util = require('lspconfig.util')
 local lsp = vim.lsp
 
 ---@type string[]
@@ -65,7 +64,7 @@ return {
     -- We keep this for backward compatibility.
     local filename = vim.api.nvim_buf_get_name(bufnr)
     local eslint_config_files_with_package_json =
-      util.insert_package_json(eslint_config_files, 'eslintConfig', filename)
+      UserUtil.lsp.insert_package_json(eslint_config_files, 'eslintConfig', filename)
     local is_buffer_using_eslint = vim.fs.find(eslint_config_files_with_package_json, {
       path = filename,
       type = 'file',

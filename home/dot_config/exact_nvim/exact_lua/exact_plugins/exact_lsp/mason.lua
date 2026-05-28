@@ -1,32 +1,35 @@
----@type string[]
-local lsp_ensure_installed = {
-  'angularls',
-  'astro',
-  'bashls',
-  'biome',
-  'css_variables',
-  'cssls',
-  'cssmodules_ls',
-  'docker_compose_language_service',
-  'dockerls',
-  'eslint',
-  'gopls',
-  'harper_ls',
-  'intelephense',
-  'jsonls',
-  'lua_ls',
-  'marksman',
-  'oxfmt',
-  'oxlint',
-  'phpactor',
-  'prismals',
-  'svelte',
-  'tailwindcss',
-  'vtsls',
-  'vue_ls',
-  'yamlls',
-  'zls',
+---@type table<string, string>
+local lsp_servers = {
+  angularls = 'angular-language-server',
+  astro = 'astro-language-server',
+  bashls = 'bash-language-server',
+  biome = 'biome',
+  css_variables = 'css-variables-language-server',
+  cssls = 'css-lsp',
+  cssmodules_ls = 'cssmodules-language-server',
+  docker_compose_language_service = 'docker-compose-language-service',
+  dockerls = 'dockerfile-language-server',
+  eslint = 'eslint-lsp',
+  gopls = 'gopls',
+  harper_ls = 'harper-ls',
+  intelephense = 'intelephense',
+  jsonls = 'json-lsp',
+  lua_ls = 'lua-language-server',
+  marksman = 'marksman',
+  oxfmt = 'oxfmt',
+  oxlint = 'oxlint',
+  phpactor = 'phpactor',
+  prismals = 'prisma-language-server',
+  svelte = 'svelte-language-server',
+  tailwindcss = 'tailwindcss-language-server',
+  vtsls = 'vtsls',
+  vue_ls = 'vue-language-server',
+  yamlls = 'yaml-language-server',
+  zls = 'zls',
 }
+
+---@type string[]
+local lsp_ensure_installed = vim.tbl_values(lsp_servers)
 
 ---@type string[]
 local linters_ensure_installed = {
@@ -54,14 +57,20 @@ local formatters_ensure_installed = {
 }
 
 ---@type string[]
-local tools_ensure_installed = vim.tbl_extend('keep', linters_ensure_installed, formatters_ensure_installed)
+local tools_ensure_installed = vim.tbl_extend('keep', lsp_ensure_installed, linters_ensure_installed, formatters_ensure_installed)
+
+local function lsp_enable_list()
+  local servers = vim.tbl_keys(lsp_servers)
+  table.sort(servers)
+  return servers
+end
 
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
   'mason-org/mason.nvim',
+  lsp_enable = lsp_enable_list,
   dependencies = {
-    'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
   },
   build = ':MasonUpdate',
@@ -69,7 +78,6 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local mason = require('mason')
-    local mason_lspconfig = require('mason-lspconfig')
     local mason_tool_installer = require('mason-tool-installer')
 
     mason.setup({
@@ -78,14 +86,14 @@ return {
       },
     })
 
-    mason_lspconfig.setup({
-      ensure_installed = lsp_ensure_installed,
-      automatic_installation = true,
-    })
-
     mason_tool_installer.setup({
       ensure_installed = tools_ensure_installed,
       run_on_start = true,
+      integrations = {
+        ['mason-lspconfig'] = false,
+        ['mason-null-ls'] = false,
+        ['mason-nvim-dap'] = false,
+      },
     })
   end,
 }

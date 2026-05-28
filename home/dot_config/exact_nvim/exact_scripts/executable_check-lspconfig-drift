@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+NVIM_CONFIG="${NVIM_CONFIG:-${HOME}/.config/nvim}"
+UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/neovim/nvim-lspconfig.git}"
+TMP_ROOT="${TMPDIR:-/tmp}"
+TMP_DIR="${TMP_ROOT%/}/nvim-lspconfig-drift"
+
+WATCHED=(
+  angularls.lua
+  biome.lua
+  eslint.lua
+  harper_ls.lua
+  jsonls.lua
+  lua_ls.lua
+  oxlint.lua
+  ruby_lsp.lua
+  svelte.lua
+  tailwindcss.lua
+  vtsls.lua
+  vue_ls.lua
+)
+
+usage() {
+  printf 'Usage: %s [--all] [--diff FILE]\n' "$(basename "$0")"
+  printf '\n'
+  printf '  --all        Check every local lsp/*.lua file instead of the watched high-risk set.\n'
+  printf '  --diff FILE  Show unified diff for one local LSP config file.\n'
+}
+
+clone_upstream() {
+  rm -rf "$TMP_DIR"
+  git clone --depth 1 "$UPSTREAM_REPO" "$TMP_DIR" >/dev/null 2>&1
+}
+
+upstream_file() {
+  local name="$1"
+  printf '%s/lsp/%s' "$TMP_DIR" "$name"
+}
+
+local_file() {
+  local name="$1"
+  printf '%s/lsp/%s' "$NVIM_CONFIG" "$name"
+}
+
+check_file() {
+  local name="$1"
+  local local_path upstream_path
+  local_path="$(local_file "$name")"
+  upstream_path="$(upstream_file "$name")"
+
+  if [[ ! -f "$local_path" ]]; then
+    printf 'MISSING_LOCAL %s\n' "$name"
+  elif [[ ! -f "$upstream_path" ]]; then
+    printf 'LOCAL_ONLY %s\n' "$name"
+  elif cmp -s "$local_path" "$upstream_path"; then
+    printf 'UNCHANGED %s\n' "$name"
+  else
+    printf 'DRIFT %s\n' "$name"
+  fi
+}
+
+show_diff() {
+  local name="$1"
+  local local_path upstream_path
+  local_path="$(local_file "$name")"
+  upstream_path="$(upstream_file "$name")"
+
+  if [[ ! -f "$local_path" ]]; then
+    printf 'Missing local file: %s\n' "$local_path" >&2
+    return 1
+  fi
+
+  if [[ ! -f "$upstream_path" ]]; then
+    printf 'Missing upstream file: %s\n' "$upstream_path" >&2
+    return 1
+  fi
+
+  diff -u "$upstream_path" "$local_path" || true
+}
+
+mode="watched"
+diff_file=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --all)
+      mode="all"
+      shift
+      ;;
+    --diff)
+      diff_file="${2:-}"
+      if [[ -z "$diff_file" ]]; then
+        usage >&2
+        exit 1
+      fi
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+clone_upstream
+
+printf 'Upstream: neovim/nvim-lspconfig @ %s\n' "$(git -C "$TMP_DIR" rev-parse --short HEAD)"
+
+if [[ -n "$diff_file" ]]; then
+  printf '\n'
+  show_diff "$(basename "$diff_file")"
+  exit 0
+fi
+
+printf '\n'
+
+if [[ "$mode" == "all" ]]; then
+  for local_path in "$NVIM_CONFIG"/lsp/*.lua; do
+    check_file "$(basename "$local_path")"
+  done
+else
+  for name in "${WATCHED[@]}"; do
+    check_file "$name"
+  done
+fi
