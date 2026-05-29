@@ -3,6 +3,6 @@
 
 [tools]
 chezmoi = "latest"
-just = "1.46.0"
+just = "1.51.0"
 node = "24.13.1"
 pnpm = "latest"
