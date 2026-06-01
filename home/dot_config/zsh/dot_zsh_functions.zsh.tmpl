@@ -11,6 +11,10 @@ function brew_update {
   brew cleanup
 }
 
+function brew_trust_taps {
+  brew tap | grep -v '^homebrew/' | xargs -n1 brew trust
+}
+
 function zinit_update {
   zi self-update &&
   zi update --all &&
