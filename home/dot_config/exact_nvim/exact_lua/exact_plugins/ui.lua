@@ -11,7 +11,10 @@ return {
 
   -- Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
   {
-    'folke/noice.nvim',
+    -- NOTE: the original noice.nvim has an issue with showing confirm prompts, so we use a fork that fixes this issue.
+    -- change back to 'folke/noice.nvim' when the pull request is merged: https://github.com/folke/noice.nvim/pull/1219
+    -- 'folke/noice.nvim',
+    'miszo/noice.nvim',
     event = 'VeryLazy',
     dependencies = {
       'MunifTanjim/nui.nvim',
@@ -114,30 +117,6 @@ return {
         vim.cmd([[messages clear]])
       end
       require('noice').setup(opts)
-
-      -- HACK: fix confirm dialog in Neovim 0.12
-      -- The confirm message and cmdline prompt arrive without a newline separator,
-      -- causing the {confirm} formatter to break.
-      -- https://github.com/folke/noice.nvim/issues/1198
-      local cmdline = require('noice.ui.cmdline')
-      local Manager = require('noice.message.manager')
-      local orig_on_show = cmdline.on_show
-      cmdline.on_show = function(event, content, pos, firstc, prompt, indent, level)
-        if cmdline.confirm_message then
-          local message = cmdline.confirm_message
-          message:newline()
-          message:append(prompt)
-          cmdline.confirm_message = nil
-          Manager.add(message)
-          cmdline._on_hide = function()
-            vim.schedule(function()
-              Manager.remove(message)
-            end)
-          end
-          return
-        end
-        return orig_on_show(event, content, pos, firstc, prompt, indent, level)
-      end
     end,
   },
   {
