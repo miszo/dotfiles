@@ -99,7 +99,11 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = augroup('highlight_yank'),
   callback = function()
-    vim.hl.on_yank()
+    if vim.fn.has('nvim-0.13') == 1 then
+      vim.hl.hl_op()
+    else
+      vim.hl.on_yank()
+    end
   end,
 })
 
