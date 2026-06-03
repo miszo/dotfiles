@@ -527,6 +527,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
       end
 
+      -- workaround for gopls not supporting semanticTokensProvider
+      -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+      if
+        client
+        and client.name == 'gopls'
+        and client.config.init_options
+        and client.config.init_options.semanticTokens
+        and not client.server_capabilities.semanticTokensProvider
+      then
+        local semantic = client.config.capabilities.textDocument.semanticTokens
+        client.server_capabilities.semanticTokensProvider = {
+          full = true,
+          legend = {
+            tokenTypes = semantic.tokenTypes,
+            tokenModifiers = semantic.tokenModifiers,
+          },
+          range = true,
+        }
+      end
+
       local highlight_augroup = augroup('lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = attach_event.buf,

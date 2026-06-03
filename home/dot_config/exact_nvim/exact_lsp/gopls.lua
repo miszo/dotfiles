@@ -14,12 +14,14 @@ local function identify_go_dir(custom_args, on_complete)
       on_complete(res)
     else
       vim.schedule(function()
-        vim.notify(('[gopls] identify %s dir cmd failed with code %d: %s\n%s'):format(
-          custom_args.envvar_id,
-          output.code,
-          vim.inspect(cmd),
-          output.stderr
-        ))
+        vim.notify(
+          ('[gopls] identify %s dir cmd failed with code %d: %s\n%s'):format(
+            custom_args.envvar_id,
+            output.code,
+            vim.inspect(cmd),
+            output.stderr
+          )
+        )
       end)
       on_complete(nil)
     end
@@ -70,6 +72,41 @@ end
 return {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+  init_options = {
+    semanticTokens = true,
+  },
+  settings = {
+    gofumpt = true,
+    codelenses = {
+      gc_details = false,
+      generate = true,
+      regenerate_cgo = true,
+      run_govulncheck = true,
+      test = true,
+      tidy = true,
+      upgrade_dependency = true,
+      vendor = true,
+    },
+    hints = {
+      assignVariableTypes = true,
+      compositeLiteralFields = true,
+      compositeLiteralTypes = true,
+      constantValues = true,
+      functionTypeParameters = true,
+      parameterNames = true,
+      rangeVariableTypes = true,
+    },
+    analyses = {
+      nilness = true,
+      unusedparams = true,
+      unusedwrite = true,
+      useany = true,
+    },
+    usePlaceholders = true,
+    completeUnimported = true,
+    staticcheck = true,
+    directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+  },
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     get_mod_cache_dir()
