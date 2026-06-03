@@ -191,20 +191,20 @@ return {
         desc = 'Sidekick: Goto/Apply Next Edit Suggestion',
         mode = { 'n' },
       },
-      -- ctrl-dot to toggle CLI terminal
+      -- ctrl-dot to focus CLI terminal
       {
         '<c-.>',
         function()
-          require('sidekick.cli').toggle({ name = 'opencode', focus = true })
+          require('sidekick.cli').focus()
         end,
         desc = 'Sidekick: Toggle CLI Terminal',
-        mode = { '' },
+        mode = { 'n', 't', 'i', 'x' },
       },
       -- AI commands prefix: <leader>a
       {
         '<leader>aa',
         function()
-          require('sidekick.cli').toggle({ name = 'opencode', focus = true })
+          require('sidekick.cli').toggle({ focus = true })
         end,
         desc = 'Sidekick: Toggle CLI',
       },
