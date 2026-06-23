@@ -2,10 +2,10 @@
 auto-update = off
 
 # fonts
-font-family = MonoLisa Variable
+font-family = MonoLisaCode
 font-family = Symbols Nerd Font Mono
 font-size = 14
-font-feature = +calt,+liga,+ss02
+font-feature = +calt,+liga,+cv01,+cv02,+cv03,+cv04,+cv05,+cv06,+cv07,+cv08,+cv09,+cv10,+cv11,+cv12,+ss01,+ss08
 adjust-underline-position = 4
 
 # mouse

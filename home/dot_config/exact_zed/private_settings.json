@@ -7,24 +7,41 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "collaboration_panel": {
+    "dock": "left"
+  },
   "features": {
     "edit_prediction_provider": "copilot"
   },
   "agent": {
+    "dock": "right",
     "default_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4"
     },
     "model_parameters": []
   },
-  "buffer_font_family": "MonoLisa Variable",
+  "buffer_font_family": "MonoLisaCode",
   "buffer_font_fallbacks": [
     "Symbols Nerd Font Mono"
   ],
   "buffer_font_features": {
     "calt": true,
     "liga": true,
-    "ss02": true
+    "cv01": true,
+    "cv02": true,
+    "cv03": true,
+    "cv04": true,
+    "cv05": true,
+    "cv06": true,
+    "cv07": true,
+    "cv08": true,
+    "cv09": true,
+    "cv10": true,
+    "cv11": true,
+    "cv12": true,
+    "ss01": true,
+    "ss08": true
   },
   "icon_theme": "Catppuccin Mocha",
   "telemetry": {
