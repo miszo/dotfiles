@@ -29,10 +29,6 @@ function nvim_plugins_update {
   echo "Updating Mason tools..."
   nvim --headless -c 'lua require("lazy").load({plugins = {"mason.nvim","mason-tool-installer.nvim"}}); vim.cmd("MasonUpdate"); vim.cmd("MasonToolsUpdateSync"); vim.cmd("qa")'
   echo "Updated Mason tools!"
-  
-  echo "Updating Treesitter parsers..."
-  nvim --headless -c 'lua require("nvim-treesitter").update(nil, {summary=true}):wait(); vim.cmd("qa")'
-  printf "\nUpdated Treesitter parsers!\n"
 }
 
 function nvim_lspconfig_drift {
