@@ -118,7 +118,7 @@ show_diff() {
     return 1
   fi
 
-  diff -u "$upstream_path" "$local_path" || true
+  (diff -u "$upstream_path" "$local_path" || true) | delta
 }
 
 mode="watched"
@@ -126,26 +126,26 @@ diff_file=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --all)
-      mode="all"
-      shift
-      ;;
-    --diff)
-      diff_file="${2:-}"
-      if [[ -z "$diff_file" ]]; then
-        usage >&2
-        exit 1
-      fi
-      shift 2
-      ;;
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    *)
+  --all)
+    mode="all"
+    shift
+    ;;
+  --diff)
+    diff_file="${2:-}"
+    if [[ -z "$diff_file" ]]; then
       usage >&2
       exit 1
-      ;;
+    fi
+    shift 2
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  *)
+    usage >&2
+    exit 1
+    ;;
   esac
 done
 
