@@ -483,6 +483,12 @@ return {
   {
     'nvim-mini/mini.move',
     event = 'VeryLazy',
+    keys = {
+      { '<M-h>', mode = { 'n', 'x' }, desc = 'Move Left' },
+      { '<M-j>', mode = { 'n', 'x' }, desc = 'Move Down' },
+      { '<M-k>', mode = { 'n', 'x' }, desc = 'Move Up' },
+      { '<M-l>', mode = { 'n', 'x' }, desc = 'Move Right' },
+    },
     opts = {
       mappings = {
         left = '<M-h>',
