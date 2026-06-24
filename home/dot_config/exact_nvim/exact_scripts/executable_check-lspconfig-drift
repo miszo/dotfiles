@@ -43,21 +43,63 @@ local_file() {
   printf '%s/lsp/%s' "$NVIM_CONFIG" "$name"
 }
 
+format_epoch() {
+  local epoch="$1"
+
+  if date -r "$epoch" '+%Y-%m-%d %H:%M' >/dev/null 2>&1; then
+    date -r "$epoch" '+%Y-%m-%d %H:%M'
+  else
+    date -d "@$epoch" '+%Y-%m-%d %H:%M'
+  fi
+}
+
+local_mtime() {
+  local path="$1"
+  local epoch
+
+  if [[ ! -f "$path" ]]; then
+    printf '-'
+    return
+  fi
+
+  if epoch="$(stat -f '%m' "$path" 2>/dev/null)"; then
+    format_epoch "$epoch"
+  else
+    epoch="$(stat -c '%Y' "$path")"
+    format_epoch "$epoch"
+  fi
+}
+
+upstream_mtime() {
+  local name="$1"
+  local path
+  path="$(upstream_file "$name")"
+
+  if [[ ! -f "$path" ]]; then
+    printf '-'
+    return
+  fi
+
+  format_epoch "$(git -C "$TMP_DIR" log -1 --format='%ct' -- "lsp/$name")"
+}
+
 check_file() {
   local name="$1"
-  local local_path upstream_path
+  local local_path upstream_path status
   local_path="$(local_file "$name")"
   upstream_path="$(upstream_file "$name")"
 
   if [[ ! -f "$local_path" ]]; then
-    printf 'MISSING_LOCAL %s\n' "$name"
+    status="MISSING_LOCAL"
   elif [[ ! -f "$upstream_path" ]]; then
-    printf 'LOCAL_ONLY %s\n' "$name"
+    status="LOCAL_ONLY"
   elif cmp -s "$local_path" "$upstream_path"; then
-    printf 'UNCHANGED %s\n' "$name"
+    status="UNCHANGED"
   else
-    printf 'DRIFT %s\n' "$name"
+    status="DRIFT"
   fi
+
+  printf '%s %s local=%s upstream=%s\n' "$status" "$name" "$(local_mtime "$local_path")" "$(upstream_mtime "$name")"
 }
 
 show_diff() {
