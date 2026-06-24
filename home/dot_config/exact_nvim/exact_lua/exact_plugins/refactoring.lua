@@ -6,10 +6,6 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'lewis6991/async.nvim',
-      {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-      },
     },
     keys = {
       { '<leader>r', '', desc = '+refactor', mode = { 'n', 'v' } },

@@ -17,11 +17,6 @@ return {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
-      -- adapters dependencies
-      {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-      },
       -- adapters
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',

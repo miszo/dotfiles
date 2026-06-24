@@ -1,5 +1,92 @@
 ---@module 'lazy'
 ---@type LazySpec[]
+local function patch_tree_sitter_manager_installer()
+  local installer = require('tree-sitter-manager.installer')
+  if installer._miszo_patched then
+    return
+  end
+
+  local config = require('tree-sitter-manager.config')
+  local util = require('tree-sitter-manager.util')
+
+  local copy_dir = util.copy_dir
+  util.copy_dir = function(src, dst)
+    vim.fs.rm(dst, { recursive = true, force = true })
+    return copy_dir(src, dst)
+  end
+
+  local install = installer.install
+
+  ---@param lang string
+  ---@param ret string[]
+  ---@param seen table<string,boolean>
+  local function add_with_deps(lang, ret, seen)
+    if seen[lang] then
+      return
+    end
+    seen[lang] = true
+
+    if config.effective_repos[lang] then
+      for _, dep in ipairs(util.get_requires(lang)) do
+        add_with_deps(dep, ret, seen)
+      end
+    end
+
+    ret[#ret + 1] = lang
+  end
+
+  function installer.install(languages, callback, no_deps, force)
+    callback = callback or function() end
+    if type(languages) == 'string' then
+      languages = { languages }
+    end
+
+    local ret, seen = {}, {}
+    for _, lang in ipairs(languages or {}) do
+      if no_deps then
+        if not seen[lang] then
+          seen[lang] = true
+          ret[#ret + 1] = lang
+        end
+      else
+        add_with_deps(lang, ret, seen)
+      end
+    end
+
+    local index = 0
+    local function next_install()
+      index = index + 1
+      local lang = ret[index]
+      if not lang then
+        return
+      end
+
+      if installer.status[lang] and (installer.status[lang].ok or installer.status[lang].installing) then
+        callback(installer.status[lang])
+        return next_install()
+      elseif not config.effective_repos[lang] then
+        installer.status[lang] = { ok = false, error = 'Parser not found in repos' }
+        vim.notify('⚠ Parser not found in repos: ' .. lang, vim.log.levels.WARN)
+        callback(installer.status[lang])
+        return next_install()
+      elseif not force and util.is_installed(lang) then
+        installer.status[lang] = { ok = true }
+        callback(installer.status[lang])
+        return next_install()
+      end
+
+      install(lang, function(out)
+        callback(out)
+        next_install()
+      end, true, force)
+    end
+
+    next_install()
+  end
+
+  installer._miszo_patched = true
+end
+
 return {
   {
     'folke/which-key.nvim',
@@ -10,105 +97,108 @@ return {
       },
     },
   },
-  -- Treesitter is a new parser generator tool that we can
-  -- use in Neovim to power faster and more accurate
-  -- syntax highlighting.
   {
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'main',
-    dependencies = {
-      'windwp/nvim-ts-autotag',
-      'RRethy/nvim-treesitter-endwise',
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'nvim-treesitter/nvim-treesitter-context',
-      { 'LiadOz/nvim-dap-repl-highlights' },
-    },
-    build = function()
-      local TS = require('nvim-treesitter')
-      if not TS.get_installed then
-        UserUtil.lazyCoreUtil.error(
-          'Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.'
-        )
-        return
-      end
-
-      -- Check if tree-sitter CLI is installed, install if missing
-      if vim.fn.executable('tree-sitter') == 0 then
-        vim.notify('Installing tree-sitter CLI via npm...', vim.log.levels.INFO)
-        local result = vim.fn.system('npm install -g tree-sitter-cli')
-        if vim.v.shell_error == 0 then
-          vim.notify('tree-sitter CLI installed successfully', vim.log.levels.INFO)
-        else
-          UserUtil.lazyCoreUtil.error({
-            'Failed to install tree-sitter CLI via npm.',
-            'Please install manually: npm install -g tree-sitter-cli',
-            'Error: ' .. result,
-          })
-          return
-        end
-      else
-        local result = vim.fn.system('npm update -g tree-sitter-cli')
-        if vim.v.shell_error == 0 then
-          vim.notify('tree-sitter CLI updated successfully', vim.log.levels.INFO)
-        else
-          UserUtil.lazyCoreUtil.error({
-            'Failed to update tree-sitter CLI via npm.',
-            'Please update manually: npm update -g tree-sitter-cli',
-            'Error: ' .. result,
-          })
-          return
-        end
-      end
-
-      vim.cmd.TSUpdate()
-    end,
+    'romus204/tree-sitter-manager.nvim',
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     event = { 'LazyFile', 'VeryLazy' },
-    cmd = { 'TSUpdate', 'TSInstall', 'TSLog', 'TSUninstall' },
-    opts_extend = { 'ensure_installed' },
-    ---@type TSConfig
-    ---@diagnostic disable-next-line: missing-fields
+    cmd = { 'TSManager', 'TSInstall', 'TSUninstall' },
     opts = {
       ensure_installed = {
         'angular',
+        'astro',
+        'awk',
         'bash',
+        'bicep',
         'blade',
         'c',
+        'c_sharp',
+        'caddy',
+        'comment',
+        'cmake',
         'cpp',
         'css',
         'dap_repl',
+        'dart',
         'diff',
         'dockerfile',
+        'dtd',
+        'ecma',
+        'editorconfig',
+        'elixir',
+        'erlang',
+        'fish',
+        'fsh',
+        'ghostty',
+        'git_config',
+        'git_rebase',
+        'gitattributes',
+        'gitcommit',
         'gitignore',
+        'glimmer',
+        'glimmer_javascript',
+        'glimmer_typescript',
         'go',
+        'gomod',
+        'haskell',
+        'haskell_persistent',
+        'hcl',
         'graphql',
         'html',
+        'html_tags',
+        'htmldjango',
         'http',
+        'java',
+        'javadoc',
         'javascript',
+        'jq',
         'jsdoc',
         'json',
         'json5',
+        'jsx',
+        'just',
+        'kitty',
+        'kotlin',
+        'latex',
         'lua',
         'luadoc',
         'luap',
+        'luau',
+        'make',
         'markdown',
         'markdown_inline',
+        'matlab',
         'mermaid',
+        'nginx',
+        'nix',
+        'nu',
+        'ocaml',
+        'ocaml_interface',
+        'odin',
+        'passwd',
         'php',
+        'php_only',
+        'phpdoc',
+        'powershell',
         'prisma',
         'printf',
         'python',
         'query',
         'regex',
+        'robots_txt',
         'ruby',
         'rust',
+        'scala',
         'scss',
         'ssh_config',
+        'styled',
         'sql',
         'svelte',
         'swift',
+        'terraform',
+        'todotxt',
         'toml',
         'tsx',
+        'twig',
         'typescript',
         'vim',
         'vimdoc',
@@ -116,79 +206,80 @@ return {
         'xml',
         'yaml',
         'zig',
+        'zsh',
+      },
+      auto_install = false,
+      highlight = false,
+      languages = {
+        dap_repl = {
+          install_info = {
+            url = 'https://github.com/LiadOz/nvim-dap-repl-highlights',
+            branch = 'master',
+            queries = 'queries/dap_repl',
+            use_repo_queries = true,
+          },
+        },
+        blade = {
+          install_info = {
+            url = 'https://github.com/EmranMR/tree-sitter-blade',
+            use_repo_queries = true,
+          },
+        },
+        just = {
+          install_info = {
+            url = 'https://github.com/IndianBoy42/tree-sitter-just',
+            files = { 'src/parser.c', 'src/scanner.c' },
+            branch = 'main',
+            use_repo_queries = true,
+          },
+        },
       },
     },
-    ---@param opts TSConfig
     config = function(_, opts)
-      local TS = require('nvim-treesitter')
-      -- have to setup dap repl highlights before treesitter
+      if vim.fn.executable('tree-sitter') == 0 then
+        UserUtil.lazyCoreUtil.error({
+          'tree-sitter CLI is required for tree-sitter-manager.nvim.',
+          'Install it manually: npm install -g tree-sitter-cli',
+        })
+        return
+      end
+
+      patch_tree_sitter_manager_installer()
+      require('tree-sitter-manager').setup(opts)
       require('nvim-dap-repl-highlights').setup()
 
-      -- checks for treesitter main branch
-      if not TS.get_installed then
-        return UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
-      elseif vim.fn.executable('tree-sitter') == 0 then
-        UserUtil.lazyCoreUtil.info('Installing tree-sitter CLI via npm...')
-        local result = vim.fn.system('npm install -g tree-sitter-cli')
-        if vim.v.shell_error == 0 then
-          UserUtil.lazyCoreUtil.info('tree-sitter CLI installed successfully')
-        else
-          UserUtil.lazyCoreUtil.error({
-            'Failed to install tree-sitter CLI via npm.',
-            'Please install manually: npm install -g tree-sitter-cli',
-            'Error: ' .. result,
-          })
-          return
-        end
-      elseif type(opts.ensure_installed) ~= 'table' then
-        return UserUtil.lazyCoreUtil.error('`nvim-treesitter` opts.ensure_installed must be a table')
-      end
-
-      -- setup treesitter
-      TS.setup(opts)
-
+      vim.filetype.add({
+        extension = {
+          mdx = 'mdx',
+        },
+        pattern = {
+          ['.*%.blade%.php'] = 'blade',
+        },
+      })
+      vim.treesitter.language.register('markdown', 'mdx')
       UserUtil.treesitter.get_installed(true) -- initialize installed langs
-
-      -- install missing parsers
-      local install = vim.tbl_filter(function(lang)
-        return not UserUtil.treesitter.have(lang)
-      end, opts.ensure_installed or {})
-      if #install > 0 then
-        TS.install(install, { summary = true }):await(function()
-          UserUtil.treesitter.get_installed(true) -- refresh the installed langs
-        end)
-      end
 
       -- treesitter highlighting
       vim.api.nvim_create_autocmd('FileType', {
-        group = vim.api.nvim_create_augroup('miszo/nvim_treesitter', { clear = true }),
+        group = vim.api.nvim_create_augroup('miszo/native_treesitter', { clear = true }),
         callback = function(ev)
           local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
-          if not UserUtil.treesitter.have(ft) then
+          if not lang or not UserUtil.treesitter.have(ft) then
             return
           end
 
-          ---@param feat string
-          ---@param query string
-          local function enabled(feat, query)
-            local f = opts[feat] or {} ---@type lazyvim.TSFeat
-            return f.enable ~= false
-              and not (type(f.disable) == 'table' and vim.tbl_contains(f.disable, lang))
-              and UserUtil.treesitter.have(ft, query)
-          end
-
           -- highlighting
-          if enabled('highlight', 'highlights') then
+          if UserUtil.treesitter.have(ft, 'highlights') then
             pcall(vim.treesitter.start, ev.buf)
           end
 
           -- indents
-          if enabled('indent', 'indents') then
+          if UserUtil.treesitter.have(ft, 'indents') then
             vim.api.nvim_set_option_value('indentexpr', 'v:lua.UserUtil.treesitter.indentexpr()', { scope = 'local' })
           end
 
           -- folds
-          if enabled('folds', 'folds') then
+          if UserUtil.treesitter.have(ft, 'folds') then
             vim.api.nvim_set_option_value('foldmethod', 'expr', { scope = 'local' })
             vim.api.nvim_set_option_value('foldexpr', 'v:lua.UserUtil.treesitter.foldexpr()', { scope = 'local' })
           end
@@ -202,86 +293,69 @@ return {
           vim.treesitter.start(nil, 'angular')
         end,
       })
-
-      -- add blade custom parser
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'TSUpdate',
-        callback = function()
-          local parsers = require('nvim-treesitter.parsers')
-          parsers.blade = {
-            install_info = {
-              url = 'https://github.com/EmranMR/tree-sitter-blade',
-            },
-          }
-          parsers.just = {
-            install_info = {
-              url = 'https://github.com/IndianBoy42/tree-sitter-just', -- local path or git repo
-              files = { 'src/parser.c', 'src/scanner.c' },
-              branch = 'main',
-            },
-            maintainers = { '@IndianBoy42' },
-          }
-
-          -- MDX support
-          vim.filetype.add({
-            extension = {
-              mdx = 'mdx',
-            },
-            -- blade files pattern
-            pattern = {
-              ['.*%.blade%.php'] = 'blade',
-            },
-          })
-          -- register mdx as markdown for treesitter
-          vim.treesitter.language.register('markdown', 'mdx')
-        end,
-      })
     end,
+    dependencies = {
+      'windwp/nvim-ts-autotag',
+      'RRethy/nvim-treesitter-endwise',
+      'nvim-treesitter/nvim-treesitter-context',
+      { 'LiadOz/nvim-dap-repl-highlights' },
+    },
   },
 
   {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    branch = 'main',
-    event = 'VeryLazy',
-    opts = {},
+    'folke/which-key.nvim',
+    opts = {
+      spec = {
+        { ']f', desc = 'Next Function Start', mode = { 'n', 'x', 'o' } },
+        { ']F', desc = 'Next Function End', mode = { 'n', 'x', 'o' } },
+        { '[f', desc = 'Prev Function Start', mode = { 'n', 'x', 'o' } },
+        { '[F', desc = 'Prev Function End', mode = { 'n', 'x', 'o' } },
+        { ']c', desc = 'Next Class Start', mode = { 'n', 'x', 'o' } },
+        { ']C', desc = 'Next Class End', mode = { 'n', 'x', 'o' } },
+        { '[c', desc = 'Prev Class Start', mode = { 'n', 'x', 'o' } },
+        { '[C', desc = 'Prev Class End', mode = { 'n', 'x', 'o' } },
+        { ']a', desc = 'Next Parameter Start', mode = { 'n', 'x', 'o' } },
+        { ']A', desc = 'Next Parameter End', mode = { 'n', 'x', 'o' } },
+        { '[a', desc = 'Prev Parameter Start', mode = { 'n', 'x', 'o' } },
+        { '[A', desc = 'Prev Parameter End', mode = { 'n', 'x', 'o' } },
+      },
+    },
     keys = function()
       local moves = {
-        goto_next_start = { [']f'] = '@function.outer', [']c'] = '@class.outer', [']a'] = '@parameter.inner' },
-        goto_next_end = { [']F'] = '@function.outer', [']C'] = '@class.outer', [']A'] = '@parameter.inner' },
-        goto_previous_start = { ['[f'] = '@function.outer', ['[c'] = '@class.outer', ['[a'] = '@parameter.inner' },
-        goto_previous_end = { ['[F'] = '@function.outer', ['[C'] = '@class.outer', ['[A'] = '@parameter.inner' },
+        { ']f', '@function.outer', 1, 'start', 'Next Function Start' },
+        { ']F', '@function.outer', 1, 'end', 'Next Function End' },
+        { '[f', '@function.outer', -1, 'start', 'Prev Function Start' },
+        { '[F', '@function.outer', -1, 'end', 'Prev Function End' },
+        { ']c', '@class.outer', 1, 'start', 'Next Class Start' },
+        { ']C', '@class.outer', 1, 'end', 'Next Class End' },
+        { '[c', '@class.outer', -1, 'start', 'Prev Class Start' },
+        { '[C', '@class.outer', -1, 'end', 'Prev Class End' },
+        { ']a', '@parameter.inner', 1, 'start', 'Next Parameter Start' },
+        { ']A', '@parameter.inner', 1, 'end', 'Next Parameter End' },
+        { '[a', '@parameter.inner', -1, 'start', 'Prev Parameter Start' },
+        { '[A', '@parameter.inner', -1, 'end', 'Prev Parameter End' },
       }
       local ret = {} ---@type LazyKeysSpec[]
-      for method, keymaps in pairs(moves) do
-        for key, query in pairs(keymaps) do
-          local desc = query:gsub('@', ''):gsub('%..*', '')
-          desc = desc:sub(1, 1):upper() .. desc:sub(2)
-          desc = (key:sub(1, 1) == '[' and 'Prev ' or 'Next ') .. desc
-          desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and ' End' or ' Start')
-          ret[#ret + 1] = {
-            key,
-            function()
-              -- don't use treesitter if in diff mode and the key is one of the c/C keys
-              if vim.wo.diff and key:find('[cC]') then
-                return vim.cmd('normal! ' .. key)
-              end
-              require('nvim-treesitter-textobjects.move')[method](query, 'textobjects')
-            end,
-            desc = desc,
-            mode = { 'n', 'x', 'o' },
-            silent = true,
-          }
-        end
+      for _, move in ipairs(moves) do
+        local key, capture, direction, edge, desc = unpack(move)
+        ret[#ret + 1] = {
+          key,
+          function()
+            if vim.wo.diff and key:find('[cC]') then
+              return vim.cmd('normal! ' .. key)
+            end
+            UserUtil.treesitter.move_textobject({
+              capture = capture,
+              direction = direction,
+              edge = edge,
+            })
+          end,
+          desc = desc,
+          mode = { 'n', 'x', 'o' },
+          silent = true,
+        }
       end
       return ret
-    end,
-    config = function(_, opts)
-      local TS = require('nvim-treesitter-textobjects')
-      if not TS.setup then
-        UserUtil.lazyCoreUtil.error('Please use `:Lazy` and update `nvim-treesitter`')
-        return
-      end
-      TS.setup(opts)
     end,
   },
 
@@ -293,12 +367,6 @@ return {
   },
   {
     'Wansmer/treesj',
-    dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-      },
-    },
     config = function()
       local tsj = require('treesj')
       tsj.setup({

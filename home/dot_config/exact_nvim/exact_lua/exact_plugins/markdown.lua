@@ -39,12 +39,8 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-      },
       'nvim-mini/mini.icons',
-    }, -- if you use standalone mini plugins
+    },
     ft = { 'markdown', 'markdown.mdx' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
