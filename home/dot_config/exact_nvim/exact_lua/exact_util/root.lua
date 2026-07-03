@@ -84,6 +84,54 @@ function M.get(opts)
   return ret
 end
 
+---@param path string?
+---@return string?
+local function start_dir(path)
+  path = realpath(path) or path or vim.uv.cwd()
+  if not path or path == '' then
+    return nil
+  end
+
+  local stat = vim.uv.fs_stat(path)
+  if stat and stat.type == 'file' then
+    return vim.fs.dirname(path)
+  end
+  return path
+end
+
+--- Find the nearest ancestor marker from a path.
+--- Returns the marker path or nil if no marker is found.
+---@param path string?
+---@param markers string[] File/directory names to search for, in priority order
+---@return string?
+function M.find_marker(path, markers)
+  local dir = start_dir(path)
+  while dir and dir ~= '' do
+    for _, marker in ipairs(markers) do
+      local marker_path = vim.fs.joinpath(dir, marker)
+      if vim.uv.fs_stat(marker_path) then
+        return marker_path
+      end
+    end
+
+    local parent = vim.fs.dirname(dir)
+    if parent == dir then
+      break
+    end
+    dir = parent
+  end
+end
+
+--- Find the nearest ancestor directory containing one of the given markers from a path.
+--- Returns the directory path or nil if no marker is found.
+---@param path string?
+---@param markers string[] File/directory names to search for, in priority order
+---@return string?
+function M.find_path(path, markers)
+  local marker = M.find_marker(path, markers)
+  return marker and vim.fs.dirname(marker) or nil
+end
+
 --- Find the nearest ancestor directory containing one of the given markers.
 --- Returns the directory path or nil if no marker is found.
 ---@param buf number Buffer number (0 for current)

@@ -33,7 +33,7 @@ return {
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local root_markers = UserUtil.lsp.insert_package_json(
-      { '.oxfmtrc.json', '.oxfmtrc.jsonc', 'oxfmt.config.ts' },
+      vim.tbl_extend('keep', { '.oxfmtrc.json', '.oxfmtrc.jsonc' }, UserUtil.config_files.js_config_filenames('oxfmt')),
       { 'oxfmt', 'vite%-plus' },
       fname
     )

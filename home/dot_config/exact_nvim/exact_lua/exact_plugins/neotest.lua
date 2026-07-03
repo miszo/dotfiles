@@ -8,6 +8,32 @@ local function has_go_in_project()
   return UserUtil.root.find(0, go_markers) ~= nil
 end
 
+local function find_jest_config(file_path)
+  return UserUtil.root.find_marker(file_path, UserUtil.config_files.js_config_filenames('jest'))
+end
+
+local function find_vitest_config(file_path)
+  return UserUtil.root.find_marker(
+    file_path,
+    vim.tbl_extend(
+      'keep',
+      UserUtil.config_files.js_config_filenames('vitest'),
+      UserUtil.config_files.js_config_filenames('vite')
+    )
+  )
+end
+
+local function setup_bun_adapter(adapter)
+  local original_root = adapter.root
+
+  adapter.root = function(dir)
+    local bun_root = UserUtil.root.find_path(dir, { 'bunfig.toml', 'bun.lock', 'bun.lockb' })
+    return bun_root or original_root(dir)
+  end
+
+  return adapter
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -16,7 +42,6 @@ return {
     dependencies = {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
       -- adapters
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
@@ -31,11 +56,14 @@ return {
       adapters = {
         ['neotest-jest'] = {
           cwd = function()
-            return vim.fn.getcwd()
+            return vim.uv.cwd()
           end,
+          jestConfigFile = find_jest_config,
           jest_test_discovery = true,
         },
-        ['neotest-vitest'] = {},
+        ['neotest-vitest'] = {
+          vitestConfigFile = find_vitest_config,
+        },
         ['neotest-rspec'] = {},
         ['neotest-zig'] = {},
       },
@@ -98,7 +126,7 @@ return {
       if opts.adapters then
         -- Dynamically add bun adapter if bun project detected
         if has_bun_in_project() then
-          opts.adapters['neotest-bun'] = {}
+          opts.adapters['neotest-bun'] = setup_bun_adapter
         end
 
         -- Dynamically add golang adapter if go project detected
@@ -117,7 +145,9 @@ return {
             adapters[#adapters + 1] = config
           elseif config ~= false then
             local adapter = require(name)
-            if type(config) == 'table' and not vim.tbl_isempty(config) then
+            if type(config) == 'function' then
+              adapter = config(adapter)
+            elseif type(config) == 'table' and not vim.tbl_isempty(config) then
               local meta = getmetatable(adapter)
               if adapter.setup then
                 adapter.setup(config)

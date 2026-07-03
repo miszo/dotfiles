@@ -1,14 +1,8 @@
 ---@type string[]
-local oxlint_config_files = {
+local oxlint_config_files = vim.tbl_extend('keep', {
   '.oxlintrc.json',
   '.oxlintrc.jsonc',
-  'oxlint.config.ts',
-  'oxlint.config.mts',
-  'oxlint.config.cts',
-  'oxlint.config.js',
-  'oxlint.config.mjs',
-  'oxlint.config.cjs',
-}
+}, UserUtil.config_files.js_config_filenames('oxlint'))
 
 local function oxlint_conf_mentions_typescript(root_dir)
   local fn = vim.fs.joinpath(root_dir, '.oxlintrc.json')
