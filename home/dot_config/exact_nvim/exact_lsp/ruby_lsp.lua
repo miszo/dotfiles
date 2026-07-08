@@ -1,17 +1,11 @@
 ---@type vim.lsp.Config
 return {
   mason = false,
-  cmd = function(dispatchers, config)
-    return vim.lsp.rpc.start({
-      'env',
-      'BUNDLE_GEMFILE=' .. vim.fn.expand('~/.config/ruby/Gemfile'),
-      'RUBYGEMS_GEMDEPS=' .. vim.fn.expand('~/.config/ruby/Gemfile'),
-      vim.fn.expand('~/.local/share/mise/shims/ruby-lsp'),
-    }, dispatchers, config and config.root_dir and { cwd = config.cmd_cwd or config.root_dir })
-  end,
+  cmd = { 'ruby-lsp' },
   filetypes = { 'ruby', 'eruby' },
   root_markers = { 'Gemfile', '.git' },
   init_options = {
+    bundleGemfile = vim.fn.expand('~/.config/ruby/Gemfile'),
     enabledFeatures = {
       'codeActions',
       'completion',

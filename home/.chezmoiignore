@@ -80,6 +80,10 @@ Support
 !.config/opencode/opencode.json
 !.config/opencode/tui.json
 
+# Ruby LSP
+.config/ruby/Gemfile.lock
+.config/ruby/.bundle/
+
 # Claude config files
 .claude/**/*
 

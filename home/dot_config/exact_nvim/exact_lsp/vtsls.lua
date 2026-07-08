@@ -29,6 +29,9 @@ local max_ts_server_memory = 8092
 ---@type vim.lsp.Config
 return {
   cmd = { 'vtsls', '--stdio' },
+  init_options = {
+    hostInfo = 'neovim',
+  },
   filetypes = {
     'javascript',
     'javascriptreact',
