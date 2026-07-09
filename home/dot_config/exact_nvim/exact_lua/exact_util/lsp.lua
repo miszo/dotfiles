@@ -10,6 +10,22 @@ function M.is_typescript_server(name)
   return vim.tbl_contains(typescript_servers, name)
 end
 
+function M.get_typescript_source_action(action)
+  if M.get_typescript_server() == 'tsgo' then
+    return ({
+      add_missing_imports = 'source.addMissingImports',
+      remove_unused_imports = 'source.removeUnusedImports',
+      fix_all = 'source.fixAll',
+    })[action]
+  end
+
+  return ({
+    add_missing_imports = 'source.addMissingImports.ts',
+    remove_unused_imports = 'source.removeUnused.ts',
+    fix_all = 'source.fixAll.ts',
+  })[action]
+end
+
 ---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: vim.lsp.Client):boolean}
 
 ---@param opts? lsp.Client.filter

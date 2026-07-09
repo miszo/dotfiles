@@ -292,21 +292,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
         {
           '<leader>cM',
           function()
-            ts_code_action('source.addMissingImports.ts')
+            ts_code_action(UserUtil.lsp.get_typescript_source_action('add_missing_imports'))
           end,
           desc = 'Add missing imports',
         },
         {
           '<leader>cu',
           function()
-            ts_code_action('source.removeUnused.ts')
+            ts_code_action(UserUtil.lsp.get_typescript_source_action('remove_unused_imports'))
           end,
           desc = 'Remove unused imports',
         },
         {
           '<leader>cD',
           function()
-            ts_code_action('source.fixAll.ts')
+            ts_code_action(UserUtil.lsp.get_typescript_source_action('fix_all'))
           end,
           desc = 'Fix all diagnostics',
         },
