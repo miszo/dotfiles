@@ -46,7 +46,8 @@ return {
 
       vim.lsp.enable(vim.list_extend(mason_lsp_enable, non_mason_lsp_enable), true)
 
-      if vim.lsp.is_enabled and vim.lsp.is_enabled('denols') and vim.lsp.is_enabled('vtsls') then
+      local typescript_lsp = UserUtil.lsp.get_typescript_server()
+      if vim.lsp.is_enabled and vim.lsp.is_enabled('denols') and vim.lsp.is_enabled(typescript_lsp) then
         ---@param server string
         local resolve = function(server)
           local markers, root_dir = vim.lsp.config[server].root_markers, vim.lsp.config[server].root_dir
@@ -65,7 +66,7 @@ return {
           })
         end
         resolve('denols')
-        resolve('vtsls')
+        resolve(typescript_lsp)
       end
 
       vim.api.nvim_create_user_command(

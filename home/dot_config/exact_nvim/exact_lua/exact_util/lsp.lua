@@ -1,5 +1,15 @@
 local M = {}
 
+local typescript_servers = { 'tsgo', 'vtsls' }
+
+function M.get_typescript_server()
+  return vim.g.typescript_lsp == 'tsgo' and 'tsgo' or 'vtsls'
+end
+
+function M.is_typescript_server(name)
+  return vim.tbl_contains(typescript_servers, name)
+end
+
 ---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: vim.lsp.Client):boolean}
 
 ---@param opts? lsp.Client.filter
@@ -142,30 +152,34 @@ function M.get_typescript_server_path(root_dir)
     end
   end
 
-  local mason_tsdk = vim.fs.joinpath(
-    vim.fn.stdpath('data'),
-    'mason',
-    'packages',
-    'typescript-language-server',
-    'node_modules',
-    'typescript',
-    'lib'
-  )
-  local mason_tsdk_found = check(mason_tsdk)
-  if mason_tsdk_found then
-    return mason_tsdk_found
+  if M.get_typescript_server() == 'vtsls' then
+    return check(vim.fs.joinpath(
+      vim.fn.stdpath('data'),
+      'mason',
+      'packages',
+      'vtsls',
+      'node_modules',
+      '@vtsls',
+      'language-server',
+      'node_modules',
+      'typescript',
+      'lib'
+    ))
   end
 
-  local vtsls_tsdk = vim.fs.joinpath(
+  return check(vim.fs.joinpath(
     vim.fn.stdpath('data'),
     'mason',
     'packages',
-    'vtsls',
+    'tsgo',
     'node_modules',
-    'typescript',
+    '@typescript',
+    'native-preview',
+    'node_modules',
+    '@typescript',
+    'native-preview-darwin-arm64',
     'lib'
-  )
-  return check(vtsls_tsdk)
+  ))
 end
 
 return M

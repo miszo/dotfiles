@@ -17,6 +17,7 @@ WATCHED=(
   ruby_lsp.lua
   svelte.lua
   tailwindcss.lua
+  tsgo.lua
   vtsls.lua
   vue_ls.lua
 )

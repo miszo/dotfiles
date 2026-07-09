@@ -41,8 +41,7 @@ function M.adjust_config_for_nx(client, bufnr)
   if vscode_root and vim.startswith(buf_path, vscode_root) then
     local vscode_settings = read_json(vim.fs.joinpath(vscode_root, '.vscode', 'settings.json'))
     if vscode_settings then
-      local override = vscode_settings['typescript.preferences.importModuleSpecifier']
-        or vscode_settings['javascript.preferences.importModuleSpecifier']
+      local override = vscode_settings['js/ts.preferences.importModuleSpecifier']
       if override then
         specifier = override
       end

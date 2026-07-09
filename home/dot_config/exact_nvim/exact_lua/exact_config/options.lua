@@ -99,5 +99,7 @@ vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 
 vim.g.is_zen_active = false
 
+vim.g.typescript_lsp = 'tsgo'
+
 --- @type ''|'double'|'single'|'shadow'|'rounded'|'solid'|'bold'|'none'
 vim.g.border_style = 'rounded'

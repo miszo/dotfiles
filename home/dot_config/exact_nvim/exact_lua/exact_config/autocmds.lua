@@ -221,7 +221,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile', 'BufEnter' }, {
   callback = function(event)
     local clients = vim.lsp.get_clients({ bufnr = event.buf })
     for _, client in ipairs(clients) do
-      if client.name == 'vtsls' then
+      if client.name == UserUtil.lsp.get_typescript_server() then
         UserUtil.nx.adjust_config_for_nx(client, event.buf)
       end
     end
@@ -275,7 +275,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       },
     })
 
-    if client and client.name == 'vtsls' then
+    if client and client.name == UserUtil.lsp.get_typescript_server() then
       local function ts_code_action(action)
         vim.lsp.buf.code_action({
           apply = true,
@@ -288,6 +288,32 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
       UserUtil.nx.adjust_config_for_nx(client, attach_event.buf)
 
+      wk.add({
+        {
+          '<leader>cM',
+          function()
+            ts_code_action('source.addMissingImports.ts')
+          end,
+          desc = 'Add missing imports',
+        },
+        {
+          '<leader>cu',
+          function()
+            ts_code_action('source.removeUnused.ts')
+          end,
+          desc = 'Remove unused imports',
+        },
+        {
+          '<leader>cD',
+          function()
+            ts_code_action('source.fixAll.ts')
+          end,
+          desc = 'Fix all diagnostics',
+        },
+      })
+    end
+
+    if client and client.name == 'vtsls' then
       client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
         ---@type string, string, lsp.Range
         local action, uri, range = unpack(command.arguments)
@@ -338,27 +364,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
 
       wk.add({
-        {
-          '<leader>cM',
-          function()
-            ts_code_action('source.addMissingImports.ts')
-          end,
-          desc = 'Add missing imports',
-        },
-        {
-          '<leader>cu',
-          function()
-            ts_code_action('source.removeUnused.ts')
-          end,
-          desc = 'Remove unused imports',
-        },
-        {
-          '<leader>cD',
-          function()
-            ts_code_action('source.fixAll.ts')
-          end,
-          desc = 'Fix all diagnostics',
-        },
         {
           '<leader>cV',
           function()

@@ -22,6 +22,7 @@ local lsp_servers = {
   prismals = 'prisma-language-server',
   svelte = 'svelte-language-server',
   tailwindcss = 'tailwindcss-language-server',
+  tsgo = 'tsgo',
   vtsls = 'vtsls',
   vue_ls = 'vue-language-server',
   yamlls = 'yaml-language-server',
@@ -63,6 +64,12 @@ local tools_ensure_installed =
 
 local function lsp_enable_list()
   local servers = vim.tbl_keys(lsp_servers)
+  local typescript_lsp = UserUtil.lsp.get_typescript_server()
+
+  servers = vim.tbl_filter(function(server)
+    return server == typescript_lsp or not UserUtil.lsp.is_typescript_server(server)
+  end, servers)
+
   table.sort(servers)
   return servers
 end

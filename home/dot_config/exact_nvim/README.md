@@ -1,21 +1,20 @@
-# dotfiles/home/dot_config/exact_nvim
+# Neovim Config
+
+Personal Neovim configuration built around `lazy.nvim`, native `vim.lsp.config`, Mason-managed tools, Snacks, Catppuccin, Treesitter, Conform, and focused language-specific plugin modules.
 
 <a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/leaderkey?style=flat" /></a>
 <a href="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim"><img src="https://dotfyle.com/miszo/dotfiles-home-dotconfig-exactnvim/badges/plugin-manager?style=flat" /></a>
 
-## Special shoutouts
+## Requirements
 
-+ [ThePrimeagen](https://github.com/ThePrimeagen), [TJ DeVries](https://github.com/tjdevries), [Chris Power](https://github.com/cpow) and [Adib Hanna](https://github.com/adibhanna) for their amazing work in the NeoVim community. You've all been a huge inspiration and a great source of knowledge. 
-+ [folke](https://github.com/folke) for creating amazing plugins and inspiring the community.
-+ [echasnovski](https://github.com/echasnovski) for creating the `mini.nvim` plugin suite, which is a great source of inspiration and utility.
++ Neovim 0.11+
++ Git
++ A working shell environment with language runtimes needed by Mason packages
 
+## Install
 
-## Install Instructions
-
- > Install requires Neovim 0.11+. Always review the code before installing a configuration.
-
-Clone the repository and install the plugins:
+Clone the dotfiles repository:
 
 ```sh
 git clone git@github.com:miszo/dotfiles ~/.config/miszo/dotfiles
@@ -27,151 +26,169 @@ Open Neovim with this config:
 NVIM_APPNAME=miszo/dotfiles/home/dot_config/exact_nvim nvim
 ```
 
-## Plugins
+This config bootstraps `lazy.nvim` automatically from `lua/config/lazy.lua`. Mason tools are installed by `mason-tool-installer.nvim` on startup.
 
-### ai
+## Structure
 
-+ [olimorris/codecompanion.nvim](https://dotfyle.com/plugins/olimorris/codecompanion.nvim)
-### animation
++ `init.lua` loads the core config modules.
++ `lua/config/` contains options, keymaps, autocmds, Lazy setup, and global config objects.
++ `lua/plugins/` contains plugin specs grouped by domain.
++ `lua/plugins/lsp/` contains LSP infrastructure specs.
++ `lsp/` contains native Neovim LSP server configs.
++ `lua/util/` contains shared helpers exposed through `UserUtil`.
++ `lua/local_plugins/` contains local plugin shims/custom plugins.
++ `scripts/` contains maintenance scripts.
 
-+ [sphamba/smear-cursor.nvim](https://dotfyle.com/plugins/sphamba/smear-cursor.nvim)
-### bars-and-lines
+## Plugin Management
 
-+ [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
-### colorscheme
+Plugins are managed by `lazy.nvim`.
 
-+ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
-### comment
+Useful commands:
 
-+ [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
-+ [folke/ts-comments.nvim](https://dotfyle.com/plugins/folke/ts-comments.nvim)
-+ [JoosepAlviste/nvim-ts-context-commentstring](https://dotfyle.com/plugins/JoosepAlviste/nvim-ts-context-commentstring)
-+ [danymat/neogen](https://dotfyle.com/plugins/danymat/neogen)
-### completion
++ `:Lazy` opens the plugin manager.
++ `:Mason` opens Mason.
++ `:checkhealth vim.lsp` checks LSP health.
++ `:LspCapabilities` shows the current LSP capability health report.
++ `:Format` formats the current buffer through the configured formatter stack.
++ `:FormatInfo` shows formatter information for the current buffer.
 
-+ [zbirenbaum/copilot.lua](https://dotfyle.com/plugins/zbirenbaum/copilot.lua)
-### debugging
+## LSP
 
-+ [rcarriga/nvim-dap-ui](https://dotfyle.com/plugins/rcarriga/nvim-dap-ui)
-+ [theHamsta/nvim-dap-virtual-text](https://dotfyle.com/plugins/theHamsta/nvim-dap-virtual-text)
-+ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
-### dependency-management
+LSP setup uses Neovim's native `vim.lsp.config` and `vim.lsp.enable` flow. Mason installs LSP servers, but `mason-lspconfig` integration is intentionally disabled.
 
-+ [vuki656/package-info.nvim](https://dotfyle.com/plugins/vuki656/package-info.nvim)
-### diagnostics
+Configured LSP servers:
 
-+ [folke/trouble.nvim](https://dotfyle.com/plugins/folke/trouble.nvim)
-### editing-support
++ `angularls`
++ `astro`
++ `bashls`
++ `biome`
++ `css_variables`
++ `cssls`
++ `cssmodules_ls`
++ `docker_compose_language_service`
++ `dockerls`
++ `eslint`
++ `gopls`
++ `harper_ls`
++ `intelephense`
++ `jsonls`
++ `lua_ls`
++ `marksman`
++ `oxfmt`
++ `oxlint`
++ `phpactor`
++ `prismals`
++ `ruby_lsp`
++ `svelte`
++ `tailwindcss`
++ `tsgo` or `vtsls`, selected by `vim.g.typescript_lsp`
++ `vue_ls`
++ `yamlls`
++ `zls`
 
-+ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
-+ [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
-+ [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
-+ [monaqa/dial.nvim](https://dotfyle.com/plugins/monaqa/dial.nvim)
-+ [gbprod/yanky.nvim](https://dotfyle.com/plugins/gbprod/yanky.nvim)
-+ [Wansmer/treesj](https://dotfyle.com/plugins/Wansmer/treesj)
-### file-explorer
+`ruby_lsp` is enabled outside Mason. All other listed LSP servers are managed through Mason.
 
-+ [stevearc/oil.nvim](https://dotfyle.com/plugins/stevearc/oil.nvim)
-### formatting
+## TypeScript LSP
 
-+ [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
-### git
+TypeScript can use either `tsgo` or `vtsls`. Only one is enabled at a time.
 
-+ [ruifm/gitlinker.nvim](https://dotfyle.com/plugins/ruifm/gitlinker.nvim)
-+ [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
-### keybinding
+The active server is selected in `lua/config/options.lua`:
 
-+ [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
-### lsp
+```lua
+vim.g.typescript_lsp = 'tsgo'
+```
 
-+ [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
-+ [rachartier/tiny-inline-diagnostic.nvim](https://dotfyle.com/plugins/rachartier/tiny-inline-diagnostic.nvim)
-+ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
-+ [mrjones2014/codesettings.nvim](https://dotfyle.com/plugins/mrjones2014/codesettings.nvim)
-+ [b0o/SchemaStore.nvim](https://dotfyle.com/plugins/b0o/SchemaStore.nvim)
-+ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
-### markdown-and-latex
+Valid values:
 
-+ [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
-+ [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
-### motion
++ `tsgo`, the current default
++ `vtsls`, the fallback/alternate server
 
-+ [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
-### nvim-dev
+Selection is centralized in `UserUtil.lsp.get_typescript_server()` and reused by:
 
-+ [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
-+ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
-+ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
-### plugin-manager
++ Mason's LSP enable list
++ Deno/TypeScript root routing
++ Vue TypeScript request forwarding
++ TypeScript-specific keymaps
++ Nx import-specifier adjustment
++ `nvim-navic` LSP preference
++ TypeScript SDK path resolution
 
-+ [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
-### programming-languages-support
+Both `lsp/tsgo.lua` and `lsp/vtsls.lua` include the same broad TypeScript preferences where possible. `vtsls` keeps custom command integrations that `tsgo` does not currently expose through `workspace/executeCommand`.
 
-+ [dmmulroy/tsc.nvim](https://dotfyle.com/plugins/dmmulroy/tsc.nvim)
-+ [dmmulroy/ts-error-translator.nvim](https://dotfyle.com/plugins/dmmulroy/ts-error-translator.nvim)
-### search
+## Monorepos And Nx
 
-+ [MagicDuck/grug-far.nvim](https://dotfyle.com/plugins/MagicDuck/grug-far.nvim)
-### session
+TypeScript roots are intended to resolve at the workspace or monorepo root so references can work across libraries, not only within the nearest package.
 
-+ [folke/persistence.nvim](https://dotfyle.com/plugins/folke/persistence.nvim)
-### snippet
+Nx-specific import specifier behavior lives in `lua/util/nx.lua`. In Nx workspaces it updates TypeScript preferences dynamically:
 
-+ [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
-+ [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
-### split-and-window
++ files inside `apps/` or `libs/` prefer `project-relative`
++ workspace-level files prefer `non-relative`
++ `.vscode/settings.json` can override the import module specifier
 
-+ [folke/edgy.nvim](https://dotfyle.com/plugins/folke/edgy.nvim)
-### statusline
+The selected TypeScript LSP is notified with `workspace/didChangeConfiguration` after the setting changes.
 
-+ [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
-### syntax
+## Formatting
 
-+ [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
-+ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
-### test
+Formatting is handled by `conform.nvim` plus LSP fallback.
 
-+ [nvim-neotest/neotest-jest](https://dotfyle.com/plugins/nvim-neotest/neotest-jest)
-+ [nvim-neotest/neotest](https://dotfyle.com/plugins/nvim-neotest/neotest)
-### tmux
+For JavaScript and TypeScript-like filetypes, formatter selection is config-driven:
 
-+ [numToStr/Navigator.nvim](https://dotfyle.com/plugins/numToStr/Navigator.nvim)
-### utility
++ `oxfmt` is used when an oxfmt config exists.
++ `biome-check` is used when a Biome config exists.
++ `prettierd` is used when a Prettier config exists.
++ LSP formatting is used as fallback.
 
-+ [rgroli/other.nvim](https://dotfyle.com/plugins/rgroli/other.nvim)
-+ [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
-+ [axieax/urlview.nvim](https://dotfyle.com/plugins/axieax/urlview.nvim)
-## Language Servers
+Other formatter tools installed by Mason include Blade, ERB, Go, Markdown TOC, PHP CS Fixer, RuboCop, Shell, and Stylua formatters.
 
-+ angularls
-+ astro
-+ bashls
-+ clangd
-+ cssls
-+ cssmodules_ls
-+ denols
-+ docker_compose_language_service
-+ dockerls
-+ eslint
-+ gopls
-+ graphql
-+ html
-+ intelephense
-+ jdtls
-+ jsonls
-+ lua_ls
-+ marksman
-+ phpactor
-+ prismals
-+ pylsp
-+ pyright
-+ rust_analyzer
-+ svelte
-+ tailwindcss
-+ tsserver
-+ vtsls
-+ yamlls
-+ zls
+## Linting
 
+Linting uses `nvim-lint`.
 
- This readme was generated by [Dotfyle](https://dotfyle.com)
+Configured external linters:
+
++ Go: `golangci-lint`
++ Shell: `shellcheck`
++ PHP/Laravel: `pint --test`
++ SQL: `sqlfluff`
+
+JavaScript and TypeScript filetypes intentionally have no `nvim-lint` linters configured to avoid conflicting with LSP diagnostics and language tooling.
+
+## Diagnostics And UI
+
++ Diagnostics are configured in `lua/plugins/lsp/lsp.lua`.
++ Inline diagnostics use `rachartier/tiny-inline-diagnostic.nvim`.
++ LSP breadcrumbs use `nvim-navic` with the selected TypeScript server preference.
++ Statusline uses `lualine.nvim`.
++ File navigation and pickers are handled primarily through `snacks.nvim`.
+
+## Maintenance
+
+Check local LSP configs against upstream `nvim-lspconfig`:
+
+```sh
+scripts/check-lspconfig-drift
+```
+
+Check every local LSP config:
+
+```sh
+scripts/check-lspconfig-drift --all
+```
+
+Show drift for one server:
+
+```sh
+scripts/check-lspconfig-drift --diff lsp/tsgo.lua
+```
+
+Validate startup and LSP health:
+
+```sh
+nvim --headless -u ~/.config/nvim/init.lua '+checkhealth vim.lsp' +qa
+```
+
+## Credits
+
++ [ThePrimeagen](https://github.com/ThePrimeagen), [TJ DeVries](https://github.com/tjdevries), [Chris Power](https://github.com/cpow), and [Adib Hanna](https://github.com/adibhanna) for their work in the Neovim community.
++ [folke](https://github.com/folke) for plugins and ecosystem work.
++ [echasnovski](https://github.com/echasnovski) for the `mini.nvim` plugin suite.

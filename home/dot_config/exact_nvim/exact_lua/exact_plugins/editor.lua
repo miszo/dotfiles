@@ -513,7 +513,20 @@ return {
         callback = function(event)
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           local buf = event.buf
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol) then
+          if not client or not client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol, buf) then
+            return
+          end
+
+          local navic_client_name = vim.b[buf].navic_client_name
+          if not navic_client_name or navic_client_name == client.name then
+            require('nvim-navic').attach(client, buf)
+            return
+          end
+
+          local typescript_lsp = UserUtil.lsp.get_typescript_server()
+          if client.name == typescript_lsp then
+            vim.b[buf].navic_client_id = nil
+            vim.b[buf].navic_client_name = nil
             require('nvim-navic').attach(client, buf)
           end
         end,
@@ -526,6 +539,9 @@ return {
         depth_limit = 5,
         icons = UserConfig.icons.kinds,
         lazy_update_context = true,
+        lsp = {
+          preference = { UserUtil.lsp.get_typescript_server() },
+        },
       }
     end,
   },

@@ -15,17 +15,18 @@ return {
     ---@param result any
     ---@param context lsp.HandlerContext
     local function typescriptHandler(_, result, context)
-      local ts_client = vim.lsp.get_clients({ bufnr = context.bufnr, name = 'vtsls' })[1]
+      local typescript_lsp = UserUtil.lsp.get_typescript_server()
+      local ts_client = vim.lsp.get_clients({ bufnr = context.bufnr, name = typescript_lsp })[1]
 
       if not ts_client then
-        -- there can sometimes be a short delay until `ts_ls`/`vtsls` are attached so we retry for a few times until it is ready
+        -- There can sometimes be a short delay until the selected TypeScript LSP is attached.
         if retries <= 10 then
           retries = retries + 1
           vim.defer_fn(function()
             typescriptHandler(_, result, context)
           end, 100)
         else
-          vim.notify('Could not find  `vtsls` lsp client required by `vue_ls`.', vim.log.levels.ERROR)
+          vim.notify('Could not find `' .. typescript_lsp .. '` lsp client required by `vue_ls`.', vim.log.levels.ERROR)
         end
         return
       end

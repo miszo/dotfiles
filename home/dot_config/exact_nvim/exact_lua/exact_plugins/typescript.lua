@@ -9,7 +9,7 @@ return {
         'angularls',
         'astro',
         'svelte',
-        'vtsls',
+        UserUtil.lsp.get_typescript_server(),
         'vue_ls',
       },
     },
