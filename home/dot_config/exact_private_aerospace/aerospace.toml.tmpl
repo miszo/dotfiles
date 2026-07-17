@@ -208,72 +208,72 @@ alt-shift-l = ['join-with right', 'mode main']
 # floating windows for apps
 {{ range .aerospace_apps.floating }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'layout floating'
 {{ end }}
 {{- if .computer.isWork }}
 [[on-window-detected]]
-if.app-id = {{ .selfService.appId | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" .selfService.appId | squote }}
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-id = {{ .authService.appId | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" .authService.appId | squote }}
 run = 'layout floating'
 {{- end }}
 
 # assign apps to workspace_1
 {{ range .aerospace_apps.workspace_1 }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 1️⃣'
 {{- end }}
 
 # assign apps to workspace_b
 {{ range .aerospace_apps.workspace_b }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 🌐'
 {{- end }}
 
 # assign apps to workspace_d
 {{ range .aerospace_apps.workspace_d }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 🎨'
 {{- end }}
 
 # assign apps to workspace_m
 {{ range .aerospace_apps.workspace_m }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 📧'
 {{- end }}
 
 # assign apps to workspace_t
 {{ range .aerospace_apps.workspace_t }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 📟'
 {{- end }}
 
 # assign apps to workspace_v
 {{ range .aerospace_apps.workspace_v }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 🖥️'
 {{- end }}
 
 # assign apps to workspace_w
 {{ range .aerospace_apps.workspace_w }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run =  'move-node-to-workspace ⚒️'
 {{- end }}
 
 # assign apps to workspace_y
 {{ range .aerospace_apps.workspace_y }}
 [[on-window-detected]]
-if.app-id = {{ . | squote }}
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 💬'
 {{- end }}
 
