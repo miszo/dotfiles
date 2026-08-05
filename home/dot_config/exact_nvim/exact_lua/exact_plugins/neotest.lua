@@ -34,6 +34,20 @@ local function setup_bun_adapter(adapter)
   return adapter
 end
 
+local function parse_tsx_positions_in_main_process()
+  local treesitter = require('neotest.lib').treesitter
+  local original_parse_positions = treesitter.parse_positions
+
+  treesitter.parse_positions = function(file_path, query, opts)
+    if vim.endswith(file_path, '.tsx') and type(opts and opts.build_position) == 'string' then
+      opts = vim.deepcopy(opts)
+      opts.build_position = assert(loadstring('return ' .. opts.build_position))()
+    end
+
+    return original_parse_positions(file_path, query, opts)
+  end
+end
+
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -83,6 +97,8 @@ return {
     },
     ---@param opts neotest.Config
     config = function(_, opts)
+      parse_tsx_positions_in_main_process()
+
       local neotest_ns = vim.api.nvim_create_namespace('miszo/neotest')
       vim.diagnostic.config({
         virtual_text = {
