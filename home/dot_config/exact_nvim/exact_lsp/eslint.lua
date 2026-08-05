@@ -5,7 +5,7 @@
 local lsp = vim.lsp
 
 ---@type string[]
-local eslint_config_files = vim.tbl_extend('keep', {
+local eslint_config_files = vim.list_extend({
   '.eslintrc',
   '.eslintrc.js',
   '.eslintrc.cjs',
