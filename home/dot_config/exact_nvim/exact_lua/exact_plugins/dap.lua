@@ -167,21 +167,6 @@ return {
         desc = 'Eval',
         mode = { 'n', 'v' },
       },
-      {
-        '<leader>du',
-        function()
-          require('dapui').toggle({})
-        end,
-        desc = 'Dap UI',
-      },
-      {
-        '<leader>de',
-        function()
-          require('dapui').eval()
-        end,
-        desc = 'Eval',
-        mode = { 'n', 'v' },
-      },
     },
 
     config = function()
@@ -210,13 +195,6 @@ return {
           'Dap' .. name,
           { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] }
         )
-      end
-
-      -- setup dap config by VsCode launch.json file
-      local vscode = require('dap.ext.vscode')
-      local json = require('plenary.json')
-      vscode.json_decode = function(str)
-        return vim.json.decode(json.json_strip_comments(str))
       end
 
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open

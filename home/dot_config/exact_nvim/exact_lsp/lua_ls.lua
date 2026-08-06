@@ -16,6 +16,9 @@ return {
   },
   settings = {
     Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
       type = {
         castNumberToInteger = true,
       },
@@ -43,6 +46,10 @@ return {
       },
       completion = {
         callSnippet = 'Replace',
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = { vim.env.VIMRUNTIME },
       },
     },
   },

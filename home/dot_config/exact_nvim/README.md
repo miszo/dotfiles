@@ -8,7 +8,7 @@ Personal Neovim configuration built around `lazy.nvim`, native `vim.lsp.config`,
 
 ## Requirements
 
-+ Neovim 0.11+
++ Neovim 0.12+
 + Git
 + A working shell environment with language runtimes needed by Mason packages
 
@@ -156,7 +156,7 @@ JavaScript and TypeScript filetypes intentionally have no `nvim-lint` linters co
 ## Diagnostics And UI
 
 + Diagnostics are configured in `lua/plugins/lsp/lsp.lua`.
-+ Inline diagnostics use `rachartier/tiny-inline-diagnostic.nvim`.
++ Inline diagnostics use Neovim's native virtual text.
 + LSP breadcrumbs use `nvim-navic` with the selected TypeScript server preference.
 + Statusline uses `lualine.nvim`.
 + File navigation and pickers are handled primarily through `snacks.nvim`.

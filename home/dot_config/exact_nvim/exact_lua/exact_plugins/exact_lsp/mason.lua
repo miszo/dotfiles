@@ -59,8 +59,9 @@ local formatters_ensure_installed = {
 }
 
 ---@type string[]
-local tools_ensure_installed =
-  vim.tbl_extend('keep', lsp_ensure_installed, linters_ensure_installed, formatters_ensure_installed)
+local tools_ensure_installed = vim.list_extend({}, lsp_ensure_installed)
+vim.list_extend(tools_ensure_installed, linters_ensure_installed)
+vim.list_extend(tools_ensure_installed, formatters_ensure_installed)
 
 local function lsp_enable_list()
   local servers = vim.tbl_keys(lsp_servers)

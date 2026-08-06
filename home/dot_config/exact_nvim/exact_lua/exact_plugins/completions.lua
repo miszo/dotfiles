@@ -21,7 +21,7 @@ return {
           default = { 'dadbod', 'laravel', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
           per_filetype = {
             codecompanion = { 'codecompanion' },
-            sql = { 'snippets', 'dadbod', 'dbee', 'buffer' },
+            sql = { 'snippets', 'dadbod', 'buffer' },
           },
           providers = {
             lazydev = {

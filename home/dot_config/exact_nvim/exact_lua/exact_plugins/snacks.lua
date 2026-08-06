@@ -83,6 +83,20 @@ local lazygit = {
   },
 }
 
+---@class snacks.gitbrowse.Config
+local gitbrowse = {}
+local gitlab_host = vim.env.GITLINKER_GITLAB_HOST ---@type string|nil
+if gitlab_host and gitlab_host ~= '' then
+  gitbrowse.url_patterns = {
+    [vim.pesc(gitlab_host)] = {
+      branch = '/-/tree/{branch}',
+      file = '/-/blob/{branch}/{file}#L{line_start}-{line_end}',
+      permalink = '/-/blob/{commit}/{file}#L{line_start}-{line_end}',
+      commit = '/-/commit/{commit}',
+    },
+  }
+end
+
 ---@class snacks.notifier.Config
 local notifier = {
   enabled = true,
@@ -327,6 +341,7 @@ return {
       bigfile = bigfile,
       dashboard = dashboard,
       explorer = explorer,
+      gitbrowse = gitbrowse,
       image = image,
       indent = indent,
       input = input,
@@ -380,6 +395,7 @@ return {
       {'<leader>sD', function() Snacks.picker.diagnostics_buffer() end, desc = 'Buffer Diagnostics'},
       {'<leader>sh', function() Snacks.picker.help() end, desc = 'Help Pages'},
       {'<leader>sH', function() Snacks.picker.highlights() end, desc = 'Highlights'},
+      {'<leader>in', function() Snacks.picker.icons() end, desc = 'Browse Nerd Icons'},
       {'<leader>si', function() Snacks.picker.icons() end, desc = 'Icons'},
       {'<leader>sj', function() Snacks.picker.jumps() end, desc = 'Jumps'},
       {'<leader>sk', function() Snacks.picker.keymaps() end, desc = 'Keymaps'},
@@ -398,6 +414,21 @@ return {
       {'<leader>bs', scratch_delete_all, desc = 'Delete all scratch buffers'},
       {'<leader>cR', function() Snacks.rename.rename_file() end, desc = 'Rename File'},
       {'<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse', mode = {'n', 'v'}},
+      {
+        '<leader>gy',
+        function()
+          Snacks.gitbrowse({
+            notify = false,
+            what = 'permalink',
+            open = function(url)
+              vim.fn.setreg('+', url)
+              vim.notify(url, vim.log.levels.INFO, { title = 'Git URL copied' })
+            end,
+          })
+        end,
+        desc = 'Copy Git File Permalink',
+        mode = {'n', 'v'},
+      },
       {'<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit'},
       {'<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications'},
       {'<c-/>', function() Snacks.terminal(nil, terminal) end, desc = 'Toggle Terminal'},

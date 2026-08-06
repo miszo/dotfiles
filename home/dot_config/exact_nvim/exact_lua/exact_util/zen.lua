@@ -1,30 +1,13 @@
 local M = {}
 
-local function adjust_options_for_zen(config)
-  config.options.multilines.enabled = not vim.g.is_zen_active
-
-  return config
-end
-
----@param win snacks.win
-local function rerender_diagnostics(win)
-  local diag = require('tiny-inline-diagnostic')
-  local diag_renderer = require('tiny-inline-diagnostic.renderer')
-  local config = adjust_options_for_zen(diag.config)
-
-  diag_renderer.safe_render(config, win.buf)
-end
-
----@param win snacks.win
-function M.on_zen_open(win)
+function M.on_zen_open()
   vim.g.is_zen_active = true
-  rerender_diagnostics(win)
+  UserUtil.diagnostic.set_zen_active(true)
 end
 
----@param win snacks.win
-function M.on_zen_close(win)
+function M.on_zen_close()
   vim.g.is_zen_active = false
-  rerender_diagnostics(win)
+  UserUtil.diagnostic.set_zen_active(false)
 end
 
 function M.is_zen_active()

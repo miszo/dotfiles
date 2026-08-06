@@ -40,27 +40,46 @@ function M.format(diagnostic)
   return string.format('%s (%s: %s)', diagnostic.message, get_shorter_source_name(diagnostic.source), diagnostic.code)
 end
 
-function M.open_float(...)
-  return require('tiny-inline-diagnostic.override').open_float(...)
+local nes_visible = false
+local zen_active = false
+local virtual_text_config
+
+local function update_virtual_text()
+  virtual_text_config = virtual_text_config or vim.diagnostic.config().virtual_text
+  if type(virtual_text_config) ~= 'table' then
+    return
+  end
+
+  local config = vim.deepcopy(virtual_text_config)
+  config.current_line = zen_active and true or nil
+  if nes_visible then
+    vim.diagnostic.config({ virtual_text = false })
+  else
+    vim.diagnostic.config({ virtual_text = config })
+  end
 end
 
-local disabled = false
+function M.set_nes_visible(visible)
+  nes_visible = visible
+  update_virtual_text()
+end
+
+function M.set_zen_active(active)
+  zen_active = active
+  update_virtual_text()
+end
 
 function M.automatically_disable_diagnostics_for_nes()
   vim.api.nvim_create_autocmd('User', {
-    pattern = 'SidekickNesHide',
+    pattern = 'SidekickNesShow',
     callback = function()
-      if disabled then
-        disabled = false
-        require('tiny-inline-diagnostic').enable()
-      end
+      M.set_nes_visible(true)
     end,
   })
   vim.api.nvim_create_autocmd('User', {
-    pattern = 'SidekickNesShow',
+    pattern = 'SidekickNesHide',
     callback = function()
-      disabled = true
-      require('tiny-inline-diagnostic').disable()
+      M.set_nes_visible(false)
     end,
   })
 end

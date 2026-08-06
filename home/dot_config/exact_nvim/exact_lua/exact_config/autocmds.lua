@@ -93,8 +93,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- close the devdocs window with q
-
 -- Highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = augroup('highlight_yank'),
@@ -674,7 +672,9 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'Cmdline
     if is_excluded_from_linenumber(buftype, filetype) then
       vim.opt_local.number = false
       vim.opt_local.relativenumber = false
+      vim.opt_local.signcolumn = 'no'
     else
+      vim.opt_local.signcolumn = 'yes'
       set_relativenumber(true)
     end
 
@@ -693,7 +693,9 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'CmdlineEn
     if is_excluded_from_linenumber(buftype, filetype) then
       vim.opt_local.number = false
       vim.opt_local.relativenumber = false
+      vim.opt_local.signcolumn = 'no'
     else
+      vim.opt_local.signcolumn = 'yes'
       set_relativenumber(false)
     end
 
