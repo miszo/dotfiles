@@ -13,7 +13,7 @@ return {
           local grug = require('grug-far')
           local ext = vim.bo.buftype == '' and vim.fn.expand('%:e')
           local files_filter = ext and ext ~= '' and '*.' .. ext or nil
-          local frontend_exts = { 'js', 'jsx', 'ts', 'tsx' }
+          local frontend_exts = { 'js', 'jsx', 'ts', 'tsx', 'mjs', 'cjs', 'mts', 'cts', 'astro', 'svelte', 'vue' }
           if vim.tbl_contains(frontend_exts, ext) then
             files_filter = '*.{' .. table.concat(frontend_exts, ',') .. '}'
           end

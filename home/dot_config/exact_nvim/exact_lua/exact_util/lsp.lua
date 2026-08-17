@@ -1,9 +1,9 @@
 local M = {}
 
-local typescript_servers = { 'tsgo', 'vtsls' }
+local typescript_servers = { 'tsc' }
 
 function M.get_typescript_server()
-  return vim.g.typescript_lsp == 'tsgo' and 'tsgo' or 'vtsls'
+  return 'tsc'
 end
 
 function M.is_typescript_server(name)
@@ -11,18 +11,10 @@ function M.is_typescript_server(name)
 end
 
 function M.get_typescript_source_action(action)
-  if M.get_typescript_server() == 'tsgo' then
-    return ({
-      add_missing_imports = 'source.addMissingImports',
-      remove_unused_imports = 'source.removeUnusedImports',
-      fix_all = 'source.fixAll',
-    })[action]
-  end
-
   return ({
-    add_missing_imports = 'source.addMissingImports.ts',
-    remove_unused_imports = 'source.removeUnused.ts',
-    fix_all = 'source.fixAll.ts',
+    add_missing_imports = 'source.addMissingImports',
+    remove_unused_imports = 'source.removeUnusedImports',
+    fix_all = 'source.fixAll',
   })[action]
 end
 
@@ -168,34 +160,7 @@ function M.get_typescript_server_path(root_dir)
     end
   end
 
-  if M.get_typescript_server() == 'vtsls' then
-    return check(vim.fs.joinpath(
-      vim.fn.stdpath('data'),
-      'mason',
-      'packages',
-      'vtsls',
-      'node_modules',
-      '@vtsls',
-      'language-server',
-      'node_modules',
-      'typescript',
-      'lib'
-    ))
-  end
-
-  return check(vim.fs.joinpath(
-    vim.fn.stdpath('data'),
-    'mason',
-    'packages',
-    'tsgo',
-    'node_modules',
-    '@typescript',
-    'native-preview',
-    'node_modules',
-    '@typescript',
-    'native-preview-darwin-arm64',
-    'lib'
-  ))
+  return check(vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'tsc', 'node_modules', 'typescript', 'bin'))
 end
 
 return M
