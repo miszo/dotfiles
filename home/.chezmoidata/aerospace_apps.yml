@@ -10,6 +10,7 @@ aerospace_apps:
     - 'com.figma.Desktop'
   workspace_m:
     - 'com.apple.mail'
+  workspace_k:
     - 'com.apple.iCal'
   workspace_t:
     - 'com.mitchellh.ghostty'

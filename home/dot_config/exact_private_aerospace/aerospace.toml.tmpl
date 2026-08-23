@@ -8,7 +8,7 @@
 config-version = 2
 
 # v2 no longer infers persistent workspaces from keybindings, so list them explicitly
-persistent-workspaces = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🌐', '🎨', '📧', '📟', '⚒️', '💬', '🖥️']
+persistent-workspaces = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🌐', '🎨', '📧', '📅', '📟', '⚒️', '💬', '🖥️']
 
 # You can use it to add commands that run after login to macOS user session.
 # 'start-at-login' needs to be 'true' for 'after-login-command' to work
@@ -77,10 +77,11 @@ outer.right = 8
 '1️⃣' = 'main'
 '📟' = 'main'
 '⚒️' = 'main'
-'🌐' = 'SDQHD'
-'🎨' = 'SDQHD'
-'📧' = 'SDQHD'
-'🖥️' = 'SDQHD'
+'🌐' = 'main'
+'🎨' = 'main'
+'📧' = 'built-in'
+'📅' = 'built-in'
+'🖥️' = 'built-in'
 '💬' = 'built-in'
 
 # 'main' binding mode declaration
@@ -156,6 +157,7 @@ alt-shift-9 = 'move-node-to-workspace 9️⃣ --focus-follows-window'
 alt-shift-b = 'move-node-to-workspace 🌐 --focus-follows-window'
 alt-shift-d = 'move-node-to-workspace 🎨 --focus-follows-window'
 alt-shift-m = 'move-node-to-workspace 📧 --focus-follows-window'
+alt-shift-k = 'move-node-to-workspace 📅 --focus-follows-window'
 alt-shift-t = 'move-node-to-workspace 📟 --focus-follows-window'
 alt-shift-w = 'move-node-to-workspace ⚒️ --focus-follows-window'
 alt-shift-y = 'move-node-to-workspace 💬 --focus-follows-window'
@@ -249,6 +251,13 @@ if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
 run = 'move-node-to-workspace 📧'
 {{- end }}
 
+# assign apps to workspace_k
+{{ range .aerospace_apps.workspace_k }}
+[[on-window-detected]]
+if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
+run = 'move-node-to-workspace 📅'
+{{- end }}
+
 # assign apps to workspace_t
 {{ range .aerospace_apps.workspace_t }}
 [[on-window-detected]]
@@ -260,7 +269,7 @@ run = 'move-node-to-workspace 📟'
 {{ range .aerospace_apps.workspace_v }}
 [[on-window-detected]]
 if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
-run = 'move-node-to-workspace 🖥️'
+run = 'move_node_to_workspace 🖥️'
 {{- end }}
 
 # assign apps to workspace_w
