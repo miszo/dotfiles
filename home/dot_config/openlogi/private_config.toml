@@ -1,0 +1,68 @@
+schema_version = 6
+
+[app_settings]
+launch_at_login = true
+check_for_updates = false
+auto_install_updates = false
+update_prompt_seen = true
+show_in_menu_bar = true
+capture_mouse_events = true
+smooth_scroll = false
+vertical_scroll_sensitivity = 14
+app_icon = "openlogi"
+auto_download_assets = true
+asset_source = "automatic"
+thumbwheel_sensitivity = 14
+appearance = "system"
+ui_scale = "normal"
+device_view_mode = "grid"
+
+[devices]
+
+[devices."serial:2439zaa44n08".identity]
+display_name = "MX Ergo S"
+codename = "MX Ergo S"
+kind = "trackball"
+
+[devices."serial:2439zaa44n08".identity.model_info]
+entity_count = 4
+unit_id = [
+    0,
+    0,
+    0,
+    0,
+]
+model_ids = [
+    45118,
+    0,
+    0,
+]
+extended_model_id = 0
+
+[keyboard]
+
+[devices."serial:2439zaa44n08".identity.model_info.transports]
+usb = false
+equad = false
+btle = true
+bluetooth = false
+
+[devices."serial:2439zaa44n08".identity.capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = false
+hires_wheel = false
+thumbwheel = false
+haptic_feedback = false
+haptic_panel = false
+
+[devices."serial:2439zaa44n08".links."direct:046d:b03e".capabilities]
+buttons = true
+pointer = true
+lighting = false
+scroll_inversion = false
+hires_wheel = false
+thumbwheel = false
+haptic_feedback = false
+haptic_panel = false
