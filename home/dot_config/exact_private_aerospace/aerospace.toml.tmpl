@@ -269,7 +269,7 @@ run = 'move-node-to-workspace 📟'
 {{ range .aerospace_apps.workspace_v }}
 [[on-window-detected]]
 if = {{ printf "test %%{app-bundle-id} = %s" . | squote }}
-run = 'move_node_to_workspace 🖥️'
+run = 'move-node-to-workspace 🖥️'
 {{- end }}
 
 # assign apps to workspace_w
