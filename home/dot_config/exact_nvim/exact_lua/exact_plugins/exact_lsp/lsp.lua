@@ -30,9 +30,6 @@ return {
           },
           numhl = { [vim.diagnostic.severity.ERROR] = 'ErrorMsg', [vim.diagnostic.severity.WARN] = 'WarningMsg' },
         },
-        float = {
-          border = vim.g.border_style,
-        },
       })
 
       vim.lsp.config('lua_ls', {

@@ -78,6 +78,7 @@ vim.o.updatetime = 200 -- Time in milliseconds to wait before triggering CursorH
 vim.o.virtualedit = 'block' -- Allow cursor to move in block mode
 vim.o.wildmode = 'longest:full,full' -- Use longest common prefix for command completion
 vim.o.wildignore = '*/node_modules/*'
+vim.o.winborder = 'rounded'
 vim.o.winminwidth = 5 -- Minimum width of a window
 vim.o.wrap = false -- Disable line wrapping
 
@@ -90,14 +91,10 @@ vim.cmd([[let &t_Ce = "\e[4:0m"]])
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ 'r' })
 
-vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
-vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+vim.filetype.add({ filename = { Podfile = 'ruby' } })
 
 vim.lsp.log.set_level(vim.lsp.log.levels.OFF)
 
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
 
 vim.g.is_zen_active = false
-
---- @type ''|'double'|'single'|'shadow'|'rounded'|'solid'|'bold'|'none'
-vim.g.border_style = 'rounded'

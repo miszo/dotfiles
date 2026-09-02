@@ -10,7 +10,7 @@ local function read_json(path)
   if vim.fn.filereadable(path) == 0 then
     return nil
   end
-  local ok, result = pcall(vim.fn.json_decode, table.concat(vim.fn.readfile(path), '\n'))
+  local ok, result = pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
   return ok and result or nil
 end
 

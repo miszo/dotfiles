@@ -83,7 +83,7 @@ return {
 
     mason.setup({
       ui = {
-        border = vim.g.border_style,
+        border = vim.o.winborder,
       },
     })
 

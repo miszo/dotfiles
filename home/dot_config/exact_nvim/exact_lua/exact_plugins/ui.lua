@@ -85,7 +85,7 @@ return {
             max_width = 120,
           },
           border = {
-            style = vim.g.border_style or 'rounded',
+            style = vim.o.winborder or 'rounded',
           },
           win_options = {
             winblend = 0,

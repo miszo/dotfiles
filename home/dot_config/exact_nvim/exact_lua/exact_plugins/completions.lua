@@ -90,7 +90,7 @@ return {
           },
           documentation = {
             window = {
-              border = vim.g.border_style,
+              border = vim.o.winborder,
               scrollbar = false,
               winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc',
             },

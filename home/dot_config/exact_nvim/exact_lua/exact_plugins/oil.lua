@@ -15,7 +15,7 @@ return {
           'icon',
         },
         keymaps_help = {
-          border = vim.g.border_style,
+          border = vim.o.winborder,
         },
         delete_to_trash = true,
         watch_for_changes = true,
@@ -73,10 +73,10 @@ return {
           end,
         },
         float = {
-          border = vim.g.border_style,
+          border = vim.o.winborder,
         },
         confirmation = {
-          border = vim.g.border_style,
+          border = vim.o.winborder,
         },
       })
       vim.keymap.set('n', '-', '<cmd>Oil<cr>', { desc = 'Open parent directory' })

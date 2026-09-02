@@ -85,7 +85,7 @@ return {
         enabled = false,
       },
       floating = {
-        border = vim.g.border_style,
+        border = vim.o.winborder,
       },
       status = { virtual_text = true },
       output = { open_on_run = true },
