@@ -1,0 +1,12 @@
+{
+  "$schema": "https://vicinae.com/schemas/config.json",
+  "providers": {
+    "applications": {
+      "entrypoints": {
+        {{ onepasswordRead "op://dev/vicinae_applications/notesPlain" .op.personal.accountCode | trim | trimSuffix "," }}{{ if .computer.isWork }},
+        {{ onepasswordRead "op://Employee/vicinae_applications/notesPlain" .op.work.accountCode | trim | trimSuffix "," }}
+        {{- end }}
+      }
+    }
+  }
+}
