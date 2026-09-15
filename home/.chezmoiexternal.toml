@@ -15,19 +15,3 @@ refreshPeriod = "168h"
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/hex-to-rgba.sh"
 refreshPeriod = "168h"
-[".config/vicinae/scripts-commands/images/lungo.png"]
-type = "file"
-url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/images/lungo.png"
-refreshPeriod = "168h"
-[".config/vicinae/scripts-commands/lungo-activate.sh"]
-type = "file"
-url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-activate.sh"
-refreshPeriod = "168h"
-[".config/vicinae/scripts-commands/lungo-deactivate.sh"]
-type = "file"
-url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-deactivate.sh"
-refreshPeriod = "168h"
-[".config/vicinae/scripts-commands/lungo-toggle.sh"]
-type = "file"
-url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-toggle.sh"
-refreshPeriod = "168h"

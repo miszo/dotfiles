@@ -1,0 +1,13 @@
+{
+  "$schema": "https://vicinae.com/schemas/config.json",
+  "providers": {
+    "scripts": {
+      "preferences": {
+        "customDirs": [
+              {{ joinPath .chezmoi.homeDir ".config" "vicinae" "scripts-commands" | quote }},
+            ]
+        }
+      },
+    }
+  }
+}

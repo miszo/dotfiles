@@ -10,7 +10,8 @@
 {
   "$schema": "https://vicinae.com/schemas/config.json",
   "imports": [
-    "applications.json"
+    "applications.json",
+    "scripts.json"
   ],
   "keybinding": "vim",
   "global_shortcuts": {
