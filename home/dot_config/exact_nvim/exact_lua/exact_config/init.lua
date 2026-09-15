@@ -172,7 +172,13 @@ local filetypes_to_skip_line_numbering = {
 M.filetypes_excluded_from_line_numbering =
   vim.list_extend(M.filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
 
-M.filetypes_excluded_from_smartcolumn = M.filetypes_excluded_from_line_numbering
+local filetypes_to_skip_smartcolumn = {
+  'markdown',
+  'mdx',
+}
+
+M.filetypes_excluded_from_smartcolumn =
+  vim.list_extend(M.filetypes_excluded_from_line_numbering, filetypes_to_skip_smartcolumn)
 
 M.buftypes_excluded_from_line_numbering = {
   'nofile',
