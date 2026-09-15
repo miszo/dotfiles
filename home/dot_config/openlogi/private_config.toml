@@ -16,6 +16,7 @@ thumbwheel_sensitivity = 14
 appearance = "system"
 ui_scale = "normal"
 device_view_mode = "grid"
+theme_dark = "Catppuccin Mocha"
 
 [devices]
 
