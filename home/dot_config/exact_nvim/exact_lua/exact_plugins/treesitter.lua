@@ -102,6 +102,7 @@ return {
     lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     event = { 'LazyFile', 'VeryLazy' },
     cmd = { 'TSManager', 'TSInstall', 'TSUninstall' },
+    ---@type tree_sitter_manager.Config
     opts = {
       ensure_installed = {
         'angular',
@@ -216,22 +217,31 @@ return {
             url = 'https://github.com/LiadOz/nvim-dap-repl-highlights',
             branch = 'master',
             queries = 'queries/dap_repl',
-            use_repo_queries = true,
           },
+          tier = 2,
         },
         blade = {
           install_info = {
             url = 'https://github.com/EmranMR/tree-sitter-blade',
-            use_repo_queries = true,
+            queries = 'queries',
           },
+          tier = 2,
         },
         just = {
           install_info = {
             url = 'https://github.com/IndianBoy42/tree-sitter-just',
-            files = { 'src/parser.c', 'src/scanner.c' },
             branch = 'main',
-            use_repo_queries = true,
+            queries = 'queries/just',
           },
+          tier = 2,
+        },
+        godoc = {
+          install_info = {
+            url = 'https://github.com/fredrikaverpil/tree-sitter-godoc',
+            branch = 'main',
+            queries = 'queries',
+          },
+          tier = 2,
         },
       },
     },
@@ -251,12 +261,15 @@ return {
       vim.filetype.add({
         extension = {
           mdx = 'mdx',
+          godoc = 'godoc',
         },
         pattern = {
           ['.*%.blade%.php'] = 'blade',
+          ['*.godoc'] = 'godoc',
         },
       })
       vim.treesitter.language.register('markdown', 'mdx')
+      vim.treesitter.language.register('godoc', 'godoc')
       UserUtil.treesitter.get_installed(true) -- initialize installed langs
 
       -- treesitter highlighting

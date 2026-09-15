@@ -79,7 +79,7 @@ function M.automatically_disable_diagnostics_for_nes()
     pattern = 'SidekickNesShow',
     callback = function()
       disabled_diagnostics = true
-      vim.diagnostic.disable()
+      require('tiny-inline-diagnostic').disable()
     end,
   })
   vim.api.nvim_create_autocmd('User', {
@@ -87,7 +87,7 @@ function M.automatically_disable_diagnostics_for_nes()
     callback = function()
       if disabled_diagnostics then
         disabled_diagnostics = false
-        vim.diagnostic.enable()
+        require('tiny-inline-diagnostic').enable()
       end
     end,
   })
