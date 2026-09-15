@@ -34,18 +34,11 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 local group_active_cursorline = augroup('active_cursorline')
 
-local filetypes_to_skip_cursorline = {
-  'lazy',
-  'snacks_picker_input',
-  'snacks_picker_results',
-  'snacks_dashboard',
-}
-
 -- highlight current line only in active window
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   group = group_active_cursorline,
   callback = function(args)
-    if not vim.tbl_contains(filetypes_to_skip_cursorline, vim.bo[args.buf].filetype) then
+    if not vim.tbl_contains(UserConfig.filetypes_to_skip_cursorline, vim.bo[args.buf].filetype) then
       vim.opt_local.cursorline = true
     end
   end,
@@ -132,30 +125,10 @@ vim.api.nvim_create_autocmd('BufRead', {
   end,
 })
 
-local filetypes_to_close_with_q = {
-  'PlenaryTestPopup',
-  'codecompanion',
-  'checkhealth',
-  'dbout',
-  'git',
-  'gitsigns-blame',
-  'grug-far',
-  'help',
-  'lspinfo',
-  'neotest-output',
-  'neotest-output-panel',
-  'neotest-summary',
-  'notify',
-  'qf',
-  'startuptime',
-  'tsplayground',
-  'snacks_dashboard',
-}
-
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup('close_with_q'),
-  pattern = filetypes_to_close_with_q,
+  pattern = UserConfig.filetypes_to_close_with_q,
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
@@ -310,7 +283,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     if client and client.name == 'vtsls' then
-      client.commands['_typescript.moveToFileRefactoring'] = function(command, ctx)
+      client.commands['_typescript.moveToFileRefactoring'] = function(command, _ctx)
         ---@type string, string, lsp.Range
         local action, uri, range = unpack(command.arguments)
 
@@ -625,33 +598,17 @@ local function set_relativenumber(is_relative)
   vim.opt_local.relativenumber = is_relative and not is_insert_mode
 end
 
-local filetypes_to_skip_line_numbering = {
-  'lazy',
-  'mason',
-  'snacks_picker_input',
-  'snacks_picker_results',
-}
-
----@type string[]
-local filetypes_excluded_from_line_numbering =
-  vim.tbl_extend('keep', filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
-
-local buftypes_excluded_from_line_numbering = {
-  'nofile',
-  'terminal',
-}
-
 --- Determine if the current buffer is excluded from line numbering
 ---@param buftype string|nil
 ---@param filetype string|nil
 ---@return boolean
 local function is_excluded_from_linenumber(buftype, filetype)
-  for _, bt in ipairs(buftypes_excluded_from_line_numbering) do
+  for _, bt in ipairs(UserConfig.buftypes_excluded_from_line_numbering) do
     if buftype == bt then
       return true
     end
   end
-  for _, ft in ipairs(filetypes_excluded_from_line_numbering) do
+  for _, ft in ipairs(UserConfig.filetypes_excluded_from_line_numbering) do
     if filetype == ft then
       return true
     end

@@ -137,4 +137,11 @@ return {
       cursor_color = 'none',
     },
   },
+  {
+    'm4xshen/smartcolumn.nvim',
+    opts = {
+      colorcolumn = '120',
+      disabled_filetypes = UserConfig.filetypes_excluded_from_smartcolumn,
+    },
+  },
 }

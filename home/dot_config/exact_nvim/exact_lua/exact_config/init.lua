@@ -135,6 +135,50 @@ M.kind_filter = {
   },
 }
 
+M.filetypes_to_skip_cursorline = {
+  'lazy',
+  'snacks_picker_input',
+  'snacks_picker_results',
+  'snacks_dashboard',
+}
+
+M.filetypes_to_close_with_q = {
+  'PlenaryTestPopup',
+  'codecompanion',
+  'checkhealth',
+  'dbout',
+  'git',
+  'gitsigns-blame',
+  'grug-far',
+  'help',
+  'lspinfo',
+  'neotest-output',
+  'neotest-output-panel',
+  'neotest-summary',
+  'notify',
+  'qf',
+  'startuptime',
+  'tsplayground',
+  'snacks_dashboard',
+}
+
+local filetypes_to_skip_line_numbering = {
+  'lazy',
+  'mason',
+  'snacks_picker_input',
+  'snacks_picker_results',
+}
+
+M.filetypes_excluded_from_line_numbering =
+  vim.list_extend(M.filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
+
+M.filetypes_excluded_from_smartcolumn = M.filetypes_excluded_from_line_numbering
+
+M.buftypes_excluded_from_line_numbering = {
+  'nofile',
+  'terminal',
+}
+
 _G.UserConfig = M
 
 return M
