@@ -80,6 +80,10 @@ Support
 !.config/opencode/opencode.json
 !.config/opencode/tui.json
 
+# OpenLogi dependencies
+.config/openlogi/**/*
+!.config/openlogi/config.toml
+
 # Ruby LSP
 .config/ruby/Gemfile.lock
 .config/ruby/.bundle/
