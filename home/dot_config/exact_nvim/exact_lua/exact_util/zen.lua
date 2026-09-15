@@ -1,17 +1,13 @@
 local M = {}
 
-function M.on_zen_open()
-  vim.g.is_zen_active = true
-  UserUtil.diagnostic.set_zen_active(true)
+---@param win snacks.win
+function M.on_zen_open(win)
+  UserUtil.diagnostics.rerender(win.buf, false)
 end
 
-function M.on_zen_close()
-  vim.g.is_zen_active = false
-  UserUtil.diagnostic.set_zen_active(false)
-end
-
-function M.is_zen_active()
-  return vim.g.is_zen_active
+---@param win snacks.win
+function M.on_zen_close(win)
+  UserUtil.diagnostics.rerender(win.buf, true)
 end
 
 return M

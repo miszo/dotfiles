@@ -96,5 +96,3 @@ vim.filetype.add({ filename = { Podfile = 'ruby' } })
 vim.lsp.log.set_level(vim.lsp.log.levels.OFF)
 
 vim.g.local_plugins_path = vim.fn.stdpath('config') .. '/lua/local_plugins/'
-
-vim.g.is_zen_active = false

@@ -15,9 +15,7 @@ return {
       UserUtil.formatting.register(UserUtil.lsp.formatter())
 
       vim.diagnostic.config({
-        virtual_text = {
-          format = UserUtil.diagnostic.format,
-        },
+        virtual_text = false,
         virtual_lines = false,
         underline = true,
         severity_sort = true,
@@ -82,5 +80,34 @@ return {
       })
       UserUtil.formatting.register(eslint_formatter)
     end),
+  },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy',
+    priority = 1000,
+    ---@module 'tiny-inline-diagnostic'
+    ---@type PluginConfig
+    opts = {
+      options = {
+        use_icons_from_diagnostic = false,
+        set_arrow_to_diag_color = true,
+        multilines = {
+          enabled = true,
+          always_show = true,
+          trim_whitespaces = true,
+          tabstop = 4,
+        },
+        format = UserUtil.diagnostics.format,
+        virt_texts = {
+          priority = 5120,
+        },
+      },
+    },
+    config = function(_, opts)
+      require('tiny-inline-diagnostic').setup(opts)
+      vim.diagnostic.open_float = UserUtil.diagnostics.open_float
+
+      UserUtil.diagnostics.create_rerender_command()
+    end,
   },
 }

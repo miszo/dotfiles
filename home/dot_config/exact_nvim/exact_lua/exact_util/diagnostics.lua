@@ -40,46 +40,55 @@ function M.format(diagnostic)
   return string.format('%s (%s: %s)', diagnostic.message, get_shorter_source_name(diagnostic.source), diagnostic.code)
 end
 
-local nes_visible = false
-local zen_active = false
-local virtual_text_config
-
-local function update_virtual_text()
-  virtual_text_config = virtual_text_config or vim.diagnostic.config().virtual_text
-  if type(virtual_text_config) ~= 'table' then
-    return
-  end
-
-  local config = vim.deepcopy(virtual_text_config)
-  config.current_line = zen_active and true or nil
-  if nes_visible then
-    vim.diagnostic.config({ virtual_text = false })
-  else
-    vim.diagnostic.config({ virtual_text = config })
-  end
+function M.open_float(...)
+  return require('tiny-inline-diagnostic').open_float(...)
 end
 
-function M.set_nes_visible(visible)
-  nes_visible = visible
-  update_virtual_text()
+---@module 'tiny-inline-diagnostic'
+---@param config PluginConfig
+---@param multilines_enabled boolean
+local function adjust_options_for_zen(config, multilines_enabled)
+  config.options.multilines.enabled = multilines_enabled
+
+  return config
 end
 
-function M.set_zen_active(active)
-  zen_active = active
-  update_virtual_text()
+---@param bufnr number
+---@param multilines_enabled? boolean
+function M.rerender(bufnr, multilines_enabled)
+  local diag = require('tiny-inline-diagnostic')
+  local diag_renderer = require('tiny-inline-diagnostic.renderer')
+
+  -- if multilines_enabled is nil, use the current value of diag.config.options.multilines.enabled
+  local enable_multilines = multilines_enabled == nil and diag.config.options.multilines.enabled or multilines_enabled
+  local config = adjust_options_for_zen(diag.config, enable_multilines)
+
+  diag_renderer.safe_render(config, bufnr)
 end
+
+function M.create_rerender_command()
+  vim.api.nvim_create_user_command('RerenderDiagnostics', function()
+    M.rerender(vim.api.nvim_get_current_buf())
+  end, { desc = 'Rerender diagnostics for the current buffer' })
+end
+
+local disabled_diagnostics = false
 
 function M.automatically_disable_diagnostics_for_nes()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'SidekickNesShow',
     callback = function()
-      M.set_nes_visible(true)
+      disabled_diagnostics = true
+      vim.diagnostic.disable()
     end,
   })
   vim.api.nvim_create_autocmd('User', {
     pattern = 'SidekickNesHide',
     callback = function()
-      M.set_nes_visible(false)
+      if disabled_diagnostics then
+        disabled_diagnostics = false
+        vim.diagnostic.enable()
+      end
     end,
   })
 end

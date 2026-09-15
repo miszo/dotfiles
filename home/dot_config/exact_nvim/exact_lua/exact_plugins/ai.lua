@@ -179,7 +179,7 @@ return {
           return true
         end
       end
-      UserUtil.diagnostic.automatically_disable_diagnostics_for_nes()
+      UserUtil.diagnostics.automatically_disable_diagnostics_for_nes()
     end,
     -- Keybindings for sidekick
     keys = {

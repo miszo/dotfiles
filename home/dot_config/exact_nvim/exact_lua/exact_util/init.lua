@@ -1,6 +1,6 @@
 local cmp = require('util.cmp')
 local config_files = require('util.config_files')
-local diagnostic = require('util.diagnostic')
+local diagnostics = require('util.diagnostics')
 local formatting = require('util.formatting')
 local icons = require('util.icons')
 local lsp = require('util.lsp')
@@ -16,7 +16,7 @@ local zen = require('util.zen')
 local M = {
   cmp = cmp,
   config_files = config_files,
-  diagnostic = diagnostic,
+  diagnostics = diagnostics,
   formatting = formatting,
   icons = icons,
   lsp = lsp,
