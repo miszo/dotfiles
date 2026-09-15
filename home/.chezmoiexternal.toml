@@ -1,33 +1,33 @@
 # Raycast script commands
-[".config/raycast/_enabled-scripts-commands/epoch-to-human-date.sh"]
+[".config/vicinae/scripts-commands/epoch-to-human-date.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/epoch-to-human-date.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/human-date-to-epoch.sh"]
+[".config/vicinae/scripts-commands/human-date-to-epoch.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/human-date-to-epoch.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/hex-to-rgb.sh"]
+[".config/vicinae/scripts-commands/hex-to-rgb.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/hex-to-rgb.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/hex-to-rgba.sh"]
+[".config/vicinae/scripts-commands/hex-to-rgba.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/conversions/hex-to-rgba.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/images/lungo.png"]
+[".config/vicinae/scripts-commands/images/lungo.png"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/images/lungo.png"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/lungo-activate.sh"]
+[".config/vicinae/scripts-commands/lungo-activate.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-activate.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/lungo-deactivate.sh"]
+[".config/vicinae/scripts-commands/lungo-deactivate.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-deactivate.sh"
 refreshPeriod = "168h"
-[".config/raycast/_enabled-scripts-commands/lungo-toggle.sh"]
+[".config/vicinae/scripts-commands/lungo-toggle.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/raycast/script-commands/master/commands/apps/lungo/lungo-toggle.sh"
 refreshPeriod = "168h"
