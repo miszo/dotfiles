@@ -32,13 +32,16 @@ local filetypes_to_skip_line_numbering = {
   'snacks_picker_results',
 }
 
-local filetypes_excluded_from_line_numbering =
-  vim.list_extend(filetypes_to_close_with_q, filetypes_to_skip_line_numbering)
+local filetypes_excluded_from_line_numbering = vim.list_extend({}, filetypes_to_close_with_q)
+vim.list_extend(filetypes_excluded_from_line_numbering, filetypes_to_skip_line_numbering)
 
 local filetypes_to_skip_smartcolumn = {
   'markdown',
   'mdx',
 }
+
+local filetypes_excluded_from_smartcolumn = vim.list_extend({}, filetypes_excluded_from_line_numbering)
+vim.list_extend(filetypes_excluded_from_smartcolumn, filetypes_to_skip_smartcolumn)
 
 local buftypes_excluded_from_line_numbering = {
   'nofile',
@@ -50,7 +53,7 @@ local M = {
     to_close_with_q = filetypes_to_close_with_q,
     excluded_from_cursorline = filetypes_excluded_from_cursorline,
     excluded_from_line_numbering = filetypes_excluded_from_line_numbering,
-    excluded_from_smartcolumn = vim.list_extend(filetypes_excluded_from_line_numbering, filetypes_to_skip_smartcolumn),
+    excluded_from_smartcolumn = filetypes_excluded_from_smartcolumn,
   },
   buftypes = {
     excluded_from_line_numbering = buftypes_excluded_from_line_numbering,

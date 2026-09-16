@@ -40,8 +40,10 @@ return {
       local mason_lsp_spec = UserUtil.plugins.get('mason.nvim') or {}
       local mason_lsp_enable = type(mason_lsp_spec.lsp_enable) == 'function' and mason_lsp_spec.lsp_enable() or {}
       local non_mason_lsp_enable = { 'ruby_lsp' }
+      local enable_lsp = vim.list_extend({}, mason_lsp_enable)
+      vim.list_extend(enable_lsp, non_mason_lsp_enable)
 
-      vim.lsp.enable(vim.list_extend(mason_lsp_enable, non_mason_lsp_enable), true)
+      vim.lsp.enable(enable_lsp, true)
 
       local typescript_lsp = UserUtil.lsp.get_typescript_server()
       if vim.lsp.is_enabled and vim.lsp.is_enabled('denols') and vim.lsp.is_enabled(typescript_lsp) then
