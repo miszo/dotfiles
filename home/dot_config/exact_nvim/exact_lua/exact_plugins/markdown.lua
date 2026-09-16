@@ -39,6 +39,10 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
       'nvim-mini/mini.icons',
     },
     ft = { 'markdown', 'markdown.mdx' },

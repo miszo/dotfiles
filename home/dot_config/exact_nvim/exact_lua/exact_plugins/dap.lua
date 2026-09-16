@@ -1,21 +1,3 @@
----@param config {type?:string, args?:string[]|fun():string[]?}
-local function get_args(config)
-  local args = type(config.args) == 'function' and (config.args() or {}) or config.args or {} --[[@as string[] | string ]]
-  local args_str = type(args) == 'table' and table.concat(args, ' ') or args --[[@as string]]
-
-  config = vim.deepcopy(config)
-  ---@cast args string[]
-  config.args = function()
-    local new_args = vim.fn.expand(vim.fn.input('Run with args: ', args_str)) --[[@as string]]
-    if config.type and config.type == 'java' then
-      ---@diagnostic disable-next-line: return-type-mismatch
-      return new_args
-    end
-    return require('dap.utils').splitstr(new_args)
-  end
-  return config
-end
-
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -57,7 +39,7 @@ return {
       {
         '<leader>da',
         function()
-          require('dap').continue({ before = get_args })
+          require('dap').continue({ before = UserUtil.dap.get_args })
         end,
         desc = 'Run with Args',
       },
@@ -179,12 +161,7 @@ return {
 
       mason_dap.setup({
         automatic_setup = true,
-        ensure_installed = {
-          'codelldb',
-          'delve',
-          'js-debug-adapter',
-          'php-debug-adapter',
-        },
+        ensure_installed = UserConfig.dap.ensure_installed,
       })
 
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })

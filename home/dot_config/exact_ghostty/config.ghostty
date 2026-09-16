@@ -45,5 +45,5 @@ keybind=super+m=unbind
 keybind=super+enter=unbind
 keybind=super+ctrl+f=unbind
 
-config-file = ?config-zsh
-config-file = ?config-tmux
+config-file = ?config-zsh.ghostty
+config-file = ?config-tmux.ghostty

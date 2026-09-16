@@ -56,6 +56,11 @@ return {
     dependencies = {
       -- neotest dependencies
       'nvim-neotest/nvim-nio',
+      -- adapters dependencies
+      {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'main',
+      },
       -- adapters
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',

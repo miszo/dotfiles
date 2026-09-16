@@ -38,7 +38,7 @@ local group_active_cursorline = augroup('active_cursorline')
 vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   group = group_active_cursorline,
   callback = function(args)
-    if not vim.tbl_contains(UserConfig.filetypes_to_skip_cursorline, vim.bo[args.buf].filetype) then
+    if not vim.tbl_contains(UserConfig.filetypes.excluded_from_cursorline, vim.bo[args.buf].filetype) then
       vim.opt_local.cursorline = true
     end
   end,
@@ -128,7 +128,7 @@ vim.api.nvim_create_autocmd('BufRead', {
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup('close_with_q'),
-  pattern = UserConfig.filetypes_to_close_with_q,
+  pattern = UserConfig.filetypes.to_close_with_q,
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
@@ -603,12 +603,12 @@ end
 ---@param filetype string|nil
 ---@return boolean
 local function is_excluded_from_linenumber(buftype, filetype)
-  for _, bt in ipairs(UserConfig.buftypes_excluded_from_line_numbering) do
+  for _, bt in ipairs(UserConfig.buftypes.excluded_from_line_numbering) do
     if buftype == bt then
       return true
     end
   end
-  for _, ft in ipairs(UserConfig.filetypes_excluded_from_line_numbering) do
+  for _, ft in ipairs(UserConfig.filetypes.excluded_from_line_numbering) do
     if filetype == ft then
       return true
     end

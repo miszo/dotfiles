@@ -41,7 +41,7 @@ local dashboard = {
       },
       { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
       { icon = '󱌢 ', key = 'm', desc = 'Mason', action = ":lua require('mason.ui').open()" },
-      { icon = ' ', key = 'T', desc = 'Treesitter', action = ':TSManager' },
+      { icon = ' ', key = 'T', desc = 'Treesitter', action = ':checkhealth nvim-treesitter' },
       { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
     },
   },

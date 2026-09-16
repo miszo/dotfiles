@@ -1,5 +1,3 @@
-# vim: syntax=ghostty
-
 # keybinds for tmux
 # https://www.eso.org/~ndelmott/ascii.html
 # ctrl+b is the prefix for tmux
