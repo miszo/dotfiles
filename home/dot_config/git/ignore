@@ -29,3 +29,6 @@ nbproject/
 miszo_task_*
 
 miszo-ai-command_*.md
+
+# Local AGENTS file
+AGENTS.local.md
