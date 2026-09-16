@@ -52,115 +52,6 @@ Useful commands:
 + `:Format` formats the current buffer through the configured formatter stack.
 + `:FormatInfo` shows formatter information for the current buffer.
 
-## LSP
-
-LSP setup uses Neovim's native `vim.lsp.config` and `vim.lsp.enable` flow. Mason installs LSP servers, but `mason-lspconfig` integration is intentionally disabled.
-
-Configured LSP servers:
-
-+ `angularls`
-+ `astro`
-+ `bashls`
-+ `biome`
-+ `css_variables`
-+ `cssls`
-+ `cssmodules_ls`
-+ `docker_compose_language_service`
-+ `dockerls`
-+ `eslint`
-+ `gopls`
-+ `harper_ls`
-+ `intelephense`
-+ `jsonls`
-+ `lua_ls`
-+ `marksman`
-+ `oxfmt`
-+ `oxlint`
-+ `phpactor`
-+ `prismals`
-+ `ruby_lsp`
-+ `svelte`
-+ `tailwindcss`
-+ `tsgo` or `vtsls`, selected by `vim.g.typescript_lsp`
-+ `vue_ls`
-+ `yamlls`
-+ `zls`
-
-`ruby_lsp` is enabled outside Mason. All other listed LSP servers are managed through Mason.
-
-## TypeScript LSP
-
-TypeScript can use either `tsgo` or `vtsls`. Only one is enabled at a time.
-
-The active server is selected in `lua/config/options.lua`:
-
-```lua
-vim.g.typescript_lsp = 'tsgo'
-```
-
-Valid values:
-
-+ `tsgo`, the current default
-+ `vtsls`, the fallback/alternate server
-
-Selection is centralized in `UserUtil.lsp.get_typescript_server()` and reused by:
-
-+ Mason's LSP enable list
-+ Deno/TypeScript root routing
-+ Vue TypeScript request forwarding
-+ TypeScript-specific keymaps
-+ Nx import-specifier adjustment
-+ `nvim-navic` LSP preference
-+ TypeScript SDK path resolution
-
-Both `lsp/tsgo.lua` and `lsp/vtsls.lua` include the same broad TypeScript preferences where possible. `vtsls` keeps custom command integrations that `tsgo` does not currently expose through `workspace/executeCommand`.
-
-## Monorepos And Nx
-
-TypeScript roots are intended to resolve at the workspace or monorepo root so references can work across libraries, not only within the nearest package.
-
-Nx-specific import specifier behavior lives in `lua/util/nx.lua`. In Nx workspaces it updates TypeScript preferences dynamically:
-
-+ files inside `apps/` or `libs/` prefer `project-relative`
-+ workspace-level files prefer `non-relative`
-+ `.vscode/settings.json` can override the import module specifier
-
-The selected TypeScript LSP is notified with `workspace/didChangeConfiguration` after the setting changes.
-
-## Formatting
-
-Formatting is handled by `conform.nvim` plus LSP fallback.
-
-For JavaScript and TypeScript-like filetypes, formatter selection is config-driven:
-
-+ `oxfmt` is used when an oxfmt config exists.
-+ `biome-check` is used when a Biome config exists.
-+ `prettierd` is used when a Prettier config exists.
-+ LSP formatting is used as fallback.
-
-Other formatter tools installed by Mason include Blade, ERB, Go, Markdown TOC, PHP CS Fixer, RuboCop, Shell, and Stylua formatters.
-
-## Linting
-
-Linting uses `nvim-lint`.
-
-Configured external linters:
-
-+ Go: `golangci-lint`
-+ Shell: `shellcheck`
-+ PHP/Laravel: `pint --test`
-+ SQL: `sqlfluff`
-
-JavaScript and TypeScript filetypes intentionally have no `nvim-lint` linters configured to avoid conflicting with LSP diagnostics and language tooling.
-
-## Diagnostics And UI
-
-+ Diagnostics are configured in `lua/plugins/lsp/lsp.lua`.
-+ Inline diagnostics use Neovim's native virtual text.
-+ LSP breadcrumbs use `nvim-navic` with the selected TypeScript server preference.
-+ Statusline uses `lualine.nvim`.
-+ File navigation and pickers are handled primarily through `snacks.nvim`.
-
 ## Maintenance
 
 Check local LSP configs against upstream `nvim-lspconfig`:
@@ -178,7 +69,7 @@ scripts/check-lspconfig-drift --all
 Show drift for one server:
 
 ```sh
-scripts/check-lspconfig-drift --diff lsp/tsgo.lua
+scripts/check-lspconfig-drift --diff lsp/tsc.lua
 ```
 
 Validate startup and LSP health:
