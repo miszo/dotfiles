@@ -55,7 +55,7 @@ return {
   on_attach = function(_, bufnr)
     -- Register a command to fix all issues in the current buffer
     vim.api.nvim_buf_create_user_command(bufnr, 'LspBiomeFixAll', function()
-      vim.lsp.buf.code_action({
+      UserUtil.lsp.code_action({
         bufnr = bufnr,
         apply = true,
         context = { only = { 'source.fixAll.biome' } },

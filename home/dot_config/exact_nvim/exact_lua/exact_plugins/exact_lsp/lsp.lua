@@ -112,4 +112,33 @@ return {
       UserUtil.diagnostics.create_rerender_command()
     end,
   },
+  {
+    'rachartier/tiny-code-action.nvim',
+    dependencies = {
+      {
+        'folke/snacks.nvim',
+        opts = {
+          terminal = {},
+        },
+      },
+    },
+    event = 'LspAttach',
+    opts = {
+      backend = 'delta',
+      backend_opts = {
+        delta = {
+          header_lines_to_remove = 4,
+          args = {
+            '--line-numbers',
+          },
+        },
+      },
+      picker = {
+        'snacks',
+        opts = {
+          layout = { preset = 'dropdown' },
+        },
+      },
+    },
+  },
 }

@@ -227,26 +227,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         Snacks.picker.lsp_outgoing_calls,
         desc = 'C[a]lls Outgoing',
       },
-      {
-        '<leader>ss',
-        function()
-          Snacks.picker.lsp_symbols({
-            filter = UserConfig.kind_filter,
-            layout = { preset = 'vscode', preview = 'main' },
-          })
-        end,
-        desc = 'LSP Symbols',
-      },
-      {
-        '<leader>sS',
-        Snacks.picker.lsp_workspace_symbols,
-        desc = 'LSP Workspace Symbols',
-      },
     })
 
     if client and client.name == UserUtil.lsp.get_typescript_server() then
       local function ts_code_action(action)
-        vim.lsp.buf.code_action({
+        UserUtil.lsp.code_action({
           apply = true,
           context = {
             only = { action },
@@ -282,7 +267,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end
 
-    if client and client.name == 'vtsls' then
+    if client and client.name == UserUtil.lsp.get_typescript_server() then
       client.commands['_typescript.moveToFileRefactoring'] = function(command, _ctx)
         ---@type string, string, lsp.Range
         local action, uri, range = unpack(command.arguments)
@@ -423,13 +408,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       wk.add({
         {
           '<leader>ca',
-          vim.lsp.buf.code_action,
+          UserUtil.lsp.code_action,
           desc = 'Code Action',
         },
         {
           '<leader>cA',
           function()
-            vim.lsp.buf.code_action({
+            UserUtil.lsp.code_action({
               apply = true,
               context = {
                 only = { 'source.fixAll', 'source', 'source.fixAll.biome', 'source.biome' },

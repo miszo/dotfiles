@@ -2,6 +2,11 @@ local M = {}
 
 local typescript_servers = { 'tsc' }
 
+function M.code_action(...)
+  -- vim.lsp.buf.code_action(...)
+  require('tiny-code-action').code_action(...)
+end
+
 function M.get_typescript_server()
   return 'tsc'
 end

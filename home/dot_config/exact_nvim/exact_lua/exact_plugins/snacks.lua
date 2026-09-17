@@ -321,7 +321,11 @@ local zen = {
 
 local function build_dependencies()
   if vim.fn.executable('npm') == 1 then
-    vim.fn.system({ 'npm', 'install', '-g', '@mermaid-js/mermaid-cli' })
+    if vim.fn.executable('mmdc') == 1 then
+      vim.fn.system({ 'npm', 'update', '-g', '@mermaid-js/mermaid-cli' })
+    else
+      vim.fn.system({ 'npm', 'install', '-g', '@mermaid-js/mermaid-cli' })
+    end
   else
     vim.notify('npm is not installed. Please install npm to use snacks.nvim', 'error')
   end
