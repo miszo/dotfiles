@@ -47,3 +47,4 @@ keybind=super+ctrl+f=unbind
 
 config-file = ?config-zsh.ghostty
 config-file = ?config-tmux.ghostty
+custom-shader = ?shaders/cursor_warp.glsl
