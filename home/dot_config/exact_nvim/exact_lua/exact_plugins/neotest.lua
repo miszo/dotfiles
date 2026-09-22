@@ -1,9 +1,14 @@
+local function is_js_project()
+  local js_markers = { 'package.json', 'yarn.lock', 'package-lock.json', 'pnpm-lock.yaml' }
+  return UserUtil.root.find(0, js_markers) ~= nil
+end
+
 local function has_bun_in_project()
   local bun_markers = { 'bun.lockb', 'bun.lock', 'bunfig.toml' }
   return UserUtil.root.find(0, bun_markers) ~= nil
 end
 
-local function has_go_in_project()
+local function is_go_project()
   local go_markers = { 'go.mod', 'go.sum' }
   return UserUtil.root.find(0, go_markers) ~= nil
 end
@@ -21,6 +26,66 @@ local function find_vitest_config(file_path)
       UserUtil.config_files.js_config_filenames('vite')
     )
   )
+end
+
+-- Neotest calls is_test_file in a fast event context, so no vim.fn here.
+local function imports_node_test(file_path)
+  local file = file_path and io.open(file_path, 'r')
+  if not file then
+    return false
+  end
+
+  local found = false
+  for _ = 1, 20 do -- only the first 20 lines, imports live at the top
+    local line = file:read('l')
+    if not line then
+      break
+    end
+    if line:match('^%s*import%s+.*%s+from%s+[\'"]node:test[\'"]') or line:match('require%([\'"]node:test[\'"]%)') then
+      found = true
+      break
+    end
+  end
+
+  file:close()
+  return found
+end
+
+-- The adapter's own matcher is name-based only (__tests__, *.test.*, *.spec.*),
+-- which is every jest spec too, so also require a 'node:test' import.
+local function setup_nodejs_adapter(adapter)
+  adapter = adapter({ nodeCommand = 'node' })
+
+  local matches_test_file_name = adapter.is_test_file
+
+  adapter.is_test_file = function(file_path)
+    return matches_test_file_name(file_path) and imports_node_test(file_path)
+  end
+
+  return adapter
+end
+
+-- Jest's own root is the nearest package.json, which in a monorepo gives one
+-- adapter (so one result/watch/summary tree) per workspace package. Key it off
+-- the lockfile instead, so the whole repo shares a single jest adapter.
+local function find_js_root(file_path)
+  return UserUtil.root.find_path(file_path, { 'yarn.lock', 'package-lock.json', 'pnpm-lock.yaml' })
+end
+
+local function setup_jest_adapter(adapter)
+  adapter = adapter({
+    cwd = find_js_root,
+    jestConfigFile = find_jest_config,
+    jest_test_discovery = true,
+  })
+
+  local original_root = adapter.root
+
+  adapter.root = function(dir)
+    return find_js_root(dir) or original_root(dir)
+  end
+
+  return adapter
 end
 
 local function setup_bun_adapter(adapter)
@@ -65,6 +130,7 @@ return {
       'nvim-neotest/neotest-jest',
       'marilari88/neotest-vitest',
       'arthur944/neotest-bun',
+      'AkisArou/neotest-nodejs',
       'fredrikaverpil/neotest-golang',
       'olimorris/neotest-rspec',
       'lawrence-laz/neotest-zig',
@@ -73,16 +139,6 @@ return {
     ---@type neotest.Config
     opts = {
       adapters = {
-        ['neotest-jest'] = {
-          cwd = function()
-            return vim.uv.cwd()
-          end,
-          jestConfigFile = find_jest_config,
-          jest_test_discovery = true,
-        },
-        ['neotest-vitest'] = {
-          vitestConfigFile = find_vitest_config,
-        },
         ['neotest-rspec'] = {},
         ['neotest-zig'] = {},
       },
@@ -145,13 +201,18 @@ return {
       end
 
       if opts.adapters then
-        -- Dynamically add bun adapter if bun project detected
-        if has_bun_in_project() then
-          opts.adapters['neotest-bun'] = setup_bun_adapter
+        if is_js_project() then
+          if has_bun_in_project() then
+            opts.adapters['neotest-bun'] = setup_bun_adapter
+          end
+          opts.adapters['neotest-nodejs'] = setup_nodejs_adapter
+          opts.adapters['neotest-jest'] = setup_jest_adapter
+          -- Claims nothing unless the file's project depends on vitest
+          opts.adapters['neotest-vitest'] = { vitestConfigFile = find_vitest_config }
         end
 
         -- Dynamically add golang adapter if go project detected
-        if has_go_in_project() then
+        if is_go_project() then
           opts.adapters['neotest-golang'] = {
             dap_go_enabled = true,
           }
@@ -184,6 +245,12 @@ return {
             adapters[#adapters + 1] = adapter
           end
         end
+        -- Neotest uses the first adapter whose is_test_file matches, and jest's
+        -- matches any *.test.* file, so it has to be the last resort.
+        table.sort(adapters, function(a, b)
+          return b.name == 'neotest-jest' and a.name ~= 'neotest-jest'
+        end)
+
         opts.adapters = adapters
       end
 
