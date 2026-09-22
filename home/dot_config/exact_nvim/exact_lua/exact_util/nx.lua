@@ -3,15 +3,30 @@ local M = {}
 local DEFAULT_APPS_DIR = 'apps'
 local DEFAULT_LIBS_DIR = 'libs'
 
+---@type table<string, { mtime: { sec: integer, nsec: integer }, value: table? }>
+local json_cache = {}
+
 --- Read and parse a JSON file, returning nil on failure.
+--- BufEnter re-runs this for every buffer switch, so parsed contents are kept
+--- and only re-read once the file's mtime changes.
 ---@param path string
 ---@return table?
 local function read_json(path)
-  if vim.fn.filereadable(path) == 0 then
+  local stat = vim.uv.fs_stat(path)
+  if not stat or stat.type ~= 'file' then
     return nil
   end
+
+  local cached = json_cache[path]
+  if cached and cached.mtime.sec == stat.mtime.sec and cached.mtime.nsec == stat.mtime.nsec then
+    return cached.value
+  end
+
   local ok, result = pcall(vim.json.decode, table.concat(vim.fn.readfile(path), '\n'))
-  return ok and result or nil
+  local value = ok and result or nil
+  json_cache[path] = { mtime = stat.mtime, value = value }
+
+  return value
 end
 
 --- Determine the import module specifier for the given buffer in an Nx workspace.
