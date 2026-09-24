@@ -11,7 +11,10 @@ esac
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 # ripgrep config end
 export HOMEBREW_NO_AUTO_UPDATE=1
+# don't install formulae that are managed by mise-en-place
+export HOMEBREW_BUNDLE_BREW_SKIP='asdf node pnpm yarn bun deno go just lua zig rust ruby chezmoi php'
+export HOMEBREW_NO_ANALYTICS=1
 export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
-COMPLETION_WAITING_DOTS=true
+export COMPLETION_WAITING_DOTS=true
 export COLIMA_HOME="$HOME/.config/colima"
 export MAS_NO_AUTO_INDEX=1
