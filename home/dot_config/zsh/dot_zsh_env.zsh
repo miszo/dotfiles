@@ -18,3 +18,14 @@ export SSH_AUTH_SOCK=$HOME/.1password/agent.sock
 export COMPLETION_WAITING_DOTS=true
 export COLIMA_HOME="$HOME/.config/colima"
 export MAS_NO_AUTO_INDEX=1
+
+# Ctrl+n
+export DEJA_CYCLE_KEY=^N
+# Shift+→
+export DEJA_CYCLE_FUZZY_KEY='^[[1;2C'
+# Shift+←
+export DEJA_CYCLE_FUZZY_BACK_KEY='^[[1;2D'
+# Empty key (disable)
+export DEJA_TOGGLE_EMPTY_KEY=
+# Escape key
+export DEJA_DISMISS_KEY=^[

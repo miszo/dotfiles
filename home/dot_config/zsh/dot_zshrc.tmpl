@@ -19,6 +19,9 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 ZSH_CACHE_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit"
 
+zinit ice wait"0" lucid depth=1 pick"deja.plugin.zsh"
+zinit light Giammarco-Ferranti/deja
+
 # Add in zsh plugins
 zinit light MichaelAquilina/zsh-you-should-use
 zinit light lukechilds/zsh-better-npm-completion
@@ -28,11 +31,7 @@ zinit light Tarrasch/zsh-bd
 
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
- blockf \
-    zsh-users/zsh-completions \
- atload"!_zsh_autosuggest_start" \
-    zsh-users/zsh-autosuggestions
+    zdharma-continuum/fast-syntax-highlighting
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
@@ -61,25 +60,26 @@ zinit snippet "$ZDOTDIR/plugins/opencode.zsh"
 zinit snippet "$ZDOTDIR/plugins/pnpm.zsh"
 
 # Keybindings
-bindkey "^p" history-search-backward         # Ctrl+p: search backward in history
-bindkey "^n" history-search-forward          # Ctrl+n: search forward in history
 bindkey '^u' backward-kill-line              # Ctrl+U: delete whole line backwards
 bindkey "^a" beginning-of-line               # Ctrl+a: move to beginning of line
 bindkey "^e" end-of-line                     # Ctrl+e: move to end of line
 bindkey  "^[[3~" delete-char                 # Delete key
 
 # History
-HISTSIZE=5000
-HISTFILE=~/.zsh_history
+HISTSIZE=100000
 SAVEHIST=$HISTSIZE
+HISTFILE=~/.zsh_history
 HISTDUP=erase
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
+setopt hist_expire_dups_first
+setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+setopt no_beep
 
 # Complete aliases
 setopt completealiases
