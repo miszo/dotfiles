@@ -1,0 +1,115 @@
+[metadata]
+name = "workmux"
+description = "Create or open task worktrees in the current repository"
+requirements = ["git", "workmux", "zsh", "tmux"]
+
+[source]
+command = '''
+git worktree list --porcelain |
+awk '
+  BEGIN { print "+ Create task" }
+  /^worktree / { checkout++ }
+  /^branch refs\/heads\// {
+    if (checkout > 1) {
+      sub(/^branch refs\/heads\//, "")
+      if ($0 ~ /^[A-Za-z0-9][A-Za-z0-9._\/-]*$/) {
+        print
+      }
+    }
+  }
+'
+'''
+
+[preview]
+cached = false
+command = '''
+task='{}'
+
+if [ "$task" = "+ Create task" ]; then
+  printf '%s\n' \
+    'Press Enter to name a task in a floating input.' \
+    'Setup runs in a separate session and closes on success.'
+  exit 0
+fi
+
+git check-ref-format --branch "$task" >/dev/null 2>&1 || exit 0
+
+worktree_path=$(workmux path "$task" 2>/dev/null) || exit 0
+printf 'Branch:   %s\nWorktree: %s\n' "$task" "$worktree_path"
+
+sessions=$(tmux list-sessions -F '#{session_id}|#{session_name}|#{session_path}' 2>/dev/null)
+matched=0
+while IFS='|' read -r session_id session_name session_dir; do
+  [ "$session_dir" = "$worktree_path" ] || continue
+  matched=1
+  printf '\nSession: %s\n' "$session_name"
+  tmux list-panes -s -t "$session_id" \
+    -F '#{window_index}|#{window_name}|#{pane_index}|#{pane_current_command}' |
+    awk -F '|' '
+      $1 != window {
+        window = $1
+        printf "  Window %s: %s\n", $1, $2
+      }
+      { printf "    Pane %s: %s\n", $3, $4 }
+    '
+done <<EOF
+$sessions
+EOF
+
+[ "$matched" = 1 ] || printf '\nSession: closed — no running windows or pane processes.\n'
+'''
+
+[keybindings]
+enter = "actions:open_or_create"
+ctrl-n = "actions:create"
+ctrl-e = "actions:create_dependencies"
+ctrl-d = ["actions:close", "reload_source"]
+alt-d = "actions:cleanup"
+
+[actions.open_or_create]
+description = "Open selected task or create a new one"
+command = '''
+zsh -f -c '
+  source "$HOME/.config/zsh/.zsh_functions.zsh"
+  task="$1"
+
+  if [[ "$task" == "+ Create task" ]]; then
+    _wt_start regular
+  else
+    wt "$task"
+  fi
+' -- {}
+'''
+mode = "execute"
+
+[actions.close]
+description = "Close selected task session; keep worktree and branch"
+command = '''
+zsh -f -c '
+  task="$1"
+  [[ "$task" == "+ Create task" ]] && exit 0
+  git check-ref-format --branch "$task" >/dev/null 2>&1 || exit 1
+  workmux close "$task"
+' -- {}
+'''
+mode = "fork"
+
+[actions.cleanup]
+description = "Remove selected task workspace and local branch, with confirmation"
+command = '''
+zsh -f -c '
+  source "$HOME/.config/zsh/.zsh_functions.zsh"
+  _wt_cleanup "$1"
+' -- {}
+'''
+mode = "execute"
+
+[actions.create]
+description = "Create a regular task"
+command = "zsh -f -c 'source \"$HOME/.config/zsh/.zsh_functions.zsh\"; _wt_start regular'"
+mode = "execute"
+
+[actions.create_dependencies]
+description = "Create a dependency task"
+command = "zsh -f -c 'source \"$HOME/.config/zsh/.zsh_functions.zsh\"; wtd'"
+mode = "execute"

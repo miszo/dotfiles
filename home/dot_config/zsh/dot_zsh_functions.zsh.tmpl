@@ -189,3 +189,224 @@ function fix_colima {
   echo "Starting Colima with ${memory}GB of memory..."
   colima start --memory="${memory}"
 }
+
+function _wt_root {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    print -u2 "Run this from inside a Git checkout."
+    return 1
+  }
+
+  git worktree list --porcelain |
+    awk '/^worktree / { print substr($0, 10); exit }'
+}
+
+function _wt_task() (
+  local mode="$1"
+  local task="${2:-}"
+  local background="${3:-}"
+  local root config
+
+  command -v workmux >/dev/null 2>&1 || {
+    print -u2 "Install WorkMux: brew install raine/workmux/workmux"
+    return 1
+  }
+
+  root=$(_wt_root) || return 1
+  cd "$root" || return 1
+
+  if [[ -z "$task" ]]; then
+    read "task?Task branch name: " || return 1
+    [[ -n "$task" ]] || return 0
+  fi
+
+  git check-ref-format --branch "$task" >/dev/null 2>&1 || {
+    print -u2 "Invalid task branch name: $task"
+    return 1
+  }
+
+  if workmux path "$task" >/dev/null 2>&1; then
+    if [[ "$background" == background ]]; then
+      print -u2 -r -- "[workmux] Task already exists: $task"
+      return 0
+    fi
+    print -u2 -r -- "[workmux] Opening task: $task"
+    workmux open "$task"
+    return $?
+  fi
+
+  local -a options
+  options=()
+
+  if [[ "$mode" == dependencies ]]; then
+    config="$root/.workmux.dependencies.yaml"
+
+    [[ -f "$config" ]] || {
+      print -u2 "Dependency profile missing: $config"
+      return 1
+    }
+
+    options=(--config "$config")
+  fi
+
+  [[ "$background" == background ]] && options+=(--background --session)
+
+  print -u2 -r -- "[workmux] Fetching remote updates for: $root"
+  git fetch --progress --verbose || {
+    local result=$?
+    print -u2 "[workmux] Fetch failed; task creation stopped."
+    return "$result"
+  }
+
+  print -u2 -r -- "[workmux] Creating task: $task ($mode profile)"
+  print -u2 "[workmux] Setting up worktree files and opening the task session..."
+  workmux add "$task" --open-if-exists "${options[@]}" || {
+    local result=$?
+    print -u2 -r -- "[workmux] Task setup failed: $task"
+    return "$result"
+  }
+)
+
+function _wt_worker {
+  local mode="$1" task="$2" client="$3" result setup_session
+
+  [[ -n "$task" ]] || return 0
+  tmux set-option -w -t "$TMUX_PANE" remain-on-exit on
+  setup_session=$(tmux display-message -p -t "$TMUX_PANE" '#{session_name}')
+  print -r -- "[workmux] Background setup: $task ($mode profile)"
+  _wt_task "$mode" "$task" background
+  result=$?
+
+  if (( result == 0 )); then
+    print -r -- "[workmux] Ready: $task. Open it with wt or the session picker."
+    tmux display-message -c "$client" -d 7000 "WorkMux task ready: $task"
+    tmux set-option -w -t "$TMUX_PANE" remain-on-exit off
+  else
+    print -u2 -r -- "[workmux] Setup failed (exit $result). Logs remain in this window."
+    tmux display-message -c "$client" -d 7000 "WorkMux setup failed: $task — see $setup_session"
+    local -a error_popup
+    error_popup=(tmux display-popup -E -c "$client" -x C -y C -w 80% -h 70%
+      -T "WorkMux setup failed: $task (q to close)"
+      zsh -f -c 'tmux capture-pane -p -J -S - -t "$1" | less -R' -- "$TMUX_PANE")
+    tmux run-shell -b "${(j: :)${(@qqq)error_popup}}"
+  fi
+
+  return "$result"
+}
+
+function _wt_input {
+  local mode="$1" task=""
+
+  bindkey -e
+  bindkey '^[' send-break
+  print
+  while true; do
+    vared -p '  Branch: ' task || return 0
+    [[ -n "$task" ]] || return 0
+    if git check-ref-format --branch "$task" >/dev/null 2>&1; then
+      _wt_start "$mode" "$task"
+      return $?
+    fi
+    print -u2 -r -- "  Invalid branch name: $task"
+  done
+}
+
+function _wt_prompt {
+  local mode="$1" root="$2" client="$3" functions_file="$4"
+
+  tmux display-popup -C -c "$client"
+  tmux display-popup -E -c "$client" -d "$root" \
+    -x C -y C -w 60 -h 7 -T "New WorkMux task ($mode)" \
+    zsh -fi -c 'source "$1"; _wt_input "$2"' -- "$functions_file" "$mode"
+}
+
+function _wt_start() (
+  local mode="$1" task="${2:-}" root client functions_file setup_session
+  local worker='source "$1"; _wt_worker "$2" "$3" "$4"'
+
+  [[ -n "$TMUX" ]] || {
+    print -u2 "Run wt/wtd inside tmux to create tasks in the background."
+    return 1
+  }
+  command -v workmux >/dev/null 2>&1 || {
+    print -u2 "Install WorkMux: brew install raine/workmux/workmux"
+    return 1
+  }
+
+  root=$(_wt_root) || return 1
+  cd "$root" || return 1
+  client=$(tmux display-message -p -t "$TMUX_PANE" '#{client_name}') || return 1
+  functions_file="${ZDOTDIR:-$HOME/.config/zsh}/.zsh_functions.zsh"
+
+  if [[ -z "$task" ]]; then
+    local -a prompt_args
+    prompt_args=(zsh -f -c 'source "$1"; _wt_prompt "$2" "$3" "$4" "$5"'
+      -- "$functions_file" "$mode" "$root" "$client" "$functions_file")
+    tmux run-shell -b "${(j: :)${(@qqq)prompt_args}}"
+    return $?
+  fi
+
+  git check-ref-format --branch "$task" >/dev/null 2>&1 || {
+    print -u2 -r -- "Invalid task branch name: $task"
+    return 1
+  }
+  if workmux path "$task" >/dev/null 2>&1; then
+    workmux open "$task"
+    return $?
+  fi
+
+  setup_session="workmux-setup-${root:t}-${(L)task}-$RANDOM"
+  setup_session=${setup_session//[^[:alnum:]_-]/-}
+  tmux new-session -d -s "$setup_session" -n setup -c "$root" \
+    zsh -f -c "$worker" -- "$functions_file" "$mode" "$task" "$client" || return $?
+  tmux display-message -c "$client" "WorkMux setup started: $task — logs in $setup_session"
+)
+
+function wt() (
+  if (( $# > 1 )); then
+    print -u2 "Usage: wt [task-branch]"
+    return 1
+  fi
+
+  if (( $# == 0 )); then
+    local root
+    root=$(_wt_root) || return 1
+    cd "$root" || return 1
+    tv workmux
+  else
+    _wt_start regular "$1"
+  fi
+)
+
+function _wt_cleanup() (
+  local task="${1:-}" root worktree_path client label functions_file
+  local -a cleanup_args
+  local cleanup='source "$1"; cd "$2" || exit 1; workmux remove "$3"; result=$?; if (( result != 0 )); then print -u2 "Cleanup cancelled or failed (exit $result). Press any key to close."; read -k 1; fi; exit "$result"'
+
+  [[ -z "$task" || "$task" == "+ Create task" ]] && return 0
+  [[ -n "$TMUX" ]] || return 1
+  git check-ref-format --branch "$task" >/dev/null 2>&1 || return 1
+  root=$(_wt_root) || return 1
+  cd "$root" || return 1
+  worktree_path=$(workmux path "$task") || return 1
+  [[ "$worktree_path" != "$root" ]] || {
+    print -u2 "The main checkout cannot be removed."
+    return 1
+  }
+  client=$(tmux display-message -p -t "$TMUX_PANE" '#{client_name}') || return 1
+  functions_file="${ZDOTDIR:-$HOME/.config/zsh}/.zsh_functions.zsh"
+  label="Remove $task worktree, session and local branch? (y/n)"
+  cleanup_args=(display-popup -E -c "$client" -d "$root" -x C -y C -w 80% -h 70%
+    -T "Clean up WorkMux task: $task"
+    zsh -f -c "$cleanup" -- "$functions_file" "$root" "$task")
+  print -r -- "confirm-before -b -t ${(qqq)client} -p ${(qqq)label} { ${(j: :)${(@qqq)cleanup_args}} }" |
+    tmux source-file -
+)
+
+function wtd {
+  if (( $# > 1 )); then
+    print -u2 "Usage: wtd [task-branch]"
+    return 1
+  fi
+
+  _wt_start dependencies "${1:-}"
+}
