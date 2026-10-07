@@ -36,6 +36,7 @@ git check-ref-format --branch "$task" >/dev/null 2>&1 || exit 0
 
 worktree_path=$(workmux path "$task" 2>/dev/null) || exit 0
 printf 'Branch:   %s\nWorktree: %s\n' "$task" "$worktree_path"
+/usr/bin/python3 "$HOME/.config/workmux/crit-status.py" --cwd "$worktree_path"
 
 sessions=$(tmux list-sessions -F '#{session_id}|#{session_name}|#{session_path}' 2>/dev/null)
 matched=0
@@ -64,7 +65,7 @@ enter = "actions:open_or_create"
 ctrl-n = "actions:create"
 ctrl-e = "actions:create_dependencies"
 ctrl-d = ["actions:close", "reload_source"]
-alt-d = "actions:cleanup"
+ctrl-k = "actions:cleanup"
 
 [actions.open_or_create]
 description = "Open selected task or create a new one"

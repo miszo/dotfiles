@@ -120,7 +120,7 @@ return {
         mux = {
           backend = 'tmux',
           enabled = true,
-          create = 'terminal', -- create sessions in Neovim terminal
+          create = 'split', -- create sessions in a tmux split
         },
         -- AI CLI Tools configuration
         tools = {

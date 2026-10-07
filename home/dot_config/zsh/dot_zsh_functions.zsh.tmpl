@@ -378,9 +378,9 @@ function wt() (
 )
 
 function _wt_cleanup() (
-  local task="${1:-}" root worktree_path client label functions_file
+  local task="${1:-}" root worktree_path client label functions_file cleanup_session
   local -a cleanup_args
-  local cleanup='source "$1"; cd "$2" || exit 1; workmux remove "$3"; result=$?; if (( result != 0 )); then print -u2 "Cleanup cancelled or failed (exit $result). Press any key to close."; read -k 1; fi; exit "$result"'
+  local cleanup='source "$1"; _wt_cleanup_worker "$2" "$3" "$4"'
 
   [[ -z "$task" || "$task" == "+ Create task" ]] && return 0
   [[ -n "$TMUX" ]] || return 1
@@ -395,11 +395,33 @@ function _wt_cleanup() (
   client=$(tmux display-message -p -t "$TMUX_PANE" '#{client_name}') || return 1
   functions_file="${ZDOTDIR:-$HOME/.config/zsh}/.zsh_functions.zsh"
   label="Remove $task worktree, session and local branch? (y/n)"
-  cleanup_args=(display-popup -E -c "$client" -d "$root" -x C -y C -w 80% -h 70%
-    -T "Clean up WorkMux task: $task"
-    zsh -f -c "$cleanup" -- "$functions_file" "$root" "$task")
+  cleanup_session="workmux-cleanup-${root:t}-${(L)task}-$RANDOM"
+  cleanup_session=${cleanup_session//[^[:alnum:]_-]/-}
+  cleanup_args=(new-session -d -s "$cleanup_session" -n cleanup -c "$root"
+    zsh -f -c "$cleanup" -- "$functions_file" "$root" "$task" "$client")
   print -r -- "confirm-before -b -t ${(qqq)client} -p ${(qqq)label} { ${(j: :)${(@qqq)cleanup_args}} }" |
     tmux source-file -
+)
+
+function _wt_cleanup_worker() (
+  local root="$1" task="$2" client="$3" result cleanup_session
+
+  cd "$root" || return 1
+  tmux set-option -w -t "$TMUX_PANE" remain-on-exit on
+  cleanup_session=$(tmux display-message -p -t "$TMUX_PANE" '#{session_name}')
+  print -r -- "[workmux] Cleaning up: $task"
+  tmux display-message -c "$client" "WorkMux cleanup started: $task — details in $cleanup_session"
+  workmux remove "$task"
+  result=$?
+
+  if (( result == 0 )); then
+    tmux display-message -c "$client" -d 7000 "WorkMux task cleaned up: $task"
+    tmux set-option -w -t "$TMUX_PANE" remain-on-exit off
+  else
+    print -u2 -r -- "[workmux] Cleanup cancelled or failed (exit $result). Logs remain here."
+    tmux display-message -c "$client" -d 7000 "WorkMux cleanup stopped: $task — see $cleanup_session"
+  fi
+  return "$result"
 )
 
 function wtd {
