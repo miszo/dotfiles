@@ -1,0 +1,24 @@
+home/dot_config/zsh/dot_zsh_functions.zsh.tmpl
+  s_64403a5b38eb68::t_5bf89a788b273f 381,383,398-401,406-424
+  s_64403a5b38eb68::t_ca64deb438d095 425-426
+home/dot_config/exact_nvim/exact_lua/exact_plugins/ai.lua
+  s_64403a5b38eb68::t_1922da6751e653 123
+home/dot_config/television/cable/workmux.toml
+  s_64403a5b38eb68::t_5bf89a788b273f 68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "436d8c19577acc1fb563822fec2f2aee0f803efe",
+  "prompts": {},
+  "sessions": {
+    "s_64403a5b38eb68": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefbd9279ffe1432Uodser3FSd",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
