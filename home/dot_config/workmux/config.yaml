@@ -1,0 +1,15 @@
+nerdfont: true
+mode: session
+default_session: default
+worktree_dir: <project>.worktrees/
+window_prefix: "wm-{project}-"
+worktree_naming: full
+stale_after: 8h
+
+sidebar:
+  position: left
+  width: 40
+  layout: tiles
+  group_by: project
+  dim_stale: true
+  collapse_stale: true
