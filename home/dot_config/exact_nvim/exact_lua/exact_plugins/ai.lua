@@ -121,6 +121,10 @@ return {
           backend = 'tmux',
           enabled = true,
           create = 'split', -- create sessions in a tmux split
+          split = {
+            vertical = true, -- vertical or horizontal split
+            size = 0.4, -- size of the split (0-1 for percentage)
+          },
         },
         -- AI CLI Tools configuration
         tools = {
