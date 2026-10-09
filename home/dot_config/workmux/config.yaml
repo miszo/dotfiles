@@ -1,7 +1,7 @@
 nerdfont: true
 mode: session
 default_session: default
-worktree_dir: <project>.worktrees/
+worktree_dir: .worktrees
 window_prefix: "wm-{project}-"
 worktree_naming: full
 stale_after: 8h
