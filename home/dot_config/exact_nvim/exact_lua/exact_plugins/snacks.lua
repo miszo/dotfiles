@@ -35,8 +35,11 @@ local dashboard = {
         action = ':lua Snacks.lazygit()',
         enabled = function()
           local has_lazygit = vim.fn.executable('lazygit') == 1
-          local is_git_repo = vim.fn.isdirectory('.git') == 1
-          return has_lazygit and is_git_repo
+          if not has_lazygit or vim.fn.executable('git') ~= 1 then
+            return false
+          end
+          local output = vim.fn.system({ 'git', 'rev-parse', '--is-inside-work-tree' })
+          return vim.v.shell_error == 0 and vim.trim(output) == 'true'
         end,
       },
       { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
