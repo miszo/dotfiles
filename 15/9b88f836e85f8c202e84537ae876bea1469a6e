@@ -1,0 +1,14 @@
+home/dot_config/exact_nvim/exact_lua/exact_plugins/snacks.lua
+  h_88c8f29a7bb397 38-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "159b88f836e85f8c202e84537ae876bea1469a6e",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
