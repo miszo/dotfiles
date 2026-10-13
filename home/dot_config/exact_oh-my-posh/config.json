@@ -50,34 +50,31 @@
         {
           "options": {
             "home_icon": "~",
-            "style": "full"
+            "style": "agnoster_git"
           },
-          "template": " \uf07c {{ .Path }} ",
-          "foreground": "transparent",
-          "powerline_symbol": "\ue0b4",
-          "background": "p:blue",
+          "template": "{{ .Path }}",
+          "foreground": "p:blue",
+          "background": "transparent",
           "type": "path",
-          "style": "powerline",
-          "leading_powerline_symbol": "\ue0b6"
+          "style": "plain"
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "template": " on ",
+          "foreground": "p:blue",
+          "background": "transparent"
         },
         {
           "options": {
-            "branch_icon": "\uf126 ",
-            "github_icon": "\uF408 ",
-            "gitlab_icon": "\uF296 ",
-            "bitbucket_icon": "\uF171 ",
-            "azure_devops_icon": "\uEBE8 ",
-            "codecommit_icon": "\uF270 ",
-            "codeberg_icon": "\uF330 ",
-            "git_icon": "\uE5FB "
+            "branch_icon": ""
           },
-          "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
-          "foreground": "transparent",
-          "powerline_symbol": "\ue0b4",
-          "background": "p:green",
+          "template": "{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} ",
+          "foreground": "p:green",
+          "background": "transparent",
           "type": "git",
-          "style": "powerline",
-          "background_templates": [
+          "style": "plain",
+          "foreground_templates": [
             "{{ if or (.Working.Changed) (.Staging.Changed) }}p:yellow{{ end }}",
             "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:peach{{ end }}",
             "{{ if gt .Ahead 0 }}p:teal{{ end }}",
@@ -91,7 +88,7 @@
       "alignment": "right",
       "segments": [
         {
-          "template": " {{ if gt .Code 0 }}\uf467 {{ reason .Code }}{{ end }} ",
+          "template": "{{ if gt .Code 0 }}exit:{{ .Code }}{{ end }} ",
           "foreground": "p:green",
           "background": "transparent",
           "type": "status",
@@ -101,25 +98,21 @@
           ]
         },
         {
-          "template": " {{ .FormattedMs }} \uf252 ",
-          "foreground": "transparent",
-          "powerline_symbol": "\ue0b4",
-          "background": "p:orange",
+          "template": "{{ .FormattedMs }} ",
+          "foreground": "p:lavender",
+          "background": "transparent",
           "type": "executiontime",
-          "style": "powerline",
-          "leading_powerline_symbol": "\ue0b6"
+          "style": "plain"
         },
         {
           "options": {
             "cache_duration": "none"
           },
-          "template": " \uf0e7 ",
-          "foreground": "transparent",
-          "powerline_symbol": "\ue0b4",
-          "background": "p:yellow",
+          "template": "root ",
+          "foreground": "p:yellow",
+          "background": "transparent",
           "type": "root",
-          "style": "powerline",
-          "leading_powerline_symbol": "\ue0b6"
+          "style": "plain"
         }
       ]
     },

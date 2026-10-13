@@ -45,7 +45,7 @@ function M.pretty_path(opts)
     modified_hl = 'MatchParen',
     directory_hl = '',
     filename_hl = 'Bold',
-    modified_sign = '',
+    modified_sign = ' ' .. UserConfig.icons.file.modified:gsub('%s+$', ''),
     readonly_icon = ' ' .. UserConfig.icons.file.readonly:gsub('%s+$', ''),
     length = 4,
   }, opts or {})
