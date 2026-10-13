@@ -1,0 +1,20 @@
+home/dot_config/exact_nvim/exact_lua/exact_plugins/statusline.lua
+  h_88c8f29a7bb397 36-37
+home/dot_config/exact_nvim/exact_lua/exact_util/statusline.lua
+  h_88c8f29a7bb397 48
+home/dot_config/exact_oh-my-posh/config.json
+  h_88c8f29a7bb397 53,55-57,59-66,70,72-74,76-77,91,101-103,105,111-113,115
+home/dot_config/exact_tmux/dot_tmux.conf
+  h_88c8f29a7bb397 130,132-135,137-150
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e5151badef0be1bed6f5dfa65449521b64a91c76",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
