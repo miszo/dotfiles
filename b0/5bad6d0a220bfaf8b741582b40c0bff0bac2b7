@@ -1,0 +1,24 @@
+home/dot_config/exact_nvim/exact_lua/exact_config/exact_configs/icons.lua
+  h_88c8f29a7bb397 2,10-11,63-70,81-104
+home/dot_config/exact_nvim/exact_lua/exact_plugins/completions.lua
+  h_88c8f29a7bb397 11
+home/dot_config/exact_nvim/exact_lua/exact_plugins/git.lua
+  h_88c8f29a7bb397 12-13,20-21
+home/dot_config/exact_nvim/exact_lua/exact_plugins/markdown.lua
+  h_88c8f29a7bb397 1,66,74,92
+home/dot_config/exact_nvim/exact_lua/exact_plugins/snacks.lua
+  h_88c8f29a7bb397 5-6,22-36,38,44,57-60,65-67
+home/dot_config/exact_nvim/exact_lua/exact_plugins/which-key.lua
+  h_88c8f29a7bb397 4,27-32,55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b05bad6d0a220bfaf8b741582b40c0bff0bac2b7",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
