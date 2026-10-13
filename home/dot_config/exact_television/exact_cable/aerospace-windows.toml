@@ -1,0 +1,17 @@
+[metadata]
+name = "aerospace-windows"
+description = "List and focus AeroSpace windows"
+requirements = ["aerospace"]
+
+[source]
+command = "aerospace list-windows --all --format '%{window-id}\t%{app-name}\t%{window-title}\t%{workspace}\t%{monitor-name}'"
+display = "{split:\t:1} — {split:\t:2} [{split:\t:3}]"
+output = "{split:\t:0}"
+
+[keybindings]
+enter = "actions:focus"
+
+[actions.focus]
+description = "Focus the selected window"
+command = "aerospace focus --window-id '{split:\t:0}'"
+mode = "execute"
