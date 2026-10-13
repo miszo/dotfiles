@@ -1,0 +1,16 @@
+home/dot_config/exact_television/exact_cable/aerospace-windows.toml
+  h_88c8f29a7bb397 1-17
+home/dot_config/exact_tmux/dot_tmux.conf
+  h_88c8f29a7bb397 113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "de3a496b7eb671d18c3b3abfe68c60ee338176df",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
