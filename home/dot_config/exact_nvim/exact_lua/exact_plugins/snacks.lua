@@ -2,6 +2,8 @@
 ---@class snacks.bigfile.Config
 local bigfile = { enabled = true }
 
+local dashboard_icons = UserConfig.icons.ui.dashboard
+
 ---@class snacks.dashboard.Config
 local dashboard = {
   width = 80,
@@ -17,19 +19,29 @@ local dashboard = {
      ]],
     ---@type snacks.dashboard.Item[]
     keys = {
-      { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
-      { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
-      { icon = ' ', key = 't', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
-      { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
-      { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
+      { icon = dashboard_icons.find, key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+      { icon = dashboard_icons.new, key = 'n', desc = 'New File', action = ':ene | startinsert' },
       {
-        icon = ' ',
+        icon = dashboard_icons.search,
+        key = 't',
+        desc = 'Find Text',
+        action = ":lua Snacks.dashboard.pick('live_grep')",
+      },
+      {
+        icon = dashboard_icons.recent,
+        key = 'r',
+        desc = 'Recent Files',
+        action = ":lua Snacks.dashboard.pick('oldfiles')",
+      },
+      { icon = dashboard_icons.session, key = 's', desc = 'Restore Session', section = 'session' },
+      {
+        icon = dashboard_icons.config,
         key = 'c',
         desc = 'Config',
         action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
       },
       {
-        icon = '',
+        icon = dashboard_icons.git,
         key = 'g',
         desc = 'Lazygit',
         action = ':lua Snacks.lazygit()',
@@ -42,17 +54,17 @@ local dashboard = {
           return vim.v.shell_error == 0 and vim.trim(output) == 'true'
         end,
       },
-      { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy' },
-      { icon = '󱌢 ', key = 'm', desc = 'Mason', action = ":lua require('mason.ui').open()" },
-      { icon = ' ', key = 'T', desc = 'Treesitter', action = ':checkhealth nvim-treesitter' },
-      { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+      { icon = dashboard_icons.lazy, key = 'l', desc = 'Lazy', action = ':Lazy' },
+      { icon = dashboard_icons.mason, key = 'm', desc = 'Mason', action = ":lua require('mason.ui').open()" },
+      { icon = dashboard_icons.treesitter, key = 'T', desc = 'Treesitter', action = ':checkhealth nvim-treesitter' },
+      { icon = dashboard_icons.quit, key = 'q', desc = 'Quit', action = ':qa' },
     },
   },
   sections = {
     { section = 'header' },
-    { icon = ' ', title = 'Keymaps', section = 'keys', indent = 2, padding = 1 },
-    { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
-    { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
+    { icon = dashboard_icons.keys, title = 'Keymaps', section = 'keys', indent = 2, padding = 1 },
+    { icon = dashboard_icons.files, title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
+    { icon = dashboard_icons.projects, title = 'Projects', section = 'projects', indent = 2, padding = 1 },
     { section = 'startup' },
   },
 }

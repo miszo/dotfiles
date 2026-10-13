@@ -1,6 +1,7 @@
 ---@diagnostic disable: missing-fields
 ---@module 'lazy'
 ---@type LazySpec[]
+local which_key_icons = UserConfig.icons.ui.which_key
 return {
   {
     'folke/which-key.nvim',
@@ -23,8 +24,12 @@ return {
           { '<leader>mp', group = 'markdown preview' },
           { '<leader>q', group = 'quit/session' },
           { '<leader>s', group = 'search' },
-          { '<leader>u', group = 'ui', icon = { icon = '󰙵 ', color = 'cyan' } },
-          { '<leader>x', group = 'diagnostics/quickfix', icon = { icon = '󱖫 ', color = 'green' } },
+          { '<leader>u', group = 'ui', icon = { icon = which_key_icons.ui, color = 'cyan' } },
+          {
+            '<leader>x',
+            group = 'diagnostics/quickfix',
+            icon = { icon = which_key_icons.diagnostics, color = 'green' },
+          },
           { '[', group = 'prev' },
           { ']', group = 'next' },
           { 'g', group = 'goto' },
@@ -47,7 +52,7 @@ return {
           },
           -- better descriptions
           { 'gx', desc = 'Open with system app' },
-          { '<leader>W', group = 'TSWorksheet', icon = require('mini.icons').get('extension', 'ts') },
+          { '<leader>W', group = 'TSWorksheet', icon = which_key_icons.worksheet },
         },
       },
     },

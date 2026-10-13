@@ -65,10 +65,6 @@ return {
             },
             inlay_hints = { background = true },
           },
-          navic = {
-            enabled = true,
-            custom_bg = colors.mantle,
-          },
           neotest = true,
           noice = true,
           notify = true,

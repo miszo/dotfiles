@@ -8,7 +8,7 @@ return {
       'rafamadriz/friendly-snippets',
       'kristijanhusak/vim-dadbod-completion',
     },
-    version = '*',
+    version = '1.*',
     config = function()
       require('blink.cmp').setup({
         snippets = { preset = 'luasnip' },
@@ -20,7 +20,6 @@ return {
         sources = {
           default = { 'dadbod', 'laravel', 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
           per_filetype = {
-            codecompanion = { 'codecompanion' },
             sql = { 'snippets', 'dadbod', 'buffer' },
           },
           providers = {
@@ -49,7 +48,6 @@ return {
           ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
           ['<C-e>'] = { 'hide', 'fallback' },
           ['<CR>'] = { 'accept', 'fallback' },
-
           ['<Tab>'] = {
             UserUtil.cmp.map({ 'snippet_forward', 'ai_nes', 'ai_accept' }),
             'fallback',
@@ -58,7 +56,6 @@ return {
             'snippet_backward',
             'fallback',
           },
-
           ['<Up>'] = { 'select_prev', 'fallback' },
           ['<Down>'] = { 'select_next', 'fallback' },
           ['<C-p>'] = { 'select_prev', 'fallback' },

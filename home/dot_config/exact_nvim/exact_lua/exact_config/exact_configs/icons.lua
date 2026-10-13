@@ -1,7 +1,5 @@
 local M = {
-  misc = {
-    dots = '󰇘',
-  },
+  misc = { dots = '󰇘' },
   dap = {
     Stopped = { '󰁕 ', 'DiagnosticWarn', 'DapStoppedLine' },
     Breakpoint = ' ',
@@ -9,17 +7,8 @@ local M = {
     BreakpointRejected = { ' ', 'DiagnosticError' },
     LogPoint = '.>',
   },
-  diagnostics = {
-    Error = ' ',
-    Warn = ' ',
-    Hint = ' ',
-    Info = ' ',
-  },
-  git = {
-    added = ' ',
-    modified = ' ',
-    removed = ' ',
-  },
+  diagnostics = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' },
+  git = { added = ' ', modified = ' ', removed = ' ' },
   kinds = {
     Array = ' ',
     Boolean = '󰨙 ',
@@ -63,13 +52,6 @@ local M = {
     Value = ' ',
     Variable = '󰀫 ',
   },
-  statusline = {
-    debugger = ' ',
-    ai_sidekick = '󰚩 ',
-    copilot = ' ',
-    copilot_stopped = ' ',
-    copilot_warning = ' ',
-  },
   package = {
     installing = '󰏗 ',
     updating = '󰚰 ',
@@ -77,6 +59,14 @@ local M = {
     fetching = '󰄉 ',
     success = '󰄬 ',
     error = '󰅙 ',
+  },
+  file = { modified = '[+] ', readonly = '[RO] ' },
+  statusline = {
+    debugger = ' ',
+    ai_sidekick = '󰚩 ',
+    copilot = ' ',
+    copilot_stopped = ' ',
+    copilot_warning = ' ',
   },
   ai_sidekick = {
     attached = ' ',
@@ -88,9 +78,30 @@ local M = {
     terminal_attached = ' ',
     terminal_started = ' ',
   },
-  file = {
-    modified = ' ',
-    readonly = ' ',
+  ui = {
+    dashboard = {
+      find = ' ',
+      new = ' ',
+      search = ' ',
+      recent = ' ',
+      session = ' ',
+      config = ' ',
+      git = ' ',
+      lazy = '󰒲 ',
+      mason = '󱌢 ',
+      treesitter = ' ',
+      quit = ' ',
+      keys = ' ',
+      files = ' ',
+      projects = ' ',
+    },
+    which_key = { ui = '󰙵 ', diagnostics = '󱖫 ', worksheet = ' ' },
+    markdown = {
+      unchecked = '󰄱 ',
+      checked = '󰱒 ',
+      headings = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+    },
+    git_signs = { delete = '' },
   },
 }
 

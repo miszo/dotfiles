@@ -9,18 +9,18 @@ return {
     event = 'LazyFile',
     opts = {
       signs = {
+        delete = { text = UserConfig.icons.ui.git_signs.delete },
+        topdelete = { text = UserConfig.icons.ui.git_signs.delete },
         add = { text = '▎' },
         change = { text = '▎' },
-        delete = { text = '' },
-        topdelete = { text = '' },
         changedelete = { text = '▎' },
         untracked = { text = '▎' },
       },
       signs_staged = {
+        delete = { text = UserConfig.icons.ui.git_signs.delete },
+        topdelete = { text = UserConfig.icons.ui.git_signs.delete },
         add = { text = '▎' },
         change = { text = '▎' },
-        delete = { text = '' },
-        topdelete = { text = '' },
         changedelete = { text = '▎' },
       },
       current_line_blame = false,

@@ -1,3 +1,4 @@
+local markdown_icons = UserConfig.icons.ui.markdown
 ---@module 'lazy'
 ---@type LazySpec[]
 return {
@@ -62,7 +63,7 @@ return {
         position = 'inline',
         unchecked = {
           -- Replaces '[ ]' of 'task_list_marker_unchecked'
-          icon = '   󰄱 ',
+          icon = '   ' .. markdown_icons.unchecked,
           -- Highlight for the unchecked icon
           highlight = 'RenderMarkdownUnchecked',
           -- Highlight for item associated with unchecked checkbox
@@ -70,7 +71,7 @@ return {
         },
         checked = {
           -- Replaces '[x]' of 'task_list_marker_checked'
-          icon = '   󰱒 ',
+          icon = '   ' .. markdown_icons.checked,
           -- Highlight for the checked icon
           highlight = 'RenderMarkdownChecked',
           -- Highlight for item associated with checked checkbox
@@ -88,7 +89,7 @@ return {
       },
       heading = {
         sign = false,
-        icons = { '󰎤 ', '󰎧 ', '󰎪 ', '󰎭 ', '󰎱 ', '󰎳 ' },
+        icons = markdown_icons.headings,
       },
     },
   },

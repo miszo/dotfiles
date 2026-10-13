@@ -8,7 +8,6 @@ return {
       'nvim-mini/mini.icons',
       'catppuccin/nvim',
       'folke/noice.nvim',
-      'SmiteshP/nvim-navic',
     },
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
@@ -52,7 +51,6 @@ return {
               },
             },
             { UserUtil.statusline.pretty_path() },
-            { 'navic', color_correction = 'dynamic' },
           },
           lualine_x = {
             'copilot',
