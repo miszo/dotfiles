@@ -1,0 +1,14 @@
+home/dot_config/exact_oh-my-posh/config.json
+  h_88c8f29a7bb397 51,64,72,113,131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0ca7a3f477e3510bdeeada10702d1e7f4d8c4537",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
