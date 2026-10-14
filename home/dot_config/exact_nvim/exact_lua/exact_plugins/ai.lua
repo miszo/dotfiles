@@ -240,6 +240,7 @@ return {
           end
           require('sidekick.cli').toggle({ name = 'codex', focus = true })
         end,
+        desc = 'Sidekick: Toggle Codex CLI',
       },
       {
         '<leader>ag',
