@@ -66,7 +66,6 @@ return {
             inlay_hints = { background = true },
           },
           neotest = true,
-          noice = true,
           notify = true,
           render_markdown = true,
           semantic_tokens = true,

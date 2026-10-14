@@ -64,6 +64,7 @@ vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', '
 vim.o.shiftround = true -- Round indent to multiple of 'shiftwidth'
 vim.o.shiftwidth = 2 -- Number of spaces for each indentation level
 vim.o.showmode = false -- Don't show mode in command line
+vim.o.showcmdloc = 'statusline'
 vim.o.smartindent = true -- Smart indentation
 vim.o.splitbelow = true -- New horizontal splits appear below the current window
 vim.o.splitkeep = 'cursor' -- Keep the same cursor position when splitting windows

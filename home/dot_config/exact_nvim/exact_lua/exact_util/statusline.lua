@@ -1,5 +1,23 @@
 local M = {}
 
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+  group = vim.api.nvim_create_augroup('miszo/statusline', { clear = true }),
+  callback = vim.schedule_wrap(function()
+    if package.loaded['lualine'] then
+      require('lualine').refresh({ place = { 'statusline' } })
+    end
+  end),
+})
+
+function M.macro_recording()
+  local register = vim.fn.reg_recording()
+  return register ~= '' and ('recording @%s'):format(register) or ''
+end
+
+function M.is_recording_macro()
+  return M.macro_recording() ~= ''
+end
+
 --- Format text with a highlight group for use in lualine components.
 --- Adapted from LazyVim's lualine.format.
 ---@param component any lualine component instance

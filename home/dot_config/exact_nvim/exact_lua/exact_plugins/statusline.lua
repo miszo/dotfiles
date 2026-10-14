@@ -7,7 +7,6 @@ return {
     dependencies = {
       'nvim-mini/mini.icons',
       'catppuccin/nvim',
-      'folke/noice.nvim',
     },
     init = function()
       vim.g.lualine_laststatus = vim.o.laststatus
@@ -53,6 +52,13 @@ return {
             { UserUtil.statusline.pretty_path() },
           },
           lualine_x = {
+            {
+              UserUtil.statusline.macro_recording,
+              cond = UserUtil.statusline.is_recording_macro,
+              color = function()
+                return { fg = Snacks.util.color('Constant') }
+              end,
+            },
             'copilot',
             --- Sidekick CLI status
             {
@@ -65,28 +71,6 @@ return {
               end,
               color = function()
                 return { fg = Snacks.util.color('Special') }
-              end,
-            },
-            {
-              function()
-                return require('noice').api.status.command.get()
-              end,
-              cond = function()
-                return package.loaded['noice'] and require('noice').api.status.command.has()
-              end,
-              color = function()
-                return { fg = Snacks.util.color('Statement') }
-              end,
-            },
-            {
-              function()
-                return require('noice').api.status.mode.get()
-              end,
-              cond = function()
-                return package.loaded['noice'] and require('noice').api.status.mode.has()
-              end,
-              color = function()
-                return { fg = Snacks.util.color('Constant') }
               end,
             },
             {
