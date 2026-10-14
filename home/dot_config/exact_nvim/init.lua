@@ -1,6 +1,6 @@
-require('config.setup_util')
-require('config.options')
-require('config.autocmds')
+require('core.setup_util')
+require('core.options')
+require('core.autocmds')
 
-require('config.lazy')
-require('config.keymaps')
+require('core.lazy')
+require('core.keymaps')

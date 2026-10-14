@@ -233,6 +233,15 @@ return {
         desc = 'Sidekick: Toggle Claude Code',
       },
       {
+        '<leader>aC',
+        function()
+          if vim.fn.executable('codex') == 0 then
+            return UserUtil.lazyCoreUtil.info('Codex CLI not found')
+          end
+          require('sidekick.cli').toggle({ name = 'codex', focus = true })
+        end,
+      },
+      {
         '<leader>ag',
         function()
           if vim.fn.executable('copilot') == 0 then

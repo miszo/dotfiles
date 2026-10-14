@@ -1,10 +1,10 @@
-local dap = require('config.configs.dap')
-local f_types = require('config.configs.filetypes')
-local icons = require('config.configs.icons')
-local kind_filter = require('config.configs.kind_filter')
-local mason = require('config.configs.mason')
-local tailwind = require('config.configs.tailwind')
-local treesitter = require('config.configs.treesitter')
+local dap = require('config.dap')
+local f_types = require('config.filetypes')
+local icons = require('config.icons')
+local kind_filter = require('config.kind_filter')
+local mason = require('config.mason')
+local tailwind = require('config.tailwind')
+local treesitter = require('config.treesitter')
 
 local M = {
   buftypes = f_types.buftypes,
