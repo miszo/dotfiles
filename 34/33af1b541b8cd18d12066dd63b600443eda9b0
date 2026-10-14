@@ -1,0 +1,14 @@
+home/dot_config/exact_nvim/exact_lua/exact_plugins/ai.lua
+  h_88c8f29a7bb397 243
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3433af1b541b8cd18d12066dd63b600443eda9b0",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
