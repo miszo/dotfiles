@@ -1,0 +1,35 @@
+home/dot_config/exact_nvim/init.lua
+  s_c4137f58897916::t_5d5de1d8965ebb 1-2
+  s_c4137f58897916::t_cce573dc01b497 3-13
+home/dot_config/exact_nvim/exact_lua/exact_plugins/statusline.lua
+  s_c4137f58897916::t_0b43953145a970 55,58,60-61
+  s_c4137f58897916::t_0aaf621318a70a 56-57
+  s_c4137f58897916::t_390dfccd335b6d 59
+home/dot_config/exact_nvim/exact_lua/exact_plugins/ui.lua
+  s_c4137f58897916::t_dddd9d5f0241df 21-25
+  s_c4137f58897916::t_cce573dc01b497 7,10-13,15-16,19-20
+  s_c4137f58897916::t_3c734e9d562dbc 8
+home/dot_config/exact_nvim/exact_lua/exact_util/statusline.lua
+  s_c4137f58897916::t_df09e8f647a481 10,12-18
+  s_c4137f58897916::t_6953790dfa9f9a 3-5,7,9
+  s_c4137f58897916::t_ae12aa22f0ff2c 6,8,11
+  s_c4137f58897916::t_17cc1be02ca540 19-20
+home/dot_config/exact_nvim/exact_lua/exact_core/options.lua
+  s_c4137f58897916::t_18d3c58883537a 67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6baae8ba5b48ccefbe8a158e765dedebc71fd898",
+  "prompts": {},
+  "sessions": {
+    "s_c4137f58897916": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a13a62-2ed0-79e3-b07e-a326dbef904e",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
