@@ -1,0 +1,21 @@
+home/dot_config/exact_tmux/dot_tmux.conf
+  s_c0920015c4e403::t_12b31689a7f13d 154-155
+  s_c0920015c4e403::t_b0eb52bae1ef48 140-153
+  s_c0920015c4e403::t_5d8d3e5514035c 134,136-137,156-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2cb0a4ac101c95bc02a9d206b268bc7f1afb195d",
+  "prompts": {},
+  "sessions": {
+    "s_c0920015c4e403": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "20611046-db39-4b2b-9cbd-64b1964b3ddf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
