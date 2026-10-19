@@ -1,0 +1,19 @@
+home/dot_config/exact_ghostty/config.ghostty
+  s_6cfb4c173ca265::t_fc2e8fa4359b60 34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2e13ed36bd2aece9fe1d5fdfbf8d44d5a250a070",
+  "prompts": {},
+  "sessions": {
+    "s_6cfb4c173ca265": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "474c9965-5739-44d9-a776-b317dc9b6652",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
