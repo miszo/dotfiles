@@ -11,7 +11,6 @@ local lsp_servers = {
   dockerls = 'dockerfile-language-server',
   eslint = 'eslint-lsp',
   gopls = 'gopls',
-  harper_ls = 'harper-ls',
   intelephense = 'intelephense',
   jsonls = 'json-lsp',
   lua_ls = 'lua-language-server',
