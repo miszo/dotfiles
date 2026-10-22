@@ -32,11 +32,6 @@
     "system_info": false
   },
   "providers": {
-    "@peduarte/store.raycast.1-click-confetti": {
-      "preferences": {
-        "confettiSound": false
-      }
-    },
     "clipboard": {
       "preferences": {
         "eraseOnStartup": false,

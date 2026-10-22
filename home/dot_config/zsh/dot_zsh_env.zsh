@@ -29,3 +29,5 @@ export DEJA_CYCLE_FUZZY_BACK_KEY='^[[1;2D'
 export DEJA_TOGGLE_EMPTY_KEY=
 # Escape key
 export DEJA_DISMISS_KEY=^[
+
+unset GEM_HOME
