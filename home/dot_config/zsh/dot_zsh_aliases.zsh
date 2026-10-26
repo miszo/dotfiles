@@ -55,7 +55,7 @@ if [ "$(command -v eza)" ]; then
     unalias -m 'l'
     unalias -m 'la'
     unalias -m 'ls'
-    alias ls='eza -G --color auto -a -s type --icons'
-    alias ll='eza -l --color always -a -s type --icons'
-    alias tree='eza --tree --level=2 --color auto -a -s type --icons'
+    alias ls='eza -G --color auto -a -s type --icons always'
+    alias ll='eza -l --color always -a -s type --icons always'
+    alias tree='eza --tree --level=2 --color auto -a -s type --icons always'
 fi
