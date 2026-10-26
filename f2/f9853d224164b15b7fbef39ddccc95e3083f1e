@@ -1,0 +1,14 @@
+home/dot_config/zsh/dot_zsh_aliases.zsh
+  h_88c8f29a7bb397 58-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f2f9853d224164b15b7fbef39ddccc95e3083f1e",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
