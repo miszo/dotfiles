@@ -1,7 +1,11 @@
 nerdfont: true
+status_icons:
+  working: "󰚩"
+  waiting: "󰏤"
+  done: "󰄴"
 mode: session
 default_session: default
-worktree_dir: "../{project}_worktrees"
+worktree_dir: "../{project}__worktrees"
 window_prefix: "wm-{project}-"
 worktree_naming: full
 stale_after: 8h
