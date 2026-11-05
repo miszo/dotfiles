@@ -1,0 +1,14 @@
+home/dot_config/workmux/config.yaml
+  h_88c8f29a7bb397 2-5,8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75f33929751fb04cfd8366e6176e0f868d456e68",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
