@@ -92,8 +92,8 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l --color always -a -s type --icons $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -l --color always -a -s type --icons $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l --color always -a -s type --icons always "$realpath"'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -l --color always -a -s type --icons always "$realpath"'
 
 function load_zsh_config {
     if [ -f $ZDOTDIR/.zsh_$1.zsh ];
