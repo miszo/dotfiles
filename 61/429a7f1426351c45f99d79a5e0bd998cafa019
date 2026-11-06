@@ -1,0 +1,14 @@
+home/dot_config/zsh/dot_zshrc.tmpl
+  h_88c8f29a7bb397 95-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "61429a7f1426351c45f99d79a5e0bd998cafa019",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
