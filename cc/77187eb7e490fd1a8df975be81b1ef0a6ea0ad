@@ -1,0 +1,16 @@
+home/dot_config/yazi/theme.toml
+  h_88c8f29a7bb397 25-43,45-48,56-60,68,87-88,104-105
+home/dot_config/yazi/yazi.toml
+  h_88c8f29a7bb397 25,106-107,111-112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cc77187eb7e490fd1a8df975be81b1ef0a6ea0ad",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
