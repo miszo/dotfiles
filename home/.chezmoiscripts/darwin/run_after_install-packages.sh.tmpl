@@ -46,9 +46,15 @@ function update_uv_tools() {
   {{ end }}
 }
 
+function install_yazi_plugins() {
+  echo "Installing Yazi plugins..."
+  ya pkg install
+}
+
 function main() {
   brew_bundle
   mise_install
+  install_yazi_plugins
   install_gh_extensions
   update_gh_extensions
   install_uv_tools

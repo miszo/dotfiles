@@ -102,15 +102,5 @@ bizarre_retry = 5
 preload = []
 prepend_previewers = [{ mime = "image/heic", run = "heic" }]
 
-[[plugin.prepend_fetchers]]
-group = "git"
-url  = "*"
-run  = "git"
-
-[[plugin.prepend_fetchers]]
-group = "git"
-url  = "*/"
-run  = "git"
-
 [log]
 enabled = false
