@@ -1,0 +1,14 @@
+home/.chezmoiscripts/darwin/run_after_install-packages.sh.tmpl
+  h_88c8f29a7bb397 49-53,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9d15b26a9b0f07e06f45cd6972bca6032a0ad363",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
