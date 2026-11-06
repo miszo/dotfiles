@@ -22,7 +22,7 @@ extract = [{ run = 'unar "$1"', desc = "Extract here", for = "macos" }]
 
 [open]
 rules = [
-  { name = "*/", use = [
+  { url = "*/", use = [
     "edit",
     "open",
     "reveal",
@@ -103,13 +103,13 @@ preload = []
 prepend_previewers = [{ mime = "image/heic", run = "heic" }]
 
 [[plugin.prepend_fetchers]]
-id   = "git"
-name = "*"
+group = "git"
+url  = "*"
 run  = "git"
 
 [[plugin.prepend_fetchers]]
-id   = "git"
-name = "*/"
+group = "git"
+url  = "*/"
 run  = "git"
 
 [log]
