@@ -1,0 +1,25 @@
+home/.chezmoiignore
+  s_72d5afb076abb7::t_b40de04832a61e 68
+  s_72d5afb076abb7::t_5ea259267d43e6 78-80
+  s_72d5afb076abb7::t_04c65b92346584 76-77
+  s_72d5afb076abb7::t_a85b0123580335 75
+  s_72d5afb076abb7::t_125a922be53662 81
+home/dot_config/exact_inkdrop/styles.css
+  s_72d5afb076abb7::t_703229af34cdd1 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5ed709cc2073f643b262db22cfd643776d5f2579",
+  "prompts": {},
+  "sessions": {
+    "s_72d5afb076abb7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d0ff8166-b53f-462d-a659-32ccecc3a9c3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
