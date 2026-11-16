@@ -65,12 +65,19 @@ Applications
 Desktop
 Documents
 Downloads
-Library
+Library/**/*
 Movies
 Music
 Pictures
 Public
 Support
+
+# allow custom config for Inkdrop
+!Library/Application Support
+!Library/Application Support/inkdrop
+!Library/Application Support/inkdrop/keymap.json
+!Library/Application Support/inkdrop/init.js
+!Library/Application Support/inkdrop/styles.css
 
 **/.DS_Store
 .ssh/1Password

@@ -1,0 +1,5 @@
+@layer theme.ui.base {
+  :root {
+    --font-name: MonoLisaText, -apple-system, BlinkMacSystemFont, Segoe UI, 'Lato';
+  }
+}

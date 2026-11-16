@@ -1,0 +1,5 @@
+{
+  "body": {
+    "shift-cmd-v": "editor:paste-as-link"
+  }
+}
