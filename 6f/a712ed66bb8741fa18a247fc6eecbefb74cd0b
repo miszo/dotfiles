@@ -1,0 +1,14 @@
+home/dot_config/exact_sesh/sesh.toml.tmpl
+  h_88c8f29a7bb397 34-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6fa712ed66bb8741fa18a247fc6eecbefb74cd0b",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
