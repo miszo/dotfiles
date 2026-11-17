@@ -31,6 +31,15 @@ windows = ["shell"]
 [[window]]
 name = "shell"
 
+[[window]]
+name = "server"
+
+[[window]]
+name = "servers"
+startup_script = "tmux split-window -h -t :servers && tmux split-window -v -t :servers"
+
+{{ onepasswordRead "op://dev/sesh/notesPlain" .op.personal.accountCode }}
+
 {{ if .computer.isWork -}}
 {{ onepasswordRead "op://Employee/sesh/notesPlain" .op.work.accountCode -}}
 {{- end -}}
