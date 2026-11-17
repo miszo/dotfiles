@@ -1,0 +1,14 @@
+.github/workflows/gitleaks.yml
+  h_88c8f29a7bb397 2-7,10,12-14,16-17,19,21-23,27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "030496589cdd0cf596dc0ebc538f48fe089b7631",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
