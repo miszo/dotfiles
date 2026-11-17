@@ -1,0 +1,14 @@
+home/.chezmoiignore
+  h_88c8f29a7bb397 85-86,88-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "db0bf9423a5732c775a52a9c618b825140838ac5",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
