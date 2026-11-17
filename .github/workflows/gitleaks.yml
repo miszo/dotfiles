@@ -1,14 +1,27 @@
 name: gitleaks
-on: [pull_request, push, workflow_dispatch]
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
 jobs:
   scan:
-    name: gitleaks
+    name: Scan for secrets
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v7
         with:
+          # Full history, so a secret in an older commit is caught too.
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_NOTIFY_USER_LIST: '@miszo'
+          GITLEAKS_VERSION: 8.30.1
