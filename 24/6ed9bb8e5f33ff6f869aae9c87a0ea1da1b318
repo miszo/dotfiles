@@ -1,0 +1,14 @@
+home/dot_config/git/ignore
+  h_88c8f29a7bb397 35-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "246ed9bb8e5f33ff6f869aae9c87a0ea1da1b318",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
