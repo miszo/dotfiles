@@ -32,3 +32,6 @@ miszo-ai-command_*.md
 
 # Local AGENTS file
 AGENTS.local.md
+
+# Personal project Workmux configuration
+.workmux*.yaml
