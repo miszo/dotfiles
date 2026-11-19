@@ -199,9 +199,34 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile', 'BufEnter' }, {
   end,
 })
 
+-- Quickfix refreshes replace buffer contents outside normal LSP edit tracking.
+local function detach_quickfix_clients(bufnr)
+  if not vim.api.nvim_buf_is_valid(bufnr) or vim.bo[bufnr].buftype ~= 'quickfix' then
+    return
+  end
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    vim.lsp.buf_detach_client(bufnr, client.id)
+  end
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup('quickfix-no-lsp'),
+  pattern = 'qf',
+  callback = function(event)
+    detach_quickfix_clients(event.buf)
+  end,
+})
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup('lsp-attach'),
   callback = function(attach_event)
+    if vim.bo[attach_event.buf].buftype == 'quickfix' then
+      vim.schedule(function()
+        detach_quickfix_clients(attach_event.buf)
+      end)
+      return
+    end
+
     local client = vim.lsp.get_client_by_id(attach_event.data.client_id)
 
     local map = function(keys, func, desc)
