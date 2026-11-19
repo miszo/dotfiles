@@ -133,6 +133,7 @@ return {
           copilot = { cmd = { 'copilot', '--banner' } },
           cursor = { cmd = { 'cursor-agent' } },
           gemini = { cmd = { 'gemini' } },
+          devin = { cmd = { 'devin' } },
           opencode = {
             cmd = { 'opencode' },
             -- Workaround for OpenCode issue #445
@@ -243,14 +244,14 @@ return {
         desc = 'Sidekick: Toggle Codex CLI',
       },
       {
-        '<leader>ag',
+        '<leader>ad',
         function()
-          if vim.fn.executable('copilot') == 0 then
-            return UserUtil.lazyCoreUtil.info('GitHub Copilot CLI not found')
+          if vim.fn.executable('devin') == 0 then
+            return UserUtil.lazyCoreUtil.info('Devin CLI not found')
           end
-          require('sidekick.cli').toggle({ name = 'copilot', focus = true })
+          require('sidekick.cli').toggle({ name = 'devin', focus = true })
         end,
-        desc = 'Sidekick: Toggle GitHub Copilot CLI',
+        desc = 'Sidekick: Toggle Devin CLI',
       },
       {
         '<leader>as',
@@ -260,7 +261,7 @@ return {
         desc = 'Sidekick: Select CLI Tool',
       },
       {
-        '<leader>ad',
+        '<leader>aD',
         function()
           require('sidekick.cli').close()
         end,
