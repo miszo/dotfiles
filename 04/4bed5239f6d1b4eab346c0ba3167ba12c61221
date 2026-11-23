@@ -1,0 +1,14 @@
+home/dot_config/exact_tmux/dot_tmux.conf
+  h_88c8f29a7bb397 62-64,119-120
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "044bed5239f6d1b4eab346c0ba3167ba12c61221",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
