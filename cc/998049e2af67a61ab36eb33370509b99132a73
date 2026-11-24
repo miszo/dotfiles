@@ -1,0 +1,30 @@
+home/dot_config/exact_tmux/core.conf
+  h_88c8f29a7bb397 1-41
+home/dot_config/exact_tmux/dot_tmux.conf
+  h_88c8f29a7bb397 10-13,20-21
+home/dot_config/exact_tmux/keys.conf
+  h_88c8f29a7bb397 1-17
+home/dot_config/exact_tmux/navigation.conf
+  h_88c8f29a7bb397 1-22
+home/dot_config/exact_tmux/pickers.conf
+  h_88c8f29a7bb397 1-31
+home/dot_config/exact_tmux/plugins.conf
+  h_88c8f29a7bb397 1-6
+home/dot_config/exact_tmux/status.conf
+  h_88c8f29a7bb397 1-16
+home/dot_config/exact_tmux/theme.conf
+  h_88c8f29a7bb397 1-39
+home/dot_tmux.conf
+  h_88c8f29a7bb397 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cc998049e2af67a61ab36eb33370509b99132a73",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
