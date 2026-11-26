@@ -25,6 +25,11 @@ nbproject/
 # Claude Code local settings
 **/.claude/settings.local.json
 
+# Serena personal overrides and generated files
+**/.serena/project.local.yml
+**/.serena/cache/
+**/.serena/logs/
+
 # Per-task scratch files (PR descriptions, findings docs, audit notes, etc.)
 miszo_task_*
 
