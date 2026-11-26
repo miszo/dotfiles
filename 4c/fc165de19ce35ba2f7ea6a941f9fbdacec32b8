@@ -1,0 +1,14 @@
+home/.chezmoidata/uv_tools.yml
+  h_88c8f29a7bb397 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4cfc165de19ce35ba2f7ea6a941f9fbdacec32b8",
+  "prompts": {},
+  "humans": {
+    "h_88c8f29a7bb397": {
+      "author": "Miszo Radomski <hello@miszo.dev>"
+    }
+  }
+}
